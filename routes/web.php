@@ -25,4 +25,8 @@ Route::get('/clientes', function () {
 
     return response()->json($clientes, 200, [], JSON_UNESCAPED_UNICODE);
 });
+Route::get('/productos', function () {
+    $productos = DB::table('producto')->get();
 
+    return response()->json($productos, 200, [], JSON_UNESCAPED_UNICODE);
+});
