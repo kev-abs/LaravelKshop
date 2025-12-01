@@ -1,0 +1,95 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Services\ProductoService;
+use Illuminate\Http\Request;
+
+class ProductoController extends Controller
+{
+    private $productoService;
+
+    public function __construct(ProductoService $productoService)
+    {
+        $this->productoService = $productoService;
+    }
+
+    // ================= LISTAR =================
+    public function index()
+    {
+        $resultado = $this->productoService->obtenerProductos();
+
+        $productos = $resultado["success"] ? $resultado["data"] : [];
+
+        return view("productos.ConsultarProducto", compact("productos"));
+    }
+
+    // ================= LISTAR PARA CLIENTE =================
+    public function catalogo()
+    {
+        $resultado = $this->productoService->obtenerProductos();
+
+        $productos = $resultado["success"] ? $resultado["data"] : [];
+
+        return view("productos.nuestrosproductos", compact("productos"));
+    }
+
+    // ================= AGREGAR =================
+    public function create()
+    {
+        return view("productos.AgregarProducto");
+    }
+
+    public function store(Request $request)
+    {
+        $resultado = $this->productoService->agregarProducto(
+            $request->nombre,
+            $request->descripcion,
+            $request->precio,
+            $request->stock,
+            $request->id_Proveedor,
+            $request->file("imagen"),
+            $request->estado
+        );
+
+        if (!$resultado["success"]) {
+            return back()->with("error", $resultado["error"]);
+        }
+
+        return redirect()->route("productos.index")->with("success", "Producto agregado");
+    }
+
+    // ================= EDITAR =================
+    public function edit($id)
+    {
+        $resultado = $this->productoService->obtenerProductoPorId($id);
+
+        if (!$resultado["success"]) {
+            return back()->with("error", "No se pudo cargar el producto");
+        }
+
+        $producto = $resultado["data"];
+
+        return view("productos.ActualizarProducto", compact("producto"));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $resultado = $this->productoService->actualizarProductos(
+            $id,
+            $request->nombre,
+            $request->descripcion,
+            $request->precio,
+            $request->stock,
+            $request->id_Proveedor,
+            $request->file("imagen"),
+            $request->estado
+        );
+
+        if (!$resultado["success"]) {
+            return back()->with("error", $resultado["error"]);
+        }
+
+        return redirect()->route("productos.index")->with("success", "Producto actualizado");
+    }
+}

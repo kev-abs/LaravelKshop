@@ -25,8 +25,13 @@ Route::get('/clientes', function () {
 
     return response()->json($clientes, 200, [], JSON_UNESCAPED_UNICODE);
 });
-Route::get('/productos', function () {
-    $productos = DB::table('producto')->get();
+use App\Http\Controllers\ProductoController;
 
-    return response()->json($productos, 200, [], JSON_UNESCAPED_UNICODE);
-});
+Route::get('/productos', [ProductoController::class, 'index'])->name('productos.index');
+Route::get('/productos/catalogo', [ProductoController::class, 'catalogo'])->name('productos.catalogo');
+
+Route::get('/productos/agregar', [ProductoController::class, 'create'])->name('productos.create');
+Route::post('/productos/agregar', [ProductoController::class, 'store'])->name('productos.store');
+
+Route::get('/productos/editar/{id}', [ProductoController::class, 'edit'])->name('productos.edit');
+Route::put('/productos/editar/{id}', [ProductoController::class, 'update'])->name('productos.update');
