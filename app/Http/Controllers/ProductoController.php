@@ -74,22 +74,24 @@ class ProductoController extends Controller
     }
 
     public function update(Request $request, $id)
-    {
-        $resultado = $this->productoService->actualizarProductos(
-            $id,
-            $request->nombre,
-            $request->descripcion,
-            $request->precio,
-            $request->stock,
-            $request->id_Proveedor,
-            $request->file("imagen"),
-            $request->estado
-        );
+{
+    $resultado = $this->productoService->actualizarProductos(
+    $id,
+    $request->nombre,
+    $request->descripcion,
+    $request->precio,
+    $request->stock,
+    $request->idProveedor,
+    $request->file("imagen"),
+    $request->imagen_actual,   
+    $request->estado
+);
+dd($resultado);
 
-        if (!$resultado["success"]) {
-            return back()->with("error", $resultado["error"]);
-        }
-
-        return redirect()->route("productos.index")->with("success", "Producto actualizado");
+    if (!$resultado["success"]) {
+        return back()->with("error", $resultado["error"]);
     }
+
+    return redirect()->route("productos.index")->with("success", "Producto actualizado");
+}
 }

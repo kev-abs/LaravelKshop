@@ -91,35 +91,50 @@ class ProductoService
     /* -------------------------------------------
        PUT - Actualizar producto
     -------------------------------------------- */
-    public function actualizarProductos($id, $nombre, $descripcion, $precio, $stock, $idProveedor, $imagen, $estado)
-    {
-        $datos = [
-            "nombre"      => $nombre,
-            "descripcion" => $descripcion,
-            "precio"      => $precio,
-            "stock"       => $stock,
-            "idProveedor" => $idProveedor,
-            "estado"      => $estado
-        ];
+    public function actualizarProductos(
+    $id,
+    $nombre,
+    $descripcion,
+    $precio,
+    $stock,
+    $idProveedor,
+    $imagen,
+    $imagenActual,
+    $estado
+) {
+    $datos = [
+        "nombre"        => $nombre,
+        "descripcion"   => $descripcion,
+        "precio"        => $precio,
+        "stock"         => $stock,
+        "id_Proveedor"   => $idProveedor,
+        "estado"        => $estado,
+        "imagen_actual" => $imagenActual,  
+        "_method"       => "PUT"            
+    ];
 
-        $url = "{$this->apiUrl}/actualizar/{$id}";
+    $url = "{$this->apiUrl}/actualizar/{$id}";
 
-        $request = Http::withToken($this->jwtToken);
+    // Preparar request con token
+    $request = Http::withToken($this->jwtToken);
 
-        if ($imagen) {
-            $request = $request->attach(
-                'imagen',
-                fopen($imagen->getRealPath(), 'r'),
-                $imagen->getClientOriginalName()
-            );
-        }
-
-        $response = $request->put($url, $datos);
-
-        if ($response->failed()) {
-            return ["success" => false, "error" => "Error al actualizar"];
-        }
-
-        return ["success" => true, "data" => $response->json()];
+    // Si se subió una nueva imagen → adjuntarla
+    if ($imagen) {
+        $request = $request->attach(
+            'imagen',
+            fopen($imagen->getRealPath(), 'r'),
+            $imagen->getClientOriginalName()
+        );
     }
+
+    // Enviar como POST (para permitir multipart/form-data)
+    $response = $request->post($url, $datos);
+
+    if ($response->failed()) {
+        return ["success" => false, "error" => "Error al actualizar"];
+    }
+
+    return ["success" => true, "data" => $response->json()];
+}
+
 }

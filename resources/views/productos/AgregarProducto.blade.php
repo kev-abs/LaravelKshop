@@ -90,7 +90,7 @@
         </div>
 
         <div class="text-center mt-4">
-            <a href="/ModeloVistaControlador/index.php?Controller=producto" class="btn btn-outline-secondary btn-lg w-50">
+            <a href="{{ route('productos.index') }}" class="btn btn-outline-secondary btn-lg w-50">
                 <i class="bi bi-arrow-left me-2"></i>Volver
             </a>
         </div>
