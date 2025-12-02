@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\InicioController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\Usuario\UsuariosController;
+use App\Http\Controllers\ProductoController;
 
 Route::get('/', [InicioController::class, 'index'])->name('inicio');
 
@@ -16,11 +17,6 @@ Route::view('/panel/admin', 'Usuario.panel.panelAdmin')->name('panel.admin');
 Route::view('/panel/cliente', 'Usuario.panel.panelCliente')->name('panel.cliente');
 Route::view('/panel/vendedor', 'Usuario.panel.panelVendedor')->name('panel.vendedor');
 
-<<<<<<< HEAD
-    return response()->json($clientes, 200, [], JSON_UNESCAPED_UNICODE);
-});
-use App\Http\Controllers\ProductoController;
-
 Route::get('/productos', [ProductoController::class, 'index'])->name('productos.index');
 Route::get('/productos/catalogo', [ProductoController::class, 'catalogo'])->name('productos.catalogo');
 
@@ -29,7 +25,6 @@ Route::post('/productos/agregar', [ProductoController::class, 'store'])->name('p
 
 Route::get('/productos/editar/{id}', [ProductoController::class, 'edit'])->name('productos.edit');
 Route::put('/productos/editar/{id}', [ProductoController::class, 'update'])->name('productos.update');
-=======
 Route::get('/logout', function () {
     session()->flush();
     return redirect()->route('inicio');
@@ -44,4 +39,3 @@ Route::match(['get','post'], '/usuarios/clientes/editar', [UsuariosController::c
 Route::get('/usuarios/empleados', [UsuariosController::class, 'consultarEmpleados'])->name('empleados.consultar');
 Route::match(['get','post'], '/usuarios/empleados/agregar', [UsuariosController::class, 'agregarEmpleado'])->name('empleados.agregar');
 Route::match(['get','post'], '/usuarios/empleados/editar', [UsuariosController::class, 'editarEliminarEmpleado'])->name('empleados.editar');
->>>>>>> main
