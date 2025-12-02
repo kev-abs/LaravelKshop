@@ -30,7 +30,8 @@ class LoginController extends Controller
             Session::put('nombre', $cliente->Nombre);
             Session::put('rol', 'cliente');
 
-            return redirect()->route('Usuario.panel.PanelCliente');
+            return redirect()->route('panel.cliente');
+
         }
 
         // --- 2. Empleado ---
@@ -49,7 +50,7 @@ class LoginController extends Controller
                     Session::put('nombre', $empleado->Nombre);
                     Session::put('rol', 'vendedor');
 
-                    return redirect()->route('Usuario.panel.panelVendedor');
+                    return redirect()->route('panel.vendedor');
                 }
             }
 
@@ -61,7 +62,7 @@ class LoginController extends Controller
                     Session::put('nombre', $empleado->Nombre);
                     Session::put('rol', 'administrador');
 
-                    return redirect()->route('Usuario.panel.panelAdmin');
+                    return redirect()->route('panel.admin');
                 }
             }
         }

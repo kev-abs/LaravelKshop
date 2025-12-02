@@ -1,18 +1,20 @@
 <?php
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
 
-// Bloqueo para evitar volver con "atrás"
-header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
-header("Cache-Control: post-check=0, pre-check=0", false);
-header("Pragma: no-cache");
-header("Expires: Sat, 01 Jan 2000 00:00:00 GMT");
+namespace App\Http\Middleware;
 
-// Validación de sesión
-if (!isset($_SESSION['rol']) || $_SESSION['rol'] !== 'administrador') {
-    header("Location: /ModeloVistaControlador/index.php?Controller=login");
-    exit();
+use Closure;
+
+class Administrador
+{
+    public function handle($request, Closure $next)
+    {
+        // Laravel usa session()
+        if (session('rol') !== 'administrador') {
+            return redirect()->route('login');
+        }
+
+        return $next($request);
+    }
 }
 ?>
 
@@ -36,7 +38,7 @@ if (!isset($_SESSION['rol']) || $_SESSION['rol'] !== 'administrador') {
 
     <!-- LOGO -->
     <div class="d-flex align-items-center">
-      <img src="/ModeloVistaControlador/Inicio/Public/Imagenes/logo_kshopsinfondo.png" alt="Logo K-Shop" width="83" class="me-2">
+      <img src="{{ asset('img/logo_kshopsinfondo.png') }}" alt="Logo K-Shop" width="83" class="me-2">
       <a href="/ModeloVistaControlador/index.php?Controller=panel&action=manejarPeticion" class="text-decoration-none fs-7 fw-bold text-dark">K-SHOP | Admin</a>
     </div>
 
@@ -47,7 +49,7 @@ if (!isset($_SESSION['rol']) || $_SESSION['rol'] !== 'administrador') {
 
     <!-- BOTÓN CERRAR SESIÓN -->
     <nav class="d-flex align-items-center gap-3">
-      <a href="/ModeloVistaControlador/Inicio/Controlador/Logueo/CerrarSesion.php" class="btn btn-outline-dark border-0 text-dark">
+      <a href="{{ route('logout') }}" class="btn btn-outline-dark border-0 text-dark">
         Cerrar Sesión
       </a>
     </nav>
@@ -75,7 +77,7 @@ if (!isset($_SESSION['rol']) || $_SESSION['rol'] !== 'administrador') {
         <div id="modPerfil" class="accordion-collapse collapse" data-bs-parent="#accordionModulos">
           <div class="accordion-body">
             <ul class="list-unstyled">
-              <li><a href="../perfiles/perfil_admin.php" class="text-white text-decoration-none">➤ Perfil de Administrador</a></li>
+              <li><a href="{{ asset('img/foto_perfil_admin.png') }}" class="text-white text-decoration-none">➤ Perfil de Administrador</a></li>
             </ul>
           </div>
         </div>
@@ -207,7 +209,7 @@ if (!isset($_SESSION['rol']) || $_SESSION['rol'] !== 'administrador') {
       <div class="row g-4">
         <!-- Card Usuarios -->
         <div class="col-md-6 col-lg-3">
-          <a href="/ModeloVistaControlador/index.php?Controller=usuarios" class="text-decoration-none">
+          <a href="{{ route('usuariosVista') }}" class="text-decoration-none">
             <div class="card h-100 shadow-sm border-0">
               <div class="card-body text-center">
                 <i class="bi bi-people-fill fs-1 text-primary mb-3"></i>

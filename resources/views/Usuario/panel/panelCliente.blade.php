@@ -1,54 +1,20 @@
 <?php
-session_start();
-if (!isset($_SESSION["rol"]) || $_SESSION["rol"] !== "cliente") {
-    header("Location: ../Barra de navegacion/Iniciarsesion.php");
-    exit();
-}
 
-$productos = [
-  [
-    "titulo" => "Camiseta manga corta dama",
-    "descripcion" => "Fresca y cómoda para el día a día.",
-    "imagen" => "../Imagenes/camiseta aqua manga corta mujer.avif",
-    "pagina" => "producto1.php",
-    "precio" => 39900
-  ],
-  [
-    "titulo" => "Camiseta Boxy Ultra Aestetick",
-    "descripcion" => "Un estilo único y moderno.",
-    "imagen" => "../Imagenes/camiseta boxy.jpeg",
-    "pagina" => "producto1.php",
-    "precio" => 80000
-  ],
-  [
-    "titulo" => "Pantalón cargo cannabis",
-    "descripcion" => "Un pantalón con mucha personalidad y estilo.",
-    "imagen" => "../Imagenes/pantalon cargo.jpeg",
-    "pagina" => "producto1.php",
-    "precio" => 100000
-  ],
-  [
-    "titulo" => "Camiseta manga corta caballero",
-    "descripcion" => "Ideal para climas cálidos y casuales.",
-    "imagen" => "../Imagenes/camiseta negra manga corta hombre.jpg",
-    "pagina" => "producto2.php",
-    "precio" => 42900
-  ],
-  [
-    "titulo" => "Buzo dama",
-    "descripcion" => "Perfecto para el clima frío.",
-    "imagen" => "../Imagenes/camiseta blanca manga larga mujer.jpg",
-    "pagina" => "producto3.php",
-    "precio" => 59900
-  ],
-  [
-    "titulo" => "Buzo caballero",
-    "descripcion" => "Diseño moderno y cálido.",
-    "imagen" => "../Imagenes/camiseta negra manga larga hombre.webp",
-    "pagina" => "producto4.php",
-    "precio" => 62900
-  ]
-];
+namespace App\Http\Middleware;
+
+use Closure;
+
+class Cliente
+{
+    public function handle($request, Closure $next)
+    {
+        if (session('rol') !== 'cliente') {
+            return redirect()->route('login');
+        }
+
+        return $next($request);
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -144,23 +110,7 @@ $productos = [
 
   <!-- Productos recomendados -->
   <h4 class="text-center mt-5 mb-4">Productos que podrían interesarte</h4>
-  <div class="row g-4">
-    <?php foreach ($productos as $index => $producto): ?>
-      <div class="col-sm-6 col-md-4">
-        <div class="card h-100 shadow-sm">
-          <img src="<?= $producto['imagen'] ?>" class="card-img-top" alt="<?= $producto['titulo'] ?>">
-          <div class="card-body d-flex flex-column">
-            <h5 class="card-title"><?= $producto['titulo'] ?></h5>
-            <p class="card-text"><?= $producto['descripcion'] ?></p>
-            <p class="text-success fw-bold">$<?= number_format($producto['precio'], 0, ',', '.') ?></p>
-            <div class="mt-auto">
-              <a href="<?= $producto['pagina'] ?>" class="btn btn-outline-primary w-100">Ver más</a>
-            </div>
-          </div>
-        </div>
-      </div>
-    <?php endforeach; ?>
-  </div>
+
 </div>
   <footer class="bg-dark text-white text-center py-4 mt-auto">
     <div class="container">
