@@ -1,0 +1,151 @@
+<?php
+
+namespace App\Http\Controllers\Usuario;
+
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller; 
+
+class UsuariosController extends Controller
+{
+
+    public function index() {
+        return view('Usuario.usuarioVista');
+    }
+
+    // -------- CLIENTES --------
+    public function consultarClientes()
+    {
+        $clientes = DB::table('Cliente')->get();
+        return view('Usuario.Cliente.ClienteConsultarVista', compact('clientes'));
+    }
+
+    public function agregarCliente(Request $request)
+    {
+        $mensaje = "";
+
+        if ($request->isMethod('post')) {
+            $data = $request->only(['nombre', 'correo', 'contrasena', 'documento', 'telefono', 'estado']);
+
+            if ($data['nombre'] && $data['correo'] && $data['contrasena']) {
+                DB::table('Cliente')->insert([
+                    'Nombre' => $data['nombre'],
+                    'Correo' => $data['correo'],
+                    'Contrasena' => bcrypt($data['contrasena']),
+                    'Documento' => $data['documento'],
+                    'Telefono' => $data['telefono'],
+                    'Estado' => $data['estado'],
+                ]);
+
+                $mensaje = "Cliente agregado correctamente.";
+            } else {
+                $mensaje = "Campos obligatorios vacíos.";
+            }
+        }
+
+        return view('Usuario.Cliente.ClienteAgregarVista', compact('mensaje'));
+    }
+
+    public function editarEliminarCliente(Request $request)
+    {
+        $mensaje = "";
+
+        if ($request->isMethod('post')) {
+
+            $accion = $request->accion;
+
+            if ($accion === "actualizar") {
+                DB::table('Cliente')
+                    ->where('ID_Cliente', $request->id_Cliente)
+                    ->update([
+                        'Nombre' => $request->nombre,
+                        'Correo' => $request->correo,
+                        'Contrasena' => $request->contrasena ? bcrypt($request->contrasena) : DB::raw('Contrasena'),
+                        'Telefono' => $request->telefono,
+                        'Documento' => $request->documento,
+                        'Estado' => $request->estado
+                    ]);
+
+                $mensaje = "Cliente actualizado correctamente.";
+            }
+
+            if ($accion === "eliminar") {
+                DB::table('Cliente')
+                    ->where('ID_Cliente', $request->id_Cliente)
+                    ->delete();
+
+                $mensaje = "Cliente eliminado correctamente.";
+            }
+        }
+
+        return view('Usuario.Cliente.ClienteActualizarEliminarVista', compact('mensaje'));
+    }
+
+    // -------- EMPLEADOS --------
+
+    public function consultarEmpleados()
+    {
+        $empleados = DB::table('Empleado')->get();
+        return view('Usuario.Empleado.EmpleadoConsultarVista', compact('empleados'));
+    }
+
+    public function agregarEmpleado(Request $request)
+    {
+        $mensaje = "";
+
+        if ($request->isMethod('post')) {
+            $data = $request->only(['nombre', 'cargo', 'correo', 'contrasena', 'estado']);
+
+            if ($data['nombre'] && $data['cargo'] && $data['correo'] && $data['contrasena']) {
+
+                DB::table('Empleado')->insert([
+                    'Nombre' => $data['nombre'],
+                    'Cargo' => $data['cargo'],
+                    'Correo' => $data['correo'],
+                    'Contrasena' => bcrypt($data['contrasena']),
+                    'Estado' => $data['estado'],
+                ]);
+
+                $mensaje = "Empleado agregado correctamente.";
+            } else {
+                $mensaje = "Campos obligatorios vacíos.";
+            }
+        }
+
+        return view('Usuario.Empleado.EmpleadoAgregarVista', compact('mensaje'));
+    }
+
+    public function editarEliminarEmpleado(Request $request)
+    {
+        $mensaje = "";
+
+        if ($request->isMethod('post')) {
+
+            if ($request->accion === "actualizar") {
+
+                DB::table('Empleado')
+                    ->where('ID_Empleado', $request->id_Empleado)
+                    ->update([
+                        'Nombre' => $request->nombre,
+                        'Cargo' => $request->cargo,
+                        'Correo' => $request->correo,
+                        'Contrasena' => $request->contrasena ? bcrypt($request->contrasena) : DB::raw('Contrasena'),
+                        'Estado' => $request->estado
+                    ]);
+
+                $mensaje = "Empleado actualizado correctamente.";
+            }
+
+            if ($request->accion === "eliminar") {
+
+                DB::table('Empleado')
+                    ->where('ID_Empleado', $request->id_Empleado)
+                    ->delete();
+
+                $mensaje = "Empleado eliminado.";
+            }
+        }
+
+        return view('Usuario.Empleado.EmpleadoActualizarEliminarVista', compact('mensaje'));
+    }
+}
