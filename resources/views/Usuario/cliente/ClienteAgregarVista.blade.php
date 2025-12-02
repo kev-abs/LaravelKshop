@@ -11,60 +11,66 @@
 
 <header class="bg-white sticky-top py-3 border-bottom shadow-sm">
     <div class="container d-flex justify-content-between align-items-center">
-        <div class="d-flex align-items-center" href="/ModeloVistaControlador/index.php?Controller=panel&action=manejarPeticion">
-            <img src="Inicio/Public/Imagenes/logo_kshopsinfondo.png" alt="Logo K-Shop" width="83" class="me-2">
+        <div class="d-flex align-items-center">
+            <img src="{{ asset('images/logo_kshopsinfondo.png') }}" alt="Logo K-Shop" width="83" class="me-2">
             <span class="fw-bold text-dark">K-SHOP | Admin</span>
         </div>
+
         <nav>
-            <a href="Inicio/Controlador/Logueo/CerrarSesion.php" class="btn btn-outline-dark">Cerrar Sesión</a>
+            <a href="{{ route('logout') }}" class="btn btn-outline-dark">Cerrar Sesión</a>
         </nav>
     </div>
 </header>
 
 <main class="container my-5">
-    <!-- Título y descripción -->
+
     <div class="text-center mb-5">
         <h2 class="fw-bold mb-2">Agregar Nuevo Cliente</h2>
         <p class="text-muted">
             Registra un cliente en el sistema para poder gestionar sus compras y mantener su información siempre actualizada.
-            Cada registro es importante para un control eficiente de tu tienda.
         </p>
     </div>
 
-    <!-- Card Agregar Cliente -->
     <div class="row justify-content-center">
         <div class="col-12 col-lg-8">
+
             <div class="card shadow-sm border-0 rounded-3">
                 <div class="card-header bg-dark text-white text-center rounded-top py-2">
                     <h5 class="mb-0">
                         <i class="bi bi-person-plus-fill me-2"></i>Formulario de Registro
                     </h5>
                 </div>
+
                 <div class="card-body bg-light p-4">
                     <p class="text-muted small mb-4">
-                        Completa los datos del cliente de manera precisa. Esto te permitirá ofrecerle un mejor seguimiento y servicio.
+                        Completa los datos del cliente de forma correcta para ofrecerle un mejor servicio.
                     </p>
-                    <!-- Mensajes -->
-                    <?php if (!empty($mensaje)): ?>
-                        <div class="mb-3">
-                            <?= $mensaje ?>
+
+                    @if (!empty($mensaje))
+                        <div class="alert alert-info text-center">
+                            {{ $mensaje }}
                         </div>
-                    <?php endif; ?>
-                    <form method="POST" class="row g-3">
-                        <input type="hidden" name="accion" value="agregar">
+                    @endif
+
+                    <form method="POST" action="{{ route('clientes.agregar') }}" class="row g-3">
+                        @csrf
 
                         <div class="col-md-4">
                             <input type="text" name="nombre" class="form-control rounded-2" placeholder="Nombre" required>
                         </div>
+
                         <div class="col-md-4">
                             <input type="email" name="correo" class="form-control rounded-2" placeholder="Correo" required>
                         </div>
+
                         <div class="col-md-4">
                             <input type="password" name="contrasena" class="form-control rounded-2" placeholder="Contraseña" required>
                         </div>
+
                         <div class="col-md-4">
                             <input type="text" name="documento" class="form-control rounded-2" placeholder="Documento">
                         </div>
+
                         <div class="col-md-4">
                             <input type="text" name="telefono" class="form-control rounded-2" placeholder="Teléfono">
                         </div>
@@ -75,19 +81,19 @@
                             </button>
                         </div>
                     </form>
+
                 </div>
             </div>
 
-            <!-- Volver -->
             <div class="text-center mt-4">
                 <a href="{{ route('clientes.consultar') }}" class="btn btn-outline-secondary btn-lg w-50">
                     <i class="bi bi-arrow-left me-2"></i>Volver
                 </a>
             </div>
+
         </div>
     </div>
 </main>
-
 
 <footer class="bg-dark text-white text-center py-4 mt-auto">
     <div class="container">

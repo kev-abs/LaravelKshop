@@ -33,7 +33,8 @@ Route::get('/logout', function () {
 
 Route::get('/usuarioVista', [UsuariosController::class,'index'])->name('usuariosVista');
 
-Route::get('/usuarios/clientes', [UsuariosController::class, 'consultarClientes'])->name('clientes.consultar');
+Route::get('/usuarios/clientes',[UsuariosController::class, 'consultarClientes'])->name('clientes.consultar');
+
 Route::match(['get','post'], '/usuarios/clientes/agregar', [UsuariosController::class, 'agregarCliente'])->name('clientes.agregar');
 Route::match(['get','post'], '/usuarios/clientes/editar', [UsuariosController::class, 'editarEliminarCliente'])->name('clientes.editar');
 
