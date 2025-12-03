@@ -4,9 +4,7 @@ namespace App\Http\Controllers\Usuario;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use App\Http\Controllers\Controller; 
-
-class UsuariosController extends Controller
+class UsuariosController
 {
 
     public function index() {
@@ -16,8 +14,8 @@ class UsuariosController extends Controller
     // -------- CLIENTES --------
     public function consultarClientes()
     {
-        $clientes = DB::table('Cliente')->get();
-        return view('Usuario.Cliente.ClienteConsultarVista', compact('clientes'));
+        $clientes = DB::table('cliente')->get();
+        return view('Usuario.cliente.ClienteConsultarVista', compact('clientes'));
     }
 
     public function agregarCliente(Request $request)
@@ -25,16 +23,15 @@ class UsuariosController extends Controller
         $mensaje = "";
 
         if ($request->isMethod('post')) {
-            $data = $request->only(['nombre', 'correo', 'contrasena', 'documento', 'telefono', 'estado']);
+            $data = $request->only(['nombre', 'correo', 'contrasena', 'documento', 'telefono']);
 
             if ($data['nombre'] && $data['correo'] && $data['contrasena']) {
-                DB::table('Cliente')->insert([
+                DB::table('cliente')->insert([
                     'Nombre' => $data['nombre'],
                     'Correo' => $data['correo'],
                     'Contrasena' => bcrypt($data['contrasena']),
                     'Documento' => $data['documento'],
                     'Telefono' => $data['telefono'],
-                    'Estado' => $data['estado'],
                 ]);
 
                 $mensaje = "Cliente agregado correctamente.";
@@ -43,7 +40,7 @@ class UsuariosController extends Controller
             }
         }
 
-        return view('Usuario.Cliente.ClienteAgregarVista', compact('mensaje'));
+        return view('Usuario.cliente.ClienteAgregarVista', compact('mensaje'));
     }
 
     public function editarEliminarCliente(Request $request)
@@ -55,7 +52,7 @@ class UsuariosController extends Controller
             $accion = $request->accion;
 
             if ($accion === "actualizar") {
-                DB::table('Cliente')
+                DB::table('cliente')
                     ->where('ID_Cliente', $request->id_Cliente)
                     ->update([
                         'Nombre' => $request->nombre,
@@ -70,7 +67,7 @@ class UsuariosController extends Controller
             }
 
             if ($accion === "eliminar") {
-                DB::table('Cliente')
+                DB::table('cliente')
                     ->where('ID_Cliente', $request->id_Cliente)
                     ->delete();
 
@@ -78,7 +75,16 @@ class UsuariosController extends Controller
             }
         }
 
-        return view('Usuario.Cliente.ClienteActualizarEliminarVista', compact('mensaje'));
+        return view('Usuario.cliente.ClienteActualizarEliminarVista', compact('mensaje'));
+    }
+
+    public function buscarCliente($id)
+    {
+        $cliente = DB::table('cliente')
+            ->where('ID_Cliente', $id)
+            ->first();
+
+        return response()->json($cliente);
     }
 
     // -------- EMPLEADOS --------
@@ -148,4 +154,10 @@ class UsuariosController extends Controller
 
         return view('Usuario.Empleado.EmpleadoActualizarEliminarVista', compact('mensaje'));
     }
+    public function buscarEmpleado($id)
+    {
+        $empleado = DB::table('empleado')->where('ID_Empleado', $id)->first();
+        return response()->json($empleado);
+    }
+
 }
