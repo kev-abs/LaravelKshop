@@ -13,7 +13,7 @@
 
 <header class="bg-white sticky-top py-3 border-bottom shadow-sm">
     <div class="container d-flex justify-content-start align-items-center">
-        <img src="{{ asset('logo_kshopsinfondo.png') }}" alt="Logo K-Shop" width="83" class="me-2">
+         <img src="{{ asset('img/logo_kshopsinfondo.png') }}" alt="Logo K-Shop" width="83" class="me-2">
         <span class="fw-bold text-dark">K-SHOP | Admin</span>
     </div>
 </header>
@@ -104,7 +104,7 @@
                     <input type="hidden" name="imagen_actual" value="{{ $producto['imagen'] }}">
 
 
-                    <button class="btn btn-primary w-100 mt-3">Actualizar Producto</button>
+                    <button type="submit" class="btn btn-primary w-100 mt-3">Actualizar Producto</button>
                 </form>
             </div>
         </div>

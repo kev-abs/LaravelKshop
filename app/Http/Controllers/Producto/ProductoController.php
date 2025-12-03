@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Producto;
 
 use App\Services\ProductoService;
 use Illuminate\Http\Request;
 
-class ProductoController extends Controller
+class ProductoController
 {
     private $productoService;
 
@@ -56,7 +56,7 @@ class ProductoController extends Controller
             return back()->with("error", $resultado["error"]);
         }
 
-        return redirect()->route("productos.index")->with("success", "Producto agregado");
+       return redirect()->route("productos.index")->with("success", "Producto agregado");
     }
 
     // ================= EDITAR =================
@@ -86,7 +86,6 @@ class ProductoController extends Controller
     $request->imagen_actual,   
     $request->estado
 );
-dd($resultado);
 
     if (!$resultado["success"]) {
         return back()->with("error", $resultado["error"]);

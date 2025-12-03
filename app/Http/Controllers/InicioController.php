@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
-class InicioController extends Controller
+use App\Http\Controllers\Producto\Controller;
+class InicioController 
 {
     public function index()
     {

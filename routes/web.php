@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\InicioController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\Usuario\UsuariosController;
-use App\Http\Controllers\ProductoController;
+use App\Http\Controllers\Producto\ProductoController;
 
 Route::get('/', [InicioController::class, 'index'])->name('inicio');
 
