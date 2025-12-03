@@ -2,10 +2,14 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\DB;
+
+use App\Http\Controllers\EnvioController;
+
 use App\Http\Controllers\InicioController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\Usuario\UsuariosController;
 use App\Http\Controllers\ProductoController;
+
 
 Route::get('/', [InicioController::class, 'index'])->name('inicio');
 
@@ -19,6 +23,19 @@ Route::view('/panel/vendedor', 'Usuario.panel.panelVendedor')->name('panel.vende
 
 Route::get('/productos', [ProductoController::class, 'index'])->name('productos.index');
 Route::get('/productos/catalogo', [ProductoController::class, 'catalogo'])->name('productos.catalogo');
+
+
+Route::get('/ventas', function () {
+    return view('ventas.ventas');
+});
+
+
+Route::get('/envios', [EnvioController::class, 'index'])->name('ventas.envios');
+
+Route::post('/envios', [EnvioController::class, 'store'])->name('envios.store');
+Route::put('/envios/{id}', [EnvioController::class, 'update'])->name('envios.update');
+Route::delete('/envios/{id}', [EnvioController::class, 'destroy'])->name('envios.destroy');
+
 
 Route::get('/productos/agregar', [ProductoController::class, 'create'])->name('productos.create');
 Route::post('/productos/agregar', [ProductoController::class, 'store'])->name('productos.store');
