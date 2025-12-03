@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Services\ProductoService;
 use Illuminate\Http\Request;
 
-class ProductoController extends Controller
+class ProductoController
 {
     private $productoService;
 

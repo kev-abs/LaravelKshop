@@ -4,9 +4,7 @@ namespace App\Http\Controllers\Usuario;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use App\Http\Controllers\Controller; 
-
-class UsuariosController extends Controller
+class UsuariosController
 {
 
     public function index() {
@@ -80,6 +78,15 @@ class UsuariosController extends Controller
         return view('Usuario.cliente.ClienteActualizarEliminarVista', compact('mensaje'));
     }
 
+    public function buscarCliente($id)
+    {
+        $cliente = DB::table('cliente')
+            ->where('ID_Cliente', $id)
+            ->first();
+
+        return response()->json($cliente);
+    }
+
     // -------- EMPLEADOS --------
 
     public function consultarEmpleados()
@@ -147,4 +154,10 @@ class UsuariosController extends Controller
 
         return view('Usuario.Empleado.EmpleadoActualizarEliminarVista', compact('mensaje'));
     }
+    public function buscarEmpleado($id)
+    {
+        $empleado = DB::table('empleado')->where('ID_Empleado', $id)->first();
+        return response()->json($empleado);
+    }
+
 }

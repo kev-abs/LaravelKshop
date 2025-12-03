@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>K-SHOP - Consultar Clientes</title>
+    <title>K-SHOP - Consultar Empleados</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
 </head>
@@ -11,33 +11,33 @@
 
 <header class="bg-white sticky-top py-3 border-bottom shadow-sm">
     <div class="container d-flex justify-content-between align-items-center">
-        <div class="d-flex align-items-center" href="/ModeloVistaControlador/index.php?Controller=panel&action=manejarPeticion">
-            <img src="{{ asset('img/logo_kshopsinfondo.png') }}" alt="Logo K-Shop" width="83" class="me-2">
+        <div class="d-flex align-items-center">
+            <img src="{{asset('img/logo_kshopsinfondo.png')}}" alt="Logo K-Shop" width="83" class="me-2">
             <span class="fw-bold text-dark">K-SHOP | Admin</span>
         </div>
         <nav>
-            <a href="Inicio/Controlador/Logueo/CerrarSesion.php" class="btn btn-outline-dark">Cerrar Sesión</a>
+            <a href="{{route('logout')}}" class="btn btn-outline-dark">Cerrar Sesión</a>
         </nav>
     </div>
 </header>
 
 <main class="container my-5">
+
     <!-- Título y descripción -->
     <div class="text-center mb-5">
-        <h2 class="fw-bold mb-2">Listado de Clientes</h2>
+        <h2 class="fw-bold mb-2">Consulta de Empleados</h2>
         <p class="text-muted">
-            Consulta todos los clientes registrados en K-SHOP de manera clara y organizada. 
-            Mantén la información actualizada para mejorar la gestión de ventas y la relación con tus clientes.
+            Visualiza y analiza toda la información de tu equipo. Mantén un registro actualizado para mejorar la coordinación y la eficiencia en la tienda.
         </p>
     </div>
 
     <?= $mensaje ?? "" ?>
 
-    @if($clientes->count() > 0)
+    @if($empleados->count() > 0)
         <div class="card shadow-sm border-0 rounded-3">
             <div class="card-header bg-dark text-white text-center rounded-top py-2">
                 <h5 class="mb-0">
-                    <i class="bi bi-people-fill me-2"></i>Clientes Registrados
+                    <i class="bi bi-people-fill me-2"></i>Empleados Registrados
                 </h5>
             </div>
 
@@ -48,42 +48,41 @@
                             <tr>
                                 <th>ID</th>
                                 <th class="text-start ps-3">Nombre</th>
+                                <th>Cargo</th>
                                 <th>Correo</th>
                                 <th>Contraseña</th>
-                                <th>Documento</th>
-                                <th>Teléfono</th>
                                 <th>Estado</th>
-                                <th>Fecha Registro</th>
+                                <th>Fecha Contratación</th>
                                 <th>Acciones</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($clientes as $c)
+                            @foreach($empleados as $e)
                                 <tr>
-                                    <td>{{ $c->ID_Cliente }}</td>
-                                    <td class="text-start ps-3">{{ $c->Nombre }}</td>
-                                    <td>{{ $c->Correo }}</td>
-                                    <td>{{ $c->Contrasena }}</td>
-                                    <td>{{ $c->Documento }}</td>
-                                    <td>{{ $c->Telefono }}</td>
+                                    <td>{{ $e->ID_Empleado }}</td>
+                                    <td class="text-start ps-3">{{ $e->Nombre }}</td>
+                                    <td>{{ $e->Cargo }}</td>
+                                    <td>{{ $e->Correo }}</td>
+                                    <td>{{ $e->Contrasena }}</td>
 
                                     <td>
-                                        @if($c->Estado === 'Activo')
-                                        <span class="badge bg-success">{{ $c->Estado }}</span>
-                                        @elseif($c->Estado === 'Inactivo')
-                                        <span class="badge bg-secondary">{{ $c->Estado }}</span>
+                                        @if($e->Estado === 'Activo')
+                                            <span class="badge bg-success">{{ $e->Estado }}</span>
+                                        @elseif($e->Estado === 'Inactivo')
+                                            <span class="badge bg-secondary">{{ $e->Estado }}</span>
                                         @else
-                                        <span class="badge bg-warning text-dark">{{ $c->Estado }}</span>
+                                            <span class="badge bg-warning text-dark">{{ $e->Estado }}</span>
                                         @endif
                                     </td>
 
-                                    <td>{{ $c->Fecha_Registro }}</td>
+                                    <td>{{ $e->Fecha_Contratacion }}</td>
 
                                     <td>
-                                        <a href="{{ route('clientes.editar') }}" class="btn btn-sm btn-outline-dark">
+                                        <a href="{{ route('empleados.editar', $e->ID_Empleado) }}" class="btn btn-sm btn-outline-dark">
                                             <i class="bi bi-pencil-square"></i>
                                         </a>
                                     </td>
+
                                 </tr>
                             @endforeach
                         </tbody>
@@ -92,21 +91,20 @@
                 </div>
             </div>
         </div>
+
     @else
         <div class="alert alert-warning text-center mt-4 shadow-sm">
-            No hay clientes registrados aún. ¡Agrega nuevos clientes para comenzar a gestionar!
+            No hay empleados registrados aún.
         </div>
     @endif
 
-
     <!-- Botón Volver -->
     <div class="text-center mt-5">
-        <a href="{{ route('usuariosVista') }}" class="btn btn-outline-secondary btn-lg w-50">
+        <a href="{{route('usuariosVista')}}" class="btn btn-outline-secondary btn-lg w-50">
             <i class="bi bi-arrow-left me-2"></i>Volver
         </a>
     </div>
 </main>
-
 
 
 <footer class="bg-dark text-white text-center py-4 mt-auto">

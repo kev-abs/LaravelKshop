@@ -15,8 +15,8 @@
     <!-- NAVBAR -->
     <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom shadow-sm sticky-top">
     <div class="container">
-        <a class="navbar-brand fw-bold" href="/ModeloVistaControlador/index.php?Controller=panel&action=manejarPeticion">
-        <img src="/ModeloVistaControlador/Inicio/Public/Imagenes/logo_kshopsinfondo.png" alt="K-Shop" width="60" class="me-2">
+        <a class="navbar-brand fw-bold" href="{{ route('panel.admin') }}">
+        <img src="{{ asset('img/logo_kshopsinfondo.png') }}" alt="K-Shop" width="60" class="me-2">
         K-SHOP | Admin
         </a>
 
