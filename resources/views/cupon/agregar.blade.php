@@ -28,13 +28,13 @@
       <div class="alert alert-info text-center">{{ session('mensaje') }}</div>
   @endif
 
-  <form method="POST" action="{{ route('cupon.guardar') }}" class="text-center">
+  <form method="POST" action="{{ route('cupon.agregar') }}" class="text-center">
     @csrf
 
     <div class="row mb-3 justify-content-center">
 
       <div class="col-md-3">
-        <label class="form-label">Código</label>
+        <label class="form-label">Codigo</label>
         <input type="text" class="form-control text-center" name="codigo" required>
       </div>
 
