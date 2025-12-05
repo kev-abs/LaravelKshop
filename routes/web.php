@@ -33,13 +33,6 @@ Route::get('/logout', function () {
 })->name('logout');
 
 Route::get('/tienda', [ProductoController::class, 'catalogo'])->name('tienda.catalogo');
-Route::get('/tienda/categoria/{id}', [ClienteController::class, 'productosCategoria'])
-    ->name('cliente.categoria');
-
-    Route::get('/cliente/panel', [ClienteController::class, 'panel'])
-    ->name('cliente.panel');
-
-
 
 Route::get('/usuarioVista', [UsuariosController::class,'index'])->name('usuariosVista');
 

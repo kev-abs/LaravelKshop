@@ -23,33 +23,6 @@ class ProductoService
         return ["success" => true, "data" => $response->json()];
     }
 
-    /*GET - Obtener todas las categorías*/
-public function obtenerCategorias()
-{
-    $url = "{$this->apiUrl}/categorias";
-
-    $response = Http::withToken($this->jwtToken)->get($url);
-
-    if ($response->failed()) {
-        return ["success" => false, "error" => "No se pudieron cargar las categorías"];
-    }
-
-    return ["success" => true, "data" => $response->json()];
-}
-
-/*GET - Obtener productos por categoría*/
-public function productosPorCategoria($idCategoria)
-{
-    $url = "{$this->apiUrl}/productos/categoria/{$idCategoria}";
-
-    $response = Http::withToken($this->jwtToken)->get($url);
-
-    if ($response->failed()) {
-        return ["success" => false, "error" => "No se pudieron cargar los productos"];
-    }
-
-    return ["success" => true, "data" => $response->json()];
-}
 
     /*GET - Obtener todos los productos */
     public function obtenerProductos()
