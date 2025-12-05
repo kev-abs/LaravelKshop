@@ -10,9 +10,7 @@ class ProductoService
     private $jwtToken = "";
 
 
-    /* -------------------------------------------
-       GET - Obtener producto por ID
-    -------------------------------------------- */
+    /*GET - Obtener producto por ID*/
     public function obtenerProductoPorId($id)
     {
         $response = Http::withToken($this->jwtToken)
@@ -25,10 +23,35 @@ class ProductoService
         return ["success" => true, "data" => $response->json()];
     }
 
+    /*GET - Obtener todas las categorías*/
+public function obtenerCategorias()
+{
+    $url = "{$this->apiUrl}/categorias";
 
-    /* -------------------------------------------
-       GET - Obtener todos los productos
-    -------------------------------------------- */
+    $response = Http::withToken($this->jwtToken)->get($url);
+
+    if ($response->failed()) {
+        return ["success" => false, "error" => "No se pudieron cargar las categorías"];
+    }
+
+    return ["success" => true, "data" => $response->json()];
+}
+
+/*GET - Obtener productos por categoría*/
+public function productosPorCategoria($idCategoria)
+{
+    $url = "{$this->apiUrl}/productos/categoria/{$idCategoria}";
+
+    $response = Http::withToken($this->jwtToken)->get($url);
+
+    if ($response->failed()) {
+        return ["success" => false, "error" => "No se pudieron cargar los productos"];
+    }
+
+    return ["success" => true, "data" => $response->json()];
+}
+
+    /*GET - Obtener todos los productos */
     public function obtenerProductos()
     {
         $response = Http::withToken($this->jwtToken)
@@ -57,9 +80,7 @@ class ProductoService
     }
 
 
-    /* -------------------------------------------
-       POST - Agregar producto
-    -------------------------------------------- */
+    /*POST - Agregar producto */
     public function agregarProducto($nombre, $descripcion, $precio, $stock, $idProveedor, $imagen = null, $estado = null)
 {
     // Iniciamos request como multipart
@@ -94,9 +115,7 @@ class ProductoService
 
 
 
-    /* -------------------------------------------
-       PUT - Actualizar producto
-    -------------------------------------------- */
+    /*PUT - Actualizar producto*/
     public function actualizarProductos(
     $id,
     $nombre,
@@ -152,4 +171,17 @@ class ProductoService
 
     return ["success" => true, "data" => $json ?? $response->body()];
 }
+public function eliminarProducto($id)
+{
+    $url = "{$this->apiUrl}/eliminar/{$id}";
+
+    $response = Http::withToken($this->jwtToken)->delete($url);
+
+    if ($response->failed()) {
+        return ["success" => false, "error" => "Error al eliminar"];
+    }
+
+    return ["success" => true];
+}
+
 }

@@ -110,6 +110,57 @@ class Cliente
 
   <!-- Productos recomendados -->
   <h4 class="text-center mt-5 mb-4">Productos que podrían interesarte</h4>
+  @extends('layouts.app')
+
+@section('content')
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Bienvenido a tu Panel de Cliente</h2>
+
+    <!-- Filtrar por categoría -->
+    <div class="mb-4 text-center">
+        <select id="filtroCategoria" class="form-select w-50 mx-auto">
+            <option value="todas">Todas las categorías</option>
+            @foreach($categoria as $cat)
+                <option value="{{ $cat['id'] }}">{{ $cat['nombre'] }}</option>
+            @endforeach
+        </select>
+    </div>
+
+    <!-- Productos -->
+    <div class="row" id="productosContainer">
+        @foreach($productos as $p)
+            <div class="col-md-3 mb-4 producto-item" data-categoria="{{ $p['id_Proveedor'] }}">
+                <div class="card shadow-sm product-card">
+                    <img src="http://localhost/api/uploads/productos/{{ $p['imagen'] }}" class="card-img-top" alt="{{ $p['nombre'] }}">
+                    <div class="card-body d-flex flex-column text-center">
+                        <h5 class="card-title">{{ $p['nombre'] }}</h5>
+                        <p class="card-text">{{ $p['descripcion'] }}</p>
+                        <p class="fw-bold">$ {{ number_format($p['precio']) }}</p>
+                        <a href="#" class="btn btn-primary mt-auto">Ver producto</a>
+                    </div>
+                </div>
+            </div>
+        @endforeach
+    </div>
+</div>
+
+<script>
+    // Filtrado por categoría
+    const selectCat = document.getElementById('filtroCategoria');
+    const productos = document.querySelectorAll('.producto-item');
+
+    selectCat.addEventListener('change', () => {
+        const cat = selectCat.value;
+        productos.forEach(p => {
+            if(cat === 'todas' || p.dataset.categoria === cat) {
+                p.style.display = 'block';
+            } else {
+                p.style.display = 'none';
+            }
+        });
+    });
+</script>
+@endsection
 
 </div>
   <footer class="bg-dark text-white text-center py-4 mt-auto">

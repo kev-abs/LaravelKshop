@@ -98,9 +98,16 @@
                                 <td>{{ $p['estado'] }}</td>
 
                                 <td>
-                                    <a href="{{ route('productos.edit', $p['id_Producto']) }}" class="btn btn-sm btn-dark">
-                                        <i class="bi bi-pencil-square"></i>
-                                    </a>
+                                    <a href="{{ route('productos.edit', $p['id_Producto']) }}" 
+                                    class="btn btn-warning btn-sm"> Editar</a>
+                                    <form action="{{ route('productos.destroy', $p['id_Producto']) }}"
+                                    method="POST"
+                                    style="display:inline-block;"
+                                    onsubmit="return confirm('¿Estás seguro de que deseas ELIMINAR este producto? Esta acción no se puede deshacer');">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+                                </form>
                                 </td>
                             </tr>
                         @endforeach

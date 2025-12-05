@@ -26,13 +26,14 @@ class ProductoController
 
     // ================= LISTAR PARA CLIENTE =================
     public function catalogo()
-    {
-        $resultado = $this->productoService->obtenerProductos();
+{
+    $resultadoProductos = $this->productoService->obtenerProductos();
 
-        $productos = $resultado["success"] ? $resultado["data"] : [];
+    $productos = $resultadoProductos["success"] ? $resultadoProductos["data"] : [];
 
-        return view("productos.nuestrosproductos", compact("productos"));
-    }
+    return view("productos.nuestrosproductos", compact("productos"));
+}
+
 
     // ================= AGREGAR =================
     public function create()
@@ -93,4 +94,15 @@ class ProductoController
 
     return redirect()->route("productos.index")->with("success", "Producto actualizado");
 }
+public function destroy($id)
+{
+    $resultado = $this->productoService->eliminarProducto($id);
+
+    if (!$resultado['success']) {
+        return back()->with("error", "No se pudo eliminar el producto");
+    }
+
+    return redirect()->route("productos.index")->with("success", "Producto eliminado correctamente");
+}
+
 }
