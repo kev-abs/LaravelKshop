@@ -30,7 +30,7 @@ class Administrador
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
 
 </head>
-<body>
+<body class="d-flex flex-column min-vh-100">
 
 <!-- ENCABEZADO PANEL ADMIN -->
 <header class="bg-white sticky-top py-3 border-bottom shadow-sm">
@@ -94,12 +94,12 @@ class Administrador
         <div id="modUsuarios" class="accordion-collapse collapse" data-bs-parent="#accordionModulos">
           <div class="accordion-body">
             <ul class="list-unstyled">
-              <li><a href="/ModeloVistaControlador/index.php?Controller=usuarios&action=consultarEmpleados" class="text-white text-decoration-none">➤ Consultar Empleados </a></li>
-              <li><a href="/ModeloVistaControlador/index.php?Controller=usuarios&action=agregarEmpleado" class="text-white text-decoration-none">➤ Registrar Empleados</a></li>
-              <li><a href="/ModeloVistaControlador/index.php?Controller=usuarios&action=editarEliminarEmpleado" class="text-white text-decoration-none">➤ Actualizar o Eliminar empleados</a></li>
-              <li><a href="/ModeloVistaControlador/index.php?Controller=usuarios&action=consultarClientes" class="text-white text-decoration-none">➤ Consultar Clientes</a></li>
-              <li><a href="/ModeloVistaControlador/index.php?Controller=usuarios&action=agregarCliente" class="text-white text-decoration-none">➤ Agregar Cliente</a></li>
-              <li><a href="/ModeloVistaControlador/index.php?Controller=usuarios&action=editarEliminarCliente" class="text-white text-decoration-none">➤ Actualizar o Eliminar Cliente</a></li>
+              <li><a href="{{ route('empleados.consultar') }}" class="text-white text-decoration-none">➤ Consultar Empleados </a></li>
+              <li><a href="{{ route('empleados.agregar') }}" class="text-white text-decoration-none">➤ Registrar Empleados</a></li>
+              <li><a href="{{ route('empleados.editar') }}" class="text-white text-decoration-none">➤ Actualizar o Eliminar empleados</a></li>
+              <li><a href="{{ route('clientes.consultar') }}" class="text-white text-decoration-none">➤ Consultar Clientes</a></li>
+              <li><a href="{{ route('clientes.agregar') }}" class="text-white text-decoration-none">➤ Agregar Cliente</a></li>
+              <li><a href="{{ route('clientes.editar') }}" class="text-white text-decoration-none">➤ Actualizar o Eliminar Cliente</a></li>
             </ul>
           </div>
         </div>

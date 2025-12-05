@@ -38,7 +38,6 @@ class ClienteService {
             return $clientes;
         }
         
-
     public function agregarCliente($nombre, $correo, $contrasena, $documento, $telefono, $estado) {
 
         $hash = password_hash($contrasena, PASSWORD_BCRYPT);
