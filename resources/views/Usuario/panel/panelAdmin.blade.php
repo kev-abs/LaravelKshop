@@ -234,7 +234,7 @@ class Administrador
 
         <!-- Card Inventario -->
         <div class="col-md-6 col-lg-3">
-          <a href="/ModeloVistaControlador/index.php?Controller=inventario" class="text-decoration-none">
+          <a href="{{ route('cupon.inventarioVista') }}" class="text-decoration-none">
             <div class="card h-100 shadow-sm border-0">
               <div class="card-body text-center">
                 <i class="bi bi-box-seam fs-1 text-warning mb-3"></i>

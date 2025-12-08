@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CuponController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\DB;
 
@@ -11,9 +12,13 @@ use App\Http\Controllers\Usuario\UsuariosController;
 use App\Http\Controllers\Producto\ProductoController;
 use App\Http\Controllers\Usuario\ClienteController;
 
-Route::get('/panel/cliente', [ProductoController::class, 'panelCliente'])
-    ->middleware('cliente')
-    ->name('cliente.panel');
+
+Route::get('/cupon', [CuponController::class, 'index'])->name('cupon.inventarioVista');
+Route::get('/cupon/consultar', [CuponController::class, 'consultar'])->name('cupon.index');
+
+Route::match(['get', 'post'],'/cupon/guardar', [CuponController::class, 'store'])->name('cupon.agregar');
+
+Route::post('/cupon/editar', [CuponController::class, 'update'])->name('cupon.editar');
 
 Route::get('/', [InicioController::class, 'index'])->name('inicio');
 
@@ -67,3 +72,5 @@ Route::get('/usuarios/clientes/buscar/{id}', [UsuariosController::class, 'buscar
 Route::get('/usuarios/empleados', [UsuariosController::class, 'consultarEmpleados'])->name('empleados.consultar');
 Route::match(['get','post'], '/usuarios/empleados/agregar', [UsuariosController::class, 'agregarEmpleado'])->name('empleados.agregar');
 Route::match(['get','post'], '/usuarios/empleados/editar', [UsuariosController::class, 'editarEliminarEmpleado'])->name('empleados.editar');
+Route::get('/usuarios/empleados/buscar/{id}', [UsuariosController::class, 'buscarEmpleado']);
+
