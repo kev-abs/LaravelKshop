@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Producto;
 
 use App\Services\ProductoService;
 use Illuminate\Http\Request;
@@ -14,6 +14,25 @@ class ProductoController
         $this->productoService = $productoService;
     }
 
+    public function panelCliente()
+{
+    $resultado = $this->productoService->obtenerProductos();
+
+    if (!$resultado['success']) {
+        $productos = [];
+    } else {
+        // Convertir a colección, mezclar y tomar 3
+        $productos = collect($resultado['data'])
+                        ->shuffle()
+                        ->take(3);
+    }
+
+    return view('Usuario.panel.panelCliente', compact('productos'));
+}
+
+
+
+
     // ================= LISTAR =================
     public function index()
     {
@@ -26,13 +45,14 @@ class ProductoController
 
     // ================= LISTAR PARA CLIENTE =================
     public function catalogo()
-    {
-        $resultado = $this->productoService->obtenerProductos();
+{
+    $resultadoProductos = $this->productoService->obtenerProductos();
 
-        $productos = $resultado["success"] ? $resultado["data"] : [];
+    $productos = $resultadoProductos["success"] ? $resultadoProductos["data"] : [];
 
-        return view("productos.nuestrosproductos", compact("productos"));
-    }
+    return view("productos.nuestrosproductos", compact("productos"));
+}
+
 
     // ================= AGREGAR =================
     public function create()
@@ -56,7 +76,7 @@ class ProductoController
             return back()->with("error", $resultado["error"]);
         }
 
-        return redirect()->route("productos.index")->with("success", "Producto agregado");
+       return redirect()->route("productos.index")->with("success", "Producto agregado");
     }
 
     // ================= EDITAR =================
@@ -74,22 +94,34 @@ class ProductoController
     }
 
     public function update(Request $request, $id)
-    {
-        $resultado = $this->productoService->actualizarProductos(
-            $id,
-            $request->nombre,
-            $request->descripcion,
-            $request->precio,
-            $request->stock,
-            $request->id_Proveedor,
-            $request->file("imagen"),
-            $request->estado
-        );
+{
+    $resultado = $this->productoService->actualizarProductos(
+    $id,
+    $request->nombre,
+    $request->descripcion,
+    $request->precio,
+    $request->stock,
+    $request->idProveedor,
+    $request->file("imagen"),
+    $request->imagen_actual,   
+    $request->estado
+);
 
-        if (!$resultado["success"]) {
-            return back()->with("error", $resultado["error"]);
-        }
-
-        return redirect()->route("productos.index")->with("success", "Producto actualizado");
+    if (!$resultado["success"]) {
+        return back()->with("error", $resultado["error"]);
     }
+
+    return redirect()->route("productos.index")->with("success", "Producto actualizado");
+}
+public function destroy($id)
+{
+    $resultado = $this->productoService->eliminarProducto($id);
+
+    if (!$resultado['success']) {
+        return back()->with("error", "No se pudo eliminar el producto");
+    }
+
+    return redirect()->route("productos.index")->with("success", "Producto eliminado correctamente");
+}
+
 }

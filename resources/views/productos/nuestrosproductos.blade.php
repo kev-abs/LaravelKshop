@@ -50,7 +50,7 @@
 
     <!-- LOGO -->
     <div class="d-flex align-items-center">
-      <img src="/ModeloVistaControlador/Inicio/Public/Imagenes/logo_kshopsinfondo.png" alt="Logo K-Shop" width="83" height="" class="me-2">
+      <img src="{{ asset('img/logo_kshopsinfondo.png') }}" alt="Logo K-Shop" width="83" class="me-2">
       <a href="/ModeloVistaControlador/index.php?Controller=inicio" class="text-decoration-none fs-7 fw-bold text-dark">K-SHOP</a>
     </div>
 
@@ -61,7 +61,7 @@
 
     <!-- MENÚ NAVEGACIÓN -->
     <nav class="d-flex align-items-center gap-3">
-      <a href="index.php?Controller=productos&action=verProductos" class="nav-link text-dark">Productos</a>
+      <a href="{{ route('productos.catalogo') }}" class="nav-link text-dark">Productos</a>
       <a href="./servicios.php" class="nav-link text-dark">Servicios</a>
       <!-- CARRITO -->
       <a href="index.php?Controller=carrito&action=mostrar" class="btn btn-outline-dark border-0">
@@ -69,13 +69,12 @@
       </a>
 
       <!-- INICIAR SESIÓN -->
-      <a href="index.php?Controller=login" class="btn btn-outline-dark border-0 text-dark">
+      <a href="{{ route('login') }}" class="btn btn-outline-dark border-0 text-dark">
         <i class="bi bi-person-circle me-1"></i>Iniciar Sesión
       </a>
     </nav>
   </div>
 </header>
-</head>
 
 <?php if (!empty($productos) && is_array($productos)): ?>
 <div class="container my-5">
@@ -115,7 +114,7 @@
 <?php endif; ?>
 
 <div class="container my-4 text-center">
-    <a href="index.php" class="btn btn-outline-secondary btn-lg btn-hover">
+    <a href="{{ route('inicio') }}" class="btn btn-outline-secondary btn-lg btn-hover">
         <i class="bi bi-arrow-left me-2"></i>Volver al inicio
     </a>
 </div>
