@@ -47,7 +47,7 @@ class Cliente
     }
     .nav-link:hover {
       color: #ffffff !important;
-      background-color: #0d6efd;
+      background-color: #000000ff;
       border-radius: 0.375rem;
     }
     .nav-link.text-warning:hover {
@@ -72,7 +72,7 @@ class Cliente
 
     <!-- LOGO -->
     <div class="d-flex align-items-center">
-      <img src="../Imagenes/logo_kshopsinfondo.png" alt="Logo K-Shop" width="83" height="" class="me-2">
+      <img src="{{ asset('img/logo_kshopsinfondo.png') }}" alt="Logo K-Shop" width="83" class="me-2">
       <a class="text-decoration-none fs-7 fw-bold text-dark">K-SHOP</a>
     </div>
 
@@ -108,8 +108,55 @@ class Cliente
 <div class="container mt-5">
   <h2 class="text-center mb-4">Bienvenido a tu Panel de Cliente</h2>
 
-  <!-- Productos recomendados -->
   <h4 class="text-center mt-5 mb-4">Productos que podrían interesarte</h4>
+
+<div class="container">
+  <div class="row justify-content-center">
+
+    @forelse ($productos ?? [] as $p)
+        <div class="col-6 col-md-4 col-lg-3 mb-4">
+            <div class="card h-100 shadow-sm">
+                
+                <!-- Imagen -->
+               <img 
+    src="http://localhost/api/uploads/productos/{{ $p['imagen'] }}"
+    class="card-img-top"
+    style="height: 180px; object-fit: cover;"
+    alt="{{ $p['nombre'] }}"
+>
+
+
+                <!-- Info -->
+                <div class="card-body text-center">
+                    <h6 class="card-title mb-2">
+                        {{ $p['nombre'] }}
+                    </h6>
+
+                    <p class="fw-bold mb-3">
+                        $ {{ number_format($p['precio'], 0, ',', '.') }}
+                    </p>
+
+                    <a href="{{ route('productos.catalogo') }}" class="btn btn-outline-dark btn-sm">
+                        Ver producto
+                    </a>
+                </div>
+            </div>
+        </div>
+    @empty
+        <p class="text-center text-muted">
+            No hay productos para mostrar
+        </p>
+    @endforelse
+
+  </div>
+</div>
+
+<div class="text-center mt-4">
+    <a href="{{ route('productos.catalogo') }}" class="btn btn-dark px-4">
+        Ver todos los productos
+    </a>
+</div>
+
 
 </div>
   <footer class="bg-dark text-white text-center py-4 mt-auto">
