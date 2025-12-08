@@ -14,6 +14,25 @@ class ProductoController
         $this->productoService = $productoService;
     }
 
+    public function panelCliente()
+{
+    $resultado = $this->productoService->obtenerProductos();
+
+    if (!$resultado['success']) {
+        $productos = [];
+    } else {
+        // Convertir a colección, mezclar y tomar 3
+        $productos = collect($resultado['data'])
+                        ->shuffle()
+                        ->take(3);
+    }
+
+    return view('Usuario.panel.panelCliente', compact('productos'));
+}
+
+
+
+
     // ================= LISTAR =================
     public function index()
     {

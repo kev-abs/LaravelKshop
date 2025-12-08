@@ -9,7 +9,11 @@ use App\Http\Controllers\InicioController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\Usuario\UsuariosController;
 use App\Http\Controllers\Producto\ProductoController;
-use App\Http\Controllers\ClienteController;
+use App\Http\Controllers\Usuario\ClienteController;
+
+Route::get('/panel/cliente', [ProductoController::class, 'panelCliente'])
+    ->middleware('cliente')
+    ->name('cliente.panel');
 
 Route::get('/', [InicioController::class, 'index'])->name('inicio');
 
@@ -18,7 +22,10 @@ Route::get('/login', [LoginController::class, 'mostrarFormulario'])->name('login
 Route::post('/login', [LoginController::class, 'manejarPeticion'])->name('login.procesar');
 
 Route::view('/panel/admin', 'Usuario.panel.panelAdmin')->name('panel.admin');
-Route::view('/panel/cliente', 'Usuario.cliente.panelCliente')->name('panel.cliente');
+
+Route::get('/panel/cliente', [ProductoController::class, 'panelCliente'])
+    ->name('panel.cliente');
+
 Route::view('/panel/vendedor', 'Usuario.panel.panelVendedor')->name('panel.vendedor');
 
 Route::get('/productos', [ProductoController::class, 'index'])->name('productos.index');

@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Services\EnvioService;
 use Illuminate\Http\Request;
 
-class EnvioController extends Controller
+class EnvioController 
 {
     private $service;
 
