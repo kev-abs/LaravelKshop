@@ -10,9 +10,7 @@ class ProductoService
     private $jwtToken = "";
 
 
-    /* -------------------------------------------
-       GET - Obtener producto por ID
-    -------------------------------------------- */
+    /*GET - Obtener producto por ID*/
     public function obtenerProductoPorId($id)
     {
         $response = Http::withToken($this->jwtToken)
@@ -26,9 +24,7 @@ class ProductoService
     }
 
 
-    /* -------------------------------------------
-       GET - Obtener todos los productos
-    -------------------------------------------- */
+    /*GET - Obtener todos los productos */
     public function obtenerProductos()
     {
         $response = Http::withToken($this->jwtToken)
@@ -57,69 +53,108 @@ class ProductoService
     }
 
 
-    /* -------------------------------------------
-       POST - Agregar producto
-    -------------------------------------------- */
+    /*POST - Agregar producto */
     public function agregarProducto($nombre, $descripcion, $precio, $stock, $idProveedor, $imagen = null, $estado = null)
-    {
-        $datos = [
-            "nombre"      => $nombre,
-            "descripcion" => $descripcion,
-            "precio"      => $precio,
-            "stock"       => $stock,
-            "idProveedor" => $idProveedor,
-            "estado"      => $estado
-        ];
+{
+    // Iniciamos request como multipart
+    $request = Http::withToken($this->jwtToken)->asMultipart();
 
-        // Si envían imagen, se adjunta
-        if ($imagen) {
-            $datos["imagen"] = fopen($imagen->getRealPath(), 'r');
-        }
+    // Adjuntar datos (SIEMPRE van como strings)
+    $request = $request->attach('nombre', $nombre);
+    $request = $request->attach('descripcion', $descripcion);
+    $request = $request->attach('precio', $precio);
+    $request = $request->attach('stock', $stock);
+    $request = $request->attach('idProveedor', $idProveedor);
+    $request = $request->attach('estado', $estado);
 
-        $response = Http::withToken($this->jwtToken)
-            ->attach('imagen', $imagen ? fopen($imagen->getRealPath(), 'r') : null)
-            ->post("{$this->apiUrl}/insertar", $datos);
-
-        if ($response->failed()) {
-            return ["success" => false, "error" => "Error al agregar producto"];
-        }
-
-        return ["success" => true, "data" => $response->json()];
+    // Adjuntar imagen solo si viene
+    if ($imagen) {
+        $request = $request->attach(
+            'imagen',
+            file_get_contents($imagen->getRealPath()),
+            $imagen->getClientOriginalName()
+        );
     }
 
+    // Enviar request
+    $response = $request->post("{$this->apiUrl}/insertar");
 
-    /* -------------------------------------------
-       PUT - Actualizar producto
-    -------------------------------------------- */
-    public function actualizarProductos($id, $nombre, $descripcion, $precio, $stock, $idProveedor, $imagen, $estado)
-    {
-        $datos = [
-            "nombre"      => $nombre,
-            "descripcion" => $descripcion,
-            "precio"      => $precio,
-            "stock"       => $stock,
-            "idProveedor" => $idProveedor,
-            "estado"      => $estado
-        ];
-
-        $url = "{$this->apiUrl}/actualizar/{$id}";
-
-        $request = Http::withToken($this->jwtToken);
-
-        if ($imagen) {
-            $request = $request->attach(
-                'imagen',
-                fopen($imagen->getRealPath(), 'r'),
-                $imagen->getClientOriginalName()
-            );
-        }
-
-        $response = $request->put($url, $datos);
-
-        if ($response->failed()) {
-            return ["success" => false, "error" => "Error al actualizar"];
-        }
-
-        return ["success" => true, "data" => $response->json()];
+    if ($response->failed()) {
+        return ["success" => false, "error" => "Error al agregar producto"];
     }
+
+    return ["success" => true, "data" => $response->json()];
+}
+
+
+
+    /*PUT - Actualizar producto*/
+    public function actualizarProductos(
+    $id,
+    $nombre,
+    $descripcion,
+    $precio,
+    $stock,
+    $idProveedor,
+    $imagen,
+    $imagenActual,
+    $estado
+) {
+    $url = "{$this->apiUrl}/actualizar/{$id}";
+
+    // construir multipart para Guzzle
+    $multipart = [
+        ['name' => 'nombre', 'contents' => (string) $nombre],
+        ['name' => 'descripcion', 'contents' => (string) $descripcion],
+        ['name' => 'precio', 'contents' => (string) $precio],
+        ['name' => 'stock', 'contents' => (string) $stock],
+        ['name' => 'idProveedor', 'contents' => (string) $idProveedor], // coincide con @RequestParam("idProveedor")
+        ['name' => 'estado', 'contents' => (string) $estado],
+        ['name' => 'imagen_actual', 'contents' => (string) $imagenActual],
+    ];
+
+    if ($imagen) {
+        // agregar archivo como resource
+        $multipart[] = [
+            'name'     => 'imagen',
+            'contents' => fopen($imagen->getRealPath(), 'r'),
+            'filename' => $imagen->getClientOriginalName(),
+        ];
+    }
+
+    // Enviar PUT real con multipart
+    $response = Http::withToken($this->jwtToken)
+        ->withOptions(['multipart' => $multipart])
+        ->send('PUT', $url);
+
+    // Depuración / manejo de errores más útil
+    if ($response->failed()) {
+        // Devuelve el status y body para que puedas ver el porqué la API rechazó
+        $status = $response->status();
+        $body = $response->body();
+        return ["success" => false, "error" => "Error al actualizar: HTTP {$status} - {$body}"];
+    }
+
+    // Si la API responde OK con JSON
+    try {
+        $json = $response->json();
+    } catch (\Throwable $e) {
+        $json = null;
+    }
+
+    return ["success" => true, "data" => $json ?? $response->body()];
+}
+public function eliminarProducto($id)
+{
+    $url = "{$this->apiUrl}/eliminar/{$id}";
+
+    $response = Http::withToken($this->jwtToken)->delete($url);
+
+    if ($response->failed()) {
+        return ["success" => false, "error" => "Error al eliminar"];
+    }
+
+    return ["success" => true];
+}
+
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Producto\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -42,7 +43,7 @@ class LoginController
         if ($empleado) {
             $cargo = strtolower(trim($empleado->Cargo));
 
-            // vendedor (contraseña cifrada)
+            // vendedor 
             if ($cargo === "vendedor") {
                 if (Hash::check($contrasena, $empleado->Contrasena)) {
 
@@ -54,9 +55,9 @@ class LoginController
                 }
             }
 
-            // administrador (texto plano)
+        
             if ($cargo === "administrador") {
-                if ($contrasena === $empleado->Contrasena) {
+                if (Hash::check($contrasena, $empleado->Contrasena)) {
 
                     Session::put('id_empleado', $empleado->ID_Empleado);
                     Session::put('nombre', $empleado->Nombre);

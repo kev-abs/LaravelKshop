@@ -116,9 +116,8 @@ class Administrador
         <div id="modProductos" class="accordion-collapse collapse" data-bs-parent="#accordionModulos">
           <div class="accordion-body">
             <ul class="list-unstyled">
-              <li><a href="/ModeloVistaControlador/index.php?Controller=producto" class="text-white text-decoration-none">➤ Consultar Productos</a></li>
-              <li><a href="/ModeloVistaControlador/index.php?Controller=producto&action=actualizarProducto" class="text-white text-decoration-none">➤ Actualizar Producto</a></li>
-              <li><a href="/ModeloVistaControlador/index.php?Controller=producto&action=agregarProducto" class="text-white text-decoration-none">➤ Agregar Producto</a></li>
+              <li><a href="{{ route('productos.index') }}" class="text-white text-decoration-none">➤ Consultar Productos</a></li>
+              <li><a href="{{ route('productos.create') }}" class="text-white text-decoration-none">➤ Agregar Producto</a></li>
             </ul>
           </div>
         </div>
@@ -222,7 +221,7 @@ class Administrador
 
         <!-- Card Productos -->
         <div class="col-md-6 col-lg-3">
-          <a href="/ModeloVistaControlador/index.php?Controller=producto" class="text-decoration-none">
+          <a href="{{ route('productos.index') }}" class="text-decoration-none">
             <div class="card h-100 shadow-sm border-0">
               <div class="card-body text-center">
                 <i class="bi bi-bag-check fs-1 text-success mb-3"></i>
@@ -235,7 +234,7 @@ class Administrador
 
         <!-- Card Inventario -->
         <div class="col-md-6 col-lg-3">
-          <a href="/ModeloVistaControlador/index.php?Controller=inventario" class="text-decoration-none">
+          <a href="{{ route('cupon.inventarioVista') }}" class="text-decoration-none">
             <div class="card h-100 shadow-sm border-0">
               <div class="card-body text-center">
                 <i class="bi bi-box-seam fs-1 text-warning mb-3"></i>
