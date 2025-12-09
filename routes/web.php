@@ -38,7 +38,7 @@ Route::get('/productos/catalogo', [ProductoController::class, 'catalogo'])->name
 
 Route::get('/ventas', function () {
     return view('ventas.ventas');
-});
+})->name('ventas.ventas');
 
 
 Route::get('/envios', [EnvioController::class, 'index'])->name('ventas.envios');

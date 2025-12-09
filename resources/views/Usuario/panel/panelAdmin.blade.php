@@ -155,8 +155,8 @@ class Administrador
         <div id="modVentas" class="accordion-collapse collapse" data-bs-parent="#accordionModulos">
           <div class="accordion-body">
             <ul class="list-unstyled">
-              <li><a href="/ModeloVistaControlador/index.php?Controller=ventas" class="text-white text-decoration-none">➤ Consultar Pedido</a></li>
-              <li><a href="/ModeloVistaControlador/index.php?Controller=envios" class="text-white text-decoration-none">➤ Consultar Envío</a></li>
+              <li><a href="{{ route('ventas.pedidos') }}" class="text-white text-decoration-none">➤ Consultar Pedido</a></li>
+              <li><a href="{{ route('ventas.envios') }}" class="text-white text-decoration-none">➤ Consultar Envío</a></li>
             </ul>
           </div>
         </div>
@@ -247,7 +247,7 @@ class Administrador
 
         <!-- Card Ventas -->
         <div class="col-md-6 col-lg-3">
-          <a href="/ModeloVistaControlador/index.php?Controller=ventas" class="text-decoration-none">
+          <a href="{{ route('ventas.ventas') }}" class="text-decoration-none">
             <div class="card h-100 shadow-sm border-0">
               <div class="card-body text-center">
                 <i class="bi bi-cart4 fs-1 text-danger mb-3"></i>
