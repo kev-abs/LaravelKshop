@@ -51,6 +51,8 @@
                         <div class="alert alert-info">{{ $mensaje }}</div>
                     @endif
 
+                    
+
                     <form method="POST" class="row g-3">
                         @csrf
                         <input type="hidden" name="accion" value="actualizar">
