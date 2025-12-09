@@ -53,6 +53,13 @@
             </div>
         @endif
 
+        <div class="d-flex justify-content-end mb-3">
+            <a href="{{ route('ventas.envios_create') }}" class="btn btn-primary">
+                <i class="bi bi-plus-lg"></i> Nuevo envío
+            </a>
+        </div>
+
+
         <!-- TABLA DE ENVIOS -->
         <div class="table-responsive">
             <table class="table table-striped table-hover align-middle">
@@ -80,9 +87,7 @@
 
                             <td>
                                 <!-- BOTÓN EDITAR -->
-                                <a href="{{ url('/envios/'.$e['id_Envio'].'/edit') }}" class="btn btn-warning btn-sm">
-                                    <i class="bi bi-pencil-square"></i>
-                                </a>
+                               
 
                                 <!-- FORM ELIMINAR -->
                                 <form action="{{ route('envios.destroy', $e['id_Envio']) }}" method="POST" class="d-inline">

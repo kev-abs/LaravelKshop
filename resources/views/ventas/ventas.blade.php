@@ -59,7 +59,7 @@
                         </p>
 
                         <div class="d-flex justify-content-center gap-2">
-                            
+                            <a href="{{ route('ventas.pedidos') }}" class="btn btn-outline-dark">
                                 Consultar Pedido
                             </a>
                         </div>
