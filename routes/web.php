@@ -8,7 +8,7 @@ use App\Http\Controllers\InicioController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\Usuario\UsuariosController;
 use App\Http\Controllers\Producto\ProductoController;
-use App\Http\Controllers\Usuario\ClienteController;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PedidoController;
 
 Route::get('/cupon', [CuponController::class, 'index'])->name('cupon.inventarioVista');
@@ -79,4 +79,7 @@ Route::match(['get','post'], '/usuarios/empleados/agregar', [UsuariosController:
 Route::match(['get','post'], '/usuarios/empleados/editar', [UsuariosController::class, 'editarEliminarEmpleado'])->name('empleados.editar');
 Route::get('/usuarios/empleados/buscar/{id}', [UsuariosController::class, 'buscarEmpleado']);
 Route::match(['get','post'],'/usuarios/cliente/registrar',[UsuariosController::class,'registrarCliente'])->name('cliente.registrar');
-
+Route::get('/forgot-password', [AuthController::class, 'mostrarFormularioCodigo'])->name('password.request');
+Route::post('/forgot-password', [AuthController::class, 'enviarCodigo'])->name('password.email');
+Route::get('/reset-password', [AuthController::class, 'mostrarFormularioReset'])->name('password.reset');
+Route::post('/reset-password', [AuthController::class, 'actualizarContrasena'])->name('password.update');
