@@ -55,6 +55,7 @@ Route::get('/pedidos/create', [PedidoController::class, 'create'])->name('ventas
 
 Route::get('/productos/agregar', [ProductoController::class, 'create'])->name('productos.create');
 Route::post('/productos/agregar', [ProductoController::class, 'store'])->name('productos.store');
+
 Route::get('/productos/editar/{id}', [ProductoController::class, 'edit'])->name('productos.edit');
 Route::put('/productos/editar/{id}', [ProductoController::class, 'update'])->name('productos.update');
 Route::delete('/productos/eliminar/{id}', [ProductoController::class, 'destroy'])
@@ -77,5 +78,5 @@ Route::get('/usuarios/empleados', [UsuariosController::class, 'consultarEmpleado
 Route::match(['get','post'], '/usuarios/empleados/agregar', [UsuariosController::class, 'agregarEmpleado'])->name('empleados.agregar');
 Route::match(['get','post'], '/usuarios/empleados/editar', [UsuariosController::class, 'editarEliminarEmpleado'])->name('empleados.editar');
 Route::get('/usuarios/empleados/buscar/{id}', [UsuariosController::class, 'buscarEmpleado']);
-
+Route::match(['get','post'],'/usuarios/cliente/registrar',[UsuariosController::class,'registrarCliente'])->name('cliente.registrar');
 
