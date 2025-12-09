@@ -13,7 +13,7 @@
 <header class="bg-white sticky-top py-3 border-bottom shadow-sm">
     <div class="container d-flex justify-content-between align-items-center">
         <div class="d-flex align-items-center">
-            <img src="{{ asset('images/logo_kshopsinfondo.png') }}" alt="Logo K-Shop" width="83" class="me-2">
+             <img src="{{ asset('img/logo_kshopsinfondo.png') }}" alt="Logo K-Shop" width="83" class="me-2">
             <span class="fw-bold text-dark">K-SHOP | Admin</span>
         </div>
     </div>
@@ -28,12 +28,19 @@
         <p class="text-muted">Consulta, agrega y actualiza productos de manera organizada y sencilla.</p>
     </div>
 
-    {{-- MENSAJES --}}
-    @if(session('mensaje'))
-        <div class="alert alert-info text-center">
-            {{ session('mensaje') }}
-        </div>
-    @endif
+    <!-- Mensajes de éxito o error -->
+@if(session('success'))
+    <div class="alert alert-success text-center">
+        {{ session('success') }}
+    </div>
+@endif
+
+@if(session('error'))
+    <div class="alert alert-danger text-center">
+        {{ session('error') }}
+    </div>
+@endif
+
 
 
     <!-- Botón agregar producto -->
@@ -91,9 +98,16 @@
                                 <td>{{ $p['estado'] }}</td>
 
                                 <td>
-                                    <a href="{{ route('productos.edit', $p['id_Producto']) }}" class="btn btn-sm btn-dark">
-                                        <i class="bi bi-pencil-square"></i>
-                                    </a>
+                                    <a href="{{ route('productos.edit', $p['id_Producto']) }}" 
+                                    class="btn btn-warning btn-sm"> Editar</a>
+                                    <form action="{{ route('productos.destroy', $p['id_Producto']) }}"
+                                    method="POST"
+                                    style="display:inline-block;"
+                                    onsubmit="return confirm('¿Estás seguro de que deseas ELIMINAR este producto? Esta acción no se puede deshacer');">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+                                </form>
                                 </td>
                             </tr>
                         @endforeach
@@ -114,7 +128,7 @@
 
 
     <div class="text-center mt-5">
-        <a href="{{ route('productos.index') }}" class="btn btn-outline-secondary btn-lg w-50">
+        <a href="{{ route('panel.admin') }}" class="btn btn-outline-secondary btn-lg w-50">
             <i class="bi bi-arrow-left me-2"></i>Volver
         </a>
     </div>

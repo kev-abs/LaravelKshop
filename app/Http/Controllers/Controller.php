@@ -2,19 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Foundation\Validation\ValidatesRequests;
+use Illuminate\Routing\Controller as BaseController;
 
-class Controller
+class Controller extends BaseController
 {
-    public function index() {
-        return view('productos.index');
-    }
-
-    public function create() {
-        return view('productos.create');
-    }
-
-    public function edit($id) {
-        return view('productos.edit', compact('id'));
-    }
+    use AuthorizesRequests, ValidatesRequests;
 }

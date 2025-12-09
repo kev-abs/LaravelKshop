@@ -35,4 +35,15 @@ return [
         ],
     ],
 
+    'envios' => [
+    'url' => env('API_ENVIOS_URL'),
+
+    ],
+
+    'pedidos' => [
+    'url' => env('API_PEDIDOS_URL'),
+
+],
+
+
 ];
