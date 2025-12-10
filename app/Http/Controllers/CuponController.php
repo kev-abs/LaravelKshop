@@ -25,14 +25,14 @@ class CuponController
 
         if ($request->isMethod('post')) {
 
-            $data = $request->only(['Codigo', 'Descuento', 'Fecha_Expiracion']);
+            $data = $request->only(['codigo', 'descuento', 'fecha_expiracion']);
 
-            if ($data['Codigo'] && $data['Descuento'] && $data['Fecha_Expiracion']) {
+            if ($data['codigo'] && $data['descuento'] && $data['fecha_expiracion']) {
 
-                DB::table('cupones')->insert([
-                    'codigo' => $data['Codigo'],
-                    'descuento' => $data['Descuento'],
-                    'fecha_expiracion' => $data['Fecha_Expiracion'],
+                DB::table('cupon')->insert([
+                    'codigo' => $data['codigo'],
+                    'descuento' => $data['descuento'],
+                    'fecha_expiracion' => $data['fecha_expiracion'],
                 ]);
 
                 $mensaje = "Cupón agregado correctamente.";
@@ -48,7 +48,7 @@ class CuponController
 
     public function update(Request $request)
     {
-        DB::table('cupones')
+        DB::table('cupon')
             ->where('id_cupon', $request->id_Cupon)
             ->update([
                 'codigo' => $request->Codigo,
@@ -61,7 +61,7 @@ class CuponController
 
     public function destroy(Request $request)
     {
-        DB::table('cupones')
+        DB::table('cupon')
             ->where('id_cupon', $request->id_Cupon)
             ->delete();
 

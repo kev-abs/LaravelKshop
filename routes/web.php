@@ -16,7 +16,7 @@ use App\Http\Controllers\Usuario\ClienteController;
 Route::get('/cupon', [CuponController::class, 'index'])->name('cupon.inventarioVista');
 Route::get('/cupon/consultar', [CuponController::class, 'consultar'])->name('cupon.index');
 
-Route::match(['get', 'post'],'/cupon/guardar', [CuponController::class, 'store'])->name('cupon.agregar');
+Route::match(['get', 'post'],'/cupon/guardar', [CuponController::class, 'store'])->name('cupon.guardar');
 
 Route::post('/cupon/editar', [CuponController::class, 'update'])->name('cupon.editar');
 
