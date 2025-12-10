@@ -30,8 +30,8 @@
 
   <h2 class="mb-4 text-center">Actualizar Cupón</h2>
 
-  <form method="POST" action="{{ route('cupon.actualizar') }}" class="text-center">
-      @csrf
+  <form method="POST" action="{{ route('cupon.editar') }}" class="text-center">
+    @csrf
 
       <div class="row mb-3 justify-content-center">
 
