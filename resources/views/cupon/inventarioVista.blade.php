@@ -11,8 +11,8 @@
     <!-- NAVBAR -->
     <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom shadow-sm sticky-top">
     <div class="container">
-        <a class="navbar-brand fw-bold" href="/ModeloVistaControlador/index.php?Controller=panel&action=manejarPeticion">
-        <img src="/ModeloVistaControlador/Inicio/Public/Imagenes/logo_kshopsinfondo.png" alt="K-Shop" width="60" class="me-2">
+        <a class="navbar-brand fw-bold" href="{{ route('panel.admin') }}">
+        <img src="{{ asset('img/logo_kshopsinfondo.png') }}" alt="K-Shop" width="60" class="me-2">
         K-SHOP | Admin
         </a>
 
@@ -75,13 +75,6 @@
                 </div>
             </div>
         </div>
-    </div>
-    
-            <!-- Botón Volver -->
-    <div class="text-center mt-4">
-        <a href="../ModeloVistaControlador/Inicio/Vista/Usuarios/Paneles/panelAdmin.php" class="btn btn-outline-secondary btn-lg w-30">
-            <i class="bi bi-arrow-left me-2"></i> <-Volver 
-        </a>
     </div>
 
  <!-- FOOTER -->

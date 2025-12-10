@@ -17,6 +17,7 @@ Route::get('/cupon/consultar', [CuponController::class, 'consultar'])->name('cup
 Route::match(['get', 'post'],'/cupon/guardar', [CuponController::class, 'store'])->name('cupon.guardar');
 
 Route::post('/cupon/editar', [CuponController::class, 'update'])->name('cupon.editar');
+Route::post('/cupon/eliminar', [CuponController::class, 'destroy'])->name('cupon.eliminar');
 
 
 Route::get('/', [InicioController::class, 'index'])->name('inicio');
