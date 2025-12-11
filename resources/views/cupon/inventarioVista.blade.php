@@ -67,7 +67,7 @@
                             <a href="{{route('cupon.guardar')}}" class="btn btn-outline-dark">
                                 <i class="bi bi-plus-circle"></i> Agregar
                             </a>
-                            <a href="{{route('cupon.editar')}}" class="btn btn-outline-dark">
+                            <a href="{{route('cupon.editarVista')}}" class="btn btn-outline-dark">
                                 <i class="bi bi-pencil-square"></i> Actualizar / Eliminar
                             </a>
                         </div>
