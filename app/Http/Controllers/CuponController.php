@@ -18,6 +18,14 @@ class CuponController
         return view('cupon.index', compact('cupones'));
     }
 
+        
+    // ================= VISTA EDITAR / ELIMINAR =================
+     public function editarVista()
+    {
+        return view('cupon.editarEliminar');
+    }
+
+
    // ================= AGREGAR CUPON =================
     public function store(Request $request)
     {
@@ -46,18 +54,19 @@ class CuponController
     }
     // ================= ACTUALIZAR / ELIMINAR =================
 
-    public function update(Request $request)
+   public function update(Request $request)
     {
         DB::table('cupon')
             ->where('id_cupon', $request->id_Cupon)
             ->update([
-                'codigo' => $request->Codigo,
-                'descuento' => $request->Descuento,
-                'fecha_expiracion' => $request->Fecha_Expiracion,
+                'codigo' => $request->codigo,
+                'descuento' => $request->descuento,
+                'fecha_expiracion' => $request->fecha_expiracion,
             ]);
 
         return back()->with('mensaje', 'Cupón actualizado correctamente');
     }
+
 
     public function destroy(Request $request)
     {
