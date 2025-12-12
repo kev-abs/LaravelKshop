@@ -4,34 +4,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Agregar Pedido</title>
+    <title>Editar Pedido</title>
 
     <!-- BOOTSTRAP -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- ICONOS -->
+    <!-- ICONOS BOOTSTRAP -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
 
     <style>
         .card-header {
             background: #f8f9fa;
             font-weight: 600;
-            font-size: 1.1rem;
         }
 
         .navbar-brand img {
             border-radius: 8px;
-        }
-
-        label {
-            font-weight: 600;
         }
     </style>
 </head>
 
 <body class="bg-light d-flex flex-column min-vh-100">
 
-    <!-- NAVBAR UNIFICADO -->
+    <!-- NAVBAR -->
     <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom shadow-sm sticky-top">
         <div class="container">
 
@@ -40,7 +35,7 @@
                 K-SHOP | Admin
             </a>
 
-            <!-- Buscador -->
+            <!-- buscador -->
             <form class="d-none d-md-flex mx-auto w-50">
                 <input class="form-control" type="search" placeholder="Buscar pedidos..." aria-label="Buscar">
             </form>
@@ -58,57 +53,62 @@
     <main class="container my-5">
 
         <div class="text-center mb-4">
-            <h2 class="fw-bold">Agregar Pedido</h2>
-            <p class="text-muted">Complete el formulario para registrar un nuevo pedido.</p>
+            <h2 class="fw-bold">Editar Pedido #{{ $pedido['id_Pedido'] }}</h2>
+            <p class="text-muted">Modifica la información del pedido seleccionado.</p>
         </div>
 
-        <div class="card shadow-sm mx-auto" style="max-width: 750px;">
+        @if(session('msg'))
+            <div class="alert alert-info text-center">{{ session('msg') }}</div>
+        @endif
+
+        <div class="card shadow-sm mx-auto" style="max-width: 700px;">
             <div class="card-header">
-                <i class="bi bi-receipt"></i> Registro de Pedido
+                <i class="bi bi-pencil-square"></i> Formulario de edición
             </div>
 
             <div class="card-body">
 
-                <form action="{{ route('pedidos.store') }}" method="POST">
+                <form action="{{ route('pedido.update', $pedido['id_Pedido']) }}" method="POST">
                     @csrf
+                    @method('PUT')
 
-                    <div class="row g-4">
-
-                        <div class="col-md-6">
-                            <label class="form-label">ID Cliente</label>
-                            <input type="number" name="id_Cliente" class="form-control border border-primary" required>
-                        </div>
-
-                        <div class="col-md-6">
-                            <label class="form-label">Fecha del Pedido</label>
-                            <input type="date" name="fecha_Pedido" class="form-control border border-primary" required>
-                        </div>
-
-                        <div class="col-md-6">
-                            <label class="form-label">Estado del Pedido</label>
-                            <select name="estado" class="form-select border border-primary" required>
-                                <option value="Pendiente">Pendiente</option>
-                                <option value="Enviado">Enviado</option>
-                            </select>
-                        </div>
-
-                        <div class="col-md-6">
-                            <label class="form-label">Total</label>
-                            <input type="number" step="0.01" name="total" class="form-control border border-primary" required>
-                        </div>
-
+                    <!-- ID Cliente -->
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">ID Cliente</label>
+                        <input type="number" name="id_Cliente" class="form-control"
+                            value="{{ $pedido['id_Cliente'] }}" required>
                     </div>
 
-                    <div class="d-flex justify-content-between mt-4">
+                    <!-- Fecha Pedido -->
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Fecha del Pedido</label>
+                        <input type="date" name="fecha_Pedido" class="form-control"
+                            value="{{ $pedido['fecha_Pedido'] }}" required>
+                    </div>
+
+                    <!-- Estado -->
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Estado</label>
+                        <input type="text" name="estado" class="form-control"
+                            value="{{ $pedido['estado'] }}" required>
+                    </div>
+
+                    <!-- Total -->
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Total</label>
+                        <input type="number" name="total" class="form-control"
+                            value="{{ $pedido['total'] }}" required>
+                    </div>
+
+                    <div class="d-flex justify-content-between">
                         <a href="{{ route('ventas.pedidos') }}" class="btn btn-outline-secondary">
                             <i class="bi bi-arrow-left"></i> Volver
                         </a>
 
-                        <button class="btn btn-primary">
-                            <i class="bi bi-save"></i> Guardar Pedido
+                        <button type="submit" class="btn btn-primary">
+                            <i class="bi bi-save"></i> Guardar Cambios
                         </button>
                     </div>
-
                 </form>
 
             </div>
@@ -123,10 +123,9 @@
         </div>
     </footer>
 
-    <!-- JS -->
+    <!-- BOOTSTRAP JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
 
 </html>
-

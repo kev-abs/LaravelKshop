@@ -29,6 +29,24 @@ class EnvioService
     }
 
 
+
+    public function obtenerEnvioPorId($id)
+    {
+        $response = Http::get("{$this->apiUrl}/{$id}");
+
+        return $response->successful() ? $response->json() : null;
+    }
+
+
+    
+    public function actualizarEnvio($id, $data)
+    {
+        $response = Http::put("{$this->apiUrl}/{$id}", $data);
+
+        return $response->successful();
+    }
+
+
     public function eliminarEnvio($id)
     {
         $response = Http::delete("{$this->apiUrl}/{$id}");

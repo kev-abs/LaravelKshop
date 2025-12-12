@@ -44,6 +44,41 @@ class PedidoController extends Controller
             ->with('msg', $ok ? 'Pedido agregado correctamente' : 'Error al agregar');
     }
 
+
+    public function edit($id)
+    {
+        $pedido = $this->service->obtenerPedidoPorId($id);
+
+        if (!$pedido) {
+            return redirect()->route('ventas.pedidos')->with('msg', 'Pedido no encontrado');
+        }
+
+        return view('ventas.editar_pedido', compact('pedido'));
+    }
+
+
+    public function update(Request $request, $id)
+    {
+        $data = [
+            "id_Cliente"   => $request->id_Cliente,
+            "fecha_Pedido" => $request->fecha_Pedido,
+            "estado"       => $request->estado,
+            "total"        => $request->total
+        ];
+
+        $ok = $this->service->actualizarPedido($id, $data);
+
+        if ($ok) {
+           return redirect()->route('ventas.pedidos')->with('msg', 'Pedido actualizado correctamente');
+
+        }
+
+        return back()->with('msg', 'No se pudo actualizar el pedido');
+    }
+
+
+
+
         public function destroy($id)
     {
         $ok = $this->service->eliminarPedido($id);

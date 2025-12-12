@@ -1,5 +1,3 @@
-{{-- <!-- Vista cargada --> --}}
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -9,17 +7,18 @@
 
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
 </head>
 
 <body class="bg-light d-flex flex-column min-vh-100">
 
-    <!-- NAVBAR -->
+    <!-- NAVBAR (igual a Usuarios) -->
     <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom shadow-sm sticky-top">
         <div class="container">
 
-            <a class="navbar-brand fw-bold" href="{{ url('/panel') }}">
-                <img src="{{ asset('imagenes/logo_kshopsinfondo.png') }}" alt="K-Shop" width="60" class="me-2">
+            <a class="navbar-brand fw-bold" href="{{ route('panel.admin') }}">
+                <img src="{{ asset('img/logo_kshopsinfondo.png') }}" alt="K-Shop" width="60" class="me-2">
                 K-SHOP | Admin
             </a>
 
@@ -28,7 +27,7 @@
             </form>
 
             <div class="d-flex">
-                
+                <a href="{{ route('logout') }}" class="btn btn-outline-dark">
                     <i class="bi bi-box-arrow-right"></i> Cerrar sesión
                 </a>
             </div>
@@ -60,7 +59,7 @@
 
                         <div class="d-flex justify-content-center gap-2">
                             <a href="{{ route('ventas.pedidos') }}" class="btn btn-outline-dark">
-                                Consultar Pedido
+                                <i class="bi bi-search"></i> Consultar Pedido
                             </a>
                         </div>
                     </div>
@@ -79,7 +78,7 @@
 
                         <div class="d-flex justify-content-center gap-2">
                             <a href="{{ route('ventas.envios') }}" class="btn btn-outline-dark">
-                                Consultar Envío
+                                <i class="bi bi-search"></i> Consultar Envío
                             </a>
                         </div>
                     </div>
@@ -96,7 +95,7 @@
 
     </main>
 
-    <!-- FOOTER -->
+    <!-- FOOTER (idéntico al de Usuarios) -->
     <footer class="bg-dark text-white text-center py-4 mt-auto">
         <div class="container">
             <div class="mb-3">

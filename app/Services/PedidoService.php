@@ -28,6 +28,20 @@ class PedidoService
         return $response->successful();
     }
 
+        public function obtenerPedidoPorId($id)
+    {
+        $response = Http::get("{$this->apiUrl}/{$id}");
+
+        return $response->successful() ? $response->json() : null;
+    }
+
+    public function actualizarPedido($id, $data)
+    {
+        $response = Http::put("{$this->apiUrl}/{$id}", $data);
+
+        return $response->successful();
+    }
+
         public function eliminarPedido($id)
     {
         $response = Http::delete("{$this->apiUrl}/{$id}");

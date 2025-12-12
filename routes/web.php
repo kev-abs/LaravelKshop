@@ -41,17 +41,23 @@ Route::get('/ventas', function () {
 })->name('ventas.ventas');
 
 
+
 Route::get('/envios', [EnvioController::class, 'index'])->name('ventas.envios');
 
-Route::post('/envios', [EnvioController::class, 'store'])->name('envios.store');
-Route::delete('/envios/{id}', [EnvioController::class, 'destroy'])->name('envios.destroy');
 Route::get('/envios/create', [EnvioController::class, 'create'])->name('ventas.envios_create');
+Route::post('/envios', [EnvioController::class, 'store'])->name('envios.store');
+Route::get('/envio  /{id}/edit', [EnvioController::class, 'edit'])->name('ventas.envio');
+Route::put('/envio/{id}', [EnvioController::class, 'update'])->name('envio.update');
+Route::delete('/envios/{id}', [EnvioController::class, 'destroy'])->name('envios.destroy');
 
 Route::get('/pedidos', [PedidoController::class, 'index'])->name('ventas.pedidos');
 
 Route::delete('/pedidos/{id}', [PedidoController::class, 'destroy'])->name('pedidos.destroy');
 Route::post('/pedidos', [PedidoController::class, 'store'])->name('pedidos.store');
 Route::get('/pedidos/create', [PedidoController::class, 'create'])->name('ventas.pedidos_create');
+Route::get('/pedido/{id}/edit', [PedidoController::class, 'edit'])->name('ventas.pedido');
+Route::put('/pedido/{id}', [PedidoController::class, 'update'])->name('pedido.update');
+
 
 Route::get('/productos/agregar', [ProductoController::class, 'create'])->name('productos.create');
 Route::post('/productos/agregar', [ProductoController::class, 'store'])->name('productos.store');
