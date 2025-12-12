@@ -8,7 +8,7 @@ use App\Http\Controllers\InicioController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\Usuario\UsuariosController;
 use App\Http\Controllers\Producto\ProductoController;
-use App\Http\Controllers\Usuario\ClienteController;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PedidoController;
 
 Route::get('/cupon', [CuponController::class, 'index'])->name('cupon.inventarioVista');
@@ -16,7 +16,13 @@ Route::get('/cupon/consultar', [CuponController::class, 'consultar'])->name('cup
 
 Route::match(['get', 'post'],'/cupon/guardar', [CuponController::class, 'store'])->name('cupon.guardar');
 
-Route::post('/cupon/editar', [CuponController::class, 'update'])->name('cupon.editar');
+Route::get('/cupon/editar', [CuponController::class, 'editarVista'])->name('cupon.editarVista');
+
+// Actualizar cupon (POST desde el formulario)
+Route::put('/cupon/editar', [CuponController::class, 'update'])->name('cupon.update');
+
+// Eliminar cupon (POST desde el formulario)
+Route::delete('/cupon/eliminar', [CuponController::class, 'destroy'])->name('cupon.eliminar');
 
 
 Route::get('/', [InicioController::class, 'index'])->name('inicio');
@@ -61,6 +67,7 @@ Route::put('/pedido/{id}', [PedidoController::class, 'update'])->name('pedido.up
 
 Route::get('/productos/agregar', [ProductoController::class, 'create'])->name('productos.create');
 Route::post('/productos/agregar', [ProductoController::class, 'store'])->name('productos.store');
+
 Route::get('/productos/editar/{id}', [ProductoController::class, 'edit'])->name('productos.edit');
 Route::put('/productos/editar/{id}', [ProductoController::class, 'update'])->name('productos.update');
 Route::delete('/productos/eliminar/{id}', [ProductoController::class, 'destroy'])
@@ -83,5 +90,8 @@ Route::get('/usuarios/empleados', [UsuariosController::class, 'consultarEmpleado
 Route::match(['get','post'], '/usuarios/empleados/agregar', [UsuariosController::class, 'agregarEmpleado'])->name('empleados.agregar');
 Route::match(['get','post'], '/usuarios/empleados/editar', [UsuariosController::class, 'editarEliminarEmpleado'])->name('empleados.editar');
 Route::get('/usuarios/empleados/buscar/{id}', [UsuariosController::class, 'buscarEmpleado']);
-
-
+Route::match(['get','post'],'/usuarios/cliente/registrar',[UsuariosController::class,'registrarCliente'])->name('cliente.registrar');
+Route::get('/forgot-password', [AuthController::class, 'mostrarFormularioCodigo'])->name('password.request');
+Route::post('/forgot-password', [AuthController::class, 'enviarCodigo'])->name('password.email');
+Route::get('/reset-password', [AuthController::class, 'mostrarFormularioReset'])->name('password.reset');
+Route::post('/reset-password', [AuthController::class, 'actualizarContrasena'])->name('password.update');
