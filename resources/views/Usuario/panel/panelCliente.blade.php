@@ -28,41 +28,6 @@ class Cliente
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
 
-  <style>
-    html, body {
-      height: 100%;
-      background-color: #ffffff;
-      color: #000000;
-    }
-    body {
-      display: flex;
-      flex-direction: column;
-    }
-    main {
-      flex: 1;
-    }
-    .nav-link {
-      color: #000000 !important;
-      transition: background-color 0.3s, color 0.3s;
-    }
-    .nav-link:hover {
-      color: #ffffff !important;
-      background-color: #000000ff;
-      border-radius: 0.375rem;
-    }
-    .nav-link.text-warning:hover {
-      background-color: #dc3545;
-    }
-    .logo-img {
-      height: 40px;
-      margin-right: 10px;
-    }
-    .carousel img {
-      object-fit: cover;
-      height: 500px;
-      filter: brightness(85%);
-    }
-  </style>
 </head>
 <body>
 

@@ -77,7 +77,7 @@ class Administrador
         <div id="modPerfil" class="accordion-collapse collapse" data-bs-parent="#accordionModulos">
           <div class="accordion-body">
             <ul class="list-unstyled">
-              <li><a href="{{ asset('img/foto_perfil_admin.png') }}" class="text-white text-decoration-none">➤ Perfil de Administrador</a></li>
+              <li><a href="{{ route('admin.perfil') }}" class="text-white text-decoration-none">➤ Perfil de Administrador</a></li>
             </ul>
           </div>
         </div>
@@ -187,11 +187,15 @@ class Administrador
     </div>
   </div>
 </div>
-  <div class="d-flex justify-content-start ps-3 py-2 border-bottom">
-    <button class="d-flex justify-content-start ps-3 py-2 border-bottom navbar-toggler navbar-dark border-0 bg-dark p-2 rounded"
-            type="button" data-bs-toggle="offcanvas" data-bs-target="#menuModulos"
-            aria-controls="menuModulos">
-      <span class="navbar-toggler-icon"></span>
+  <div class="d-flex justify-content-start ps-3 py-2">
+    <button
+      class="btn btn-light d-flex align-items-center gap-2 px-3 py-2 rounded-4 shadow-sm menu-btn"
+      type="button"
+      data-bs-toggle="offcanvas"
+      data-bs-target="#menuModulos"
+    >
+      <i class="bi bi-list fs-4"></i>
+      <span class="fw-semibold d-none d-md-inline">Menú</span>
     </button>
   </div>
 
