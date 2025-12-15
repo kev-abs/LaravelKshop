@@ -49,6 +49,12 @@
             <i class="bi bi-plus-circle me-2"></i>Agregar Producto
         </a>
     </div>
+    <!-- Botón categorizar producto -->
+     <div class="text-end mb-2">
+        <a href="{{ route('productos.categorizar') }}" class="btn btn-success">
+            <i class="bi bi-plus-circle me-2"></i>Categorizar Producto
+        </a>
+    </div>
 
 
     <!-- Tabla de productos -->
@@ -65,6 +71,7 @@
 
                         <thead class="table-secondary text-dark">
                             <tr>
+
                                 <th>ID</th>
                                 <th>Nombre</th>
                                 <th>Descripción</th>

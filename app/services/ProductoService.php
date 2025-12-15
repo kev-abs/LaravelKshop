@@ -156,5 +156,59 @@ public function eliminarProducto($id)
 
     return ["success" => true];
 }
+// Obtener categorías desde API 
+public function obtenerCategorias()
+{
+    try {
+        $response = Http::get('http://localhost:8080/api/categorias');
+
+        if ($response->successful()) {
+            return [
+                'success' => true,
+                'data' => $response->json()
+            ];
+        }
+
+        return ['success' => false, 'data' => []];
+
+    } catch (\Exception $e) {
+        return ['success' => false, 'data' => []];
+    }
+}
+
+public function asignarProductoCategoria($idProducto, $idCategoria)
+{
+    $response = Http::post(
+        $this->apiUrl . '/producto-categoria/asignar',
+        [
+            'idProducto'  => $idProducto,
+            'idCategoria' => $idCategoria
+        ]
+    );
+
+    if ($response->failed()) {
+        return ['success' => false];
+    }
+
+    return ['success' => true];
+}
+
+public function obtenerCategoriasConProductos()
+{
+    $response = Http::get('http://localhost:8080/api/producto-categoria/con-productos');
+
+    if ($response->failed()) {
+        return [
+            'success' => false,
+            'data' => []
+        ];
+    }
+
+    return [
+        'success' => true,
+        'data' => $response->json()
+    ];
+}
+
 
 }

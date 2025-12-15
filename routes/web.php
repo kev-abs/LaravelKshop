@@ -8,8 +8,12 @@ use App\Http\Controllers\InicioController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\Usuario\UsuariosController;
 use App\Http\Controllers\Producto\ProductoController;
+use App\Http\Controllers\Producto\ProductoCategoriaController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PedidoController;
+use App\Http\Controllers\Usuario\AdminController;
+use App\Http\Controllers\Usuario\VendedorController;
+use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\CarritoController;
 use App\Http\Controllers\CheckoutController;
 
@@ -30,29 +34,30 @@ Route::get('/cupon/consultar', [CuponController::class, 'consultar'])->name('cup
 Route::match(['get', 'post'],'/cupon/guardar', [CuponController::class, 'store'])->name('cupon.guardar');
 
 Route::get('/cupon/editar', [CuponController::class, 'editarVista'])->name('cupon.editarVista');
-
-// Actualizar cupon (POST desde el formulario)
 Route::put('/cupon/editar', [CuponController::class, 'update'])->name('cupon.update');
-
-// Eliminar cupon (POST desde el formulario)
 Route::delete('/cupon/eliminar', [CuponController::class, 'destroy'])->name('cupon.eliminar');
 
 
+//Paneles
 Route::get('/', [InicioController::class, 'index'])->name('inicio');
 
 Route::get('/login', [LoginController::class, 'mostrarFormulario'])->name('login');
 
 Route::post('/login', [LoginController::class, 'manejarPeticion'])->name('login.procesar');
-
-Route::view('/panel/admin', 'Usuario.panel.panelAdmin')->name('panel.admin');
-
-Route::get('/panel/cliente', [ProductoController::class, 'panelCliente'])
-    ->name('panel.cliente');
-
-Route::view('/panel/vendedor', 'Usuario.panel.panelVendedor')->name('panel.vendedor');
-
-Route::get('/productos', [ProductoController::class, 'index'])->name('productos.index');
-Route::get('/productos/catalogo', [ProductoController::class, 'catalogo'])->name('productos.catalogo');
+Route::get('/panel/admin', [AdminController::class, 'panel'])->name('panel.admin');
+Route::get('usuarios/panel/perfiles/perfilAdmin', [AdminController::class, 'perfilAdmin'])->name('admin.perfil');
+Route::get('usuarios/panel/perfiles/editarPerfilAdmin',[AdminController::class, 'editarPerfilAdmin'])->name('admin.perfil.editar');
+Route::post('usuarios/panel/perfiles/actualizarPerfilAdmin',[AdminController::class, 'actualizarPerfilAdmin'])->name('admin.perfil.actualizar');
+Route::get('/panel/vendedor', [VendedorController::class, 'panel'])->name('panel.vendedor');
+Route::get('/panel/vendedor/perfil', [VendedorController::class, 'perfil'])->name('vendedor.perfil');
+Route::get('/panel/vendedor', [VendedorController::class, 'panel'])->name('panel.vendedor');
+Route::get('/panel/vendedor/perfil', [VendedorController::class, 'perfilVendedor'])->name('vendedor.perfil');
+Route::get('/panel/vendedor/perfil/editar', [VendedorController::class, 'editarPerfilVendedor'])->name('vendedor.perfil.editar');
+Route::post('/panel/vendedor/perfil/actualizar', [VendedorController::class, 'actualizarPerfilVendedor'])->name('vendedor.perfil.actualizar');
+Route::get('/cliente/panel', [ClienteController::class, 'panel'])->name('panel.cliente');
+Route::get('/cliente/perfil', [ClienteController::class, 'perfil'])->name('cliente.perfil');
+Route::get('/panel/cliente/perfil/editar', [ClienteController::class, 'editarPerfil'])->name('cliente.perfil.editar');
+Route::post('/panel/cliente/perfil/actualizar', [ClienteController::class, 'actualizarPerfil'])->name('cliente.perfil.actualizar');
 
 
 Route::get('/ventas', function () {
@@ -86,8 +91,16 @@ Route::post('/productos/agregar', [ProductoController::class, 'store'])->name('p
 
 Route::get('/productos/editar/{id}', [ProductoController::class, 'edit'])->name('productos.edit');
 Route::put('/productos/editar/{id}', [ProductoController::class, 'update'])->name('productos.update');
-Route::delete('/productos/eliminar/{id}', [ProductoController::class, 'destroy'])
-    ->name('productos.destroy');
+Route::delete('/productos/eliminar/{id}', [ProductoController::class, 'destroy'])->name('productos.destroy');
+
+Route::get('/productos', [ProductoController::class, 'index'])->name('productos.index');
+Route::get('/productos/catalogo', [ProductoController::class, 'catalogo'])->name('productos.catalogo');
+
+Route::get('/productos/categorizar', [ProductoController::class, 'categorizar'])->name('productos.categorizar');
+Route::post('/productos/categorizar', [ProductoController::class, 'guardarCategorias'])->name('productos.categorizar.guardar');
+Route::post( '/productos/asignar-categoria', [ProductoController::class, 'asignarCategoria'])->name('productos.asignarCategoria');
+Route::get('/api/producto-categoria/por-categoria',  [ProductoCategoriaController::class, 'porCategoria'])->name('productos.productosPorCategoria');
+
 Route::get('/logout', function () {
     session()->flush();
     return redirect()->route('inicio');
@@ -95,6 +108,9 @@ Route::get('/logout', function () {
 
 Route::get('/tienda', [ProductoController::class, 'catalogo'])->name('tienda.catalogo');
 
+
+
+//Rutas modulo de Usuarios
 Route::get('/usuarioVista', [UsuariosController::class,'index'])->name('usuariosVista');
 
 Route::get('/usuarios/clientes',[UsuariosController::class, 'consultarClientes'])->name('clientes.consultar');
