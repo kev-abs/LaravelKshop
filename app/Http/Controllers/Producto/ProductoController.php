@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Producto;
 
 use App\Services\ProductoService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
+
 
 class ProductoController
 {
@@ -52,7 +54,35 @@ class ProductoController
 
     return view("productos.nuestrosproductos", compact("productos"));
 }
+public function categorizar()
+{
+    $productos = $this->productoService->obtenerProductos()['data'] ?? [];
+    $categorias = $this->productoService->obtenerCategorias()['data'] ?? [];
 
+    return view('productos.CategorizarProductos', compact('productos', 'categorias'));
+}
+public function asignarCategoria(Request $request)
+{
+    // Validación básica
+    $request->validate([
+        'idCategoria' => 'required|integer',
+        'productos'   => 'required|array|min:1'
+    ]);
+
+    $idCategoria = $request->idCategoria;
+    $productos   = $request->productos;
+
+    foreach ($productos as $idProducto) {
+        $this->productoService->asignarProductoCategoria(
+            $idProducto,
+            $idCategoria
+        );
+    }
+
+    return redirect()
+        ->route('productos.index')
+        ->with('success', 'Productos categorizados correctamente');
+}
 
     // ================= AGREGAR =================
     public function create()
