@@ -83,3 +83,6 @@ Route::get('/forgot-password', [AuthController::class, 'mostrarFormularioCodigo'
 Route::post('/forgot-password', [AuthController::class, 'enviarCodigo'])->name('password.email');
 Route::get('/reset-password', [AuthController::class, 'mostrarFormularioReset'])->name('password.reset');
 Route::post('/reset-password', [AuthController::class, 'actualizarContrasena'])->name('password.update');
+Route::get('usuarios/panel/perfiles/perfilAdmin', [UsuariosController::class, 'perfilAdmin'])->name('admin.perfil');
+Route::get('usuarios/panel/perfiles/editarPerfilAdmin',[UsuariosController::class, 'editarPerfilAdmin'])->name('admin.perfil.editar');
+Route::post('usuarios/panel/perfiles/actualizarPerfilAdmin',[UsuariosController::class, 'actualizarPerfilAdmin'])->name('admin.perfil.actualizar');
