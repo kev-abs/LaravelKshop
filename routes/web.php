@@ -8,6 +8,7 @@ use App\Http\Controllers\InicioController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\Usuario\UsuariosController;
 use App\Http\Controllers\Producto\ProductoController;
+use App\Http\Controllers\Producto\ProductoCategoriaController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PedidoController;
 use App\Http\Controllers\Usuario\AdminController;
@@ -46,10 +47,6 @@ Route::get('/panel/cliente/perfil/editar', [ClienteController::class, 'editarPer
 Route::post('/panel/cliente/perfil/actualizar', [ClienteController::class, 'actualizarPerfil'])->name('cliente.perfil.actualizar');
 
 
-Route::get('/productos', [ProductoController::class, 'index'])->name('productos.index');
-Route::get('/productos/catalogo', [ProductoController::class, 'catalogo'])->name('productos.catalogo');
-
-
 Route::get('/ventas', function () {
     return view('ventas.ventas');
 })->name('ventas.ventas');
@@ -78,8 +75,16 @@ Route::post('/productos/agregar', [ProductoController::class, 'store'])->name('p
 
 Route::get('/productos/editar/{id}', [ProductoController::class, 'edit'])->name('productos.edit');
 Route::put('/productos/editar/{id}', [ProductoController::class, 'update'])->name('productos.update');
-Route::delete('/productos/eliminar/{id}', [ProductoController::class, 'destroy'])
-    ->name('productos.destroy');
+Route::delete('/productos/eliminar/{id}', [ProductoController::class, 'destroy'])->name('productos.destroy');
+
+Route::get('/productos', [ProductoController::class, 'index'])->name('productos.index');
+Route::get('/productos/catalogo', [ProductoController::class, 'catalogo'])->name('productos.catalogo');
+
+Route::get('/productos/categorizar', [ProductoController::class, 'categorizar'])->name('productos.categorizar');
+Route::post('/productos/categorizar', [ProductoController::class, 'guardarCategorias'])->name('productos.categorizar.guardar');
+Route::post( '/productos/asignar-categoria', [ProductoController::class, 'asignarCategoria'])->name('productos.asignarCategoria');
+Route::get('/api/producto-categoria/por-categoria',  [ProductoCategoriaController::class, 'porCategoria'])->name('productos.productosPorCategoria');
+
 Route::get('/logout', function () {
     session()->flush();
     return redirect()->route('inicio');

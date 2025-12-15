@@ -118,6 +118,7 @@ class Administrador
             <ul class="list-unstyled">
               <li><a href="{{ route('productos.index') }}" class="text-white text-decoration-none">➤ Consultar Productos</a></li>
               <li><a href="{{ route('productos.create') }}" class="text-white text-decoration-none">➤ Agregar Producto</a></li>
+              <li><a href="{{ route('productos.productosPorCategoria') }}" class="text-white text-decoration-none">➤ Productos por Categoria</a></li>
             </ul>
           </div>
         </div>
