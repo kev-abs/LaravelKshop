@@ -136,7 +136,7 @@ class Cliente
                         $ {{ number_format($p['precio'], 0, ',', '.') }}
                     </p>
 
-                    <a href="{{ route('productos.catalogo') }}" class="btn btn-outline-dark btn-sm">
+                    <a href="{{ route('cliente.todosProductos') }}" class="btn btn-outline-dark btn-sm">
                         Ver producto
                     </a>
                 </div>
@@ -152,7 +152,7 @@ class Cliente
 </div>
 
 <div class="text-center mt-4">
-    <a href="{{ route('productos.catalogo') }}" class="btn btn-dark px-4">
+    <a href="{{ route('cliente.todosProductos') }}" class="btn btn-dark px-4">
         Ver todos los productos
     </a>
 </div>
