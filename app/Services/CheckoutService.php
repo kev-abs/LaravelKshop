@@ -6,19 +6,18 @@ use Illuminate\Support\Facades\Http;
 
 class CheckoutService
 {
-    private $apiUrl;
+    private string $apiUrl;
 
     public function __construct()
     {
         $this->apiUrl = config('services.checkout.url');
     }
 
-    public function confirmarCompra(array $data)
+    public function confirmarCompra(array $data): bool
     {
         $response = Http::post($this->apiUrl, $data);
 
-        return $response->successful()
-            ? $response->json()
-            : false;
+        return $response->successful();
     }
 }
+

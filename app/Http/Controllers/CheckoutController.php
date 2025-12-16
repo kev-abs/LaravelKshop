@@ -29,20 +29,26 @@ class CheckoutController extends Controller
     // Confirmar compra
     public function store(Request $request)
     {
-        if (!session()->has('idCliente')) {
-        return redirect()->route('login')
-            ->with('error', 'Debes iniciar sesión para comprar');
-        
+        // 🔐 Validar sesión cliente
+        if (!session()->has('id_cliente')) {
+            return redirect()
+                ->route('login')
+                ->with('error', 'Debes iniciar sesión para comprar');
         }
-        
+
+        // ✅ Validar formulario
         $request->validate([
             'direccion'     => 'required|string',
             'metodo_pago'   => 'required|string',
             'tipo_entrega'  => 'required|string',
         ]);
 
-        $carrito = session('carrito', []);
-        $idCliente = session('idCliente');
+        $carrito   = session('carrito', []);
+        $idCliente = session('id_cliente');
+
+        if (empty($carrito)) {
+            return redirect()->route('ventas.carrito');
+        }
 
         $data = [
             'idCliente'    => $idCliente,
