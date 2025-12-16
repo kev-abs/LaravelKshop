@@ -36,7 +36,7 @@ class CheckoutController extends Controller
                 ->with('error', 'Debes iniciar sesión para comprar');
         }
 
-        // ✅ Validar formulario
+        // Validar formulario
         $request->validate([
             'direccion'     => 'required|string',
             'metodo_pago'   => 'required|string',
@@ -68,4 +68,20 @@ class CheckoutController extends Controller
 
         return redirect()->route('pedido.exito');
     }
+
+
+    public function historial()
+    {
+        if (!session()->has('id_cliente')) {
+            return redirect()->route('login');
+        }
+
+        $idCliente = session('id_cliente');
+
+        $compras = $this->checkoutService->obtenerHistorial($idCliente);
+
+        return view('ventas.historial', compact('compras'));
+    }
+
+
 }

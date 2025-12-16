@@ -15,7 +15,7 @@
     <div class="container d-flex flex-wrap justify-content-between align-items-center">
         <div class="d-flex align-items-center">
             <img src="{{ asset('img/logo_kshopsinfondo.png') }}" width="83" class="me-2">
-            <a href="{{ route('inicio') }}" class="text-decoration-none fw-bold text-dark">K-SHOP</a>
+            <a href="{{ route('panel.cliente') }}" class="text-decoration-none fw-bold text-dark">K-SHOP | Cliente</a>
         </div>
 
         <nav class="d-flex align-items-center gap-3">

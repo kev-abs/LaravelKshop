@@ -69,8 +69,8 @@
                             Tipo de entrega
                         </label>
                         <select name="tipo_entrega" class="form-select" required>
-                            <option value="DELIVERY">Delivery</option>
-                            <option value="RECOGER">Recoger en tienda</option>
+                            <option value="CONTRAENTREGA">Contra-Entrega</option>
+                            <option value="PUNTOENTREGA">Punto de entrega</option>
                         </select>
                     </div>
 

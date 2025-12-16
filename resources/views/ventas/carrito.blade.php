@@ -16,8 +16,8 @@
 
         <div class="d-flex align-items-center">
             <img src="{{ asset('img/logo_kshopsinfondo.png') }}" width="83" class="me-2">
-            <a href="{{ route('inicio') }}" class="fw-bold text-dark text-decoration-none">
-                K-SHOP
+            <a href="{{ route('panel.cliente') }}" class="fw-bold text-dark text-decoration-none">
+                K-SHOP | Cliente
             </a>
         </div>
 

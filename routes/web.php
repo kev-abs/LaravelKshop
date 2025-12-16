@@ -19,6 +19,11 @@ use App\Http\Controllers\ClienteCuponController;
 use App\Http\Controllers\CarritoController;
 use App\Http\Controllers\CheckoutController;
 
+
+
+Route::get('/mis-compras', [CheckoutController::class, 'historial'])
+    ->name('checkout.historial');
+
 Route::get('/checkout', [CheckoutController::class, 'index'])
     ->name('checkout.index');
 
