@@ -15,6 +15,7 @@ use App\Http\Controllers\Usuario\AdminController;
 use App\Http\Controllers\Usuario\VendedorController;
 use App\Http\Controllers\Usuario\ListaDeseosController;
 use App\Http\Controllers\ClienteController;
+use App\Http\Controllers\ClienteCuponController;
 use App\Http\Controllers\CarritoController;
 use App\Http\Controllers\CheckoutController;
 
@@ -36,6 +37,7 @@ Route::get('/cupon/consultar', [CuponController::class, 'consultar'])->name('cup
 Route::match(['get', 'post'],'/cupon/guardar', [CuponController::class, 'store'])->name('cupon.guardar');
 
 Route::get('/cupon/editar', [CuponController::class, 'editarVista'])->name('cupon.editarVista');
+
 Route::put('/cupon/editar', [CuponController::class, 'update'])->name('cupon.update');
 
 Route::delete('/cupon/eliminar', [CuponController::class, 'destroy'])->name('cupon.eliminar');
@@ -161,3 +163,7 @@ Route::get('/cliente/lista-deseos', [ListaDeseosController::class, 'index'])->na
 Route::post('/cliente/lista-deseos/agregar', [ListaDeseosController::class, 'agregar'])->name('cliente.listaDeseos.agregar');
 Route::delete('/cliente/lista-deseos/{idLista}', [ListaDeseosController::class, 'eliminar'])->name('cliente.listaDeseos.eliminar');
 Route::get('/cliente/productos', [ListaDeseosController::class, 'productos'])->name('cliente.productos');
+
+Route::get('/cliente/cupones', [ClienteCuponController::class, 'index'])->name('cliente.cupones');
+Route::get('/usuario/mis-cupones', [CuponController::class, 'misCupones'])->name('usuario.mis_cupones');
+Route::post('/usuario/cupon/redimir', [CuponController::class, 'redimir'])->name('usuario.cupon.redimir');
