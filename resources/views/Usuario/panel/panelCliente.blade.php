@@ -54,7 +54,7 @@
       </li>
 
       <li class="mb-3">
-        <a href="#" class="text-white text-decoration-none">
+        <a href="{{ route('cliente.listaDeseos') }}" class="text-white text-decoration-none">
           <i class="bi bi-heart me-2"></i> Lista de Deseos
         </a>
       </li>
@@ -89,46 +89,56 @@
   </p>
 
   <!-- TARJETAS -->
-  <div class="row g-4 mb-5 text-center">
-    <div class="col-md-6 col-lg-3">
-      <div class="card shadow-sm border-0 h-100">
-        <div class="card-body">
-          <i class="bi bi-cart-check fs-1 text-success"></i>
-          <h5 class="fw-bold mt-3">Pedidos</h5>
-          <p class="text-muted">Consulta tus compras</p>
+  <div class="row row-cols-2 row-cols-md-2 row-cols-lg-4 g-4 text-center mb-5">
+  
+    <div class="col">
+      <a href="#" class="text-decoration-none d-block h-100">
+        <div class="card shadow-sm border-0 h-100">
+          <div class="card-body">
+            <i class="bi bi-cart-check fs-1 text-success"></i>
+            <h5 class="fw-bold mt-3">Pedidos</h5>
+            <p class="text-muted">Consulta tus compras</p>
+          </div>
         </div>
-      </div>
+      </a>
     </div>
 
-    <div class="col-md-6 col-lg-3">
-      <div class="card shadow-sm border-0 h-100">
-        <div class="card-body">
-          <i class="bi bi-heart fs-1 text-danger"></i>
-          <h5 class="fw-bold mt-3">Favoritos</h5>
-          <p class="text-muted">Productos guardados</p>
+    <div class="col">
+      <a href="{{ route('cliente.listaDeseos') }}" class="text-decoration-none d-block h-100">
+        <div class="card shadow-sm border-0 h-100">
+          <div class="card-body">
+            <i class="bi bi-heart fs-1 text-danger"></i>
+            <h5 class="fw-bold mt-3">Favoritos</h5>
+            <p class="text-muted">Productos guardados</p>
+          </div>
         </div>
-      </div>
+      </a>
     </div>
 
-    <div class="col-md-6 col-lg-3">
-      <div class="card shadow-sm border-0 h-100">
-        <div class="card-body">
-          <i class="bi bi-person fs-1 text-dark"></i>
-          <h5 class="fw-bold mt-3">Perfil</h5>
-          <p class="text-muted">Actualiza tu información</p>
+    <div class="col">
+      <a href="{{ route('cliente.perfil') }}" class="text-decoration-none d-block h-100">
+        <div class="card shadow-sm border-0 h-100">
+          <div class="card-body">
+            <i class="bi bi-person fs-1 text-dark"></i>
+            <h5 class="fw-bold mt-3">Perfil</h5>
+            <p class="text-muted">Actualiza tu información</p>
+          </div>
         </div>
-      </div>
+      </a>
     </div>
 
-    <div class="col-md-6 col-lg-3">
-      <div class="card shadow-sm border-0 h-100">
-        <div class="card-body">
-          <i class="bi bi-bag fs-1 text-primary"></i>
-          <h5 class="fw-bold mt-3">Productos</h5>
-          <p class="text-muted">Explora novedades</p>
+    <div class="col">
+      <a href="{{ route('cliente.productos') }}" class="text-decoration-none d-block h-100">
+        <div class="card shadow-sm border-0 h-100">
+          <div class="card-body">
+            <i class="bi bi-bag fs-1 text-primary"></i>
+            <h5 class="fw-bold mt-3">Productos</h5>
+            <p class="text-muted">Explora novedades</p>
+          </div>
         </div>
-      </div>
+      </a>
     </div>
+
   </div>
 
   <!-- PRODUCTOS -->
@@ -150,9 +160,9 @@
               $ {{ number_format($p->Precio, 0, ',', '.') }}
             </p>
 
-            <a href="{{ route('productos.catalogo') }}"
+            <a href="{{ route('cliente.productos') }}"
               class="btn btn-outline-dark btn-sm">
-              Ver producto
+              Ver todos los productos
             </a>
           </div>
 

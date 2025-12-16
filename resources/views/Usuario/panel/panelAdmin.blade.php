@@ -39,7 +39,7 @@ class Administrador
     <!-- LOGO -->
     <div class="d-flex align-items-center">
       <img src="{{ asset('img/logo_kshopsinfondo.png') }}" alt="Logo K-Shop" width="83" class="me-2">
-      <a href="/ModeloVistaControlador/index.php?Controller=panel&action=manejarPeticion" class="text-decoration-none fs-7 fw-bold text-dark">K-SHOP | Admin</a>
+      <a href="{{route('panel.admin')}}" class="text-decoration-none fs-7 fw-bold text-dark">K-SHOP | Admin</a>
     </div>
 
     <!-- BARRA DE BÚSQUEDA -->
