@@ -13,6 +13,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PedidoController;
 use App\Http\Controllers\Usuario\AdminController;
 use App\Http\Controllers\Usuario\VendedorController;
+use App\Http\Controllers\Usuario\ListaDeseosController;
 use App\Http\Controllers\ClienteController;
 
 Route::get('/cupon', [CuponController::class, 'index'])->name('cupon.inventarioVista');
@@ -111,3 +112,7 @@ Route::get('/forgot-password', [AuthController::class, 'mostrarFormularioCodigo'
 Route::post('/forgot-password', [AuthController::class, 'enviarCodigo'])->name('password.email');
 Route::get('/reset-password', [AuthController::class, 'mostrarFormularioReset'])->name('password.reset');
 Route::post('/reset-password', [AuthController::class, 'actualizarContrasena'])->name('password.update');
+Route::get('/cliente/lista-deseos', [ListaDeseosController::class, 'index'])->name('cliente.listaDeseos');
+Route::post('/cliente/lista-deseos/agregar', [ListaDeseosController::class, 'agregar'])->name('cliente.listaDeseos.agregar');
+Route::delete('/cliente/lista-deseos/{idLista}', [ListaDeseosController::class, 'eliminar'])->name('cliente.listaDeseos.eliminar');
+Route::get('/cliente/productos', [ListaDeseosController::class, 'productos'])->name('cliente.productos');

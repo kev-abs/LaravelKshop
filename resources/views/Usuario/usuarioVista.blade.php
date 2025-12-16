@@ -12,28 +12,23 @@
 </head>
 <body class="bg-light d-flex flex-column min-vh-100">
 
-    <!-- NAVBAR -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom shadow-sm sticky-top">
-    <div class="container">
-        <a class="navbar-brand fw-bold" href="{{ route('panel.admin') }}">
-        <img src="{{ asset('img/logo_kshopsinfondo.png') }}" alt="K-Shop" width="60" class="me-2">
-        K-SHOP | Admin
-        </a>
-
-        <form class="d-none d-md-flex mx-auto w-50" role="search">
-        <input class="form-control" type="search" placeholder="Buscar en usuarios..." aria-label="Buscar">
-        </form>
-
-        <div class="d-flex">
-        <a href="{{ route('logout') }}" class="btn btn-outline-dark">
-            <i class="bi bi-box-arrow-right"></i> Cerrar sesión
-        </a>
+<header class="bg-white sticky-top py-3 border-bottom shadow-sm">
+    <div class="container d-flex justify-content-between align-items-center">
+        <div class="d-flex align-items-center">
+            <a class="navbar-brand fw-bold" href="{{ route('panel.admin') }}">
+            <img src="{{ asset('img/logo_kshopsinfondo.png') }}" alt="K-Shop" width="60" class="me-2">
+            K-SHOP | Admin
+            </a>
         </div>
-    </div>
-    </nav>
 
-    <!-- CONTENIDO -->
-    <main class="container my-5">
+        <nav>
+            <a href="{{ route('logout') }}" class="btn btn-outline-dark">Cerrar Sesión</a>
+        </nav>
+    </div>
+</header>
+
+<!-- CONTENIDO -->
+<main class="container my-5">
     <div class="text-center mb-5">
         <h2 class="fw-bold">Módulo de Usuarios</h2>
         <p class="text-muted">
