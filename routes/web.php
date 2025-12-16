@@ -149,3 +149,5 @@ Route::delete('/cliente/lista-deseos/{idLista}', [ListaDeseosController::class, 
 Route::get('/cliente/productos', [ListaDeseosController::class, 'productos'])->name('cliente.productos');
 
 Route::get('/cliente/cupones', [ClienteCuponController::class, 'index'])->name('cliente.cupones');
+Route::get('/usuario/mis-cupones', [CuponController::class, 'misCupones'])->name('usuario.mis_cupones');
+Route::post('/usuario/cupon/redimir', [CuponController::class, 'redimir'])->name('usuario.cupon.redimir');
