@@ -119,13 +119,21 @@ if (!empty($categoriaId)) { // Comparamos contra string vacío
 
     // ================= LISTAR PARA CLIENTE =================
     public function catalogo()
-{
-    $resultadoProductos = $this->productoService->obtenerProductos();
+    {
+        $resultadoProductos = $this->productoService->obtenerProductos();
 
-    $productos = $resultadoProductos["success"] ? $resultadoProductos["data"] : [];
+        $productos = $resultadoProductos["success"] ? $resultadoProductos["data"] : [];
 
-    return view("productos.nuestrosproductos", compact("productos"));
-}
+        return view("productos.nuestrosproductos", compact("productos"));
+    }
+    public function vistacatalogo()
+    {
+        $resultadoProductos = $this->productoService->obtenerProductos();
+
+        $productos = $resultadoProductos["success"] ? $resultadoProductos["data"] : [];
+
+        return view("productos.productosVista", compact("productos"));
+    }
 public function categorizar()
 {
     $productos = $this->productoService->obtenerProductos()['data'] ?? [];

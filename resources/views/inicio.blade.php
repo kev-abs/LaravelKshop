@@ -20,19 +20,14 @@
     </div>
 
     <!-- BARRA DE BÚSQUEDA CENTRADA (invisible en móvil) -->
-    <form action="{{ route('productos.catalogo') }}" method="GET" class="d-flex mb-4">
+    <form action="{{ route('productos.vistaCatalogo') }}" method="GET" class="d-flex mb-4">
     <input type="text" name="q" class="form-control me-2" placeholder="Buscar productos...">
 
 </form>
 
     <!-- MENÚ NAVEGACIÓN -->
     <nav class="d-flex align-items-center gap-3">
-      <a href="{{ route('productos.catalogo') }}" class="nav-link text-dark">Productos</a>
-      <a href="./servicios.php" class="nav-link text-dark">Servicios</a>
-      <!-- CARRITO -->
-      <a href="index.php?Controller=carrito&action=mostrar" class="btn btn-outline-dark border-0">
-        <i class="bi bi-cart-fill"></i>
-      </a>
+      <a href="{{ route('productos.vistaCatalogo') }}" class="nav-link text-dark">Productos</a>
 
       <!-- INICIAR SESIÓN -->
       <a href="{{ route('login') }}" class="btn btn-outline-dark border-0 text-dark">
@@ -83,7 +78,7 @@
           </div>
           <div class="card-body">
             <h5 class="fw-bold">Hombre</h5>
-            <a href="#" class="btn btn-dark btn-sm">Ver más</a>
+            <a href="{{ route('productos.catalogo') }}" class="btn btn-dark btn-sm">Ver más</a>
           </div>
         </div>
       </div>
@@ -95,7 +90,7 @@
           </div>
           <div class="card-body">
             <h5 class="fw-bold">Mujer</h5>
-            <a href="#" class="btn btn-dark btn-sm">Ver más</a>
+            <a href="{{ route('productos.catalogo') }}" class="btn btn-dark btn-sm">Ver más</a>
           </div>
         </div>
       </div>
@@ -107,7 +102,7 @@
           </div>
           <div class="card-body">
             <h5 class="fw-bold">Niños</h5>
-            <a href="#" class="btn btn-dark btn-sm">Ver más</a>
+            <a href="{{route('productos.catalogo')}}" class="btn btn-dark btn-sm">Ver más</a>
           </div>
         </div>
       </div>

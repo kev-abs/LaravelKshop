@@ -16,15 +16,16 @@
   <div class="container d-flex justify-content-between align-items-center">
 
     <div class="d-flex align-items-center">
-      <a class="navbar-brand fw-bold" href="{{ route('panel.cliente') }}">
+      <a class="navbar-brand fw-bold" href="{{ route('inicio') }}">
         <img src="{{ asset('img/logo_kshopsinfondo.png') }}" width="83" class="me-2">
-        <span class="fw-bold text-dark">K-SHOP | Cliente</span>
+        <span class="fw-bold text-dark">K-SHOP</span>
       </a>
     </div>
 
     <nav>
-      <a href="{{ route('logout') }}" class="btn btn-outline-dark border-0">
-        Cerrar Sesión
+      <!-- INICIAR SESIÓN -->
+      <a href="{{ route('login') }}" class="btn btn-outline-dark border-0 text-dark">
+        <i class="bi bi-person-circle me-1"></i>Iniciar Sesión
       </a>
     </nav>
 
@@ -57,16 +58,6 @@
                     <h5 class="fw-bold">{{ $p['nombre'] }}</h5>
                     <p class="text-muted mb-1 small">{{ $p['descripcion'] }}</p>
                     <p class="fw-bold mb-2">${{ number_format($p['precio'], 0, ',', '.') }}</p>
-
-                    {{-- AGREGAR AL CARRITO --}}
-                    <form action="{{ route('carrito.store') }}" method="POST" class="mt-auto">
-                        @csrf
-                        <input type="hidden" name="idProducto" value="{{ $p['id_Producto'] }}">
-                        <input type="hidden" name="cantidad" value="1">
-                        <button type="submit" class="btn btn-primary w-100">
-                            <i class="bi bi-cart-plus me-1"></i> Agregar al carrito
-                        </button>
-                    </form>
                 </div>
             </div>
         </div>
