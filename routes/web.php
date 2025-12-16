@@ -15,6 +15,7 @@ use App\Http\Controllers\Usuario\AdminController;
 use App\Http\Controllers\Usuario\VendedorController;
 use App\Http\Controllers\Usuario\ListaDeseosController;
 use App\Http\Controllers\ClienteController;
+use App\Http\Controllers\ClienteCuponController;
 
 Route::get('/cupon', [CuponController::class, 'index'])->name('cupon.inventarioVista');
 
@@ -146,3 +147,5 @@ Route::get('/cliente/lista-deseos', [ListaDeseosController::class, 'index'])->na
 Route::post('/cliente/lista-deseos/agregar', [ListaDeseosController::class, 'agregar'])->name('cliente.listaDeseos.agregar');
 Route::delete('/cliente/lista-deseos/{idLista}', [ListaDeseosController::class, 'eliminar'])->name('cliente.listaDeseos.eliminar');
 Route::get('/cliente/productos', [ListaDeseosController::class, 'productos'])->name('cliente.productos');
+
+Route::get('/cliente/cupones', [ClienteCuponController::class, 'index'])->name('cliente.cupones');
