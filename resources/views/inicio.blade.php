@@ -54,7 +54,7 @@
       </div>
     </div>
     <div class="carousel-item">
-      <img src="{{ asset('img/ropa dama.jpeg') }}" class="d-block w-100 object-fit-cover" alt="Damas" style="height: 80vh;">
+      <img src="{{ asset('img/ropa dama.jpg') }}" class="d-block w-100 object-fit-cover" alt="Damas" style="height: 80vh;">
       <div class="carousel-caption d-none d-md-block">
         <h2 class="fw-bold text-light text-shadow">Moda femenina</h2>
         <p class="text-light">Tu estilo ideal está aquí</p>

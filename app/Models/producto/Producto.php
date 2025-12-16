@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\producto;
 
 use Illuminate\Database\Eloquent\Model;
 
 class Producto extends Model
 {
-    protected $table = 'producto';   // nombre real de la tabla
+    protected $table = 'producto'; 
     protected $primaryKey = 'ID_Producto';
 
     public $timestamps = false;

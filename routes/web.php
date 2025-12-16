@@ -11,6 +11,10 @@ use App\Http\Controllers\Producto\ProductoController;
 use App\Http\Controllers\Producto\ProductoCategoriaController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PedidoController;
+use App\Http\Controllers\Usuario\AdminController;
+use App\Http\Controllers\Usuario\VendedorController;
+use App\Http\Controllers\Usuario\ListaDeseosController;
+use App\Http\Controllers\ClienteController;
 
 Route::get('/cupon', [CuponController::class, 'index'])->name('cupon.inventarioVista');
 Route::get('/cupon/consultar', [CuponController::class, 'consultar'])->name('cupon.index');
@@ -18,26 +22,31 @@ Route::get('/cupon/consultar', [CuponController::class, 'consultar'])->name('cup
 Route::match(['get', 'post'],'/cupon/guardar', [CuponController::class, 'store'])->name('cupon.guardar');
 
 Route::get('/cupon/editar', [CuponController::class, 'editarVista'])->name('cupon.editarVista');
-
-// Actualizar cupon (POST desde el formulario)
 Route::put('/cupon/editar', [CuponController::class, 'update'])->name('cupon.update');
-
-// Eliminar cupon (POST desde el formulario)
 Route::delete('/cupon/eliminar', [CuponController::class, 'destroy'])->name('cupon.eliminar');
 
 
+//Paneles
 Route::get('/', [InicioController::class, 'index'])->name('inicio');
 
 Route::get('/login', [LoginController::class, 'mostrarFormulario'])->name('login');
 
 Route::post('/login', [LoginController::class, 'manejarPeticion'])->name('login.procesar');
+Route::get('/panel/admin', [AdminController::class, 'panel'])->name('panel.admin');
+Route::get('usuarios/panel/perfiles/perfilAdmin', [AdminController::class, 'perfilAdmin'])->name('admin.perfil');
+Route::get('usuarios/panel/perfiles/editarPerfilAdmin',[AdminController::class, 'editarPerfilAdmin'])->name('admin.perfil.editar');
+Route::post('usuarios/panel/perfiles/actualizarPerfilAdmin',[AdminController::class, 'actualizarPerfilAdmin'])->name('admin.perfil.actualizar');
+Route::get('/panel/vendedor', [VendedorController::class, 'panel'])->name('panel.vendedor');
+Route::get('/panel/vendedor/perfil', [VendedorController::class, 'perfil'])->name('vendedor.perfil');
+Route::get('/panel/vendedor', [VendedorController::class, 'panel'])->name('panel.vendedor');
+Route::get('/panel/vendedor/perfil', [VendedorController::class, 'perfilVendedor'])->name('vendedor.perfil');
+Route::get('/panel/vendedor/perfil/editar', [VendedorController::class, 'editarPerfilVendedor'])->name('vendedor.perfil.editar');
+Route::post('/panel/vendedor/perfil/actualizar', [VendedorController::class, 'actualizarPerfilVendedor'])->name('vendedor.perfil.actualizar');
+Route::get('/cliente/panel', [ClienteController::class, 'panel'])->name('panel.cliente');
+Route::get('/cliente/perfil', [ClienteController::class, 'perfil'])->name('cliente.perfil');
+Route::get('/panel/cliente/perfil/editar', [ClienteController::class, 'editarPerfil'])->name('cliente.perfil.editar');
+Route::post('/panel/cliente/perfil/actualizar', [ClienteController::class, 'actualizarPerfil'])->name('cliente.perfil.actualizar');
 
-Route::view('/panel/admin', 'Usuario.panel.panelAdmin')->name('panel.admin');
-
-Route::get('/panel/cliente', [ProductoController::class, 'panelCliente'])
-    ->name('panel.cliente');
-
-Route::view('/panel/vendedor', 'Usuario.panel.panelVendedor')->name('panel.vendedor');
 
 Route::get('/ventas', function () {
     return view('ventas.ventas');
@@ -84,6 +93,9 @@ Route::get('/logout', function () {
 
 Route::get('/tienda', [ProductoController::class, 'catalogo'])->name('tienda.catalogo');
 
+
+
+//Rutas modulo de Usuarios
 Route::get('/usuarioVista', [UsuariosController::class,'index'])->name('usuariosVista');
 
 Route::get('/usuarios/clientes',[UsuariosController::class, 'consultarClientes'])->name('clientes.consultar');
@@ -105,3 +117,7 @@ Route::get('/forgot-password', [AuthController::class, 'mostrarFormularioCodigo'
 Route::post('/forgot-password', [AuthController::class, 'enviarCodigo'])->name('password.email');
 Route::get('/reset-password', [AuthController::class, 'mostrarFormularioReset'])->name('password.reset');
 Route::post('/reset-password', [AuthController::class, 'actualizarContrasena'])->name('password.update');
+Route::get('/cliente/lista-deseos', [ListaDeseosController::class, 'index'])->name('cliente.listaDeseos');
+Route::post('/cliente/lista-deseos/agregar', [ListaDeseosController::class, 'agregar'])->name('cliente.listaDeseos.agregar');
+Route::delete('/cliente/lista-deseos/{idLista}', [ListaDeseosController::class, 'eliminar'])->name('cliente.listaDeseos.eliminar');
+Route::get('/cliente/productos', [ListaDeseosController::class, 'productos'])->name('cliente.productos');
