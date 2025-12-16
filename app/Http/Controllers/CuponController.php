@@ -77,37 +77,51 @@ class CuponController
         return back()->with('mensaje', 'Cupón eliminado correctamente');
     }
 
-    // ================= REDIMIR CUPON =================
-    public function redimir(Request $request)
-    {
-        $cuponId = $request->input('ID_CuponCliente');
-
-        DB::table('cupon_cliente')
-            ->where('ID_Cupon', $cuponId)
-            ->update(['Usado' => true]);
-
-        return redirect()->back()->with('success', '¡Cupón redimido correctamente!');
-    }
-
     public function misCupones()
     {
-        // ID del cliente logueado
-        $clienteId = session('id_cliente'); // asegúrate de guardar esto en sesión al loguear
+        // --- Valor temporal para demo ---
+        $clienteId = 1;
+        $clienteId = session('id_cliente');
+        dd($clienteId);
+        if (!$clienteId) {
+            return redirect()->route('login'); 
+        }
 
-        // Obtener los cupones del cliente con su estado
+        
         $cupones = DB::table('cupon_cliente')
-            ->join('cupon', 'cupon.id_cupon', '=', 'cupon_cliente.ID_Cupon')
+            ->leftJoin('cupon', 'cupon.id_cupon', '=', 'cupon_cliente.ID_Cupon')
             ->select(
                 'cupon_cliente.ID_Cliente',
-                'cupon_cliente.ID_Cupon as ID_CuponCliente',
+                'cupon_cliente.ID_Cupon',
                 'cupon.codigo',
                 'cupon.descuento',
                 'cupon_cliente.Usado'
             )
             ->where('cupon_cliente.ID_Cliente', $clienteId)
             ->get();
+        
+             // Para verificar que sí estamos obteniendo cupones
+            if ($cupones->isEmpty()) {
+                dd("No se encontraron cupones para el cliente con ID: $clienteId");
+            }
+        return view('usuario.cupones.index', compact('cupones'));
+    }
 
-        return view('cliente.mis_cupones', compact('cupones'));
+    public function redimir(Request $request)
+    {
+        $clienteId = $request->input('ID_Cliente'); 
+        $cuponId   = $request->input('ID_Cupon');  
+
+        if (!$cuponId) {
+            return redirect()->back()->with('error', 'Cupón inválido');
+        }
+
+        DB::table('cupon_cliente')
+            ->where('ID_Cliente', $clienteId)
+            ->where('ID_Cupon', $cuponId)
+            ->update(['Usado' => true]);
+
+        return redirect()->back()->with('success', '¡Cupón redimido correctamente!');
     }
 
 }
