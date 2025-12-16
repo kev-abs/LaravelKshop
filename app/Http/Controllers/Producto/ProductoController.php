@@ -31,6 +31,78 @@ class ProductoController
 
     return view('Usuario.panel.panelCliente', compact('productos'));
 }
+public function todosProductos(Request $request)
+{
+    // 1. OBTENER DATOS BASE
+    $productos = $this->productoService->obtenerProductos()['data'] ?? []; 
+    $categorias = $this->productoService->obtenerCategorias()['data'] ?? [];
+    
+    // --- LÍNEA CLAVE AJUSTADA ---
+    // Si el servicio devuelve el array directamente, usamos la variable completa.
+    $categoriasConProductos = $this->productoService->obtenerCategoriasConProductos(); 
+    
+    // Si el resultado es un array de error (ej: ['error' => 500]), lo manejamos.
+    if (isset($categoriasConProductos['error'])) {
+        // Podrías lanzar una excepción o registrar un error aquí.
+        // Por ahora, lo establecemos como un array vacío para evitar que el código falle.
+        $categoriasConProductos = []; 
+    }
+    // ----------------------------
+    
+    // Convertir la lista plana de productos en un Collection asociativo (clave: id_Producto)
+    $productosBase = collect($productos)->keyBy('id_Producto')->all();
+    
+    $mapaRelaciones = []; 
+
+    // 2. CONSTRUIR EL MAPA DE RELACIONES
+    foreach ($categoriasConProductos as $categoria) { // ¡El bucle ahora usa el array directo!
+        $idCategoria = (int) $categoria['idCategoria']; 
+        
+        if (isset($categoria['productos']) && is_array($categoria['productos'])) {
+            foreach ($categoria['productos'] as $productoAnidado) {
+                $idProducto = $productoAnidado['id_Producto']; 
+                
+                if (!isset($mapaRelaciones[$idProducto])) {
+                    $mapaRelaciones[$idProducto] = [];
+                }
+                if (!in_array($idCategoria, $mapaRelaciones[$idProducto])) {
+                    $mapaRelaciones[$idProducto][] = $idCategoria;
+                }
+            }
+        }
+    }
+    
+    // ... el resto del código (pasos 3, 4 y 5) sigue igual ...
+    $productosFinales = collect($productosBase)->map(function ($p) use ($mapaRelaciones) {
+        $idProducto = $p['id_Producto'];
+        $p['categorias'] = $mapaRelaciones[$idProducto] ?? [];
+        return $p;
+    })->values()->all();
+
+    $categoriaId = (string) $request->query('categoria'); 
+
+if (!empty($categoriaId)) { // Comparamos contra string vacío
+    $productosFinales = collect($productosFinales)
+        ->filter(function($p) use ($categoriaId) {
+            
+            // Convertimos la lista de IDs del producto a STRINGs antes de buscar
+            $categoriasProductoString = array_map('strval', $p['categorias']); 
+            
+            // Buscamos el ID de filtro (STRING) en la lista de IDs del producto (STRING)
+            return in_array($categoriaId, $categoriasProductoString);
+        })
+        ->values()
+        ->all();
+}
+
+    return view('Usuario.panel.todosProductos', [
+        'productos' => $productosFinales,
+        'categorias' => $categorias,
+        'categoriaId' => $categoriaId,
+    ]);
+}
+
+
 
 
 

@@ -102,6 +102,11 @@ Route::get('/usuarios/clientes',[UsuariosController::class, 'consultarClientes']
 Route::match(['get','post'], '/usuarios/clientes/agregar', [UsuariosController::class, 'agregarCliente'])->name('clientes.agregar');
 Route::match(['get','post'], '/usuarios/clientes/editar', [UsuariosController::class, 'editarEliminarCliente'])->name('clientes.editar');
 Route::get('/usuarios/clientes/buscar/{id}', [UsuariosController::class, 'buscarCliente']);
+Route::get('/usuarios/clientes/{id}', [UsuariosController::class, 'buscarCliente']);
+Route::get('/cliente/productos', [ProductoController::class, 'panelCliente'])->name('cliente.Productos');
+Route::get('/cliente/panel', [ProductoController::class, 'panelCliente'])->name('cliente.panel');
+Route::get('/cliente/productos', [ProductoController::class, 'todosProductos'])->name('cliente.todosProductos');
+
 
 Route::get('/usuarios/empleados', [UsuariosController::class, 'consultarEmpleados'])->name('empleados.consultar');
 Route::match(['get','post'], '/usuarios/empleados/agregar', [UsuariosController::class, 'agregarEmpleado'])->name('empleados.agregar');

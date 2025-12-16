@@ -166,6 +166,34 @@
             </a>
           </div>
 
+    @forelse ($productos ?? [] as $p)
+        <div class="col-6 col-md-4 col-lg-3 mb-4">
+            <div class="card h-100 shadow-sm">
+                
+                <!-- Imagen -->
+               <img 
+    src="http://localhost/api/uploads/productos/{{ $p['imagen'] }}"
+    class="card-img-top"
+    style="height: 180px; object-fit: cover;"
+    alt="{{ $p['nombre'] }}"
+>
+
+
+                <!-- Info -->
+                <div class="card-body text-center">
+                    <h6 class="card-title mb-2">
+                        {{ $p['nombre'] }}
+                    </h6>
+
+                    <p class="fw-bold mb-3">
+                        $ {{ number_format($p['precio'], 0, ',', '.') }}
+                    </p>
+
+                    <a href="{{ route('cliente.todosProductos') }}" class="btn btn-outline-dark btn-sm">
+                        Ver producto
+                    </a>
+                </div>
+            </div>
         </div>
       </div>
     @empty
@@ -173,6 +201,11 @@
     @endforelse
 </div>
 
+<div class="text-center mt-4">
+    <a href="{{ route('cliente.todosProductos') }}" class="btn btn-dark px-4">
+        Ver todos los productos
+    </a>
+</div>
 
 </main>
 
