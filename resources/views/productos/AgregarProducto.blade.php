@@ -72,7 +72,7 @@
         <label class="form-label">Estado</label>
         <select name="estado" class="form-select" required>
             <option value="">Seleccione...</option>
-            <option value="activo">Activo</option>
+            <option value="activo">Disponible</option>
             <option value="inactivo">Inactivo</option>
         </select>
     </div>
@@ -82,9 +82,7 @@
         <input type="file" name="imagen" class="form-control">
     </div>
 
-    <button type="submit" class="btn btn-success w-100">
-        <i class="bi bi-plus-circle me-2"></i>Agregar Producto
-    </button>
+    <button type="submit" class="btn btn-primary w-100 mt-3">Agregar Producto</button>
 </form>
 
             </div>

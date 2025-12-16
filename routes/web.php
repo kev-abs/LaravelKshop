@@ -13,6 +13,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PedidoController;
 use App\Http\Controllers\Usuario\AdminController;
 use App\Http\Controllers\Usuario\VendedorController;
+use App\Http\Controllers\Usuario\ListaDeseosController;
 use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\CarritoController;
 use App\Http\Controllers\CheckoutController;
@@ -117,6 +118,11 @@ Route::get('/usuarios/clientes',[UsuariosController::class, 'consultarClientes']
 Route::match(['get','post'], '/usuarios/clientes/agregar', [UsuariosController::class, 'agregarCliente'])->name('clientes.agregar');
 Route::match(['get','post'], '/usuarios/clientes/editar', [UsuariosController::class, 'editarEliminarCliente'])->name('clientes.editar');
 Route::get('/usuarios/clientes/buscar/{id}', [UsuariosController::class, 'buscarCliente']);
+Route::get('/usuarios/clientes/{id}', [UsuariosController::class, 'buscarCliente']);
+Route::get('/cliente/productos', [ProductoController::class, 'panelCliente'])->name('cliente.Productos');
+Route::get('/cliente/panel', [ProductoController::class, 'panelCliente'])->name('cliente.panel');
+Route::get('/cliente/productos', [ProductoController::class, 'todosProductos'])->name('cliente.todosProductos');
+
 
 Route::get('/usuarios/empleados', [UsuariosController::class, 'consultarEmpleados'])->name('empleados.consultar');
 Route::match(['get','post'], '/usuarios/empleados/agregar', [UsuariosController::class, 'agregarEmpleado'])->name('empleados.agregar');
@@ -127,3 +133,7 @@ Route::get('/forgot-password', [AuthController::class, 'mostrarFormularioCodigo'
 Route::post('/forgot-password', [AuthController::class, 'enviarCodigo'])->name('password.email');
 Route::get('/reset-password', [AuthController::class, 'mostrarFormularioReset'])->name('password.reset');
 Route::post('/reset-password', [AuthController::class, 'actualizarContrasena'])->name('password.update');
+Route::get('/cliente/lista-deseos', [ListaDeseosController::class, 'index'])->name('cliente.listaDeseos');
+Route::post('/cliente/lista-deseos/agregar', [ListaDeseosController::class, 'agregar'])->name('cliente.listaDeseos.agregar');
+Route::delete('/cliente/lista-deseos/{idLista}', [ListaDeseosController::class, 'eliminar'])->name('cliente.listaDeseos.eliminar');
+Route::get('/cliente/productos', [ListaDeseosController::class, 'productos'])->name('cliente.productos');
