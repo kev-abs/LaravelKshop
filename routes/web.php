@@ -2,7 +2,6 @@
 
 use App\Http\Controllers\CuponController;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\EnvioController;
 use App\Http\Controllers\IngresoCompraController;
 use App\Http\Controllers\InicioController;
@@ -131,7 +130,6 @@ Route::match(['get','post'], '/usuarios/clientes/editar', [UsuariosController::c
 Route::get('/usuarios/clientes/buscar/{id}', [UsuariosController::class, 'buscarCliente']);
 Route::get('/usuarios/clientes/{id}', [UsuariosController::class, 'buscarCliente']);
 Route::get('/cliente/productos', [ProductoController::class, 'panelCliente'])->name('cliente.Productos');
-Route::get('/cliente/panel', [ProductoController::class, 'panelCliente'])->name('cliente.panel');
 Route::get('/cliente/productos', [ProductoController::class, 'todosProductos'])->name('cliente.todosProductos');
 
 

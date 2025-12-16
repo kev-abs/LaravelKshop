@@ -65,6 +65,12 @@
         </a>
       </li>
 
+      <li class="mb-3">
+        <a href="{{ route('cliente.cupones') }}" class="text-white text-decoration-none">
+          <i class="bi bi-ticket-perforated me-2"></i> Mis Cupones
+        </a>
+      </li>
+
     </ul>
   </div>
 </div>
@@ -139,6 +145,18 @@
       </a>
     </div>
 
+    <div class="col">
+      <a href="{{ route('cliente.cupones') }}" class="text-decoration-none d-block h-100">
+        <div class="card shadow-sm border-0 h-100">
+          <div class="card-body">
+            <i class="bi bi-ticket-perforated fs-1 text-warning"></i>
+            <h5 class="fw-bold mt-3">Cupones</h5>
+            <p class="text-muted">Redime tus descuentos</p>
+          </div>
+        </div>
+      </a>
+    </div>
+
   </div>
 
   <!-- PRODUCTOS -->
@@ -166,34 +184,6 @@
             </a>
           </div>
 
-    @forelse ($productos ?? [] as $p)
-        <div class="col-6 col-md-4 col-lg-3 mb-4">
-            <div class="card h-100 shadow-sm">
-                
-                <!-- Imagen -->
-               <img 
-    src="http://localhost/api/uploads/productos/{{ $p['imagen'] }}"
-    class="card-img-top"
-    style="height: 180px; object-fit: cover;"
-    alt="{{ $p['nombre'] }}"
->
-
-
-                <!-- Info -->
-                <div class="card-body text-center">
-                    <h6 class="card-title mb-2">
-                        {{ $p['nombre'] }}
-                    </h6>
-
-                    <p class="fw-bold mb-3">
-                        $ {{ number_format($p['precio'], 0, ',', '.') }}
-                    </p>
-
-                    <a href="{{ route('cliente.todosProductos') }}" class="btn btn-outline-dark btn-sm">
-                        Ver producto
-                    </a>
-                </div>
-            </div>
         </div>
       </div>
     @empty
@@ -201,11 +191,6 @@
     @endforelse
 </div>
 
-<div class="text-center mt-4">
-    <a href="{{ route('cliente.todosProductos') }}" class="btn btn-dark px-4">
-        Ver todos los productos
-    </a>
-</div>
 
 </main>
 
