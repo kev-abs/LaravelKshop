@@ -15,12 +15,6 @@
         <img src="{{ asset('img/logo_kshopsinfondo.png') }}" alt="K-Shop" width="60" class="me-2">
         K-SHOP | Admin
         </a>
-
-        <div class="d-flex">
-        <a href="/ModeloVistaControlador/Inicio/Controlador/Logueo/CerrarSesion.php" class="btn btn-outline-dark">
-            <i class="bi bi-box-arrow-right"></i> Cerrar sesión
-        </a>
-        </div>
     </div>
     </nav>
 
