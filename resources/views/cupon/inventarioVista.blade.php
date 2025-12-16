@@ -15,12 +15,6 @@
         <img src="{{ asset('img/logo_kshopsinfondo.png') }}" alt="K-Shop" width="60" class="me-2">
         K-SHOP | Admin
         </a>
-
-        <div class="d-flex">
-        <a href="/ModeloVistaControlador/Inicio/Controlador/Logueo/CerrarSesion.php" class="btn btn-outline-dark">
-            <i class="bi bi-box-arrow-right"></i> Cerrar sesión
-        </a>
-        </div>
     </div>
     </nav>
 
@@ -39,15 +33,17 @@
                         <h4 class="fw-bold">Gestión de Ingresos de Compra</h4>
                         <p class="text-muted">Consultar, agregar, actualizar o eliminar ingresos de compra.</p>
                         <div class="d-flex justify-content-center gap-2">
-                            <a href="/ModeloVistaControlador/index.php?Controller=inventario&action=consultarIngresoCompra" class="btn btn-outline-dark">
-                                <i class="bi bi-search"></i> Consultar
-                            </a>
-                            <a href="/ModeloVistaControlador/index.php?Controller=inventario&action=agregarIngresoCompra" class="btn btn-outline-dark">
-                                <i class="bi bi-plus-circle"></i> Agregar
-                            </a>
-                            <a href="/ModeloVistaControlador/index.php?Controller=inventario&action=editarEliminarIngresoCompra" class="btn btn-outline-dark">
-                                <i class="bi bi-pencil-square"></i> Actualizar / Eliminar
-                            </a>
+                            <a href="{{ route('ingresocompra.index') }}" class="btn btn-outline-dark">
+                                    Consultar
+                                </a>
+
+                                <a href="{{ route('ingresocompra.create') }}" class="btn btn-outline-dark">
+                                    Agregar
+                                </a>
+
+                                <a href="{{ route('ingresocompra.editDelete') }}" class="btn btn-outline-dark">
+                                    Actualizar / Eliminar
+                                </a>
                         </div>
                     </div>
                 </div>

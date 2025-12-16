@@ -59,12 +59,12 @@
         </div>
     @endif
 
-</div>
-
-<div class="text-center mt-4">
+    <div class="text-center mt-4">
     <a href="{{ route('cupon.inventarioVista') }}" class="btn btn-outline-secondary btn-lg w-50">
-        <i class="bi bi-arrow-left me-2"></i> Volver al Panel
+      <i class="bi bi-arrow-left me-2"></i> Volver al Panel
     </a>
+  </div>
+
 </div>
 
 <footer class="bg-dark text-white text-center py-4 mt-auto">

@@ -2,8 +2,8 @@
 
 use App\Http\Controllers\CuponController;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\EnvioController;
+use App\Http\Controllers\IngresoCompraController;
 use App\Http\Controllers\InicioController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\Usuario\UsuariosController;
@@ -30,16 +30,41 @@ Route::get('/pedido/exito', function () {
 
 
 Route::get('/cupon', [CuponController::class, 'index'])->name('cupon.inventarioVista');
+
 Route::get('/cupon/consultar', [CuponController::class, 'consultar'])->name('cupon.index');
 
 Route::match(['get', 'post'],'/cupon/guardar', [CuponController::class, 'store'])->name('cupon.guardar');
 
 Route::get('/cupon/editar', [CuponController::class, 'editarVista'])->name('cupon.editarVista');
 Route::put('/cupon/editar', [CuponController::class, 'update'])->name('cupon.update');
+
 Route::delete('/cupon/eliminar', [CuponController::class, 'destroy'])->name('cupon.eliminar');
 
+//INGRESO_COMPRA
+Route::get('/ingresocompra', [IngresoCompraController::class, 'index'])
+    ->name('ingresocompra.index');
 
-//Paneles
+Route::get('/ingresocompra/crear', [IngresoCompraController::class, 'create'])
+    ->name('ingresocompra.create');
+
+Route::post('/ingresocompra/guardar', [IngresoCompraController::class, 'store'])
+    ->name('ingresocompra.store');
+
+Route::get('/ingresocompra/{id}/editar', [IngresoCompraController::class, 'edit'])
+    ->name('ingresocompra.edit');
+
+Route::put('/ingresocompra/actualizar', [IngresoCompraController::class, 'update'])
+    ->name('ingresocompra.update');
+
+Route::delete('/ingresocompra/eliminar', [IngresoCompraController::class, 'destroy'])
+    ->name('ingresocompra.destroy');
+
+Route::get('/ingresocompra/editar', [IngresoCompraController::class, 'editDeleteVista'])
+    ->name('ingresocompra.editDelete');
+
+Route::put('/cupon/editar', [CuponController::class, 'update'])->name('cupon.update');
+Route::delete('/cupon/eliminar', [CuponController::class, 'destroy'])->name('cupon.eliminar');
+
 Route::get('/', [InicioController::class, 'index'])->name('inicio');
 
 Route::get('/login', [LoginController::class, 'mostrarFormulario'])->name('login');
@@ -120,7 +145,6 @@ Route::match(['get','post'], '/usuarios/clientes/editar', [UsuariosController::c
 Route::get('/usuarios/clientes/buscar/{id}', [UsuariosController::class, 'buscarCliente']);
 Route::get('/usuarios/clientes/{id}', [UsuariosController::class, 'buscarCliente']);
 Route::get('/cliente/productos', [ProductoController::class, 'panelCliente'])->name('cliente.Productos');
-Route::get('/cliente/panel', [ProductoController::class, 'panelCliente'])->name('cliente.panel');
 Route::get('/cliente/productos', [ProductoController::class, 'todosProductos'])->name('cliente.todosProductos');
 
 
