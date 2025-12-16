@@ -49,7 +49,7 @@
 
                         {{-- IMAGEN --}}
                         @if(!empty($item['imagen']))
-                            <img src="{{ asset('uploads/productos/' . $item['imagen']) }}"
+                            <img src="{{ asset('http://localhost/api/uploads/productos/' . $item['imagen']) }}"
                                  class="card-img-top"
                                  style="height:200px; object-fit:cover">
                         @else
