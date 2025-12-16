@@ -2,17 +2,12 @@
 
 use App\Http\Controllers\CuponController;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\EnvioController;
 use App\Http\Controllers\IngresoCompraController;
 use App\Http\Controllers\InicioController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\Usuario\UsuariosController;
 use App\Http\Controllers\Producto\ProductoController;
-Ram_Santi
-use App\Http\Controllers\Usuario\ClienteController;
-
-//CUPON
 use App\Http\Controllers\Producto\ProductoCategoriaController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PedidoController;
@@ -28,8 +23,6 @@ Route::get('/cupon/consultar', [CuponController::class, 'consultar'])->name('cup
 Route::match(['get', 'post'],'/cupon/guardar', [CuponController::class, 'store'])->name('cupon.guardar');
 
 Route::get('/cupon/editar', [CuponController::class, 'editarVista'])->name('cupon.editarVista');
- Ram_Santi
-
 Route::put('/cupon/editar', [CuponController::class, 'update'])->name('cupon.update');
 
 Route::delete('/cupon/eliminar', [CuponController::class, 'destroy'])->name('cupon.eliminar');
@@ -136,7 +129,6 @@ Route::match(['get','post'], '/usuarios/clientes/editar', [UsuariosController::c
 Route::get('/usuarios/clientes/buscar/{id}', [UsuariosController::class, 'buscarCliente']);
 Route::get('/usuarios/clientes/{id}', [UsuariosController::class, 'buscarCliente']);
 Route::get('/cliente/productos', [ProductoController::class, 'panelCliente'])->name('cliente.Productos');
-Route::get('/cliente/panel', [ProductoController::class, 'panelCliente'])->name('cliente.panel');
 Route::get('/cliente/productos', [ProductoController::class, 'todosProductos'])->name('cliente.todosProductos');
 
 
