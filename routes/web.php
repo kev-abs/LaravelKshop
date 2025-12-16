@@ -5,26 +5,48 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\DB;
 
 use App\Http\Controllers\EnvioController;
-
+use App\Http\Controllers\IngresoCompraController;
 use App\Http\Controllers\InicioController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\Usuario\UsuariosController;
 use App\Http\Controllers\Producto\ProductoController;
 use App\Http\Controllers\Usuario\ClienteController;
 
-
+//CUPON
 Route::get('/cupon', [CuponController::class, 'index'])->name('cupon.inventarioVista');
+
 Route::get('/cupon/consultar', [CuponController::class, 'consultar'])->name('cupon.index');
 
 Route::match(['get', 'post'],'/cupon/guardar', [CuponController::class, 'store'])->name('cupon.guardar');
 
 Route::get('/cupon/editar', [CuponController::class, 'editarVista'])->name('cupon.editarVista');
 
-// Actualizar cupon (POST desde el formulario)
 Route::put('/cupon/editar', [CuponController::class, 'update'])->name('cupon.update');
 
-// Eliminar cupon (POST desde el formulario)
 Route::delete('/cupon/eliminar', [CuponController::class, 'destroy'])->name('cupon.eliminar');
+
+//INGRESO_COMPRA
+Route::get('/ingresocompra', [IngresoCompraController::class, 'index'])
+    ->name('ingresocompra.index');
+
+Route::get('/ingresocompra/crear', [IngresoCompraController::class, 'create'])
+    ->name('ingresocompra.create');
+
+Route::post('/ingresocompra/guardar', [IngresoCompraController::class, 'store'])
+    ->name('ingresocompra.store');
+
+Route::get('/ingresocompra/{id}/editar', [IngresoCompraController::class, 'edit'])
+    ->name('ingresocompra.edit');
+
+Route::put('/ingresocompra/actualizar', [IngresoCompraController::class, 'update'])
+    ->name('ingresocompra.update');
+
+Route::delete('/ingresocompra/eliminar', [IngresoCompraController::class, 'destroy'])
+    ->name('ingresocompra.destroy');
+
+Route::get('/ingresocompra/editar', [IngresoCompraController::class, 'editDeleteVista'])
+    ->name('ingresocompra.editDelete');
+
 
 Route::get('/', [InicioController::class, 'index'])->name('inicio');
 
