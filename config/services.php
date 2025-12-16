@@ -43,6 +43,18 @@ return [
     'pedidos' => [
     'url' => env('API_PEDIDOS_URL'),
 
+    ],
+
+    'checkout' => [
+    'url' => env('CHECKOUT_API_URL'),
+    ],
+
+
+    'carrito' => [
+    'url' => env('API_CARRITO_URL'),
+
+    
+
 ],
 
 
