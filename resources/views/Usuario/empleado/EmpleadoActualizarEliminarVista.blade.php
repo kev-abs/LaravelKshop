@@ -12,8 +12,10 @@
 <header class="bg-white sticky-top py-3 border-bottom shadow-sm">
     <div class="container d-flex justify-content-between align-items-center">
         <div class="d-flex align-items-center">
-            <img src="Inicio/Public/Imagenes/logo_kshopsinfondo.png" alt="Logo K-Shop" width="83" class="me-2">
-            <span class="fw-bold text-dark">K-SHOP | Admin</span>
+            <a class="navbar-brand fw-bold" href="{{ route('panel.admin') }}">
+            <img src="{{ asset('img/logo_kshopsinfondo.png') }}" alt="K-Shop" width="60" class="me-2">
+            K-SHOP | Admin
+            </a>
         </div>
         <nav>
             <a href="Inicio/Controlador/Logueo/CerrarSesion.php" class="btn btn-outline-dark">Cerrar Sesión</a>
@@ -117,14 +119,6 @@
         </div>
 
     </div>
-
-    <!-- Volver -->
-    <div class="text-center mt-5">
-        <a href="{{route('usuariosVista')}}" class="btn btn-outline-secondary btn-lg w-50">
-        <i class="bi bi-arrow-left me-2"></i>Volver
-        </a>
-    </div>
-
 </main>
 
 

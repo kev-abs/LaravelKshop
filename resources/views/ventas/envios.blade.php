@@ -3,34 +3,56 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Envios</title>
+    <title>K-SHOP - Gestión de Envíos</title>
 
     <!-- BOOTSTRAP -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- ICONOS BOOTSTRAP -->
+    <!-- ICONOS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
 
+    <style>
+        .table thead th {
+            background-color: #343a40 !important;
+            color: white;
+        }
+
+        .btn-action {
+            padding: 5px 10px;
+        }
+
+        .navbar-brand img {
+            border-radius: 8px;
+        }
+
+        .btn-back {
+            width: 55px;
+            height: 55px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 26px;
+            border-radius: 10px;
+        }
+    </style>
 </head>
 
-<body>
+<body class="bg-light d-flex flex-column min-vh-100">
 
     <!-- NAVBAR -->
-    <nav class="navbar navbar-expand-lg bg-light border-bottom shadow-sm">
-        <div class="container py-2">
+    <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom shadow-sm sticky-top">
+        <div class="container">
 
-            <a class="navbar-brand fw-bold fs-4" href="#">
-                <i class="bi bi-truck"></i> Gestión de Envíos
+            <a class="navbar-brand fw-bold" href="{{ route('panel.admin') }}">
+                <img src="{{ asset('img/logo_kshopsinfondo.png') }}" alt="K-Shop" width="60" class="me-2">
+                K-SHOP | Admin
             </a>
 
-            <!-- BUSCADOR -->
             <form class="d-none d-md-flex mx-auto w-50" role="search">
-                <input class="form-control" type="search" placeholder="Buscar en ventas..." aria-label="Buscar">
+                <input class="form-control" type="search" placeholder="Buscar en envíos..." aria-label="Buscar">
             </form>
 
-            <!-- CERRAR SESIÓN -->
             <div class="d-flex">
-                
+                <a href="{{ route('logout') }}" class="btn btn-outline-dark">
                     <i class="bi bi-box-arrow-right"></i> Cerrar sesión
                 </a>
             </div>
@@ -38,77 +60,125 @@
         </div>
     </nav>
 
+
     <!-- CONTENIDO PRINCIPAL -->
     <main class="container my-5">
 
-        <div class="text-center mb-5">
-            <h2 class="fw-bold">Lista de Envíos</h2>
-            <p class="text-muted">Gestione, edite o elimine los envíos registrados.</p>
+
+        <div class="text-center mb-4">
+            <h2 class="fw-bold">Gestión de Envíos</h2>
+            <p class="text-muted">Administra, edita o elimina los registros de envíos realizados.</p>
         </div>
 
-        <!-- ALERTA -->
         @if(session('msg'))
             <div class="alert alert-info text-center">
                 {{ session('msg') }}
             </div>
         @endif
 
-        <!-- TABLA DE ENVIOS -->
-        <div class="table-responsive">
-            <table class="table table-striped table-hover align-middle">
-                <thead class="table-dark">
-                    <tr>
-                        <th>id_Envío</th>
-                        <th>id_Pedido</th>
-                        <th>Dirección</th>
-                        <th>Fecha</th>
-                        <th>Método</th>
-                        <th>Estado</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
+        <div class="d-flex justify-content-between mb-3">
 
-                    @forelse($Envios as $e)
-                        <tr>
-                            <td>{{ $e['id_Envio'] }}</td>
-                            <td>{{ $e['id_Pedido'] }}</td>
-                            <td>{{ $e['direccionEnvio'] }}</td>
-                            <td>{{ $e['fechaEnvio'] }}</td>
-                            <td>{{ $e['metodoEnvio'] }}</td>
-                            <td>{{ $e['estadoEnvio'] }}</td>
+           
+            <a href="{{ route('ventas.ventas') }}" class="btn btn-outline-secondary">
+                <i class="bi bi-arrow-left"></i> Volver
+            </a>
 
-                            <td>
-                                <!-- BOTÓN EDITAR -->
-                                <a href="{{ url('/envios/'.$e['id_Envio'].'/edit') }}" class="btn btn-warning btn-sm">
-                                    <i class="bi bi-pencil-square"></i>
-                                </a>
+            
+            <a href="{{ route('ventas.envios_create') }}" class="btn btn-primary">
+                <i class="bi bi-plus-circle"></i> Nuevo Envío
+            </a>
 
-                                <!-- FORM ELIMINAR -->
-                                <form action="{{ route('envios.destroy', $e['id_Envio']) }}" method="POST" class="d-inline">
-                                    @csrf
-                                    @method('DELETE')
+        </div>
 
-                                    <button class="btn btn-danger btn-sm" onclick="return confirm('¿Eliminar este envío?')">
-                                        <i class="bi bi-trash3"></i>
-                                    </button>
-                                </form>
-                            </td>
-                        </tr>
 
-                    @empty
-                        <tr>
-                            <td colspan="7" class="text-center py-4">
-                                <em>No hay envíos registrados.</em>
-                            </td>
-                        </tr>
-                    @endforelse
+        <!-- TABLA -->
+        <div class="card shadow-sm">
+            <div class="card-body p-0">
 
-                </tbody>
-            </table>
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle mb-0">
+
+                        <thead>
+                            <tr>
+                                <th>ID Envío</th>
+                                <th>ID Pedido</th>
+                                <th>Dirección</th>
+                                <th>Fecha</th>
+                                <th>Método</th>
+                                <th>Estado</th>
+                                <th class="text-center">Acciones</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+
+                            @forelse($Envios as $e)
+
+                                <tr>
+                                    <td>{{ $e['id_Envio'] }}</td>
+                                    <td>{{ $e['id_Pedido'] }}</td>
+                                    <td>{{ $e['direccionEnvio'] }}</td>
+                                    <td>{{ $e['fechaEnvio'] }}</td>
+                                    <td>{{ $e['metodoEnvio'] }}</td>
+                                    <td>{{ $e['estadoEnvio'] }}</td>
+
+                                    <td class="text-center">
+
+                                        <a href="{{ route('ventas.envio', $e['id_Envio']) }}" 
+                                           class="btn btn-warning btn-sm me-1 btn-action">
+                                            <i class="bi bi-pencil-square"></i>
+                                        </a>
+
+                                        <!-- ELIMINAR -->
+                                        <form action="{{ route('envios.destroy', $e['id_Envio']) }}"
+                                              method="POST"
+                                              class="d-inline">
+                                            @csrf
+                                            @method('DELETE')
+
+                                            <button class="btn btn-outline-danger btn-sm btn-action"
+                                                    onclick="return confirm('¿Está seguro de eliminar este envío?')">
+                                                <i class="bi bi-trash3"></i>
+                                            </button>
+                                        </form>
+
+                                    </td>
+
+                                </tr>
+
+                            @empty
+                                <tr>
+                                    <td colspan="7" class="text-center py-4">
+                                        No hay envíos registrados.
+                                    </td>
+                                </tr>
+                            @endforelse
+
+                        </tbody>
+
+                    </table>
+                </div>
+
+            </div>
+
         </div>
 
     </main>
+
+
+    <!-- FOOTER -->
+    <footer class="bg-dark text-white text-center py-4 mt-auto">
+        <div class="container">
+            <div class="mb-3">
+                <a href="#" class="text-white me-3">Términos</a>
+                <a href="#" class="text-white me-3">Privacidad</a>
+                <a href="#" class="text-white">Ayuda</a>
+            </div>
+
+            <p class="mb-0">&copy; 2025 Tienda K-Shop - Todos los derechos reservados</p>
+        </div>
+    </footer>
+
 
     <!-- BOOTSTRAP JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>

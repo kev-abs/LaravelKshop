@@ -4,16 +4,16 @@ namespace App\Services;
 
 use Illuminate\Support\Facades\Http;
 
-class EnvioService
+class PedidoService
 {
     private $apiUrl;
 
     public function __construct()
     {
-        $this->apiUrl = config('services.envios.url');
+        $this->apiUrl = config('services.pedidos.url');
     }
 
-    public function obtenerEnvios()
+    public function obtenerPedidos()
     {
         $response = Http::get($this->apiUrl);
 
@@ -22,34 +22,30 @@ class EnvioService
             : false;
     }
 
-    public function agregarEnvios($data)
+        public function agregarPedidos($data)
     {
         $response = Http::post($this->apiUrl, $data);
         return $response->successful();
     }
 
-
-
-    public function obtenerEnvioPorId($id)
+        public function obtenerPedidoPorId($id)
     {
         $response = Http::get("{$this->apiUrl}/{$id}");
 
         return $response->successful() ? $response->json() : null;
     }
 
-
-    
-    public function actualizarEnvio($id, $data)
+    public function actualizarPedido($id, $data)
     {
         $response = Http::put("{$this->apiUrl}/{$id}", $data);
 
         return $response->successful();
     }
 
-
-    public function eliminarEnvio($id)
+        public function eliminarPedido($id)
     {
         $response = Http::delete("{$this->apiUrl}/{$id}");
         return $response->successful();
     }
+
 }

@@ -156,5 +156,65 @@ public function eliminarProducto($id)
 
     return ["success" => true];
 }
+// Obtener categorías desde API 
+public function obtenerCategorias()
+{
+    try {
+        $response = Http::get('http://localhost:8080/api/categorias');
+
+        if ($response->successful()) {
+            return [
+                'success' => true,
+                'data' => $response->json()
+            ];
+        }
+
+        return ['success' => false, 'data' => []];
+
+    } catch (\Exception $e) {
+        return ['success' => false, 'data' => []];
+    }
+}
+
+public function asignarProductoCategoria($idProducto, $idCategoria)
+{
+    $response = Http::post(
+        $this->apiUrl . '/producto-categoria/asignar',
+        [
+            'idProducto'  => $idProducto,
+            'idCategoria' => $idCategoria
+        ]
+    );
+
+    if ($response->failed()) {
+        return ['success' => false];
+    }
+
+    return ['success' => true];
+}
+
+// app/Services/ProductoService.php
+
+public function obtenerCategoriasConProductos()
+{
+    try {
+        $response = Http::get('URL_DE_TU_API/endpoint_categorias_productos'); // Asegura la URL
+        
+        // --- ¡DEBUG EN EL SERVICIO! ---
+        if ($response->failed()) {
+            // Si hay un error 4xx o 5xx, devolvemos el error.
+            return ['error' => $response->status(), 'message' => $response->body()];
+        }
+        // -----------------------------
+        
+        // Asumiendo que tu servicio siempre devuelve la data dentro de una clave 'data'
+        return ['data' => $response->json()]; 
+
+    } catch (\Exception $e) {
+        // Manejar errores de conexión (ej: servidor Spring caído)
+        return ['error' => 500, 'message' => 'Error de conexión con el backend: ' . $e->getMessage()];
+    }
+}
+
 
 }

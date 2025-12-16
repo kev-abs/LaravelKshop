@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Usuario;
 
-use App\Http\Controllers\Producto\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -43,6 +42,31 @@ class UsuariosController
         }
 
         return view('Usuario.cliente.ClienteAgregarVista', compact('mensaje'));
+    }
+
+    public function registrarCliente(Request $request)
+    {
+        $mensaje = "";
+
+        if ($request->isMethod('post')) {
+            $data = $request->only(['nombre', 'correo', 'contrasena', 'documento', 'telefono']);
+
+            if ($data['nombre'] && $data['correo'] && $data['contrasena']) {
+                DB::table('cliente')->insert([
+                    'Nombre' => $data['nombre'],
+                    'Correo' => $data['correo'],
+                    'Contrasena' => bcrypt($data['contrasena']),
+                    'Documento' => $data['documento'],
+                    'Telefono' => $data['telefono'],
+                ]);
+
+                $mensaje = "Registro completado exitosamente.";
+            } else {
+                $mensaje = "Campos obligatorios vacíos.";
+            }
+        }
+
+        return view('Usuario.cliente.registro.ClienteRegistrarVista', compact('mensaje'));
     }
 
     public function editarEliminarCliente(Request $request)
@@ -161,5 +185,4 @@ class UsuariosController
         $empleado = DB::table('empleado')->where('ID_Empleado', $id)->first();
         return response()->json($empleado);
     }
-
 }

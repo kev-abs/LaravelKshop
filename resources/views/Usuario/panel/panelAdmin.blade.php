@@ -39,7 +39,7 @@ class Administrador
     <!-- LOGO -->
     <div class="d-flex align-items-center">
       <img src="{{ asset('img/logo_kshopsinfondo.png') }}" alt="Logo K-Shop" width="83" class="me-2">
-      <a href="/ModeloVistaControlador/index.php?Controller=panel&action=manejarPeticion" class="text-decoration-none fs-7 fw-bold text-dark">K-SHOP | Admin</a>
+      <a href="{{route('panel.admin')}}" class="text-decoration-none fs-7 fw-bold text-dark">K-SHOP | Admin</a>
     </div>
 
     <!-- BARRA DE BÚSQUEDA -->
@@ -77,7 +77,7 @@ class Administrador
         <div id="modPerfil" class="accordion-collapse collapse" data-bs-parent="#accordionModulos">
           <div class="accordion-body">
             <ul class="list-unstyled">
-              <li><a href="{{ asset('img/foto_perfil_admin.png') }}" class="text-white text-decoration-none">➤ Perfil de Administrador</a></li>
+              <li><a href="{{ route('admin.perfil') }}" class="text-white text-decoration-none">➤ Perfil de Administrador</a></li>
             </ul>
           </div>
         </div>
@@ -118,6 +118,7 @@ class Administrador
             <ul class="list-unstyled">
               <li><a href="{{ route('productos.index') }}" class="text-white text-decoration-none">➤ Consultar Productos</a></li>
               <li><a href="{{ route('productos.create') }}" class="text-white text-decoration-none">➤ Agregar Producto</a></li>
+              <li><a href="{{ route('productos.productosPorCategoria') }}" class="text-white text-decoration-none">➤ Productos por Categoria</a></li>
             </ul>
           </div>
         </div>
@@ -155,8 +156,8 @@ class Administrador
         <div id="modVentas" class="accordion-collapse collapse" data-bs-parent="#accordionModulos">
           <div class="accordion-body">
             <ul class="list-unstyled">
-              <li><a href="/ModeloVistaControlador/index.php?Controller=ventas" class="text-white text-decoration-none">➤ Consultar Pedido</a></li>
-              <li><a href="/ModeloVistaControlador/index.php?Controller=envios" class="text-white text-decoration-none">➤ Consultar Envío</a></li>
+              <li><a href="{{ route('ventas.pedidos') }}" class="text-white text-decoration-none">➤ Consultar Pedido</a></li>
+              <li><a href="{{ route('ventas.envios') }}" class="text-white text-decoration-none">➤ Consultar Envío</a></li>
             </ul>
           </div>
         </div>
@@ -187,11 +188,15 @@ class Administrador
     </div>
   </div>
 </div>
-  <div class="d-flex justify-content-start ps-3 py-2 border-bottom">
-    <button class="d-flex justify-content-start ps-3 py-2 border-bottom navbar-toggler navbar-dark border-0 bg-dark p-2 rounded"
-            type="button" data-bs-toggle="offcanvas" data-bs-target="#menuModulos"
-            aria-controls="menuModulos">
-      <span class="navbar-toggler-icon"></span>
+  <div class="d-flex justify-content-start ps-3 py-2">
+    <button
+      class="btn btn-light d-flex align-items-center gap-2 px-3 py-2 rounded-4 shadow-sm menu-btn"
+      type="button"
+      data-bs-toggle="offcanvas"
+      data-bs-target="#menuModulos"
+    >
+      <i class="bi bi-list fs-4"></i>
+      <span class="fw-semibold d-none d-md-inline">Menú</span>
     </button>
   </div>
 
@@ -247,7 +252,7 @@ class Administrador
 
         <!-- Card Ventas -->
         <div class="col-md-6 col-lg-3">
-          <a href="/ModeloVistaControlador/index.php?Controller=ventas" class="text-decoration-none">
+          <a href="{{ route('ventas.ventas') }}" class="text-decoration-none">
             <div class="card h-100 shadow-sm border-0">
               <div class="card-body text-center">
                 <i class="bi bi-cart4 fs-1 text-danger mb-3"></i>
