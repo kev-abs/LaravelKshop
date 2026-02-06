@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminPedidoController;
 use App\Http\Controllers\CuponController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EnvioController;
@@ -169,6 +170,20 @@ Route::middleware('cliente')->group(function () {
 
 
 });
+
+Route::middleware('admin')->group(function () {
+
+    Route::get('/admin/pedidos', [AdminPedidoController::class, 'index'])
+        ->name('ventas.pedidos');
+
+    Route::get('/admin/envios', [AdminEnvioController::class, 'index'])
+        ->name('ventas.envios');
+    
+    Route::get('/admin/pedidos/{id}', [AdminPedidoController::class, 'detalle'])
+        ->name('admin.pedido.detalle');
+
+});
+
 
 
 
