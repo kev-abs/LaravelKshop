@@ -21,7 +21,7 @@
         <nav class="d-flex align-items-center gap-3">
             <a href="{{ route('productos.catalogo') }}" class="nav-link text-dark">Productos</a>
 
-            <a href="{{ route('ventas.carrito') }}" class="btn btn-outline-dark border-0">
+            <a href="{{ route('ventas.carrito.index') }}" class="btn btn-outline-dark border-0">
                 <i class="bi bi-cart-fill"></i>
             </a>
         </nav>

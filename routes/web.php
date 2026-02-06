@@ -20,21 +20,6 @@ use App\Http\Controllers\CarritoController;
 use App\Http\Controllers\CheckoutController;
 
 
-
-Route::get('/mis-compras', [CheckoutController::class, 'historial'])
-    ->name('checkout.historial');
-
-Route::get('/checkout', [CheckoutController::class, 'index'])
-    ->name('checkout.index');
-
-Route::post('/checkout/confirmar', [CheckoutController::class, 'store'])
-    ->name('checkout.store');
-    
-Route::get('/pedido/exito', function () {
-    return view('ventas.pedido_exito');
-})->name('pedido.exito');
-
-
 Route::get('/cupon', [CuponController::class, 'index'])->name('cupon.inventarioVista');
 
 Route::get('/cupon/consultar', [CuponController::class, 'consultar'])->name('cupon.index');
@@ -98,27 +83,6 @@ Route::get('/ventas', function () {
 })->name('ventas.ventas');
 
 
-
-Route::get('/envios', [EnvioController::class, 'index'])->name('ventas.envios');
-
-Route::get('/envios/create', [EnvioController::class, 'create'])->name('ventas.envios_create');
-Route::post('/envios', [EnvioController::class, 'store'])->name('envios.store');
-Route::get('/envio  /{id}/edit', [EnvioController::class, 'edit'])->name('ventas.envio');
-Route::put('/envio/{id}', [EnvioController::class, 'update'])->name('envio.update');
-Route::delete('/envios/{id}', [EnvioController::class, 'destroy'])->name('envios.destroy');
-
-Route::get('/pedidos', [PedidoController::class, 'index'])->name('ventas.pedidos');
-
-Route::delete('/pedidos/{id}', [PedidoController::class, 'destroy'])->name('pedidos.destroy');
-Route::post('/pedidos', [PedidoController::class, 'store'])->name('pedidos.store');
-Route::get('/pedidos/create', [PedidoController::class, 'create'])->name('ventas.pedidos_create');
-Route::get('/pedido/{id}/edit', [PedidoController::class, 'edit'])->name('ventas.pedido');
-Route::put('/pedido/{id}', [PedidoController::class, 'update'])->name('pedido.update');
-
-Route::get('/carrito', [CarritoController::class, 'index'])->name('ventas.carrito');
-Route::post('/carrito', [CarritoController::class, 'store'])->name('carrito.store');
-Route::delete('/carrito', [CarritoController::class, 'vaciar'])->name('carrito.vaciar');
-
 Route::get('/productos/agregar', [ProductoController::class, 'create'])->name('productos.create');
 Route::post('/productos/agregar', [ProductoController::class, 'store'])->name('productos.store');
 
@@ -172,3 +136,40 @@ Route::get('/cliente/productos', [ListaDeseosController::class, 'productos'])->n
 Route::get('/cliente/cupones', [ClienteCuponController::class, 'index'])->name('cliente.cupones');
 Route::get('/usuario/mis-cupones', [CuponController::class, 'misCupones'])->name('usuario.mis_cupones');
 Route::post('/usuario/cupon/redimir', [CuponController::class, 'redimir'])->name('usuario.cupon.redimir');
+
+//Rutas modulo ventas
+
+Route::middleware('cliente')->group(function () {
+
+    // Carrito
+    Route::get('/carrito', [CarritoController::class, 'index'])
+        ->name('ventas.carrito.index');
+
+    Route::post('/carrito', [CarritoController::class, 'store'])
+        ->name('carrito.store');
+
+    Route::put('/carrito/cantidad', [CarritoController::class, 'updateCantidad'])
+        ->name('carrito.update');
+
+    Route::delete('/carrito/eliminar', [CarritoController::class, 'eliminar'])
+        ->name('carrito.delete');
+
+    Route::post('/carrito/checkout', [CarritoController::class, 'checkout'])
+        ->name('carrito.checkout');
+    
+     Route::get('/carrito/confirmar', [CarritoController::class, 'confirmar'])
+    ->name('carrito.confirmar');
+
+    // Pedidos
+    Route::get('/mis-pedidos', [PedidoController::class, 'historial'])
+        ->name('checkout.historial');
+
+    Route::get('/mis-pedidos/{id}', [PedidoController::class, 'detalle'])
+        ->name('pedido.detalle');
+
+
+});
+
+
+
+
