@@ -147,17 +147,7 @@
       </a>
     </div>
 
-    <div class="col">
-      <a href="{{ route('cliente.cupones') }}" class="text-decoration-none d-block h-100">
-        <div class="card shadow-sm border-0 h-100">
-          <div class="card-body">
-            <i class="bi bi-ticket-perforated fs-1 text-warning"></i>
-            <h5 class="fw-bold mt-3">Cupones</h5>
-            <p class="text-muted">Redime tus descuentos</p>
-          </div>
-        </div>
-      </a>
-    </div>
+
 
   </div>
 
