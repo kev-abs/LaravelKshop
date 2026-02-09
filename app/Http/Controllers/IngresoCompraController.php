@@ -23,25 +23,33 @@ class IngresoCompraController
         return back()->with('mensaje','Ingreso registrado correctamente');
     }
 
-   public function update(Request $request)
-        {
-            DB::table('ingreso_compra')
-                ->where('ID_Ingreso', $request->ID_Ingreso)
-                ->update([
-                    'ID_Empleado' => $request->ID_Empleado,
-                    'ID_Proveedor' => $request->ID_Proveedor,
-                    'Fecha_Ingreso' => $request->Fecha_Ingreso,
-                    'Total' => $request->Total
-                ]);
+  public function update(Request $request)
+    {
+        $actualizado = DB::table('ingreso_compra')
+            ->where('ID_Ingreso', $request->ID_Ingreso)
+            ->update([
+                'ID_Empleado' => $request->ID_Empleado,
+                'ID_Proveedor' => $request->ID_Proveedor,
+                'Fecha_Ingreso' => $request->Fecha_Ingreso,
+                'Total' => $request->Total
+            ]);
 
-            return back()->with('mensaje', 'Ingreso actualizado correctamente');
+        if ($actualizado == 0) {
+            return back()->with('mensaje', 'El ingreso no existe o no se pudo actualizar');
         }
 
-        public function destroy(Request $request)
+        return back()->with('mensaje', 'Ingreso actualizado correctamente');
+    }
+
+    public function destroy(Request $request)
         {
-            DB::table('ingreso_compra')
+            $eliminado = DB::table('ingreso_compra')
                 ->where('ID_Ingreso', $request->ID_Ingreso)
                 ->delete();
+
+            if ($eliminado == 0) {
+                return back()->with('mensaje', 'El ingreso no existe o ya fue eliminado');
+            }
 
             return back()->with('mensaje', 'Ingreso eliminado correctamente');
         }

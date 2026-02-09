@@ -128,18 +128,38 @@ class Administrador
       <div class="accordion-item bg-dark text-white">
         <h2 class="accordion-header">
           <button class="accordion-button collapsed bg-dark text-white" 
-                  type="button" data-bs-toggle="collapse" data-bs-target="#modInventario">
-            Inventario
+                  type="button" data-bs-toggle="collapse" data-bs-target="#modGestion">
+                  Inventario
           </button>
         </h2>
-        <div id="modInventario" class="accordion-collapse collapse" data-bs-parent="#accordionModulos">
+
+        <div id="modGestion" class="accordion-collapse collapse" data-bs-parent="#accordionModulos">
           <div class="accordion-body">
             <ul class="list-unstyled">
-              <li><a href="../Inventario/consultar_inventario.php" class="text-white text-decoration-none">➤ Consultar Inventario</a></li>
-              <li><a href="../Inventario/actualizar_inventario.php" class="text-white text-decoration-none">➤ Actualizar Inventario</a></li>
-              <li><a href="/ModeloVistaControlador/index.php?Controller=inventario&action=consultarIngresoCompra" class="text-white text-decoration-none">➤ Consultar Compra</a></li>
-              <li><a href="/ModeloVistaControlador/index.php?Controller=inventario&action=agregarIngresoCompra" class="text-white text-decoration-none">➤ Ingresar Compra</a></li>
-              <li><a href="/ModeloVistaControlador/index.php?Controller=inventario&action=editarEliminarIngresoCompra" class="text-white text-decoration-none">➤ Actualizar o Eliminar Compra</a></li>
+
+              <!-- CUPONES -->
+              <li class="mb-2 fw-bold">Cupones</li>
+              <li>
+                <a href="{{ route('cupon.consultar') }}" class="text-white text-decoration-none"> ➤ Listar cupones </a>
+              </li>
+              <li>
+                <a href="{{ route('cupon.agregar') }}" class="text-white text-decoration-none">➤ Agregar cupón</a>
+              </li>
+              <li>
+              <a href="{{ route('cupon.editarVista') }}" class="text-white text-decoration-none">➤ Editar / Eliminar cupón </a>
+              </li>
+
+              <!-- INGRESO COMPRA -->
+              <li class="mb-2 fw-bold">Ingreso Compra</li>
+              <li>
+                <a href="{{ url('/ingresocompra') }}" class="text-white text-decoration-none"> ➤ Listar ingresos</a>
+              </li>
+              <li>
+                <a href="{{ url('/ingresocompra/crear') }}" class="text-white text-decoration-none"> ➤ Agregar ingreso</a>
+              </li>
+               <li>
+                <a href="{{ route('ingresocompra.editDelete') }}" class="text-white text-decoration-none"> ➤ Editar / Eliminar ingreso</a>            
+              </li>
             </ul>
           </div>
         </div>

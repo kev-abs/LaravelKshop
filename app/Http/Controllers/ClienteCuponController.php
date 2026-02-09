@@ -23,7 +23,7 @@ class ClienteCuponController extends Controller
     ->where('cupon_cliente.ID_Cliente', $clienteId)
     ->get();
 
-    return view('usuario.cupones.index', compact('cupones'));
+    return view('usuario.cliente.cupones.index', compact('cupones'));
 }
 
 }
