@@ -123,28 +123,6 @@ class Administrador
           </div>
         </div>
       </div>
-
-      <!-- Inventario -->
-      <div class="accordion-item bg-dark text-white">
-        <h2 class="accordion-header">
-          <button class="accordion-button collapsed bg-dark text-white" 
-                  type="button" data-bs-toggle="collapse" data-bs-target="#modInventario">
-            Inventario
-          </button>
-        </h2>
-        <div id="modInventario" class="accordion-collapse collapse" data-bs-parent="#accordionModulos">
-          <div class="accordion-body">
-            <ul class="list-unstyled">
-              <li><a href="../Inventario/consultar_inventario.php" class="text-white text-decoration-none">➤ Consultar Inventario</a></li>
-              <li><a href="../Inventario/actualizar_inventario.php" class="text-white text-decoration-none">➤ Actualizar Inventario</a></li>
-              <li><a href="/ModeloVistaControlador/index.php?Controller=inventario&action=consultarIngresoCompra" class="text-white text-decoration-none">➤ Consultar Compra</a></li>
-              <li><a href="/ModeloVistaControlador/index.php?Controller=inventario&action=agregarIngresoCompra" class="text-white text-decoration-none">➤ Ingresar Compra</a></li>
-              <li><a href="/ModeloVistaControlador/index.php?Controller=inventario&action=editarEliminarIngresoCompra" class="text-white text-decoration-none">➤ Actualizar o Eliminar Compra</a></li>
-            </ul>
-          </div>
-        </div>
-      </div>
-
       <!-- Ventas -->
       <div class="accordion-item bg-dark text-white">
         <h2 class="accordion-header">
@@ -158,28 +136,6 @@ class Administrador
             <ul class="list-unstyled">
               <li><a href="{{ route('ventas.pedidos') }}" class="text-white text-decoration-none">➤ Consultar Pedido</a></li>
               <li><a href="{{ route('ventas.envios') }}" class="text-white text-decoration-none">➤ Consultar Envío</a></li>
-            </ul>
-          </div>
-        </div>
-      </div>
-
-      <!-- Reportes -->
-      <div class="accordion-item bg-dark text-white">
-        <h2 class="accordion-header">
-          <button class="accordion-button collapsed bg-dark text-white" 
-                  type="button" data-bs-toggle="collapse" data-bs-target="#modReportes">
-            Reportes
-          </button>
-        </h2>
-        <div id="modReportes" class="accordion-collapse collapse" data-bs-parent="#accordionModulos">
-          <div class="accordion-body">
-            <ul class="list-unstyled">
-              <li><a href="../reportes/estadisticas_ventas.php" class="text-white text-decoration-none">➤ Estadísticas de Ventas</a></li>
-              <li><a href="../reportes/exportar_datos.php" class="text-white text-decoration-none">➤ Exportar Datos</a></li>
-              <li><a href="../reportes/productos_mas_vendidos.php" class="text-white text-decoration-none">➤ Productos Más Vendidos</a></li>
-              <li><a href="../reportes/clientes_frecuentes.php" class="text-white text-decoration-none">➤ Clientes Frecuentes</a></li>
-              <li><a href="../reportes/bajo_inventario.php" class="text-white text-decoration-none">➤ Bajo Inventario</a></li>
-              <li><a href="../reportes/efectividad_cupones.php" class="text-white text-decoration-none">➤ Uso de Cupones</a></li>
             </ul>
           </div>
         </div>
