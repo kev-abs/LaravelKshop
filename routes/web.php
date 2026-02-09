@@ -16,6 +16,19 @@ use App\Http\Controllers\Usuario\VendedorController;
 use App\Http\Controllers\Usuario\ListaDeseosController;
 use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\ClienteCuponController;
+use App\Http\Controllers\CarritoController;
+use App\Http\Controllers\CheckoutController;
+
+Route::get('/checkout', [CheckoutController::class, 'index'])
+    ->name('checkout.index');
+
+Route::post('/checkout/confirmar', [CheckoutController::class, 'store'])
+    ->name('checkout.store');
+    
+Route::get('/pedido/exito', function () {
+    return view('ventas.pedido_exito');
+})->name('pedido.exito');
+
 
 
 //Cupones
@@ -106,6 +119,9 @@ Route::get('/pedidos/create', [PedidoController::class, 'create'])->name('ventas
 Route::get('/pedido/{id}/edit', [PedidoController::class, 'edit'])->name('ventas.pedido');
 Route::put('/pedido/{id}', [PedidoController::class, 'update'])->name('pedido.update');
 
+Route::get('/carrito', [CarritoController::class, 'index'])->name('ventas.carrito');
+Route::post('/carrito', [CarritoController::class, 'store'])->name('carrito.store');
+Route::delete('/carrito', [CarritoController::class, 'vaciar'])->name('carrito.vaciar');
 
 Route::get('/productos/agregar', [ProductoController::class, 'create'])->name('productos.create');
 Route::post('/productos/agregar', [ProductoController::class, 'store'])->name('productos.store');
