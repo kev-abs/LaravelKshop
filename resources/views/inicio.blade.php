@@ -65,48 +65,6 @@
   </div>
 </div>
 
-<!-- SECCIÓN CATEGORÍAS -->
-<section class="py-5">
-  <div class="container text-center">
-    <h2 class="fw-bold mb-4">Explora por categorías</h2>
-    <div class="row g-4">
-      
-      <div class="col-md-4">
-        <div class="card border-0 shadow-sm">
-          <div class="ratio ratio-1x1">
-            <img src="{{ asset('img/RopaCaballero2.png') }}" class="card-img-top" alt="Hombre" style="object-fit: cover;">
-          </div>
-          <div class="card-body">
-            <h5 class="fw-bold">Hombre</h5>
-            <a href="{{ route('productos.catalogo') }}" class="btn btn-dark btn-sm">Ver más</a>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-md-4">
-        <div class="card border-0 shadow-sm">
-          <div class="ratio ratio-1x1">
-            <img src="{{ asset('img/RopaDama2.png') }}" class="card-img-top" alt="Mujer" style="object-fit: cover;">
-          </div>
-          <div class="card-body">
-            <h5 class="fw-bold">Mujer</h5>
-            <a href="{{ route('productos.catalogo') }}" class="btn btn-dark btn-sm">Ver más</a>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-md-4">
-        <div class="card border-0 shadow-sm">
-          <div class="ratio ratio-1x1">
-            <img src="{{ asset('img/RopaNiños2.png') }}" class="card-img-top" alt="Niños" style="object-fit: cover;">
-          </div>
-          <div class="card-body">
-            <h5 class="fw-bold">Niños</h5>
-            <a href="{{route('productos.catalogo')}}" class="btn btn-dark btn-sm">Ver más</a>
-          </div>
-        </div>
-      </div>
-
     </div>
   </div>
 </section>

@@ -3,7 +3,7 @@
 use App\Http\Controllers\AdminPedidoController;
 use App\Http\Controllers\CuponController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\EnvioController;
+use App\Http\Controllers\AdminEnvioController;
 use App\Http\Controllers\IngresoCompraController;
 use App\Http\Controllers\InicioController;
 use App\Http\Controllers\LoginController;

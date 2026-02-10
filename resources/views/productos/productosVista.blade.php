@@ -43,7 +43,8 @@
 
                 {{-- IMAGEN --}}
                 @if(!empty($p['imagen']))
-                    <img src="http://localhost/api/uploads/productos/{{ $p['imagen'] }}"
+                    <img src="http://localhost:8080/uploads/productos/{{ $p['imagen'] }}"
+
                          class="card-img-top"
                          style="height:200px; object-fit:cover;"
                          alt="{{ $p['nombre'] }}">
