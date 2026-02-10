@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Producto;
 use App\Services\ProductoService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
-
+use Illuminate\Support\Facades\DB;
 
 class ProductoController
 {
@@ -91,7 +91,14 @@ if (!empty($categoriaId)) {
     ]);
 }
 
+public function detalle($id)
+{
+    $response = Http::get("http://localhost:8080/productos/".$id);
 
+    $producto = $response->json();
+
+    return view('productos.detalleProducto', compact('producto'));
+}
 
 
 
@@ -108,13 +115,21 @@ if (!empty($categoriaId)) {
 
     // ================= LISTAR PARA CLIENTE =================
     public function catalogo()
-{
-    $resultadoProductos = $this->productoService->obtenerProductos();
+    {
+        $resultadoProductos = $this->productoService->obtenerProductos();
 
-    $productos = $resultadoProductos["success"] ? $resultadoProductos["data"] : [];
+        $productos = $resultadoProductos["success"] ? $resultadoProductos["data"] : [];
 
-    return view("productos.nuestrosproductos", compact("productos"));
-}
+        return view("productos.nuestrosproductos", compact("productos"));
+    }
+    public function vistacatalogo()
+    {
+        $resultadoProductos = $this->productoService->obtenerProductos();
+
+        $productos = $resultadoProductos["success"] ? $resultadoProductos["data"] : [];
+
+        return view("productos.productosVista", compact("productos"));
+    }
 public function categorizar()
 {
     $productos = $this->productoService->obtenerProductos()['data'] ?? [];
@@ -214,4 +229,41 @@ public function destroy($id)
     return redirect()->route("productos.index")->with("success", "Producto eliminado correctamente");
 }
 
+      // ================= INVENTARIO =================
+
+    public function inventario(Request $request)
+    {
+        $filtro = $request->get('filtro');
+
+        $query = DB::table('producto');
+
+        if ($filtro == 'bajo') {
+            $query->where('Stock', '<', 10)->where('Stock', '>', 0);
+        }
+
+        if ($filtro == 'sin') {
+            $query->where('Stock', '<=', 0);
+        }
+
+        if ($filtro == 'alto') {
+            $query->where('Stock', '>=', 10);
+        }
+
+        $productos = $query->get();
+
+        $total = DB::table('producto')->count();
+        $stockBajo = DB::table('producto')->where('Stock', '<', 10)->where('Stock', '>', 0)->count();
+        $sinStock = DB::table('producto')->where('Stock', '<=', 0)->count();
+        $stockAlto = DB::table('producto')->where('Stock', '>=', 10)->count();
+        $alertas = $stockBajo + $sinStock;
+
+        return view('productos.inventario', compact(
+            'total',
+            'stockBajo',
+            'sinStock',
+            'stockAlto',
+            'alertas',
+            'productos'
+        ));
+    }
 }

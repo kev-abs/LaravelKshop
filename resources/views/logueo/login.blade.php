@@ -26,8 +26,9 @@
 
     <!-- MENÚ NAVEGACIÓN -->
     <nav class="d-flex align-items-center gap-3">
-      <a href="{{ route('productos.catalogo') }}" class="nav-link text-dark">Productos</a>
-      <a href="./servicios.php" class="nav-link text-dark">Servicios</a>
+      <a href="{{ route('productos.vistaCatalogo') }}" class="nav-link text-dark">Productos</a>
+    
+
       <!-- CARRITO -->
       <a href="index.php?Controller=carrito&action=mostrar" class="btn btn-outline-dark border-0">
         <i class="bi bi-cart-fill"></i>
