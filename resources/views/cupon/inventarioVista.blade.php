@@ -57,14 +57,31 @@
                         <h4 class="fw-bold">Gestión de Cupones</h4>
                         <p class="text-muted">Consultar, agregar, actualizar o eliminar cupones.</p>
                         <div class="d-flex justify-content-center gap-2">
-                            <a href="{{route('cupon.index')}}" class="btn btn-outline-dark">
+                            <a href="{{route('cupon.consultar')}}" class="btn btn-outline-dark">
                                 <i class="bi bi-search"></i> Consultar
                             </a>
-                            <a href="{{route('cupon.guardar')}}" class="btn btn-outline-dark">
+                            <a href="{{route('cupon.agregar')}}" class="btn btn-outline-dark">
                                 <i class="bi bi-plus-circle"></i> Agregar
                             </a>
                             <a href="{{route('cupon.editarVista')}}" class="btn btn-outline-dark">
                                 <i class="bi bi-pencil-square"></i> Actualizar / Eliminar
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card Inventario -->
+            <div class="col-md-6">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body text-center">
+                        <i class="bi bi-box-seam fs-1 text-primary mb-3"></i>
+                        <h4 class="fw-bold">Gestion de Inventario</h4>
+                        <p class="text-muted">Visualizar stock, alertas y estado del inventario.</p>
+
+                        <div class="d-flex justify-content-center gap-2">
+                            <a href="{{ route('productos.inventario') }}" class="btn btn-outline-dark">
+                                <i class="bi bi-eye"></i> Ver Inventario
                             </a>
                         </div>
                     </div>

@@ -21,13 +21,21 @@ use App\Http\Controllers\CarritoController;
 use App\Http\Controllers\CheckoutController;
 
 
+
+//Cupones
 Route::get('/cupon', [CuponController::class, 'index'])->name('cupon.inventarioVista');
 
-Route::get('/cupon/consultar', [CuponController::class, 'consultar'])->name('cupon.index');
+Route::get('/cupon/consultar', [CuponController::class, 'consultar'])->name('cupon.consultar');
+
+Route::get('/cupon/agregar', [CuponController::class, 'create'])->name('cupon.agregar');
 
 Route::match(['get', 'post'],'/cupon/guardar', [CuponController::class, 'store'])->name('cupon.guardar');
 
 Route::get('/cupon/editar', [CuponController::class, 'editarVista'])->name('cupon.editarVista');
+
+Route::put('/cupon/editar', [CuponController::class, 'update'])->name('cupon.update');
+
+Route::delete('/cupon/eliminar', [CuponController::class, 'destroy'])->name('cupon.eliminar');
 
 Route::put('/cupon/editar', [CuponController::class, 'update'])->name('cupon.update');
 
@@ -55,8 +63,9 @@ Route::delete('/ingresocompra/eliminar', [IngresoCompraController::class, 'destr
 Route::get('/ingresocompra/editar', [IngresoCompraController::class, 'editDeleteVista'])
     ->name('ingresocompra.editDelete');
 
-Route::put('/cupon/editar', [CuponController::class, 'update'])->name('cupon.update');
-Route::delete('/cupon/eliminar', [CuponController::class, 'destroy'])->name('cupon.eliminar');
+//GESTION DE INVENTARIO
+Route::get('/inventario/productos', [ProductoController::class, 'inventario'])
+    ->name('productos.inventario');
 
 Route::get('/', [InicioController::class, 'index'])->name('inicio');
 
