@@ -107,6 +107,8 @@ Route::get('/productos/categorizar', [ProductoController::class, 'categorizar'])
 Route::post('/productos/categorizar', [ProductoController::class, 'guardarCategorias'])->name('productos.categorizar.guardar');
 Route::post( '/productos/asignar-categoria', [ProductoController::class, 'asignarCategoria'])->name('productos.asignarCategoria');
 Route::get('/api/producto-categoria/por-categoria',  [ProductoCategoriaController::class, 'porCategoria'])->name('productos.productosPorCategoria');
+Route::get('/producto/{id}', [ProductoController::class, 'detalle'])->name('producto.detalle');
+
 
 Route::get('/logout', function () {
     session()->flush();

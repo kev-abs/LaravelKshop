@@ -102,7 +102,14 @@ if (!empty($categoriaId)) { // Comparamos contra string vacío
     ]);
 }
 
+public function detalle($id)
+{
+    $response = Http::get("http://localhost:8080/productos/".$id);
 
+    $producto = $response->json();
+
+    return view('productos.detalleProducto', compact('producto'));
+}
 
 
 
