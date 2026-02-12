@@ -34,6 +34,79 @@
     </div>
 
     <?= $mensaje ?? "" ?>
+    
+    <div class="row mb-4">
+
+        <!-- Total Clientes -->
+        <div class="col-md-4">
+            <div class="card shadow-sm border-0 text-center">
+                <div class="card-body">
+                    <h6 class="text-muted">Total Clientes</h6>
+                    <h3 class="fw-bold">{{ $totalClientes }}</h3>
+                </div>
+            </div>
+        </div>
+
+        <!-- Cliente más activo -->
+        <div class="col-md-4">
+            <div class="card shadow-sm border-0 text-center">
+                <div class="card-body">
+                    <h6 class="text-muted">Cliente Más Activo</h6>
+                    <h5 class="fw-bold">
+                        {{ $clienteMasFrecuente->Nombre ?? 'N/A' }}
+                    </h5>
+                    <small class="text-muted">
+                        {{ $clienteMasFrecuente->total_logins ?? 0 }} logins
+                    </small>
+                </div>
+            </div>
+        </div>
+
+        <!-- Top 5 -->
+        <div class="col-md-4">
+            <div class="card shadow-sm border-0">
+                <div class="card-body">
+                    <h6 class="text-muted text-center">Top 5 Clientes</h6>
+                    <ul class="list-group list-group-flush">
+                        @foreach($top5 as $t)
+                            <li class="list-group-item d-flex justify-content-between">
+                                <span>{{ $t->Nombre }}</span>
+                                <span class="badge bg-dark">
+                                    {{ $t->total_logins }}
+                                </span>
+                            </li>
+                        @endforeach
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <form method="GET" class="mb-3">
+        <div class="row">
+            <div class="col-md-4">
+                <select name="orden" class="form-select">
+                    <option value="c.ID_Cliente">ID</option>
+                    <option value="c.Nombre">Nombre</option>
+                    <option value="c.Documento">Documento</option>
+                    <option value="total_logins">Total Logins</option>
+                </select>
+            </div>
+
+            <div class="col-md-3">
+                <select name="direccion" class="form-select">
+                    <option value="asc">Ascendente</option>
+                    <option value="desc">Descendente</option>
+                </select>
+            </div>
+
+            <div class="col-md-2">
+                <button type="submit" class="btn btn-dark">Ordenar</button>
+            </div>
+        </div>
+    </form>
+
 
     @if($clientes->count() > 0)
         <div class="card shadow-sm border-0 rounded-3">
@@ -56,6 +129,7 @@
                                 <th>Teléfono</th>
                                 <th>Estado</th>
                                 <th>Fecha Registro</th>
+                                <th>Logins</th>
                                 <th>Acciones</th>
                             </tr>
                         </thead>
@@ -80,6 +154,7 @@
                                     </td>
 
                                     <td>{{ $c->Fecha_Registro }}</td>
+                                    <td>{{ $c->total_logins }}</td>
 
                                     <td>
                                         <a href="{{ route('clientes.editar') }}" class="btn btn-sm btn-outline-dark">
