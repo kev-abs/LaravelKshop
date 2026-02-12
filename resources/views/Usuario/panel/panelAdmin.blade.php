@@ -99,7 +99,7 @@ class Administrador
               <li><a href="{{ route('empleados.editar') }}" class="text-white text-decoration-none">➤ Actualizar o Eliminar empleados</a></li>
               <li><a href="{{ route('clientes.consultar') }}" class="text-white text-decoration-none">➤ Consultar Clientes</a></li>
               <li><a href="{{ route('clientes.agregar') }}" class="text-white text-decoration-none">➤ Agregar Cliente</a></li>
-              <li><a href="{{ route('clientes.editar') }}" class="text-white text-decoration-none">➤ Actualizar o Eliminar Cliente</a></li>
+              <li><a href="{{ route('clientes.update') }}" class="text-white text-decoration-none">➤ Actualizar o Eliminar Cliente</a></li>
             </ul>
           </div>
         </div>
