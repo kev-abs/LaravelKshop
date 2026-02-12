@@ -16,7 +16,7 @@ class UsuariosController
     public function consultarClientes(Request $request)
     {
         // Filtro
-        $orden = $request->get('orden', 'Nombre');
+        $orden = $request->get('orden', 'c.Nombre');
         $direccion = $request->get('direccion', 'asc');
 
         $columnasPermitidas = [
@@ -131,39 +131,49 @@ class UsuariosController
         return view('Usuario.cliente.registro.ClienteRegistrarVista', compact('mensaje'));
     }
 
-    public function editarEliminarCliente(Request $request)
+    public function mostrarEditarCliente($id)
     {
-        $mensaje = "";
+        $cliente = DB::table('cliente')
+            ->where('ID_Cliente', $id)
+            ->first();
 
-        if ($request->isMethod('post')) {
-
-            $accion = $request->accion;
-
-            if ($accion === "actualizar") {
-                DB::table('cliente')
-                    ->where('ID_Cliente', $request->id_Cliente)
-                    ->update([
-                        'Nombre' => $request->nombre,
-                        'Correo' => $request->correo,
-                        'Contrasena' => $request->contrasena ? bcrypt($request->contrasena) : DB::raw('Contrasena'),
-                        'Telefono' => $request->telefono,
-                        'Documento' => $request->documento,
-                        'Estado' => $request->estado
-                    ]);
-
-                $mensaje = "Cliente actualizado correctamente.";
-            }
-
-            if ($accion === "eliminar") {
-                DB::table('cliente')
-                    ->where('ID_Cliente', $request->id_Cliente)
-                    ->delete();
-
-                $mensaje = "Cliente eliminado correctamente.";
-            }
+        if (!$cliente) {
+            return redirect()->back()->with('error', 'Cliente no encontrado');
         }
 
-        return view('Usuario.cliente.ClienteActualizarEliminarVista', compact('mensaje'));
+        return view('Usuario.cliente.ClienteActualizarEliminarVista', compact('cliente'));
+    }
+
+    public function actualizarCliente(Request $request)
+    {
+        DB::table('cliente')
+            ->where('ID_Cliente', $request->id_Cliente)
+            ->update([
+                'Nombre' => $request->nombre,
+                'Correo' => $request->correo,
+                'Contrasena' => $request->contrasena 
+                    ? bcrypt($request->contrasena) 
+                    : DB::raw('Contrasena'),
+                'Telefono' => $request->telefono,
+                'Documento' => $request->documento,
+                'Estado' => $request->estado
+            ]);
+
+        return redirect()
+            ->route('clientes.consultar')
+            ->with('mensaje', 'Cliente actualizado correctamente.');
+    }
+
+
+    public function eliminarCliente($id)
+    {
+        DB::table('cliente')
+            ->where('ID_Cliente', $id)
+            ->delete();
+
+        return redirect()
+            ->route('clientes.consultar')
+            ->with('mensaje', 'Cliente eliminado correctamente.');
     }
 
     public function buscarCliente($id)

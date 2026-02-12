@@ -53,7 +53,7 @@
                 <a href="{{ route('clientes.agregar') }}" class="btn btn-outline-dark">
                     <i class="bi bi-person-plus"></i> Agregar
                 </a>
-                <a href="{{ route('clientes.editar') }}" class="btn btn-outline-dark">
+                <a href="{{ route('clientes.update') }}" class="btn btn-outline-dark">
                     <i class="bi bi-pencil-square"></i> Actualizar/Eliminar
                 </a>
             </div>
