@@ -87,6 +87,31 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Card Proveedores -->
+            <div class="col-md-6">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body text-center">
+                        <i class="bi bi-truck fs-1 text-secondary mb-3"></i>
+                        <h4 class="fw-bold">Gestión de Proveedores</h4>
+                        <p class="text-muted">Consultar, agregar, actualizar o eliminar proveedores.</p>
+
+                        <div class="d-flex justify-content-center gap-2">
+                            <a href="{{ route('proveedor.consultar') }}" class="btn btn-outline-dark">
+                                <i class="bi bi-search"></i> Consultar
+                            </a>
+
+                            <a href="{{ route('proveedor.agregar') }}" class="btn btn-outline-dark">
+                                <i class="bi bi-plus-circle"></i> Agregar
+                            </a>
+
+                            <a href="{{ route('proveedor.editar') }}" class="btn btn-outline-dark">
+                                <i class="bi bi-pencil-square"></i> Actualizar / Eliminar
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
