@@ -19,6 +19,7 @@ use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\ClienteCuponController;
 use App\Http\Controllers\CarritoController;
 use App\Http\Controllers\CheckoutController;
+use App\Http\Controllers\ProveedorController;
 
 
 
@@ -67,6 +68,17 @@ Route::get('/ingresocompra/editar', [IngresoCompraController::class, 'editDelete
 Route::get('/inventario/productos', [ProductoController::class, 'inventario'])
     ->name('productos.inventario');
 
+    
+// PROVEEDORES
+Route::get('/proveedores', function () { return view('Proveedor.proveedores');});
+
+Route::get('/proveedores/consultar', [ProveedorController::class, 'index'])->name('proveedor.consultar');
+Route::get('/proveedores/agregar', [ProveedorController::class, 'create'])->name('proveedor.agregar');
+Route::post('/proveedores/guardar', [ProveedorController::class, 'guardar'])->name('proveedor.guardar');
+Route::post('/proveedor/buscar', [ProveedorController::class, 'buscar']) ->name('proveedor.buscar');
+Route::get('/proveedor/editar', [ProveedorController::class, 'editView'])->name('proveedor.editar');
+Route::put('/proveedor/update', [ProveedorController::class, 'update']) ->name('proveedor.update');
+Route::delete('/proveedor/eliminar', [ProveedorController::class, 'eliminar']) ->name('proveedor.eliminar');
 Route::get('/', [InicioController::class, 'index'])->name('inicio');
 
 Route::get('/login', [LoginController::class, 'mostrarFormulario'])->name('login');
