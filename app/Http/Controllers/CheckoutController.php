@@ -37,7 +37,7 @@ class CheckoutController extends Controller
                 ->with('error', 'Debes iniciar sesión para comprar');
         }
 
-        // ✅ Validar formulario
+        //  Validar formulario
         $request->validate([
             'direccion'     => 'required|string',
             'metodo_pago'   => 'required|string',
