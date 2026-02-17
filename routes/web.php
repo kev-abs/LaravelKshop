@@ -183,6 +183,14 @@ Route::middleware('cliente')->group(function () {
 
     Route::get('/mis-pedidos/{id}', [PedidoController::class, 'detalle'])
         ->name('pedido.detalle');
+    
+    Route::get('/pedido/{id}/comprobante', [PedidoController::class, 'comprobante'])
+    ->name('pedido.comprobante');
+    
+    Route::get('/pedido/{id}/comprobante/pdf', [PedidoController::class, 'comprobantePdf'])
+    ->name('pedido.comprobante.pdf');
+
+
 
 
 });
