@@ -24,6 +24,7 @@ class ProveedorController extends Controller
         return view('Proveedor.agregar');
     }
 
+    // GUARDAR    
     public function guardar(Request $request)
     {
         DB::table('proveedor')->insert([
@@ -41,33 +42,49 @@ class ProveedorController extends Controller
     // VISTA EDITAR
     public function editView()
     {
-        $response = Http::get($this->apiUrl);
-        $proveedores = $response->json();
-
-        return view('Proveedor.editar', compact('proveedores'));
+        return view('Proveedor.editar');
     }
 
-    // ACTUALIZAR
-    public function update(Request $request, $id)
+    // Buscar proveedor por ID
+    public function buscar(Request $request)
     {
-        Http::put($this->apiUrl . '/' . $id, [
-            "nombre_Empresa" => $request->nombre_Empresa,
-            "contacto"       => $request->contacto,
-            "telefono"       => $request->telefono,
-            "correo"         => $request->correo,
-            "direccion"      => $request->direccion,
-        ]);
+        $proveedor = DB::table('proveedor')
+            ->where('ID_Proveedor', $request->ID_Proveedor)
+            ->first();
+
+        if (!$proveedor) {
+            return redirect()->back()
+                ->with('mensaje', 'Proveedor no encontrado');
+        }
+
+        return view('Proveedor.editar', compact('proveedor'));
+    }
+
+    // Actualizar proveedor
+    public function update(Request $request)
+    {
+        DB::table('proveedor')
+            ->where('ID_Proveedor', $request->ID_Proveedor)
+            ->update([
+                'Nombre_Empresa' => $request->Nombre_Empresa,
+                'Contacto' => $request->Contacto,
+                'Telefono' => $request->Telefono,
+                'Correo' => $request->Correo,
+                'Direccion' => $request->Direccion,
+            ]);
 
         return redirect()->route('proveedor.editar')
-                         ->with('success', 'Proveedor actualizado');
+    ->with('mensaje', 'Proveedor actualizado correctamente');
     }
 
     // ELIMINAR
-    public function destroy($id)
+    public function eliminar(Request $request)
     {
-        Http::delete($this->apiUrl . '/' . $id);
+        DB::table('proveedor')
+            ->where('ID_Proveedor', $request->ID_Proveedor)
+            ->delete();
 
-        return redirect()->route('proveedor.editar')
-                         ->with('success', 'Proveedor eliminado');
+        return redirect()->back()
+            ->with('mensaje', 'Proveedor eliminado correctamente');
     }
 }

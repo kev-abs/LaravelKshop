@@ -84,10 +84,10 @@ Route::get('/proveedores', function () { return view('Proveedor.proveedores');})
 Route::get('/proveedores/consultar', [ProveedorController::class, 'index'])->name('proveedor.consultar');
 Route::get('/proveedores/agregar', [ProveedorController::class, 'create'])->name('proveedor.agregar');
 Route::post('/proveedores/guardar', [ProveedorController::class, 'guardar'])->name('proveedor.guardar');
-
-Route::get('/proveedores/editar', [ProveedorController::class, 'editView'])->name('proveedor.editar');
-Route::put('/proveedores/actualizar/{id}', [ProveedorController::class, 'update'])->name('proveedor.update');
-Route::delete('/proveedores/eliminar/{id}', [ProveedorController::class, 'destroy'])->name('proveedor.destroy');
+Route::post('/proveedor/buscar', [ProveedorController::class, 'buscar']) ->name('proveedor.buscar');
+Route::get('/proveedor/editar', [ProveedorController::class, 'editView'])->name('proveedor.editar');
+Route::put('/proveedor/update', [ProveedorController::class, 'update']) ->name('proveedor.update');
+Route::delete('/proveedor/eliminar', [ProveedorController::class, 'eliminar']) ->name('proveedor.eliminar');
 Route::get('/', [InicioController::class, 'index'])->name('inicio');
 
 Route::get('/login', [LoginController::class, 'mostrarFormulario'])->name('login');
