@@ -12,7 +12,7 @@
 <header class="bg-white sticky-top py-3 border-bottom shadow-sm">
     <div class="container d-flex justify-content-between align-items-center">
         <div class="d-flex align-items-center">
-            <a class="navbar-brand fw-bold" href="{{ route('panel.admin') }}">
+            <a class="navbar-brand fw-bold" href="{{ route('usuariosVista') }}">
             <img src="{{ asset('img/logo_kshopsinfondo.png') }}" alt="K-Shop" width="60" class="me-2">
             K-SHOP | Admin
             </a>

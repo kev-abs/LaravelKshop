@@ -2,89 +2,40 @@
 
 namespace App\Http\Controllers;
 
-use App\Services\PedidoService;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 
 class PedidoController extends Controller
 {
-    private $service;
-
-    public function __construct(PedidoService $service)
+    public function historial()
     {
-        $this->service = $service;
+        $idCliente = session('id_cliente');
+
+        $response = Http::get("http://localhost:8080/pedido/cliente/$idCliente");
+
+        $pedidos = $response->json();
+
+        return view('ventas.pedidos.index', compact('pedidos'));
     }
 
-    public function index(Request $request)
-    {
-        $Pedidos = $this->service->obtenerPedidos();
-        
-        $mensaje = $request->query('msg');
+public function detalle($id)
+{
+    $idCliente = session('id_cliente');
 
-        return view('ventas.pedidos', compact('Pedidos', 'mensaje'));
+    // Traer pedido
+    $pedidoResponse = Http::get("http://localhost:8080/pedido/$id");
+    $pedido = $pedidoResponse->json();
+
+    // Seguridad
+    if (!$pedido || $pedido['idCliente'] != $idCliente) {
+        abort(403);
     }
 
-    public function create()
-    {
-    return view('ventas.pedidos_create');
-    }
+    // Traer detalle productos
+    $detalleResponse = Http::get("http://localhost:8080/pedido/$id/detalle");
+    $detalles = $detalleResponse->json();
 
-    public function store(Request $request)
-    {
-        $request->validate([
-            'id_Cliente' => 'required',
-            'fecha_Pedido' => 'required',
-            'estado' => 'required',
-            'total' => 'required',
-        
-        ]);
+    return view('ventas.pedidos.detalle', compact('pedido', 'detalles'));
+}
 
-        $ok = $this->service->agregarPedidos($request->all());
-
-        return redirect()->route('ventas.pedidos')
-            ->with('msg', $ok ? 'Pedido agregado correctamente' : 'Error al agregar');
-    }
-
-
-    public function edit($id)
-    {
-        $pedido = $this->service->obtenerPedidoPorId($id);
-
-        if (!$pedido) {
-            return redirect()->route('ventas.pedidos')->with('msg', 'Pedido no encontrado');
-        }
-
-        return view('ventas.editar_pedido', compact('pedido'));
-    }
-
-
-    public function update(Request $request, $id)
-    {
-        $data = [
-            "id_Cliente"   => $request->id_Cliente,
-            "fecha_Pedido" => $request->fecha_Pedido,
-            "estado"       => $request->estado,
-            "total"        => $request->total
-        ];
-
-        $ok = $this->service->actualizarPedido($id, $data);
-
-        if ($ok) {
-           return redirect()->route('ventas.pedidos')->with('msg', 'Pedido actualizado correctamente');
-
-        }
-
-        return back()->with('msg', 'No se pudo actualizar el pedido');
-    }
-
-
-
-
-        public function destroy($id)
-    {
-        $ok = $this->service->eliminarPedido($id);
-
-        return redirect()->route('ventas.pedidos')
-            ->with('msg', $ok ? 'Pedido eliminado correctamente' : 'Error al eliminar');
-    }
 
 }

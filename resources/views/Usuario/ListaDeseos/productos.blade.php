@@ -50,9 +50,11 @@
             <p class="text-muted mb-1">Precio: $ {{ number_format($p->Precio, 0, ',', '.') }}</p>
             <p class="text-muted mb-2">Stock: {{ $p->Stock ?? 'Disponible' }}</p>
 
-            <a href="{{ route('productos.catalogo') }}" class="btn btn-outline-dark btn-sm mb-1">
-              Ver Producto
-            </a>
+            <a href="{{ route('producto.detalle', $p->ID_Producto) }}"
+   class="btn btn-outline-dark btn-sm mb-1">
+   Ver Producto
+</a>
+
 
             <form action="{{ route('cliente.listaDeseos.agregar') }}" method="POST" class="d-inline">
               @csrf

@@ -19,5 +19,14 @@ class CheckoutService
 
         return $response->successful();
     }
+
+        public function obtenerHistorial($idCliente)
+    {
+        $response = Http::get("{$this->apiUrl}/cliente/{$idCliente}");
+
+        return $response->successful()
+            ? $response->json()
+            : [];
+    }
 }
 

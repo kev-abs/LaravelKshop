@@ -20,19 +20,14 @@
     </div>
 
     <!-- BARRA DE BÚSQUEDA CENTRADA (invisible en móvil) -->
-    <form action="{{ route('productos.catalogo') }}" method="GET" class="d-flex mb-4">
+    <form action="{{ route('productos.vistaCatalogo') }}" method="GET" class="d-flex mb-4">
     <input type="text" name="q" class="form-control me-2" placeholder="Buscar productos...">
 
 </form>
 
     <!-- MENÚ NAVEGACIÓN -->
     <nav class="d-flex align-items-center gap-3">
-      <a href="{{ route('productos.catalogo') }}" class="nav-link text-dark">Productos</a>
-      <a href="./servicios.php" class="nav-link text-dark">Servicios</a>
-      <!-- CARRITO -->
-      <a href="index.php?Controller=carrito&action=mostrar" class="btn btn-outline-dark border-0">
-        <i class="bi bi-cart-fill"></i>
-      </a>
+      <a href="{{ route('productos.vistaCatalogo') }}" class="nav-link text-dark">Productos</a>
 
       <!-- INICIAR SESIÓN -->
       <a href="{{ route('login') }}" class="btn btn-outline-dark border-0 text-dark">
@@ -69,48 +64,6 @@
     </div>
   </div>
 </div>
-
-<!-- SECCIÓN CATEGORÍAS -->
-<section class="py-5">
-  <div class="container text-center">
-    <h2 class="fw-bold mb-4">Explora por categorías</h2>
-    <div class="row g-4">
-      
-      <div class="col-md-4">
-        <div class="card border-0 shadow-sm">
-          <div class="ratio ratio-1x1">
-            <img src="{{ asset('img/RopaCaballero2.png') }}" class="card-img-top" alt="Hombre" style="object-fit: cover;">
-          </div>
-          <div class="card-body">
-            <h5 class="fw-bold">Hombre</h5>
-            <a href="#" class="btn btn-dark btn-sm">Ver más</a>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-md-4">
-        <div class="card border-0 shadow-sm">
-          <div class="ratio ratio-1x1">
-            <img src="{{ asset('img/RopaDama2.png') }}" class="card-img-top" alt="Mujer" style="object-fit: cover;">
-          </div>
-          <div class="card-body">
-            <h5 class="fw-bold">Mujer</h5>
-            <a href="#" class="btn btn-dark btn-sm">Ver más</a>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-md-4">
-        <div class="card border-0 shadow-sm">
-          <div class="ratio ratio-1x1">
-            <img src="{{ asset('img/RopaNiños2.png') }}" class="card-img-top" alt="Niños" style="object-fit: cover;">
-          </div>
-          <div class="card-body">
-            <h5 class="fw-bold">Niños</h5>
-            <a href="#" class="btn btn-dark btn-sm">Ver más</a>
-          </div>
-        </div>
-      </div>
 
     </div>
   </div>

@@ -48,7 +48,8 @@
       </li>
 
       <li class="mb-3">
-        <a href="#" class="text-white text-decoration-none">
+        {{-- <a href="{{ route('checkout.historial') }}"> --}}
+
           <i class="bi bi-bag-check me-2"></i> Mis Pedidos
         </a>
       </li>
@@ -60,7 +61,7 @@
       </li>
 
       <li class="mb-3">
-        <a href="#" class="text-white text-decoration-none">
+        <a href="{{ route('ventas.carrito.index') }}" class="text-white text-decoration-none">
           <i class="bi bi-cart me-2"></i> Carrito
         </a>
       </li>
@@ -98,7 +99,8 @@
   <div class="row row-cols-2 row-cols-md-2 row-cols-lg-4 g-4 text-center mb-5">
   
     <div class="col">
-      <a href="#" class="text-decoration-none d-block h-100">
+      <a href="{{ route('checkout.historial') }}" class="text-decoration-none text-dark">
+
         <div class="card shadow-sm border-0 h-100">
           <div class="card-body">
             <i class="bi bi-cart-check fs-1 text-success"></i>
@@ -145,17 +147,7 @@
       </a>
     </div>
 
-    <div class="col">
-      <a href="{{ route('cliente.cupones') }}" class="text-decoration-none d-block h-100">
-        <div class="card shadow-sm border-0 h-100">
-          <div class="card-body">
-            <i class="bi bi-ticket-perforated fs-1 text-warning"></i>
-            <h5 class="fw-bold mt-3">Cupones</h5>
-            <p class="text-muted">Redime tus descuentos</p>
-          </div>
-        </div>
-      </a>
-    </div>
+
 
   </div>
 

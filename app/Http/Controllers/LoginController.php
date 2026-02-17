@@ -27,6 +27,11 @@ class LoginController
 
         if ($cliente && Hash::check($contrasena, $cliente->Contrasena)) {
 
+            DB::table('historial_login')->insert([
+                'ID_Cliente' => $cliente->ID_Cliente,
+                'Fecha_Login' => now()
+            ]);
+
             Session::put('id_cliente', $cliente->ID_Cliente);
             Session::put('nombre', $cliente->Nombre);
             Session::put('rol', 'cliente');

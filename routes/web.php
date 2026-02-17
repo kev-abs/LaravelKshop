@@ -1,8 +1,9 @@
 <?php
 
+use App\Http\Controllers\AdminPedidoController;
 use App\Http\Controllers\CuponController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\EnvioController;
+use App\Http\Controllers\AdminEnvioController;
 use App\Http\Controllers\IngresoCompraController;
 use App\Http\Controllers\InicioController;
 use App\Http\Controllers\LoginController;
@@ -19,16 +20,6 @@ use App\Http\Controllers\ClienteCuponController;
 use App\Http\Controllers\CarritoController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\ProveedorController;
-
-Route::get('/checkout', [CheckoutController::class, 'index'])
-    ->name('checkout.index');
-
-Route::post('/checkout/confirmar', [CheckoutController::class, 'store'])
-    ->name('checkout.store');
-    
-Route::get('/pedido/exito', function () {
-    return view('ventas.pedido_exito');
-})->name('pedido.exito');
 
 
 
@@ -114,27 +105,6 @@ Route::get('/ventas', function () {
 })->name('ventas.ventas');
 
 
-
-Route::get('/envios', [EnvioController::class, 'index'])->name('ventas.envios');
-
-Route::get('/envios/create', [EnvioController::class, 'create'])->name('ventas.envios_create');
-Route::post('/envios', [EnvioController::class, 'store'])->name('envios.store');
-Route::get('/envio  /{id}/edit', [EnvioController::class, 'edit'])->name('ventas.envio');
-Route::put('/envio/{id}', [EnvioController::class, 'update'])->name('envio.update');
-Route::delete('/envios/{id}', [EnvioController::class, 'destroy'])->name('envios.destroy');
-
-Route::get('/pedidos', [PedidoController::class, 'index'])->name('ventas.pedidos');
-
-Route::delete('/pedidos/{id}', [PedidoController::class, 'destroy'])->name('pedidos.destroy');
-Route::post('/pedidos', [PedidoController::class, 'store'])->name('pedidos.store');
-Route::get('/pedidos/create', [PedidoController::class, 'create'])->name('ventas.pedidos_create');
-Route::get('/pedido/{id}/edit', [PedidoController::class, 'edit'])->name('ventas.pedido');
-Route::put('/pedido/{id}', [PedidoController::class, 'update'])->name('pedido.update');
-
-Route::get('/carrito', [CarritoController::class, 'index'])->name('ventas.carrito');
-Route::post('/carrito', [CarritoController::class, 'store'])->name('carrito.store');
-Route::delete('/carrito', [CarritoController::class, 'vaciar'])->name('carrito.vaciar');
-
 Route::get('/productos/agregar', [ProductoController::class, 'create'])->name('productos.create');
 Route::post('/productos/agregar', [ProductoController::class, 'store'])->name('productos.store');
 
@@ -144,11 +114,13 @@ Route::delete('/productos/eliminar/{id}', [ProductoController::class, 'destroy']
 
 Route::get('/productos', [ProductoController::class, 'index'])->name('productos.index');
 Route::get('/productos/catalogo', [ProductoController::class, 'catalogo'])->name('productos.catalogo');
-
+Route::get('/productos/catalogovista', [ProductoController::class, 'vistacatalogo'])->name('productos.vistaCatalogo');
 Route::get('/productos/categorizar', [ProductoController::class, 'categorizar'])->name('productos.categorizar');
 Route::post('/productos/categorizar', [ProductoController::class, 'guardarCategorias'])->name('productos.categorizar.guardar');
 Route::post( '/productos/asignar-categoria', [ProductoController::class, 'asignarCategoria'])->name('productos.asignarCategoria');
 Route::get('/api/producto-categoria/por-categoria',  [ProductoCategoriaController::class, 'porCategoria'])->name('productos.productosPorCategoria');
+Route::get('/producto/{id}', [ProductoController::class, 'detalle'])->name('producto.detalle');
+
 
 Route::get('/logout', function () {
     session()->flush();
@@ -164,7 +136,12 @@ Route::get('/usuarioVista', [UsuariosController::class,'index'])->name('usuarios
 
 Route::get('/usuarios/clientes',[UsuariosController::class, 'consultarClientes'])->name('clientes.consultar');
 Route::match(['get','post'], '/usuarios/clientes/agregar', [UsuariosController::class, 'agregarCliente'])->name('clientes.agregar');
-Route::match(['get','post'], '/usuarios/clientes/editar', [UsuariosController::class, 'editarEliminarCliente'])->name('clientes.editar');
+Route::get('/usuarios/clientes/editar/{id}',[UsuariosController::class, 'mostrarEditarCliente'])->name('clientes.editar.form');
+Route::post('/usuarios/clientes/actualizar',[UsuariosController::class, 'actualizarCliente'])->name('clientes.update');
+Route::delete('/usuarios/clientes/eliminar/{id}',[UsuariosController::class, 'eliminarCliente'])->name('clientes.eliminar');
+
+
+
 Route::get('/usuarios/clientes/buscar/{id}', [UsuariosController::class, 'buscarCliente']);
 Route::get('/usuarios/clientes/{id}', [UsuariosController::class, 'buscarCliente']);
 Route::get('/cliente/productos', [ProductoController::class, 'panelCliente'])->name('cliente.Productos');
@@ -188,3 +165,54 @@ Route::get('/cliente/productos', [ListaDeseosController::class, 'productos'])->n
 Route::get('/cliente/cupones', [ClienteCuponController::class, 'index'])->name('cliente.cupones');
 Route::get('/usuario/mis-cupones', [CuponController::class, 'misCupones'])->name('usuario.mis_cupones');
 Route::post('/usuario/cupon/redimir', [CuponController::class, 'redimir'])->name('usuario.cupon.redimir');
+
+//Rutas modulo ventas
+
+Route::middleware('cliente')->group(function () {
+
+    // Carrito
+    Route::get('/carrito', [CarritoController::class, 'index'])
+        ->name('ventas.carrito.index');
+
+    Route::post('/carrito', [CarritoController::class, 'store'])
+        ->name('carrito.store');
+
+    Route::put('/carrito/cantidad', [CarritoController::class, 'updateCantidad'])
+        ->name('carrito.update');
+
+    Route::delete('/carrito/eliminar', [CarritoController::class, 'eliminar'])
+        ->name('carrito.delete');
+
+    Route::post('/carrito/checkout', [CarritoController::class, 'checkout'])
+        ->name('carrito.checkout');
+    
+     Route::get('/carrito/confirmar', [CarritoController::class, 'confirmar'])
+    ->name('carrito.confirmar');
+
+    // Pedidos
+    Route::get('/mis-pedidos', [PedidoController::class, 'historial'])
+        ->name('checkout.historial');
+
+    Route::get('/mis-pedidos/{id}', [PedidoController::class, 'detalle'])
+        ->name('pedido.detalle');
+
+
+});
+
+Route::middleware('admin')->group(function () {
+
+    Route::get('/admin/pedidos', [AdminPedidoController::class, 'index'])
+        ->name('ventas.pedidos');
+
+    Route::get('/admin/envios', [AdminEnvioController::class, 'index'])
+        ->name('ventas.envios');
+    
+    Route::get('/admin/pedidos/{id}', [AdminPedidoController::class, 'detalle'])
+        ->name('admin.pedido.detalle');
+
+});
+
+
+
+
+

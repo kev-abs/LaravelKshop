@@ -30,7 +30,7 @@ class CheckoutController extends Controller
     // Confirmar compra
     public function store(Request $request)
     {
-        // 🔐 Validar sesión cliente
+        // Validar sesión cliente
         if (!session()->has('id_cliente')) {
             return redirect()
                 ->route('login')

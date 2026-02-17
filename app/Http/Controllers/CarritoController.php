@@ -2,74 +2,83 @@
 
 namespace App\Http\Controllers;
 
-use App\Services\ProductoService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 
 class CarritoController extends Controller
 {
-    protected $productoService;
-
-    public function __construct(ProductoService $productoService)
-    {
-        $this->productoService = $productoService;
-    }
-
-   
     public function index()
     {
-        $carrito = session()->get('carrito', []);
-        return view('ventas.carrito', compact('carrito'));
+        $idCliente = session('id_cliente');
+
+        $response = Http::get("http://localhost:8080/carrito/$idCliente");
+
+        $carrito = $response->json();
+
+        return view('ventas.carrito.index', compact('carrito'));
     }
 
-   
     public function store(Request $request)
     {
-        $request->validate([
-            'idProducto' => 'required|integer',
-            'cantidad'   => 'required|integer|min:1'
+        $idCliente = session('id_cliente');
+
+        Http::asJson()->post("http://localhost:8080/carrito", [
+            "idCliente" => $idCliente,
+            "idProducto" => (int) $request->idProducto,
+            "cantidad" => (int) $request->cantidad
         ]);
 
-        
-        $resultado = $this->productoService->obtenerProductoPorId(
-            $request->idProducto
-        );
-
-        if (!$resultado['success']) {
-            return back()->with('error', 'Producto no encontrado');
-        }
-
-        $producto = $resultado['data'];
-
-        $carrito = session()->get('carrito', []);
-
-        $id = $producto['id_Producto'];
-
-        if (isset($carrito[$id])) {
-            $carrito[$id]['cantidad'] += $request->cantidad;
-        } else {
-            $carrito[$id] = [
-                'idProducto' => $id,
-                'nombre'     => $producto['nombre'],
-                'precio'     => $producto['precio'],
-                'imagen'     => $producto['imagen'],
-                'cantidad'   => $request->cantidad
-            ];
-        }
-
-        session()->put('carrito', $carrito);
-
-        return redirect()
-            ->route('ventas.carrito')
-            ->with('success', 'Producto agregado al carrito');
+        return redirect()->route('ventas.carrito.index');
     }
-
-
-    public function vaciar()
+    
+    public function updateCantidad(Request $request)
     {
-        session()->forget('carrito');
+        $idCliente = session('id_cliente');
 
-        return redirect()
-            ->route('ventas.carrito')
-            ->with('success', 'Carrito vaciado');
+        Http::asJson()->put("http://localhost:8080/carrito/cantidad", [
+            "idCliente" => $idCliente,
+            "idProducto" => (int) $request->idProducto,
+            "cantidad" => (int) $request->cantidad
+        ]);
+
+        return redirect()->route('ventas.carrito.index');
     }
+
+    public function eliminar(Request $request)
+    {
+        $idCliente = session('id_cliente');
+
+        Http::asJson()->delete("http://localhost:8080/carrito/producto", [
+            "idCliente" => $idCliente,
+            "idProducto" => (int) $request->idProducto
+        ]);
+
+        return redirect()->route('ventas.carrito.index');
+    }
+
+public function checkout(Request $request)
+{
+    $idCliente = session('id_cliente');
+
+    Http::post("http://localhost:8080/carrito/checkout", [
+        "idCliente" => $idCliente,
+        "direccion" => $request->direccion,
+        "ciudad" => $request->ciudad,
+        "metodoPago" => $request->metodoPago
+    ]);
+
+    return redirect()->route('checkout.historial');
+}
+
+    public function confirmar()
+{
+    $idCliente = session('id_cliente');
+
+    $response = Http::get("http://localhost:8080/carrito/$idCliente");
+
+    $carrito = $response->json();
+
+    return view('ventas.carrito.confirmar', compact('carrito'));
+}
+
 }
