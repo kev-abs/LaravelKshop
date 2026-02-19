@@ -99,7 +99,6 @@ Route::post('/productos/agregar', [ProductoController::class, 'store'])->name('p
 Route::get('/productos/editar/{id}', [ProductoController::class, 'edit'])->name('productos.edit');
 Route::put('/productos/editar/{id}', [ProductoController::class, 'update'])->name('productos.update');
 Route::delete('/productos/eliminar/{id}', [ProductoController::class, 'destroy'])->name('productos.destroy');
-
 Route::get('/productos', [ProductoController::class, 'index'])->name('productos.index');
 Route::get('/productos/catalogo', [ProductoController::class, 'catalogo'])->name('productos.catalogo');
 Route::get('/productos/catalogovista', [ProductoController::class, 'vistacatalogo'])->name('productos.vistaCatalogo');
@@ -108,6 +107,9 @@ Route::post('/productos/categorizar', [ProductoController::class, 'guardarCatego
 Route::post( '/productos/asignar-categoria', [ProductoController::class, 'asignarCategoria'])->name('productos.asignarCategoria');
 Route::get('/api/producto-categoria/por-categoria',  [ProductoCategoriaController::class, 'porCategoria'])->name('productos.productosPorCategoria');
 Route::get('/producto/{id}', [ProductoController::class, 'detalle'])->name('producto.detalle');
+Route::get('/productos/buscar', [ProductoController::class, 'listar'])->name('productos.buscar');
+
+
 
 
 Route::get('/logout', function () {
@@ -144,7 +146,6 @@ Route::get('/cliente/lista-deseos', [ListaDeseosController::class, 'index'])->na
 Route::post('/cliente/lista-deseos/agregar', [ListaDeseosController::class, 'agregar'])->name('cliente.listaDeseos.agregar');
 Route::delete('/cliente/lista-deseos/{idLista}', [ListaDeseosController::class, 'eliminar'])->name('cliente.listaDeseos.eliminar');
 Route::get('/cliente/productos', [ListaDeseosController::class, 'productos'])->name('cliente.productos');
-
 Route::get('/cliente/cupones', [ClienteCuponController::class, 'index'])->name('cliente.cupones');
 Route::get('/usuario/mis-cupones', [CuponController::class, 'misCupones'])->name('usuario.mis_cupones');
 Route::post('/usuario/cupon/redimir', [CuponController::class, 'redimir'])->name('usuario.cupon.redimir');

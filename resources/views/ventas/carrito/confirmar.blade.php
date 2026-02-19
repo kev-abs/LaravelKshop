@@ -17,10 +17,9 @@
                 {{-- IMAGEN --}}
                 <div style="width: 90px;">
                     @if(!empty($item['imagen']))
-                        <img src="http://localhost:8080/uploads/productos/{{ $item['imagen'] }}"
+                        <img src="http://localhost/api/uploads/productos/{{ $item['imagen'] }}" 
                              class="img-fluid rounded"
                              style="height:90px; object-fit:cover;">
-                             alt="{{ $p['nombre'] }}">
                     @else
                         <img src="{{ asset('img/no-image.png') }}"
                              class="img-fluid rounded"

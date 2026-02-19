@@ -22,9 +22,21 @@
             </a>
 
             <!-- Buscador -->
-            <form class="d-none d-md-flex mx-auto w-50" role="search">
-                <input class="form-control" type="search" placeholder="Buscar en productos..." aria-label="Buscar">
-            </form>
+            <form action="{{ route('productos.buscar') }}" method="GET" class="d-flex">
+
+<input 
+type="text" 
+name="nombre"
+value="{{ request('nombre') }}"
+class="form-control me-2"
+placeholder="Buscar productos..."
+>
+
+<button class="btn btn-dark">
+<i class="bi bi-search"></i>
+</button>
+
+</form>
 
             <div class="d-flex">
                 <a href="{{ route('logout') }}" class="btn btn-outline-dark">

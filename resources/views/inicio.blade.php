@@ -19,9 +19,20 @@
       <a href="/ModeloVistaControlador/index.php?Controller=inicio" class="text-decoration-none fs-7 fw-bold text-dark">K-SHOP</a>
     </div>
 
-    <!-- BARRA DE BÚSQUEDA CENTRADA (invisible en móvil) -->
-    <form action="{{ route('productos.vistaCatalogo') }}" method="GET" class="d-flex mb-4">
-    <input type="text" name="q" class="form-control me-2" placeholder="Buscar productos...">
+    <!-- BARRA DE BÚSQUEDA -->
+<form action="{{ route('productos.buscar') }}" method="GET" class="d-flex">
+
+<input 
+type="text" 
+name="nombre"
+value="{{ request('nombre') }}"
+class="form-control me-2"
+placeholder="Buscar productos..."
+>
+
+<button class="btn btn-dark">
+<i class="bi bi-search"></i>
+</button>
 
 </form>
 

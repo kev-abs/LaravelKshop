@@ -7,8 +7,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\DB;
 
+
 class ProductoController
 {
+    
     private $productoService;
 
     public function __construct(ProductoService $productoService)
@@ -158,6 +160,28 @@ public function asignarCategoria(Request $request)
         ->route('productos.index')
         ->with('success', 'Productos categorizados correctamente');
 }
+
+public function listar(Request $request)
+{
+    $response = Http::get('http://localhost:8080/productos/filtrar', [
+
+        'nombre' => $request->query('nombre'),
+        'idCategoria' => $request->query('idCategoria') 
+
+    ]);
+
+    $productos = $response->json();
+
+    $categorias = $this->productoService->obtenerCategorias()['data'] ?? [];
+
+    $categoriaId = $request->query('categoria');
+
+    return view('Usuario.panel.todosProductos',
+        compact('productos','categorias','categoriaId')
+    );
+}
+
+
 
     // ================= AGREGAR =================
     public function create()
