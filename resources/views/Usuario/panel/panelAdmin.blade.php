@@ -184,6 +184,7 @@ class Administrador
       </div>
 
       <!-- Reportes -->
+    
       <div class="accordion-item bg-dark text-white">
         <h2 class="accordion-header">
           <button class="accordion-button collapsed bg-dark text-white" 

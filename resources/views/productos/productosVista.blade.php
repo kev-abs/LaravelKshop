@@ -59,6 +59,15 @@
                     <h5 class="fw-bold">{{ $p['nombre'] }}</h5>
                     <p class="text-muted mb-1 small">{{ $p['descripcion'] }}</p>
                     <p class="fw-bold mb-2">${{ number_format($p['precio'], 0, ',', '.') }}</p>
+                <p class="mb-2">
+    Stock:
+    @if(($p['stock'] ?? 0) <= 0)
+        <span class="text-danger fw-bold">Agotado</span>
+    @else
+        <span class="text-muted">{{ $p['stock'] }}</span>
+    @endif
+</p>
+
                 </div>
             </div>
         </div>

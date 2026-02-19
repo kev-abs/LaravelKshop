@@ -20,9 +20,21 @@
     </div>
 
     <!-- BARRA DE BÚSQUEDA CENTRADA (invisible en móvil) -->
-    <form class="mx-auto d-none d-md-block w-50" action="/buscar" method="GET">
-      <input type="text" class="form-control" name="q" placeholder="Buscar productos...">
-    </form>
+        <form action="{{ route('productos.buscar') }}" method="GET" class="d-flex">
+
+<input 
+type="text" 
+name="nombre"
+value="{{ request('nombre') }}"
+class="form-control me-2"
+placeholder="Buscar productos..."
+>
+
+<button class="btn btn-dark">
+<i class="bi bi-search"></i>
+</button>
+
+</form>
 
     <!-- MENÚ NAVEGACIÓN -->
     <nav class="d-flex align-items-center gap-3">
