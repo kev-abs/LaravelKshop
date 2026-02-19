@@ -19,6 +19,7 @@ use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\ClienteCuponController;
 use App\Http\Controllers\CarritoController;
 use App\Http\Controllers\CheckoutController;
+use App\Http\Controllers\ProveedorController;
 
 
 
@@ -67,6 +68,17 @@ Route::get('/ingresocompra/editar', [IngresoCompraController::class, 'editDelete
 Route::get('/inventario/productos', [ProductoController::class, 'inventario'])
     ->name('productos.inventario');
 
+    
+// PROVEEDORES
+Route::get('/proveedores', function () { return view('Proveedor.proveedores');});
+
+Route::get('/proveedores/consultar', [ProveedorController::class, 'index'])->name('proveedor.consultar');
+Route::get('/proveedores/agregar', [ProveedorController::class, 'create'])->name('proveedor.agregar');
+Route::post('/proveedores/guardar', [ProveedorController::class, 'guardar'])->name('proveedor.guardar');
+Route::post('/proveedor/buscar', [ProveedorController::class, 'buscar']) ->name('proveedor.buscar');
+Route::get('/proveedor/editar', [ProveedorController::class, 'editView'])->name('proveedor.editar');
+Route::put('/proveedor/update', [ProveedorController::class, 'update']) ->name('proveedor.update');
+Route::delete('/proveedor/eliminar', [ProveedorController::class, 'eliminar']) ->name('proveedor.eliminar');
 Route::get('/', [InicioController::class, 'index'])->name('inicio');
 
 Route::get('/login', [LoginController::class, 'mostrarFormulario'])->name('login');
@@ -126,7 +138,12 @@ Route::get('/usuarioVista', [UsuariosController::class,'index'])->name('usuarios
 
 Route::get('/usuarios/clientes',[UsuariosController::class, 'consultarClientes'])->name('clientes.consultar');
 Route::match(['get','post'], '/usuarios/clientes/agregar', [UsuariosController::class, 'agregarCliente'])->name('clientes.agregar');
-Route::match(['get','post'], '/usuarios/clientes/editar', [UsuariosController::class, 'editarEliminarCliente'])->name('clientes.editar');
+Route::get('/usuarios/clientes/editar/{id}',[UsuariosController::class, 'mostrarEditarCliente'])->name('clientes.editar.form');
+Route::post('/usuarios/clientes/actualizar',[UsuariosController::class, 'actualizarCliente'])->name('clientes.update');
+Route::delete('/usuarios/clientes/eliminar/{id}',[UsuariosController::class, 'eliminarCliente'])->name('clientes.eliminar');
+
+
+
 Route::get('/usuarios/clientes/buscar/{id}', [UsuariosController::class, 'buscarCliente']);
 Route::get('/usuarios/clientes/{id}', [UsuariosController::class, 'buscarCliente']);
 Route::get('/cliente/productos', [ProductoController::class, 'panelCliente'])->name('cliente.Productos');

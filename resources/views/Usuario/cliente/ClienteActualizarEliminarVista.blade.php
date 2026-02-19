@@ -12,7 +12,7 @@
 <header class="bg-white sticky-top py-3 border-bottom shadow-sm">
     <div class="container d-flex justify-content-between align-items-center">
         <div class="d-flex align-items-center" href="#">
-            <a class="navbar-brand fw-bold" href="{{ route('panel.admin') }}">
+            <a class="navbar-brand fw-bold" href="{{ route('usuariosVista') }}">
             <img src="{{ asset('img/logo_kshopsinfondo.png') }}" alt="K-Shop" width="60" class="me-2">
             K-SHOP | Admin
             </a>
@@ -55,69 +55,57 @@
 
                     
 
-                    <form method="POST" class="row g-3">
+                    <form method="POST" action="{{ route('clientes.update') }}"  class="row g-3">
                         @csrf
                         <input type="hidden" name="accion" value="actualizar">
                         
                         <div class="col-md-6">
-                            <input type="number" name="id_Cliente" class="form-control rounded-2" placeholder="ID Cliente" required>
+                            <input type="hidden" name="id_Cliente" value="{{ $cliente->ID_Cliente ?? '' }}">
+
+                            @if(empty($cliente))
+                                <div class="col-md-6">
+                                    <input type="number" name="id_busqueda"class="form-control rounded-2"placeholder="ID Cliente">
+                                </div>
+                            @endif
+
                         </div>
                         <div class="col-md-6">
-                            <input type="text" name="nombre" class="form-control rounded-2" placeholder="Nombre" required>
+                            <input type="text" name="nombre" class="form-control rounded-2" placeholder="Nombre" required value="{{ $cliente->Nombre ?? '' }}">
                         </div>
                         <div class="col-md-6">
-                            <input type="email" name="correo" class="form-control rounded-2" placeholder="Correo" required>
+                            <input type="email" name="correo" class="form-control rounded-2" placeholder="Correo" required value="{{ $cliente->Correo ?? '' }}">
                         </div>
                         <div class="col-md-6">
                             <input type="password" name="contrasena" class="form-control" placeholder="Nueva Contraseña">
                         </div>
 
                         <div class="col-md-6">
-                            <input type="text" name="documento" class="form-control rounded-2" placeholder="Documento">
+                            <input type="text" name="documento" class="form-control rounded-2" placeholder="Documento" value="{{ $cliente->Documento ?? '' }}">
                         </div>
                         <div class="col-md-6">
-                            <input type="text" name="telefono" class="form-control rounded-2" placeholder="Teléfono">
+                            <input type="text" name="telefono" class="form-control rounded-2" placeholder="Teléfono" value="{{ $cliente->Telefono ?? '' }}">
                         </div>
                         <div class="col-md-6">
                             <select name="estado" class="form-select rounded-2">
-                                <option value="" disabled selected>Estado</option>
-                                <option value="Activo">Activo</option>
-                                <option value="Inactivo">Inactivo</option>
-                                <option value="Suspendido">Suspendido</option>
+                                <option value="">Estado</option>
+                                <option value="Activo"
+                                    {{ ($cliente->Estado ?? '') == 'Activo' ? 'selected' : '' }}>
+                                    Activo
+                                </option>
+                                <option value="Inactivo"
+                                    {{ ($cliente->Estado ?? '') == 'Inactivo' ? 'selected' : '' }}>
+                                    Inactivo
+                                </option>
+                                <option value="Suspendido"
+                                    {{ ($cliente->Estado ?? '') == 'Suspendido' ? 'selected' : '' }}>
+                                    Suspendido
+                                </option>
                             </select>
                         </div>
 
                         <div class="col-12 text-center mt-3">
                             <button type="submit" class="btn btn-dark btn-lg w-75">
                                 <i class="bi bi-check-circle me-2"></i>Actualizar
-                            </button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-
-        <!-- Eliminar Cliente -->
-        <div class="col-12 col-lg-6">
-            <div class="card shadow-sm border-0 rounded-3">
-                <div class="card-header bg-secondary text-white text-center rounded-top py-2">
-                    <h5 class="mb-0">
-                        <i class="bi bi-trash-fill me-2"></i>Eliminar Cliente
-                    </h5>
-                </div>
-                <div class="card-body bg-light p-4">
-                    <p class="text-muted small mb-4">
-                        Elimina registros antiguos o incorrectos. Una herramienta potente para mantener tu base de datos limpia y eficiente.
-                    </p>
-                    <form method="POST" class="row g-3 justify-content-center">
-                        @csrf
-                        <input type="hidden" name="accion" value="eliminar">
-                        <div class="col-8 col-md-6">
-                            <input type="number" name="id_Cliente" class="form-control rounded-2" placeholder="ID Cliente" required>
-                        </div>
-                        <div class="col-12 text-center mt-3">
-                            <button type="submit" class="btn btn-outline-dark btn-lg w-75">
-                                <i class="bi bi-x-circle me-2"></i>Eliminar
                             </button>
                         </div>
                     </form>
@@ -146,7 +134,7 @@
 <script>
 $(document).ready(function () {
 
-    $("input[name='id_Cliente']").on('keyup', function () {
+    $("input[name='id_busqueda']").on('keyup', function () {
 
         let id = $(this).val();
 
@@ -165,6 +153,8 @@ $(document).ready(function () {
                     $("select[name='estado']").val("");
                     return;
                 }
+
+                $("input[name='id_Cliente']").val(data.ID_Cliente);
 
                 $("input[name='nombre']").val(data.Nombre);
                 $("input[name='correo']").val(data.Correo);

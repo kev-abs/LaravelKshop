@@ -13,11 +13,73 @@ class UsuariosController
     }
 
     // -------- CLIENTES --------
-    public function consultarClientes()
+    public function consultarClientes(Request $request)
     {
-        $clientes = DB::table('cliente')->get();
-        return view('Usuario.cliente.ClienteConsultarVista', compact('clientes'));
+        // Filtro
+        $orden = $request->get('orden', 'c.Nombre');
+        $direccion = $request->get('direccion', 'asc');
+
+        $columnasPermitidas = [
+            'c.Nombre',
+            'c.Documento',
+            'c.ID_Cliente',
+            'total_logins'
+        ];
+
+        if (!in_array($orden, $columnasPermitidas)) {
+            $orden = 'Nombre';
+        }
+
+        if (!in_array($direccion, ['asc', 'desc'])) {
+            $direccion = 'asc';
+        }
+
+        // Conteo de logins
+        $clientes = DB::table('cliente as c')
+            ->leftJoin('historial_login as h', 'c.ID_Cliente', '=', 'h.ID_Cliente')
+            ->select(
+                'c.*',
+                DB::raw('COUNT(h.ID_Login) as total_logins')
+            )
+            ->groupBy(
+                'c.ID_Cliente',
+                'c.Nombre',
+                'c.Correo',
+                'c.Contrasena',
+                'c.Foto',
+                'c.Documento',
+                'c.Telefono',
+                'c.Estado',
+                'c.Fecha_Registro'
+            )
+            ->orderBy($orden, $direccion)
+            ->get();
+
+        $totalClientes = DB::table('cliente')->count();
+
+        $clienteMasFrecuente = DB::table('cliente as c')
+            ->leftJoin('historial_login as h', 'c.ID_Cliente', '=', 'h.ID_Cliente')
+            ->select('c.Nombre', DB::raw('COUNT(h.ID_Login) as total_logins'))
+            ->groupBy('c.ID_Cliente', 'c.Nombre')
+            ->orderByDesc('total_logins')
+            ->first();
+
+        $top5 = DB::table('cliente as c')
+            ->leftJoin('historial_login as h', 'c.ID_Cliente', '=', 'h.ID_Cliente')
+            ->select('c.Nombre', DB::raw('COUNT(h.ID_Login) as total_logins'))
+            ->groupBy('c.ID_Cliente', 'c.Nombre')
+            ->orderByDesc('total_logins')
+            ->limit(5)
+            ->get();
+
+        return view('Usuario.cliente.ClienteConsultarVista', compact(
+            'clientes',
+            'totalClientes',
+            'clienteMasFrecuente',
+            'top5'
+        ));
     }
+
 
     public function agregarCliente(Request $request)
     {
@@ -69,39 +131,49 @@ class UsuariosController
         return view('Usuario.cliente.registro.ClienteRegistrarVista', compact('mensaje'));
     }
 
-    public function editarEliminarCliente(Request $request)
+    public function mostrarEditarCliente($id)
     {
-        $mensaje = "";
+        $cliente = DB::table('cliente')
+            ->where('ID_Cliente', $id)
+            ->first();
 
-        if ($request->isMethod('post')) {
-
-            $accion = $request->accion;
-
-            if ($accion === "actualizar") {
-                DB::table('cliente')
-                    ->where('ID_Cliente', $request->id_Cliente)
-                    ->update([
-                        'Nombre' => $request->nombre,
-                        'Correo' => $request->correo,
-                        'Contrasena' => $request->contrasena ? bcrypt($request->contrasena) : DB::raw('Contrasena'),
-                        'Telefono' => $request->telefono,
-                        'Documento' => $request->documento,
-                        'Estado' => $request->estado
-                    ]);
-
-                $mensaje = "Cliente actualizado correctamente.";
-            }
-
-            if ($accion === "eliminar") {
-                DB::table('cliente')
-                    ->where('ID_Cliente', $request->id_Cliente)
-                    ->delete();
-
-                $mensaje = "Cliente eliminado correctamente.";
-            }
+        if (!$cliente) {
+            return redirect()->back()->with('error', 'Cliente no encontrado');
         }
 
-        return view('Usuario.cliente.ClienteActualizarEliminarVista', compact('mensaje'));
+        return view('Usuario.cliente.ClienteActualizarEliminarVista', compact('cliente'));
+    }
+
+    public function actualizarCliente(Request $request)
+    {
+        DB::table('cliente')
+            ->where('ID_Cliente', $request->id_Cliente)
+            ->update([
+                'Nombre' => $request->nombre,
+                'Correo' => $request->correo,
+                'Contrasena' => $request->contrasena 
+                    ? bcrypt($request->contrasena) 
+                    : DB::raw('Contrasena'),
+                'Telefono' => $request->telefono,
+                'Documento' => $request->documento,
+                'Estado' => $request->estado
+            ]);
+
+        return redirect()
+            ->route('clientes.consultar')
+            ->with('mensaje', 'Cliente actualizado correctamente.');
+    }
+
+
+    public function eliminarCliente($id)
+    {
+        DB::table('cliente')
+            ->where('ID_Cliente', $id)
+            ->delete();
+
+        return redirect()
+            ->route('clientes.consultar')
+            ->with('mensaje', 'Cliente eliminado correctamente.');
     }
 
     public function buscarCliente($id)
