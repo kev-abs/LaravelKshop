@@ -26,9 +26,21 @@
       </a>
     </div>
 
-    <form class="d-none d-md-block w-50">
-      <input type="text" class="form-control" placeholder="Buscar productos...">
-    </form>
+    <form action="{{ route('productos.buscar') }}" method="GET" class="d-flex">
+
+<input 
+type="text" 
+name="nombre"
+value="{{ request('nombre') }}"
+class="form-control me-2"
+placeholder="Buscar productos..."
+>
+
+<button class="btn btn-dark">
+<i class="bi bi-search"></i>
+</button>
+
+</form>
 
     <a href="{{ route('logout') }}" class="btn btn-outline-dark border-0">
       <i class="bi bi-box-arrow-right"></i> Salir
@@ -54,8 +66,6 @@
    class="btn btn-outline-dark btn-sm mb-1">
    Ver Producto
 </a>
-
-
             <form action="{{ route('cliente.listaDeseos.agregar') }}" method="POST" class="d-inline">
               @csrf
               <input type="hidden" name="ID_Producto" value="{{ $p->ID_Producto }}">

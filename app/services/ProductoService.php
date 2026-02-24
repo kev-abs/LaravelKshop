@@ -198,23 +198,35 @@ public function asignarProductoCategoria($idProducto, $idCategoria)
 public function obtenerCategoriasConProductos()
 {
     try {
-        $response = Http::get('URL_DE_TU_API/endpoint_categorias_productos'); // Asegura la URL
-        
-        // --- ¡DEBUG EN EL SERVICIO! ---
-        if ($response->failed()) {
-            // Si hay un error 4xx o 5xx, devolvemos el error.
-            return ['error' => $response->status(), 'message' => $response->body()];
-        }
-        // -----------------------------
-        
-        // Asumiendo que tu servicio siempre devuelve la data dentro de una clave 'data'
-        return ['data' => $response->json()]; 
 
-    } catch (\Exception $e) {
-        // Manejar errores de conexión (ej: servidor Spring caído)
-        return ['error' => 500, 'message' => 'Error de conexión con el backend: ' . $e->getMessage()];
+        $response = Http::get('http://localhost:8080/api/producto-categoria/por-categoria'); 
+    
+
+        // Si falla (error 4xx o 5xx)
+        if (!$response->successful()) {
+            return [
+                'error' => true,
+                'status' => $response->status(),
+                'message' => $response->body()
+            ];
+        }
+
+        // Retornar directamente la data
+        return [
+            'error' => false,
+            'data' => $response->json()
+        ];
+
+    } catch (\Throwable $e) {
+
+        return [
+            'error' => true,
+            'status' => 500,
+            'message' => 'Error de conexión con SpringBoot: ' . $e->getMessage()
+        ];
     }
 }
+
 
 
 }

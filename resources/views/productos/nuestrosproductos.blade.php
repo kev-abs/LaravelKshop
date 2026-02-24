@@ -14,6 +14,22 @@
 <!-- ================= ENCABEZADO ================= -->
 <header class="bg-white sticky-top py-3 border-bottom shadow-sm">
   <div class="container d-flex justify-content-between align-items-center">
+        <!-- BARRA DE BÚSQUEDA -->
+<form action="{{ route('productos.buscar') }}" method="GET" class="d-flex">
+
+<input 
+type="text" 
+name="nombre"
+value="{{ request('nombre') }}"
+class="form-control me-2"
+placeholder="Buscar productos..."
+>
+
+<button class="btn btn-dark">
+<i class="bi bi-search"></i>
+</button>
+
+</form>
 
     <div class="d-flex align-items-center">
       <a class="navbar-brand fw-bold" href="{{ route('panel.cliente') }}">
@@ -33,6 +49,7 @@
 
 <div class="container my-5 flex-grow-1">
     <h2 class="text-center fw-bold mb-5">Nuestros Productos</h2>
+    
 
     @if(!empty($productos))
     <div class="row g-4">
@@ -57,6 +74,15 @@
                     <h5 class="fw-bold">{{ $p['nombre'] }}</h5>
                     <p class="text-muted mb-1 small">{{ $p['descripcion'] }}</p>
                     <p class="fw-bold mb-2">${{ number_format($p['precio'], 0, ',', '.') }}</p>
+                    <p class="mb-2">
+    Stock:
+    @if(($p['stock'] ?? 0) <= 0)
+        <span class="text-danger fw-bold">Agotado</span>
+    @else
+        <span class="text-muted">{{ $p['stock'] }}</span>
+    @endif
+</p>
+
 
                     {{-- AGREGAR AL CARRITO --}}
                     <form action="{{ route('carrito.store') }}" method="POST" class="mt-auto">

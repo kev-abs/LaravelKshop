@@ -21,9 +21,21 @@
       <span class="fw-bold text-dark">K-SHOP | Cliente</span>
     </div>
 
-    <form class="d-none d-md-block w-50">
-      <input type="text" class="form-control" placeholder="Buscar productos...">
-    </form>
+    <form action="{{ route('productos.buscar') }}" method="GET" class="d-flex">
+
+<input 
+type="text" 
+name="nombre"
+value="{{ request('nombre') }}"
+class="form-control me-2"
+placeholder="Buscar productos..."
+>
+
+<button class="btn btn-dark">
+<i class="bi bi-search"></i>
+</button>
+
+</form>
 
     <nav><a href="{{ route('logout') }}" class="btn btn-outline-dark">Cerrar Sesión</a></nav>
   </div>
