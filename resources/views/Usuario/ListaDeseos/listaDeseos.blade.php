@@ -89,7 +89,7 @@ placeholder="Buscar productos..."
       @foreach($deseos as $d)
         <div class="col">
           <div class="card h-100 shadow-sm border-0">
-            <img src="http://localhost/api/uploads/productos/{{ $d->Imagen ?? '' }}" class="card-img-top" style="height:180px; object-fit:cover">
+            <img src="http://localhost:8080/uploads/productos/{{ $d->Imagen ?? '' }}" class="card-img-top" style="height:180px; object-fit:cover">
             <div class="card-body text-center">
               <h6 class="fw-bold">{{ $d->Nombre ?? '' }}</h6>
               <p class="fw-bold mb-2">$ {{ number_format($d->Precio ?? 0, 0, ',', '.') }}</p>

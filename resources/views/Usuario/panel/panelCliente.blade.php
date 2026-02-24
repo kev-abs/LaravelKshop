@@ -270,7 +270,7 @@ placeholder="Buscar productos..."
       <div class="col-6 col-md-4 col-lg-3">
         <div class="card border-0 shadow-sm h-100 rounded-4">
 
-          <img src="http://localhost/api/uploads/productos/{{ $p->Imagen }}"
+          <img src="http://localhost:8080/uploads/productos/{{ $p->Imagen }}"
                class="card-img-top rounded-top-4"
                style="height:200px; object-fit:cover;">
 
