@@ -127,6 +127,8 @@ Route::match(['get','post'], '/usuarios/clientes/agregar', [UsuariosController::
 Route::get('/usuarios/clientes/editar/{id}',[UsuariosController::class, 'mostrarEditarCliente'])->name('clientes.editar.form');
 Route::post('/usuarios/clientes/actualizar',[UsuariosController::class, 'actualizarCliente'])->name('clientes.update');
 Route::delete('/usuarios/clientes/eliminar/{id}',[UsuariosController::class, 'eliminarCliente'])->name('clientes.eliminar');
+Route::get('/cliente/historial', [UsuariosController::class, 'historial'])->name('cliente.historial');
+
 
 
 

@@ -185,6 +185,19 @@ class UsuariosController
         return response()->json($cliente);
     }
 
+    public function historial()
+    {
+        $clienteId = session('cliente_id'); // o auth()->id() si usas auth
+
+        $pedidos = DB::table('pedido')
+            ->where('ID_Cliente', $clienteId)
+            ->orderBy('fecha', 'desc')
+            ->get();
+
+        return view('Usuario.panel.panelCliente', compact('pedidos'));
+    }
+
+
     // -------- EMPLEADOS --------
 
     public function consultarEmpleados()

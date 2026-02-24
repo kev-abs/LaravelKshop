@@ -25,9 +25,7 @@
       <input type="text" class="form-control" placeholder="Buscar productos...">
     </form>
 
-    <a href="{{ route('logout') }}" class="btn btn-outline-dark border-0">
-      <i class="bi bi-box-arrow-right"></i> Salir
-    </a>
+    <nav><a href="{{ route('logout') }}" class="btn btn-outline-dark">Cerrar Sesión</a></nav>
   </div>
 </header>
 
