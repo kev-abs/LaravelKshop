@@ -198,6 +198,14 @@ Route::middleware('cliente')->group(function () {
 
     Route::get('/mis-pedidos/{id}', [PedidoController::class, 'detalle'])
         ->name('pedido.detalle');
+    
+    Route::get('/pedido/{id}/comprobante', [PedidoController::class, 'comprobante'])
+    ->name('pedido.comprobante');
+    
+    Route::get('/pedido/{id}/comprobante/pdf', [PedidoController::class, 'comprobantePdf'])
+    ->name('pedido.comprobante.pdf');
+
+
 
 
 });
@@ -212,6 +220,9 @@ Route::middleware('admin')->group(function () {
     
     Route::get('/admin/pedidos/{id}', [AdminPedidoController::class, 'detalle'])
         ->name('admin.pedido.detalle');
+    
+    Route::post('/admin/pedido/{id}/estado', [AdminPedidoController::class, 'cambiarEstado'])
+    ->name('admin.pedido.estado');
 
 });
 

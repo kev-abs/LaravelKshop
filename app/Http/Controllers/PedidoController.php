@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Http;
+use Barryvdh\DomPDF\Facade\Pdf;
+
 
 class PedidoController extends Controller
 {
@@ -35,6 +37,33 @@ public function detalle($id)
     $detalles = $detalleResponse->json();
 
     return view('ventas.pedidos.detalle', compact('pedido', 'detalles'));
+}
+public function comprobante($id)
+{
+    $pedido = Http::get("http://localhost:8080/pedido/$id")->json();
+    $detalles = Http::get("http://localhost:8080/pedido/$id/detalle")->json();
+
+    return view('ventas.pedidos.comprobante', compact('pedido','detalles'));
+}
+
+public function comprobantePdf($id)
+{
+    $idCliente = session('id_cliente');
+
+    $pedido = Http::get("http://localhost:8080/pedido/$id")->json();
+    $detalles = Http::get("http://localhost:8080/pedido/$id/detalle")->json();
+
+    // seguridad
+    if (!$pedido || $pedido['idCliente'] != $idCliente) {
+        abort(403);
+    }
+
+    $pdf = Pdf::loadView('ventas.pedidos.comprobante', [
+        'pedido' => $pedido,
+        'detalles' => $detalles
+    ]);
+
+    return $pdf->download("Comprobante_Pedido_{$id}.pdf");
 }
 
 

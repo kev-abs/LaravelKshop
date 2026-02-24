@@ -139,6 +139,15 @@
 
     </div>
 
+    <a href="{{ route('pedido.comprobante.pdf', $pedido['idPedido']) }}"
+   class="btn btn-dark btn-sm rounded-pill px-4">
+    Descargar comprobante
+</a>
+
+
+    
+
+
 
     {{-- BOTÓN VOLVER --}}
     <div class="mt-4">
