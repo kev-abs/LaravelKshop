@@ -23,7 +23,6 @@
 <div class="container py-5">
 @if($alertas > 0)
 <div class="alert alert-warning text-center shadow-sm">
-    ⚠ 
     <a href="?filtro=bajo" class="fw-bold text-dark text-decoration-none">
         {{ $stockBajo }} con stock bajo
     </a> — 

@@ -42,28 +42,6 @@ Route::put('/cupon/editar', [CuponController::class, 'update'])->name('cupon.upd
 
 Route::delete('/cupon/eliminar', [CuponController::class, 'destroy'])->name('cupon.eliminar');
 
-//INGRESO_COMPRA
-Route::get('/ingresocompra', [IngresoCompraController::class, 'index'])
-    ->name('ingresocompra.index');
-
-Route::get('/ingresocompra/crear', [IngresoCompraController::class, 'create'])
-    ->name('ingresocompra.create');
-
-Route::post('/ingresocompra/guardar', [IngresoCompraController::class, 'store'])
-    ->name('ingresocompra.store');
-
-Route::get('/ingresocompra/{id}/editar', [IngresoCompraController::class, 'edit'])
-    ->name('ingresocompra.edit');
-
-Route::put('/ingresocompra/actualizar', [IngresoCompraController::class, 'update'])
-    ->name('ingresocompra.update');
-
-Route::delete('/ingresocompra/eliminar', [IngresoCompraController::class, 'destroy'])
-    ->name('ingresocompra.destroy');
-
-Route::get('/ingresocompra/editar', [IngresoCompraController::class, 'editDeleteVista'])
-    ->name('ingresocompra.editDelete');
-
 //GESTION DE INVENTARIO
 Route::get('/inventario/productos', [ProductoController::class, 'inventario'])
     ->name('productos.inventario');
