@@ -205,6 +205,9 @@ Route::middleware('admin')->group(function () {
     
     Route::get('/admin/pedidos/{id}', [AdminPedidoController::class, 'detalle'])
         ->name('admin.pedido.detalle');
+    
+    Route::post('/admin/pedido/{id}/estado', [AdminPedidoController::class, 'cambiarEstado'])
+    ->name('admin.pedido.estado');
 
 });
 

@@ -2,6 +2,8 @@
 
 @section('content')
 
+
+
 <div class="container my-5" style="max-width:1200px;">
 
     <h4 class="fw-semibold mb-4">Gestión de Pedidos</h4>
@@ -30,6 +32,8 @@
 
                 <tbody>
                     @foreach($pedidos as $pedido)
+
+                    
                         <tr>
 
                             <td class="fw-semibold">
