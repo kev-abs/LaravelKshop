@@ -56,7 +56,7 @@ placeholder="Buscar productos..."
     @forelse ($productos as $p)
       <div class="col-6 col-md-4 col-lg-3">
         <div class="card h-100 shadow-sm border-0">
-          <img src="http://localhost/api/uploads/productos/{{ $p->Imagen }}" class="card-img-top" style="height:180px; object-fit:cover">
+          <img src="http://localhost:8080/uploads/productos/{{ $p->Imagen }}" class="card-img-top" style="height:180px; object-fit:cover">
           <div class="card-body text-center">
             <h6 class="fw-bold">{{ $p->Nombre }}</h6>
             <p class="text-muted mb-1">Precio: $ {{ number_format($p->Precio, 0, ',', '.') }}</p>
