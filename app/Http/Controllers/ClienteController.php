@@ -1,8 +1,7 @@
 <?php
-
-
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\DB;
 use App\Models\producto\Producto;
 use Illuminate\Http\Request;
@@ -10,17 +9,56 @@ use Illuminate\Http\Request;
 class ClienteController
 {
     public function panel()
-    {
-        if (session('rol') !== 'cliente') {
-            return redirect()->route('login');
-        }
-    
-        $productos = Producto::inRandomOrder()->take(3)->get();
-
-
-        return view('Usuario.panel.panelCliente', compact('productos'));
+{
+    if (session('rol') !== 'cliente') {
+        return redirect()->route('login');
     }
 
+    $idCliente = session('id_cliente');
+
+    // =========================
+    // Productos recomendados
+    // =========================
+    $productos = Producto::inRandomOrder()->take(4)->get();
+
+    // =========================
+    // Total pedidos (tabla pedido)
+    // =========================
+    $totalPedidos = DB::table('pedido')
+        ->where('ID_Cliente', $idCliente)
+        ->count('ID_Pedido');
+
+    // =========================
+    // Total favoritos (tabla listadeseos)
+    // =========================
+    $totalFavoritos = DB::table('lista_deseos')
+        ->where('ID_Cliente', $idCliente)
+        ->count();
+
+    // =========================
+    // Total productos en carrito
+    // carrito → detalle_carrito
+    // =========================
+    $totalCarrito = DB::table('detalle_carrito')
+        ->join('carrito', 'detalle_carrito.ID_Carrito', '=', 'carrito.ID_Carrito')
+        ->where('carrito.ID_Cliente', $idCliente)
+        ->sum('detalle_carrito.cantidad');
+
+    // =========================
+    // Gasto total (tabla pedido)
+    // =========================
+    $gastoTotal = DB::table('pedido')
+        ->where('ID_Cliente', $idCliente)
+        ->sum('Total') ?? 0;
+
+    return view('Usuario.panel.panelCliente', compact(
+        'productos',
+        'totalPedidos',
+        'totalFavoritos',
+        'totalCarrito',
+        'gastoTotal'
+    ));
+}
     public function perfil()
     {
         if (session('rol') !== 'cliente') {

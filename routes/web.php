@@ -145,7 +145,7 @@ Route::get('/cliente/historial', [UsuariosController::class, 'historial'])->name
 
 
 
-
+Route::get('/usuarios/clientes/panelCliente', [UsuariosController::class, 'panelCliente'])->name('panelCliente');
 Route::get('/usuarios/clientes/buscar/{id}', [UsuariosController::class, 'buscarCliente']);
 Route::get('/usuarios/clientes/{id}', [UsuariosController::class, 'buscarCliente']);
 Route::get('/cliente/productos', [ProductoController::class, 'panelCliente'])->name('cliente.Productos');
