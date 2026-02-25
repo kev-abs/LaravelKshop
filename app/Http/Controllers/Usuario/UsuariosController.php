@@ -185,6 +185,19 @@ class UsuariosController
         return response()->json($cliente);
     }
 
+    public function historial()
+    {
+        $clienteId = session('cliente_id'); // o auth()->id() si usas auth
+
+        $pedidos = DB::table('pedido')
+            ->where('ID_Cliente', $clienteId)
+            ->orderBy('fecha', 'desc')
+            ->get();
+
+        return view('panelcliente.historial', compact('pedidos'));
+    }
+
+
     // -------- EMPLEADOS --------
 
     public function consultarEmpleados()
@@ -257,4 +270,50 @@ class UsuariosController
         $empleado = DB::table('empleado')->where('ID_Empleado', $id)->first();
         return response()->json($empleado);
     }
+public function panelCliente()
+{
+    if (session('rol') !== 'cliente') {
+        return redirect()->route('login');
+    }
+
+    $clienteId = session('id_cliente');
+
+    if (!$clienteId) {
+        return redirect()->route('login');
+    }
+
+    $cliente = DB::table('cliente')
+        ->where('ID_Cliente', $clienteId)
+        ->first();
+
+    $totalPedidos = DB::table('pedido')
+        ->where('ID_Cliente', $clienteId)
+        ->count();
+
+    $totalFavoritos = DB::table('lista_deseos')
+        ->where('ID_Cliente', $clienteId)
+        ->count();
+
+    $totalCarrito = DB::table('carrito')
+        ->where('ID_Cliente', $clienteId)
+        ->count();
+
+    $gastoTotal = DB::table('pedido')
+        ->where('ID_Cliente', $clienteId)
+        ->sum('Total') ?? 0;
+
+    $productos = DB::table('producto')
+        ->inRandomOrder()
+        ->limit(8)
+        ->get();
+
+    return view('Usuario.panel.panelCliente', [
+        'cliente' => $cliente,
+        'totalPedidos' => $totalPedidos,
+        'totalFavoritos' => $totalFavoritos,
+        'totalCarrito' => $totalCarrito,
+        'gastoTotal' => $gastoTotal,
+        'productos' => $productos
+    ]);
+}
 }

@@ -183,6 +183,29 @@ class Administrador
         </div>
       </div>
 
+      <!-- Reportes -->
+    
+      <div class="accordion-item bg-dark text-white">
+        <h2 class="accordion-header">
+          <button class="accordion-button collapsed bg-dark text-white" 
+                  type="button" data-bs-toggle="collapse" data-bs-target="#modReportes">
+            Reportes
+          </button>
+        </h2>
+        <div id="modReportes" class="accordion-collapse collapse" data-bs-parent="#accordionModulos">
+          <div class="accordion-body">
+            <ul class="list-unstyled">
+              <li><a href="../reportes/estadisticas_ventas.php" class="text-white text-decoration-none">➤ Estadísticas de Ventas</a></li>
+              <li><a href="../reportes/exportar_datos.php" class="text-white text-decoration-none">➤ Exportar Datos</a></li>
+              <li><a href="../reportes/productos_mas_vendidos.php" class="text-white text-decoration-none">➤ Productos Más Vendidos</a></li>
+              <li><a href="../reportes/clientes_frecuentes.php" class="text-white text-decoration-none">➤ Clientes Frecuentes</a></li>
+              <li><a href="{{ route('productos.inventario', ['filtro' => 'alto'])}}" class="text-white text-decoration-none">➤ Bajo Inventario</a></li>
+              <li><a href="../reportes/efectividad_cupones.php" class="text-white text-decoration-none">➤ Uso de Cupones</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
 </div>

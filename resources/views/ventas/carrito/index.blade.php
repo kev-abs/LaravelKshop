@@ -13,6 +13,7 @@
                 <div class="d-flex align-items-center py-4 border-bottom item-row" data-id="{{ $item['idProducto'] }}"
                     data-precio="{{ $item['precio'] }}">
 
+<<<<<<< HEAD
                     {{-- IMAGEN --}}
                     <div style="width: 120px;">
                         @if (!empty($item['imagen']))
@@ -22,6 +23,35 @@
                             <img src="{{ asset('img/no-image.png') }}" class="img-fluid rounded"
                                 style="height:120px; object-fit:cover;">
                         @endif
+=======
+    @foreach($carrito['items'] as $item)
+
+    <div class="d-flex align-items-center py-4 border-bottom item-row"
+         data-id="{{ $item['idProducto'] }}"
+         data-precio="{{ $item['precio'] }}">
+
+        {{-- IMAGEN --}}
+        <div style="width: 120px;">
+            @if(!empty($item['imagen']))
+                <img src="http://localhost:8080/uploads/productos/{{ $item['imagen'] }}" 
+                     class="img-fluid rounded"
+                     style="height:120px; object-fit:cover;">
+            @else
+                <img src="{{ asset('img/no-image.png') }}"
+                     class="img-fluid rounded"
+                     style="height:120px; object-fit:cover;">
+            @endif
+        </div>
+
+        {{-- INFO --}}
+        <div class="flex-grow-1 ms-4">
+
+            <div class="d-flex justify-content-between align-items-start">
+
+                <div>
+                    <div class="fw-medium">
+                        {{ $item['nombre'] }}
+>>>>>>> main
                     </div>
 
                     {{-- INFO --}}

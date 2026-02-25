@@ -95,7 +95,7 @@
                                <td>{{ $p['id_Proveedor'] }}</td>
                                 <td>
                                     @if ($p['imagen'])
-                                        <img src="http://localhost/api/uploads/productos/{{ $p['imagen'] }}" width="80" alt="Producto">
+                                        <img src="http://localhost:8080/uploads/productos/{{ $p['imagen'] }}" width="80" alt="Producto">
 
                                     @else
                                         <span class="text-muted">Sin imagen</span>

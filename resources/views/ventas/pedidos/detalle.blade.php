@@ -101,7 +101,7 @@
             {{-- IMAGEN --}}
             <div style="width: 100px;">
                 @if(!empty($item['imagen']))
-                    <img src="http://localhost/api/uploads/productos/{{ $item['imagen'] }}"
+                    <img src="http://localhost:8080/uploads/productos/{{ $item['imagen'] }}" 
                          class="img-fluid rounded-3"
                          style="height:100px; object-fit:cover;">
                 @else

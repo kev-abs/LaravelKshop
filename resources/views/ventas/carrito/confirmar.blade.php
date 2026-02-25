@@ -27,9 +27,18 @@
                         {{-- INFO --}}
                         <div class="flex-grow-1 ms-3">
 
-                            <div class="fw-medium" style="font-size:0.95rem;">
-                                {{ $item['nombre'] }}
+
+                            {{-- IMAGEN --}}
+                            <div style="width: 90px;">
+                                @if (!empty($item['imagen']))
+                                    <img src="http://localhost:8080/uploads/productos/{{ $item['imagen'] }}"
+                                        class="img-fluid rounded" style="height:90px; object-fit:cover;">
+                                @else
+                                    <img src="{{ asset('img/no-image.png') }}" class="img-fluid rounded"
+                                        style="height:90px; object-fit:cover;" alt="Sin imagen">
+                                @endif
                             </div>
+
 
                             <div class="text-muted small">
                                 Cantidad: {{ $item['cantidad'] }}

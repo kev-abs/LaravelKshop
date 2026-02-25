@@ -24,11 +24,25 @@
             <img src="{{ asset('img/logo_kshopsinfondo.png') }}" alt="Logo K-Shop" width="83" class="me-2">
             <a href="{{ route('inicio') }}" class="text-decoration-none fs-7 fw-bold text-dark">K-SHOP</a>
         </div>
-        <form class="mx-auto d-none d-md-block w-50" action="/buscar" method="GET">
-            <input type="text" class="form-control" name="q" placeholder="Buscar en el panel...">
-        </form>
+            <!-- BARRA DE BÚSQUEDA -->
+<form action="{{ route('productos.buscar') }}" method="GET" class="d-flex">
+
+<input 
+type="text" 
+name="nombre"
+value="{{ request('nombre') }}"
+class="form-control me-2"
+placeholder="Buscar productos..."
+>
+
+<button class="btn btn-dark">
+<i class="bi bi-search"></i>
+</button>
+
+</form>
+    
         <nav class="d-flex align-items-center gap-3">
-            <a href="{{ route('cliente.panel') }}" class="nav-link text-dark">Panel Cliente</a>
+            <a href="{{ route('panel.cliente') }}" class="nav-link text-dark">Panel Cliente</a>
             <a href="#" class="btn btn-outline-dark border-0">
                 <i class="bi bi-cart-fill"></i>
             </a>
@@ -46,21 +60,7 @@
 
     <h2 class="text-center mb-4 fw-bold text-shadow">Todos los Productos</h2>
 
-    <!-- FILTRAR POR CATEGORÍA -->
-     <div class="container my-4">
-    <!-- Filtro de categorías -->
-    <form action="{{ route('cliente.todosProductos') }}" method="GET" class="mb-4">
-        <select name="categoria" class="form-select w-50 d-inline">
-            <option value="">-- Todas las categorías --</option>
-            @foreach($categorias as $c)
-                <option value="{{ $c['idCategoria'] }}" 
-                    {{ $categoriaId == $c['idCategoria'] ? 'selected' : '' }}>
-                    {{ $c['nombre'] }}
-                </option>
-            @endforeach
-        </select>
-        <button type="submit" class="btn btn-primary ms-2">Filtrar</button>
-    </form>
+</form>
 
     <!-- Productos -->
     <div class="row g-4">
@@ -77,24 +77,41 @@
                         <h5 class="card-title">{{ $p['nombre'] }}</h5>
                         <p class="card-text text-muted">{{ $p['descripcion'] }}</p>
                         <p class="fw-bold">${{ $p['precio'] }}</p>
-                        <a href="#" class="btn btn-outline-primary">Agregar al carrito</a>
-                    </div>
+                        <p class="mb-2">
+    Stock:
+    @if(($p['stock'] ?? 0) <= 0)
+        <span class="text-danger fw-bold">Agotado</span>
+    @else
+        <span class="text-muted">{{ $p['stock'] }}</span>
+    @endif
+</p>
+
+                        <a href="{{ route('producto.detalle', $p['id_Producto']) }}"
+                        class="btn btn-outline-dark btn-sm mb-1">Ver Producto
+                    </a>
+                    <form action="{{ route('cliente.listaDeseos.agregar') }}" method="POST" class="d-inline">
+              @csrf
+              <input type="hidden" name="ID_Producto" value="{{ $p['id_Producto'] }}">
+
+              <button type="submit" class="btn btn-outline-danger btn-sm">
+                <i class="bi bi-heart"></i> Añadir a Favoritos
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    @empty
+      <p class="text-center text-muted">No hay productos disponibles</p>
+    @endforelse
+  </div>
                 </div>
             </div>
-        @empty
-            <div class="alert alert-warning text-center">
-                No hay productos disponibles en esta categoría.
-            </div>
-        @endforelse
-    </div>
-</div>
-
 
 
 
 
     <div class="text-center my-4">
-        <a href="{{ route('cliente.panel') }}" class="btn btn-outline-secondary btn-lg btn-hover">
+        <a href="{{ route('panel.cliente') }}" class="btn btn-outline-secondary btn-lg btn-hover">
             <i class="bi bi-arrow-left me-2"></i>Volver al panel
         </a>
     </div>

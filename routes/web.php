@@ -19,6 +19,7 @@ use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\ClienteCuponController;
 use App\Http\Controllers\CarritoController;
 use App\Http\Controllers\CheckoutController;
+use App\Http\Controllers\ProveedorController;
 
 
 
@@ -67,6 +68,17 @@ Route::get('/ingresocompra/editar', [IngresoCompraController::class, 'editDelete
 Route::get('/inventario/productos', [ProductoController::class, 'inventario'])
     ->name('productos.inventario');
 
+    
+// PROVEEDORES
+Route::get('/proveedores', function () { return view('Proveedor.proveedores');});
+
+Route::get('/proveedores/consultar', [ProveedorController::class, 'index'])->name('proveedor.consultar');
+Route::get('/proveedores/agregar', [ProveedorController::class, 'create'])->name('proveedor.agregar');
+Route::post('/proveedores/guardar', [ProveedorController::class, 'guardar'])->name('proveedor.guardar');
+Route::post('/proveedor/buscar', [ProveedorController::class, 'buscar']) ->name('proveedor.buscar');
+Route::get('/proveedor/editar', [ProveedorController::class, 'editView'])->name('proveedor.editar');
+Route::put('/proveedor/update', [ProveedorController::class, 'update']) ->name('proveedor.update');
+Route::delete('/proveedor/eliminar', [ProveedorController::class, 'eliminar']) ->name('proveedor.eliminar');
 Route::get('/', [InicioController::class, 'index'])->name('inicio');
 
 Route::get('/login', [LoginController::class, 'mostrarFormulario'])->name('login');
@@ -99,7 +111,6 @@ Route::post('/productos/agregar', [ProductoController::class, 'store'])->name('p
 Route::get('/productos/editar/{id}', [ProductoController::class, 'edit'])->name('productos.edit');
 Route::put('/productos/editar/{id}', [ProductoController::class, 'update'])->name('productos.update');
 Route::delete('/productos/eliminar/{id}', [ProductoController::class, 'destroy'])->name('productos.destroy');
-
 Route::get('/productos', [ProductoController::class, 'index'])->name('productos.index');
 Route::get('/productos/catalogo', [ProductoController::class, 'catalogo'])->name('productos.catalogo');
 Route::get('/productos/catalogovista', [ProductoController::class, 'vistacatalogo'])->name('productos.vistaCatalogo');
@@ -108,6 +119,9 @@ Route::post('/productos/categorizar', [ProductoController::class, 'guardarCatego
 Route::post( '/productos/asignar-categoria', [ProductoController::class, 'asignarCategoria'])->name('productos.asignarCategoria');
 Route::get('/api/producto-categoria/por-categoria',  [ProductoCategoriaController::class, 'porCategoria'])->name('productos.productosPorCategoria');
 Route::get('/producto/{id}', [ProductoController::class, 'detalle'])->name('producto.detalle');
+Route::get('/productos/buscar', [ProductoController::class, 'listar'])->name('productos.buscar');
+
+
 
 
 Route::get('/logout', function () {
@@ -127,9 +141,11 @@ Route::match(['get','post'], '/usuarios/clientes/agregar', [UsuariosController::
 Route::get('/usuarios/clientes/editar/{id}',[UsuariosController::class, 'mostrarEditarCliente'])->name('clientes.editar.form');
 Route::post('/usuarios/clientes/actualizar',[UsuariosController::class, 'actualizarCliente'])->name('clientes.update');
 Route::delete('/usuarios/clientes/eliminar/{id}',[UsuariosController::class, 'eliminarCliente'])->name('clientes.eliminar');
+Route::get('/cliente/historial', [UsuariosController::class, 'historial'])->name('cliente.historial');
 
 
 
+Route::get('/usuarios/clientes/panelCliente', [UsuariosController::class, 'panelCliente'])->name('panelCliente');
 Route::get('/usuarios/clientes/buscar/{id}', [UsuariosController::class, 'buscarCliente']);
 Route::get('/usuarios/clientes/{id}', [UsuariosController::class, 'buscarCliente']);
 Route::get('/cliente/productos', [ProductoController::class, 'panelCliente'])->name('cliente.Productos');
@@ -149,7 +165,6 @@ Route::get('/cliente/lista-deseos', [ListaDeseosController::class, 'index'])->na
 Route::post('/cliente/lista-deseos/agregar', [ListaDeseosController::class, 'agregar'])->name('cliente.listaDeseos.agregar');
 Route::delete('/cliente/lista-deseos/{idLista}', [ListaDeseosController::class, 'eliminar'])->name('cliente.listaDeseos.eliminar');
 Route::get('/cliente/productos', [ListaDeseosController::class, 'productos'])->name('cliente.productos');
-
 Route::get('/cliente/cupones', [ClienteCuponController::class, 'index'])->name('cliente.cupones');
 Route::get('/usuario/mis-cupones', [CuponController::class, 'misCupones'])->name('usuario.mis_cupones');
 Route::post('/usuario/cupon/redimir', [CuponController::class, 'redimir'])->name('usuario.cupon.redimir');

@@ -24,9 +24,21 @@
         K-SHOP | Cliente
       </a>
     </div>
-    <form class="d-none d-md-block w-50">
-      <input type="text" class="form-control" placeholder="Buscar productos...">
-    </form>
+    <form action="{{ route('productos.buscar') }}" method="GET" class="d-flex">
+
+<input 
+type="text" 
+name="nombre"
+value="{{ request('nombre') }}"
+class="form-control me-2"
+placeholder="Buscar productos..."
+>
+
+<button class="btn btn-dark">
+<i class="bi bi-search"></i>
+</button>
+
+</form>
     <a href="{{ route('logout') }}" class="btn btn-outline-dark border-0">
       <i class="bi bi-box-arrow-right"></i> Salir
     </a>
@@ -77,7 +89,7 @@
       @foreach($deseos as $d)
         <div class="col">
           <div class="card h-100 shadow-sm border-0">
-            <img src="http://localhost/api/uploads/productos/{{ $d->Imagen ?? '' }}" class="card-img-top" style="height:180px; object-fit:cover">
+            <img src="http://localhost:8080/uploads/productos/{{ $d->Imagen ?? '' }}" class="card-img-top" style="height:180px; object-fit:cover">
             <div class="card-body text-center">
               <h6 class="fw-bold">{{ $d->Nombre ?? '' }}</h6>
               <p class="fw-bold mb-2">$ {{ number_format($d->Precio ?? 0, 0, ',', '.') }}</p>
