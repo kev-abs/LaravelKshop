@@ -119,9 +119,11 @@ Route::match(['get','post'], '/usuarios/clientes/agregar', [UsuariosController::
 Route::get('/usuarios/clientes/editar/{id}',[UsuariosController::class, 'mostrarEditarCliente'])->name('clientes.editar.form');
 Route::post('/usuarios/clientes/actualizar',[UsuariosController::class, 'actualizarCliente'])->name('clientes.update');
 Route::delete('/usuarios/clientes/eliminar/{id}',[UsuariosController::class, 'eliminarCliente'])->name('clientes.eliminar');
+Route::get('/cliente/historial', [UsuariosController::class, 'historial'])->name('cliente.historial');
 
 
 
+Route::get('/usuarios/clientes/panelCliente', [UsuariosController::class, 'panelCliente'])->name('panelCliente');
 Route::get('/usuarios/clientes/buscar/{id}', [UsuariosController::class, 'buscarCliente']);
 Route::get('/usuarios/clientes/{id}', [UsuariosController::class, 'buscarCliente']);
 Route::get('/cliente/productos', [ProductoController::class, 'panelCliente'])->name('cliente.Productos');
@@ -174,6 +176,14 @@ Route::middleware('cliente')->group(function () {
 
     Route::get('/mis-pedidos/{id}', [PedidoController::class, 'detalle'])
         ->name('pedido.detalle');
+    
+    Route::get('/pedido/{id}/comprobante', [PedidoController::class, 'comprobante'])
+    ->name('pedido.comprobante');
+    
+    Route::get('/pedido/{id}/comprobante/pdf', [PedidoController::class, 'comprobantePdf'])
+    ->name('pedido.comprobante.pdf');
+
+
 
 
 });
@@ -188,6 +198,9 @@ Route::middleware('admin')->group(function () {
     
     Route::get('/admin/pedidos/{id}', [AdminPedidoController::class, 'detalle'])
         ->name('admin.pedido.detalle');
+    
+    Route::post('/admin/pedido/{id}/estado', [AdminPedidoController::class, 'cambiarEstado'])
+    ->name('admin.pedido.estado');
 
 });
 

@@ -19,7 +19,7 @@
         {{-- IMAGEN --}}
         <div style="width: 120px;">
             @if(!empty($item['imagen']))
-                <img src="http://localhost/api/uploads/productos/{{ $item['imagen'] }}" 
+                <img src="http://localhost:8080/uploads/productos/{{ $item['imagen'] }}" 
                      class="img-fluid rounded"
                      style="height:120px; object-fit:cover;">
             @else
