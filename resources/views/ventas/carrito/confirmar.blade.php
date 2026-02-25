@@ -2,6 +2,7 @@
 
 @section('content')
     <div class="container my-5" style="max-width: 1100px;">
+
         <h5 class="mb-4 fw-semibold">Confirmar compra</h5>
 
         <div class="row">
@@ -16,8 +17,8 @@
                         <div style="width: 90px;">
                             @if (!empty($item['imagen']))
                                 <img src="http://localhost:8080/uploads/productos/{{ $item['imagen'] }}"
-                                    class="img-fluid rounded" style="height:90px; object-fit:cover;">
-                                alt="{{ $p['nombre'] }}">
+                                    class="img-fluid rounded" style="height:90px; object-fit:cover;"
+                                    alt="{{ $item['nombre'] }}">
                             @else
                                 <img src="{{ asset('img/no-image.png') }}" class="img-fluid rounded"
                                     style="height:90px; object-fit:cover;" alt="Sin imagen">
@@ -27,20 +28,11 @@
                         {{-- INFO --}}
                         <div class="flex-grow-1 ms-3">
 
-
-                            {{-- IMAGEN --}}
-                            <div style="width: 90px;">
-                                @if (!empty($item['imagen']))
-                                    <img src="http://localhost:8080/uploads/productos/{{ $item['imagen'] }}"
-                                        class="img-fluid rounded" style="height:90px; object-fit:cover;">
-                                @else
-                                    <img src="{{ asset('img/no-image.png') }}" class="img-fluid rounded"
-                                        style="height:90px; object-fit:cover;" alt="Sin imagen">
-                                @endif
+                            <div class="fw-medium">
+                                {{ $item['nombre'] }}
                             </div>
 
-
-                            <div class="text-muted small">
+                            <div class="text-muted small mt-1">
                                 Cantidad: {{ $item['cantidad'] }}
                             </div>
 
@@ -56,7 +48,7 @@
 
             </div>
 
-            {{-- FORMULARIO CHECKOUT --}}
+
             <div class="col-md-5">
 
                 <div class="border p-4 rounded">

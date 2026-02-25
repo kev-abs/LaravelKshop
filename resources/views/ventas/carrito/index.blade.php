@@ -13,7 +13,6 @@
                 <div class="d-flex align-items-center py-4 border-bottom item-row" data-id="{{ $item['idProducto'] }}"
                     data-precio="{{ $item['precio'] }}">
 
-<<<<<<< HEAD
                     {{-- IMAGEN --}}
                     <div style="width: 120px;">
                         @if (!empty($item['imagen']))
@@ -23,35 +22,6 @@
                             <img src="{{ asset('img/no-image.png') }}" class="img-fluid rounded"
                                 style="height:120px; object-fit:cover;">
                         @endif
-=======
-    @foreach($carrito['items'] as $item)
-
-    <div class="d-flex align-items-center py-4 border-bottom item-row"
-         data-id="{{ $item['idProducto'] }}"
-         data-precio="{{ $item['precio'] }}">
-
-        {{-- IMAGEN --}}
-        <div style="width: 120px;">
-            @if(!empty($item['imagen']))
-                <img src="http://localhost:8080/uploads/productos/{{ $item['imagen'] }}" 
-                     class="img-fluid rounded"
-                     style="height:120px; object-fit:cover;">
-            @else
-                <img src="{{ asset('img/no-image.png') }}"
-                     class="img-fluid rounded"
-                     style="height:120px; object-fit:cover;">
-            @endif
-        </div>
-
-        {{-- INFO --}}
-        <div class="flex-grow-1 ms-4">
-
-            <div class="d-flex justify-content-between align-items-start">
-
-                <div>
-                    <div class="fw-medium">
-                        {{ $item['nombre'] }}
->>>>>>> main
                     </div>
 
                     {{-- INFO --}}
@@ -79,17 +49,13 @@
                         {{-- CONTROLES --}}
                         <div class="d-flex align-items-center mt-3 gap-2">
 
-                            <button class="btn btn-sm btn-light border minus" style="width:34px;height:34px;">
-                                -
-                            </button>
+                            <button class="btn btn-sm btn-light border minus" style="width:34px;height:34px;">-</button>
 
                             <span class="small item-cantidad">
                                 {{ $item['cantidad'] }}
                             </span>
 
-                            <button class="btn btn-sm btn-light border plus" style="width:34px;height:34px;">
-                                +
-                            </button>
+                            <button class="btn btn-sm btn-light border plus" style="width:34px;height:34px;">+</button>
 
                             {{-- ELIMINAR --}}
                             <button class="btn p-0 border-0 ms-3 delete-btn" style="color:#dc3545;">
@@ -99,13 +65,10 @@
                         </div>
 
                     </div>
-
                 </div>
             @endforeach
 
-
             <div class="mt-4 pt-4 border-top">
-
                 <div class="d-flex justify-content-between mb-3">
                     <span class="fw-medium">Subtotal</span>
                     <span class="fw-semibold" id="subtotal">
@@ -116,7 +79,6 @@
                 <a href="{{ route('carrito.confirmar') }}" class="btn btn-dark w-100 py-2" style="font-size:0.95rem;">
                     Comprar
                 </a>
-
             </div>
         @endif
 
