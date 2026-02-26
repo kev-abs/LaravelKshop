@@ -23,8 +23,9 @@ Route::get('/ventas', function () {return view('ventas.ventas');})->name('ventas
 
 
 Route::get('/productos', [ProductoController::class, 'index'])->name('productos.index');
-Route::get('/productos/catalogo', [ProductoController::class, 'catalogo'])->name('productos.catalogo');
 Route::get('/productos/catalogovista', [ProductoController::class, 'vistacatalogo'])->name('productos.vistaCatalogo');
+Route::get('/categorias', [ProductoController::class, 'gestionCategorias'])->name('categorias.index');
+Route::get('/productos/buscar', [ProductoController::class, 'listar'])->name('productos.buscar');
 
 
 Route::get('/tienda', [ProductoController::class, 'catalogo'])->name('tienda.catalogo');
@@ -61,19 +62,18 @@ Route::middleware(['verificar.sesion'])->group(function () {
     Route::put('/productos/editar/{id}', [ProductoController::class, 'update'])->name('productos.update');
     Route::delete('/productos/eliminar/{id}', [ProductoController::class, 'destroy'])->name('productos.destroy');
 
-    Route::get('/productos/categorizar', [ProductoController::class, 'categorizar'])->name('productos.categorizar');
-    Route::post('/productos/categorizar', [ProductoController::class, 'guardarCategorias'])->name('productos.categorizar.guardar');
-    Route::post( '/productos/asignar-categoria', [ProductoController::class, 'asignarCategoria'])->name('productos.asignarCategoria');
-    Route::get('/api/producto-categoria/por-categoria',  [ProductoCategoriaController::class, 'porCategoria'])->name('productos.productosPorCategoria');
-    Route::get('/producto/{id}', [ProductoController::class, 'detalle'])->name('producto.detalle');
-    Route::get('/productos/buscar', [ProductoController::class, 'listar'])->name('productos.buscar');
-    Route::get('/productos/editar-categoria/{id}', [ProductoController::class, 'editarCategoria'])->name('productos.editarCategoria');
-    Route::post('/productos/editar-categoria/{id}', [ProductoController::class, 'actualizarCategoria'])->name('productos.actualizarCategoria');
-    Route::get('/categorias', [ProductoController::class, 'gestionCategorias'])->name('categorias.index');
     Route::post('/categorias', [ProductoController::class, 'crearCategoria'])->name('categorias.store');
     Route::get('/categorias/editar/{id}', [ProductoController::class, 'editarCategoriaForm'])->name('categorias.edit');
     Route::put('/categorias/editar/{id}', [ProductoController::class, 'actualizarCategoriaForm'])->name('categorias.update');
     Route::delete('/categorias/eliminar/{id}', [ProductoController::class, 'eliminarCategoria'])->name('categorias.destroy');
+    Route::get('/productos/editar-categoria/{id}', [ProductoController::class, 'editarCategoria'])->name('productos.editarCategoria');
+    Route::post('/productos/editar-categoria/{id}', [ProductoController::class, 'actualizarCategoria'])->name('productos.actualizarCategoria');
+    Route::get('/api/producto-categoria/por-categoria',  [ProductoCategoriaController::class, 'porCategoria'])->name('productos.productosPorCategoria');
+    Route::get('/productos/categorizar', [ProductoController::class, 'categorizar'])->name('productos.categorizar');
+    Route::post('/productos/categorizar', [ProductoController::class, 'guardarCategorias'])->name('productos.categorizar.guardar');
+    Route::post( '/productos/asignar-categoria', [ProductoController::class, 'asignarCategoria'])->name('productos.asignarCategoria');
+    Route::get('/producto/{id}', [ProductoController::class, 'detalle'])->name('producto.detalle');
+    Route::get('/productos/catalogo', [ProductoController::class, 'catalogo'])->name('productos.catalogo');
 
 
     //Cupones
