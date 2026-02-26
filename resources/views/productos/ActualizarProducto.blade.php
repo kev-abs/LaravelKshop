@@ -70,9 +70,17 @@
                     </div>
 
                     <div class="mb-3">
-                        <label class="form-label">ID Proveedor</label>
-                        <input type="number" name="idProveedor" class="form-control" value="{{ $producto['id_Proveedor'] }}" required>
-                    </div>
+    <label class="form-label">Proveedor</label>
+    <select name="idProveedor" class="form-select" required>
+        <option value="">Seleccione un proveedor</option>
+        @foreach($proveedores as $proveedor)
+            <option value="{{ $proveedor['id_Proveedor'] }}"
+                {{ $producto['id_Proveedor'] == $proveedor['id_Proveedor'] ? 'selected' : '' }}>
+                {{ $proveedor['nombre_Empresa'] }}
+            </option>
+        @endforeach
+    </select>
+</div>
 
                     <div class="mb-3">
                         <label class="form-label">Estado</label>

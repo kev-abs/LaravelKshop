@@ -12,9 +12,9 @@
 <header class="bg-white sticky-top py-3 border-bottom shadow-sm">
     <div class="container d-flex justify-content-between align-items-center">
         <div class="d-flex align-items-center">
-             <img src="{{ asset('img/logo_kshopsinfondo.png') }}" alt="Logo K-Shop" width="83" class="me-2">
-            <span class="fw-bold text-dark">K-SHOP | Admin</span>
-        </div>
+      <img src="{{ asset('img/logo_kshopsinfondo.png') }}" alt="Logo K-Shop" width="83" class="me-2">
+      <a href="{{route('panel.admin')}}" class="text-decoration-none fs-7 fw-bold text-dark">K-SHOP | Admin</a>
+    </div>
         <nav>
             <a href="Inicio/Controlador/Logueo/CerrarSesion.php" class="btn btn-outline-dark">Cerrar Sesión</a>
         </nav>
@@ -64,9 +64,16 @@
     </div>
 
     <div class="mb-3">
-        <label class="form-label">ID Proveedor</label>
-        <input type="number" name="id_Proveedor" class="form-control" required>
-    </div>
+    <label class="form-label">Proveedor</label>
+    <select name="id_Proveedor" class="form-select" required>
+        <option value="">Seleccione un proveedor</option>
+        @foreach($proveedores as $proveedor)
+            <option value="{{ $proveedor['id_Proveedor'] }}">
+                {{ $proveedor['nombre_Empresa'] }}
+            </option>
+        @endforeach
+    </select>
+</div>
 
     <div class="mb-3">
         <label class="form-label">Estado</label>

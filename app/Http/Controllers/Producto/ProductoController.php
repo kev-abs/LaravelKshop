@@ -107,13 +107,15 @@ public function detalle($id)
 
     // ================= LISTAR =================
     public function index()
-    {
-        $resultado = $this->productoService->obtenerProductos();
+{
+    $resultado = $this->productoService->obtenerProductos();
+    $productos = $resultado["success"] ? $resultado["data"] : [];
 
-        $productos = $resultado["success"] ? $resultado["data"] : [];
+    $response = Http::get('http://localhost:8080/proveedor');
+    $proveedores = $response->successful() ? $response->json() : [];
 
-        return view("productos.ConsultarProducto", compact("productos"));
-    }
+    return view("productos.ConsultarProducto", compact("productos", "proveedores"));
+}
 
     // ================= LISTAR PARA CLIENTE =================
     public function catalogo()
@@ -136,6 +138,20 @@ public function categorizar()
 {
     $productos = $this->productoService->obtenerProductos()['data'] ?? [];
     $categorias = $this->productoService->obtenerCategorias()['data'] ?? [];
+
+    // Traer productos ya categorizados
+    $response = Http::get('http://localhost:8080/api/producto-categoria/por-categoria');
+    $categorizados = $response->successful() ? $response->json() : [];
+
+    // Extraer IDs ya categorizados
+    $idsCategorizados = collect($categorizados)
+        ->flatMap(fn($cat) => collect($cat['productos'])->pluck('id_Producto'))
+        ->toArray();
+
+    // Filtrar solo los sin categoría
+    $productos = collect($productos)->filter(function($p) use ($idsCategorizados) {
+        return !in_array($p['id_Producto'], $idsCategorizados);
+    })->values()->toArray();
 
     return view('productos.CategorizarProductos', compact('productos', 'categorias'));
 }
@@ -161,6 +177,43 @@ public function asignarCategoria(Request $request)
         ->with('success', 'Productos categorizados correctamente');
 }
 
+public function editarCategoria($id)
+{
+    $categorias = $this->productoService->obtenerCategorias()['data'] ?? [];
+
+    $response = Http::get('http://localhost:8080/api/producto-categoria/por-categoria');
+    $categorizados = $response->successful() ? $response->json() : [];
+
+    // Buscar el producto y su categoría actual
+    $productoEncontrado = null;
+    $categoriaActual = null;
+
+    foreach ($categorizados as $cat) {
+        foreach ($cat['productos'] as $p) {
+            if ($p['id_Producto'] == $id) {
+                $productoEncontrado = $p;
+                $categoriaActual = $cat['idCategoria'];
+                break 2;
+            }
+        }
+    }
+
+    return view('productos.EditarCategoria', compact('productoEncontrado', 'categorias', 'categoriaActual'));
+}
+
+public function actualizarCategoria(Request $request, $id)
+{
+    $response = Http::post('http://localhost:8080/api/producto-categoria/asignar-multiple', [
+        'idCategoria' => (int) $request->idCategoria,
+        'productos' => [(int) $id]
+    ]);
+
+    if ($response->successful()) {
+        return redirect()->route('productos.productosPorCategoria')->with('success', 'Categoría actualizada correctamente');
+    }
+
+    return back()->with('error', 'No se pudo actualizar la categoría');
+}
 public function listar(Request $request)
 {
     $response = Http::get('http://localhost:8080/productos/filtrar', [
@@ -181,13 +234,61 @@ public function listar(Request $request)
     );
 }
 
+// ================= CATEGORÍAS =================
+public function gestionCategorias()
+{
+    $response = Http::get('http://localhost:8080/api/categorias');
+    $categorias = $response->successful() ? $response->json() : [];
 
+    return view('categorias.index', compact('categorias'));
+}
+
+public function crearCategoria(Request $request)
+{
+    $request->validate(['nombre' => 'required|string']);
+
+    Http::post('http://localhost:8080/api/categorias', [
+        'nombre' => $request->nombre
+    ]);
+
+    return redirect()->route('categorias.index')->with('success', 'Categoría creada correctamente');
+}
+
+public function editarCategoriaForm($id)
+{
+    $response = Http::get('http://localhost:8080/api/categorias');
+    $categorias = $response->successful() ? $response->json() : [];
+    $categoria = collect($categorias)->firstWhere('idCategoria', (int)$id);
+
+    return view('categorias.edit', compact('categoria'));
+}
+
+public function actualizarCategoriaForm(Request $request, $id)
+{
+    $request->validate(['nombre' => 'required|string']);
+
+    Http::put("http://localhost:8080/api/categorias/{$id}", [
+        'nombre' => $request->nombre
+    ]);
+
+    return redirect()->route('categorias.index')->with('success', 'Categoría actualizada correctamente');
+}
+
+public function eliminarCategoria($id)
+{
+    Http::delete("http://localhost:8080/api/categorias/{$id}");
+
+    return redirect()->route('categorias.index')->with('success', 'Categoría eliminada correctamente');
+}
 
     // ================= AGREGAR =================
     public function create()
-    {
-        return view("productos.AgregarProducto");
-    }
+{
+    $response = Http::get('http://localhost:8080/proveedor');
+    $proveedores = $response->successful() ? $response->json() : [];
+
+    return view("productos.AgregarProducto", compact("proveedores"));
+}
 
     public function store(Request $request)
     {
@@ -209,19 +310,27 @@ public function listar(Request $request)
     }
 
     // ================= EDITAR =================
-    public function edit($id)
-    {
-        $resultado = $this->productoService->obtenerProductoPorId($id);
+  public function edit($id)
+{
+    // producto
+    $resultado = $this->productoService->obtenerProductoPorId($id);
 
-        if (!$resultado["success"]) {
-            return back()->with("error", "No se pudo cargar el producto");
-        }
-
-        $producto = $resultado["data"];
-
-        return view("productos.ActualizarProducto", compact("producto"));
+    if (!$resultado["success"]) {
+        return back()->with("error", "No se pudo cargar el producto");
     }
 
+    $producto = $resultado["data"];
+
+    $response = Http::get('http://localhost:8080/proveedor');
+
+    $proveedores = $response->successful()
+        ? $response->json()
+        : [];
+
+    return view("productos.ActualizarProducto",
+        compact("producto", "proveedores")
+    );
+}
     public function update(Request $request, $id)
 {
     $resultado = $this->productoService->actualizarProductos(

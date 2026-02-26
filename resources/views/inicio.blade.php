@@ -158,15 +158,7 @@ placeholder="Buscar productos..."
             <li><a href="#" class="text-white text-decoration-none">Contáctanos</a></li>
           </ul>
         </div>
-        <!-- CATEGORÍAS -->
-        <div class="col-md-3 mb-4">
-          <h6 class="fw-bold">Categorías</h6>
-          <ul class="list-unstyled small">
-            <li><a href="#" class="text-white text-decoration-none">Hombre</a></li>
-            <li><a href="#" class="text-white text-decoration-none">Mujer</a></li>
-            <li><a href="#" class="text-white text-decoration-none">Niños</a></li>
-          </ul>
-        </div>
+      
         <!-- REDES -->
         <div class="col-md-3 mb-4">
           <h6 class="fw-bold">Síguenos</h6>
