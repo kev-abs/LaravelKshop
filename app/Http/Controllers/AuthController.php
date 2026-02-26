@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Hash;
+use App\Mail\CodigoRecuperacionMail;
 
 class AuthController
 {
@@ -39,10 +40,9 @@ class AuthController
             ]
         );
 
-        Mail::raw("Tu código de recuperación es: $codigo", function ($message) use ($correo) {
-            $message->to($correo)
-                ->subject('Código de recuperación - KSHOP');
-        });
+        $nombre = $cliente->Nombre;
+
+        Mail::to($correo)->send(new CodigoRecuperacionMail($codigo, $correo, $nombre));
 
         return redirect()->route('password.reset')->with('correo', $correo);
     }
