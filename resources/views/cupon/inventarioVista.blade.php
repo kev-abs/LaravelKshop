@@ -21,33 +21,10 @@
     <div class="container my-5 text-center">
         <h1 class="fw-bold">Modulo de Inventario</h1>
         <p class="text-muted">
-        Desde aquí podrás gestionar a los <strong>Ingresos De Compra</strong> y <strong>Cupones</strong> de K-SHOP.
+        Desde aquí podrás gestionar el <strong>Inventario</strong> de K-SHOP.
         </p>
 
        <div class="row g-4 justify-content-center">
-            <!-- Card Ingresos de Compra -->
-            <div class="col-md-6">
-                <div class="card h-100 shadow-sm">
-                    <div class="card-body text-center">
-                        <i class="bi bi-bag-fill fs-1 text-success mb-3"></i>
-                        <h4 class="fw-bold">Gestión de Ingresos de Compra</h4>
-                        <p class="text-muted">Consultar, agregar, actualizar o eliminar ingresos de compra.</p>
-                        <div class="d-flex justify-content-center gap-2">
-                            <a href="{{ route('ingresocompra.index') }}" class="btn btn-outline-dark">
-                                    Consultar
-                                </a>
-
-                                <a href="{{ route('ingresocompra.create') }}" class="btn btn-outline-dark">
-                                    Agregar
-                                </a>
-
-                                <a href="{{ route('ingresocompra.editDelete') }}" class="btn btn-outline-dark">
-                                    Actualizar / Eliminar
-                                </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
 
             <!-- Card Cupones -->
             <div class="col-md-6">

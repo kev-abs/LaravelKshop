@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Http;
 use Barryvdh\DomPDF\Facade\Pdf;
 
-class PedidoController extends Controller
+class PedidoController
 {
     public function historial()
     {
