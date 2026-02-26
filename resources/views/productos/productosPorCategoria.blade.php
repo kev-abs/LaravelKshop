@@ -14,9 +14,9 @@
 <header class="bg-white sticky-top py-3 border-bottom shadow-sm">
     <div class="container d-flex justify-content-between align-items-center">
         <div class="d-flex align-items-center">
-            <img src="{{ asset('img/logo_kshopsinfondo.png') }}" alt="Logo K-Shop" width="83" class="me-2">
-            <span class="fw-bold text-dark">K-SHOP | Admin</span>
-        </div>
+      <img src="{{ asset('img/logo_kshopsinfondo.png') }}" alt="Logo K-Shop" width="83" class="me-2">
+      <a href="{{route('panel.admin')}}" class="text-decoration-none fs-7 fw-bold text-dark">K-SHOP | Admin</a>
+    </div>
     </div>
 </header>
 
@@ -29,6 +29,11 @@
             Visualiza los productos organizados por cada categoría registrada.
         </p>
     </div>
+    <div class="text-center mb-4">
+    <a href="{{ route('categorias.index') }}" class="btn btn-dark btn-lg">
+        <i class="bi bi-tags me-2"></i>Gestionar Categorías
+    </a>
+</div>
 
     @if(isset($categorias) && count($categorias) > 0)
 
@@ -58,6 +63,7 @@
                                         <th>Descripción</th>
                                         <th>Precio</th>
                                         <th>Imagen</th>
+                                        <th>Acciones</th>
                                     </tr>
                                 </thead>
 
@@ -76,6 +82,12 @@
                                         <span class="text-muted">Sin imagen</span>
                                     @endif
                                 </td>
+                                <td>
+    <a href="{{ route('productos.editarCategoria', $p['id_Producto']) }}" 
+       class="btn btn-warning btn-sm">
+        <i class="bi bi-pencil"></i> Editar categoría
+    </a>
+</td>
                                     </tr>
                                 @endforeach
                                 </tbody>
