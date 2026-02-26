@@ -14,9 +14,9 @@
 <header class="bg-white sticky-top py-3 border-bottom shadow-sm">
     <div class="container d-flex justify-content-between align-items-center">
         <div class="d-flex align-items-center">
-            <img src="{{ asset('img/logo_kshopsinfondo.png') }}" alt="Logo K-Shop" width="83" class="me-2">
-            <span class="fw-bold text-dark">K-SHOP | Admin</span>
-        </div>
+      <img src="{{ asset('img/logo_kshopsinfondo.png') }}" alt="Logo K-Shop" width="83" class="me-2">
+      <a href="{{route('panel.admin')}}" class="text-decoration-none fs-7 fw-bold text-dark">K-SHOP | Admin</a>
+    </div>
     </div>
 </header>
 

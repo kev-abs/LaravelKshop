@@ -20,6 +20,7 @@ use App\Http\Controllers\ClienteCuponController;
 use App\Http\Controllers\CarritoController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\ProveedorController;
+use App\Http\Controllers\Producto\CategoriaController;
 
 
 
@@ -120,9 +121,13 @@ Route::post( '/productos/asignar-categoria', [ProductoController::class, 'asigna
 Route::get('/api/producto-categoria/por-categoria',  [ProductoCategoriaController::class, 'porCategoria'])->name('productos.productosPorCategoria');
 Route::get('/producto/{id}', [ProductoController::class, 'detalle'])->name('producto.detalle');
 Route::get('/productos/buscar', [ProductoController::class, 'listar'])->name('productos.buscar');
-
-
-
+Route::get('/productos/editar-categoria/{id}', [ProductoController::class, 'editarCategoria'])->name('productos.editarCategoria');
+Route::post('/productos/editar-categoria/{id}', [ProductoController::class, 'actualizarCategoria'])->name('productos.actualizarCategoria');
+Route::get('/categorias', [ProductoController::class, 'gestionCategorias'])->name('categorias.index');
+Route::post('/categorias', [ProductoController::class, 'crearCategoria'])->name('categorias.store');
+Route::get('/categorias/editar/{id}', [ProductoController::class, 'editarCategoriaForm'])->name('categorias.edit');
+Route::put('/categorias/editar/{id}', [ProductoController::class, 'actualizarCategoriaForm'])->name('categorias.update');
+Route::delete('/categorias/eliminar/{id}', [ProductoController::class, 'eliminarCategoria'])->name('categorias.destroy');
 
 Route::get('/logout', function () {
     session()->flush();
