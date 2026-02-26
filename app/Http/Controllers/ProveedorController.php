@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\DB;
 
-class ProveedorController extends Controller
+class ProveedorController
 {
     private $apiUrl = "http://localhost:8080/proveedores";
 

@@ -32,9 +32,12 @@
     </div>
 
     <nav>
-      <a href="{{ route('logout') }}" class="btn btn-outline-dark border-0">
-        Cerrar Sesión
-      </a>
+      <form method="POST" action="{{ route('logout') }}">
+          @csrf
+          <button type="submit" class="btn btn-outline-dark">
+              Cerrar sesión
+          </button>
+      </form>
     </nav>
 
   </div>
