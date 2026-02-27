@@ -4,6 +4,11 @@ namespace App\Http\Controllers\Usuario;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
+use App\Exceptions\DocumentoInvalidoException;
+use App\Exceptions\TelefonoInvalidoException;
+use App\Exceptions\CorreoInvalidoException;
+use App\Exceptions\ContrasenaInvalidaException;
 
 class UsuariosController
 {
@@ -86,9 +91,28 @@ class UsuariosController
         $mensaje = "";
 
         if ($request->isMethod('post')) {
+
             $data = $request->only(['nombre', 'correo', 'contrasena', 'documento', 'telefono']);
 
-            if ($data['nombre'] && $data['correo'] && $data['contrasena']) {
+            // Validar datos
+            $validator = Validator::make($data, [
+                'nombre' => 'required|string|max:100',
+                'correo' => 'required|email|max:100|unique:cliente,Correo',
+                'contrasena' => 'required|min:6',
+                'documento' => 'required|digits_between:6,15|unique:cliente,Documento',
+                'telefono' => 'required|regex:/^[0-9]{10}$/',
+            ]);
+
+            if ($validator->fails()) {
+                $errors = $validator->errors();
+
+                if ($errors->has('correo')) throw new CorreoInvalidoException();
+                if ($errors->has('documento')) throw new DocumentoInvalidoException();
+                if ($errors->has('telefono')) throw new TelefonoInvalidoException();
+                if ($errors->has('contrasena')) throw new ContrasenaInvalidaException();
+
+                $mensaje = "Error en los datos ingresados.";
+            } else {
                 DB::table('cliente')->insert([
                     'Nombre' => $data['nombre'],
                     'Correo' => $data['correo'],
@@ -98,8 +122,6 @@ class UsuariosController
                 ]);
 
                 $mensaje = "Cliente agregado correctamente.";
-            } else {
-                $mensaje = "Campos obligatorios vacíos.";
             }
         }
 
@@ -111,9 +133,36 @@ class UsuariosController
         $mensaje = "";
 
         if ($request->isMethod('post')) {
+
             $data = $request->only(['nombre', 'correo', 'contrasena', 'documento', 'telefono']);
 
-            if ($data['nombre'] && $data['correo'] && $data['contrasena']) {
+            $validator = Validator::make($data, [
+                'nombre' => 'required|string|max:100',
+                'correo' => 'required|email|max:100|unique:cliente,Correo',
+                'contrasena' => 'required|min:6',
+                'documento' => 'required|digits_between:6,15|unique:cliente,Documento',
+                'telefono' => 'required|regex:/^[0-9]{10}$/',
+            ]);
+
+            if ($validator->fails()) {
+                $errors = $validator->errors();
+
+                if ($errors->has('correo')) {
+                    return back()->withInput()->with('error', 'El correo electrónico ingresado no es válido o ya está en uso.');
+                }
+
+                if ($errors->has('documento')) {
+                    return back()->withInput()->with('error', 'El documento ingresado es inválido o ya existe.');
+                }
+
+                if ($errors->has('telefono')) {
+                    return back()->withInput()->with('error', 'El número de teléfono no cumple con el formato requerido.');
+                }
+
+                if ($errors->has('contrasena')) {
+                    return back()->withInput()->with('error', 'La contraseña es demasiado débil o está vacía.');
+                }
+            } else {
                 DB::table('cliente')->insert([
                     'Nombre' => $data['nombre'],
                     'Correo' => $data['correo'],
@@ -123,8 +172,6 @@ class UsuariosController
                 ]);
 
                 $mensaje = "Registro completado exitosamente.";
-            } else {
-                $mensaje = "Campos obligatorios vacíos.";
             }
         }
 
@@ -146,17 +193,38 @@ class UsuariosController
 
     public function actualizarCliente(Request $request)
     {
+        $id = $request->id_Cliente;
+
+        $data = $request->only(['nombre', 'correo', 'contrasena', 'documento', 'telefono', 'estado']);
+
+        $validator = Validator::make($data, [
+            'nombre' => 'required|string|max:100',
+            'correo' => "required|email|max:100|unique:cliente,Correo,{$id},ID_Cliente",
+            'documento' => "required|digits_between:6,15|unique:cliente,Documento,{$id},ID_Cliente",
+            'telefono' => 'required|regex:/^[0-9]{10}$/',
+            'contrasena' => 'nullable|min:6',
+        ]);
+
+        if ($validator->fails()) {
+            $errors = $validator->errors();
+
+            if ($errors->has('correo')) throw new CorreoInvalidoException();
+            if ($errors->has('documento')) throw new DocumentoInvalidoException();
+            if ($errors->has('telefono')) throw new TelefonoInvalidoException();
+            if ($errors->has('contrasena')) throw new ContrasenaInvalidaException();
+        }
+
         DB::table('cliente')
-            ->where('ID_Cliente', $request->id_Cliente)
+            ->where('ID_Cliente', $id)
             ->update([
-                'Nombre' => $request->nombre,
-                'Correo' => $request->correo,
-                'Contrasena' => $request->contrasena 
-                    ? bcrypt($request->contrasena) 
+                'Nombre' => $data['nombre'],
+                'Correo' => $data['correo'],
+                'Contrasena' => $data['contrasena']
+                    ? bcrypt($data['contrasena'])
                     : DB::raw('Contrasena'),
-                'Telefono' => $request->telefono,
-                'Documento' => $request->documento,
-                'Estado' => $request->estado
+                'Telefono' => $data['telefono'],
+                'Documento' => $data['documento'],
+                'Estado' => $data['estado']
             ]);
 
         return redirect()

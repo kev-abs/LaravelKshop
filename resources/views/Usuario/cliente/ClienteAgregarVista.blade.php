@@ -59,6 +59,20 @@
                         </div>
                     @endif
 
+                    @if (session('error'))
+                        <div class="alert alert-danger shadow-lg rounded-2xl border-l-4 border-red-500 bg-gradient-to-r from-red-500/20 to-red-600/10 text-red-800 p-4 mb-4 animate-pulse">
+                            <strong class="block font-semibold text-red-700">¡¡Error!!:</strong>
+                            <span class="text-sm">{{ session('error') }}</span>
+                        </div>
+                    @endif
+
+                    @if (session('mensaje'))
+                        <div class="alert alert-success shadow-lg rounded-2xl border-l-4 border-green-500 bg-gradient-to-r from-green-500/20 to-green-600/10 text-green-800 p-4 mb-4 animate-bounce">
+                            <strong class="block font-semibold text-green-700">¡¡Éxito!!:</strong>
+                            <span class="text-sm">{{ session('mensaje') }}</span>
+                        </div>
+                    @endif
+
                     <form method="POST" action="{{ route('clientes.agregar') }}" class="row g-3">
                         @csrf
 
