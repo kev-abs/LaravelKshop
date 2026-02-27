@@ -6,6 +6,7 @@
     <title>K-SHOP - Actualizar / Eliminar Cliente</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
 </head>
 <body class="d-flex flex-column min-vh-100">
 
@@ -58,7 +59,22 @@
                         <div class="alert alert-info">{{ $mensaje }}</div>
                     @endif
 
-                    
+                    <!-- ALERTAS -->
+                    @if (session('error'))
+                        <div class="alert shadow-lg border-0 rounded-3 p-3 mb-4 animate__animated animate__fadeInDown" 
+                            style="background: linear-gradient(90deg, #ff5f6d, #ffc371); color:#4b0000; font-weight:500;">
+                            <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                            {{ session('error') }}
+                        </div>
+                    @endif
+
+                    @if (session('mensaje'))
+                        <div class="alert shadow-lg border-0 rounded-3 p-3 mb-4 animate__animated animate__fadeInDown" 
+                            style="background: linear-gradient(90deg, #00c6ff, #0072ff); color:white; font-weight:500;">
+                            <i class="bi bi-check-circle-fill me-2"></i>
+                            {{ session('mensaje') }}
+                        </div>
+                    @endif
 
                     <form method="POST" action="{{ route('clientes.update') }}"  class="row g-3">
                         @csrf
@@ -75,21 +91,24 @@
 
                         </div>
                         <div class="col-md-6">
-                            <input type="text" name="nombre" class="form-control rounded-2" placeholder="Nombre" required value="{{ $cliente->Nombre ?? '' }}">
+                            <input type="text" name="nombre" class="form-control rounded-2 shadow-sm border-primary-subtle"
+                            placeholder="Nombre" required value="{{ old('nombre', $cliente->Nombre ?? '') }}">
                         </div>
                         <div class="col-md-6">
-                            <input type="email" name="correo" class="form-control rounded-2" placeholder="Correo" required value="{{ $cliente->Correo ?? '' }}">
+                            <input type="email" name="correo" class="form-control rounded-2" placeholder="Correo" required value="{{ old('Correo', $cliente->Correo ?? '') }}">
                         </div>
                         <div class="col-md-6">
                             <input type="password" name="contrasena" class="form-control" placeholder="Nueva Contraseña">
                         </div>
 
                         <div class="col-md-6">
-                            <input type="text" name="documento" class="form-control rounded-2" placeholder="Documento" value="{{ $cliente->Documento ?? '' }}">
+                            <input type="text" name="documento" class="form-control rounded-2" placeholder="Documento"
+                            value="{{ old('Documento', $cliente->Documento ?? '') }}">
                         </div>
-                        <div class="col-md-6">
-                            <input type="text" name="telefono" class="form-control rounded-2" placeholder="Teléfono" value="{{ $cliente->Telefono ?? '' }}">
-                        </div>
+                        <v class="col-md-6">
+                            <input type="text" name="telefono" class="form-control rounded-2" placeholder="Teléfono"
+                            value="{{ old('Telefono', $cliente->Telefono ?? '') }}">
+                        </v>
                         <div class="col-md-6">
                             <select name="estado" class="form-select rounded-2">
                                 <option value="">Estado</option>
@@ -173,6 +192,16 @@ $(document).ready(function () {
 
 });
 </script>
-
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const alerts = document.querySelectorAll('.alert');
+    alerts.forEach(alert => {
+        setTimeout(() => {
+            alert.classList.add('animate__fadeOutUp');
+            setTimeout(() => alert.remove(), 800);
+        }, 5000);
+    });
+});
+</script>
 </body>
 </html>
