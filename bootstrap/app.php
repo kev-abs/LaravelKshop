@@ -2,6 +2,12 @@
 
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
+use Throwable;
+use Illuminate\Validation\ValidationException;
+use Illuminate\Database\QueryException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 use Illuminate\Foundation\Configuration\Middleware;
 use App\Http\Middleware\VerificarSesion;
 

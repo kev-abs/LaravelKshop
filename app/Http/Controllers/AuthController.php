@@ -63,20 +63,44 @@ class AuthController
 
         $correo = $request->correo;
 
-        $reset = DB::table('password_resets')->where('email', $correo)->first();
+        $reset = DB::table('password_resets')
+            ->where('email', $correo)
+            ->first();
 
-        if (!$reset || $reset->token != $request->codigo) {
+        if (!$reset) {
+            return back()->with('mensaje', 'No existe solicitud de recuperación.');
+        }
+
+        // verificar expiración (10 minutos)
+        $expiraEn = 10; // minutos
+
+        if (now()->diffInMinutes($reset->created_at) > $expiraEn) {
+
+            DB::table('password_resets')
+                ->where('email', $correo)
+                ->delete();
+
+            return back()->with('mensaje', 'El código ha expirado. Solicita uno nuevo.');
+        }
+
+        // verificar código
+        if ($reset->token != $request->codigo) {
             return back()->with('mensaje', 'Código incorrecto.');
         }
 
+        // actualizar contraseña
         DB::table('cliente')
             ->where('Correo', $correo)
             ->update([
                 'Contrasena' => Hash::make($request->contrasena)
             ]);
 
-        DB::table('password_resets')->where('email', $correo)->delete();
+        // eliminar código usado
+        DB::table('password_resets')
+            ->where('email', $correo)
+            ->delete();
 
-        return redirect()->route('login')->with('mensaje', 'Contraseña actualizada correctamente.');
+        return redirect()->route('login')
+            ->with('mensaje', 'Contraseña actualizada correctamente.');
     }
 }

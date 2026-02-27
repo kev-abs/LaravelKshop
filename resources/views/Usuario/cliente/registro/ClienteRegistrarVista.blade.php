@@ -29,83 +29,145 @@
     </div>
 </header>
 
-<main class="container my-5">
+<main class="container-fluid flex-fill">
 
-    <div class="text-center mb-5">
-        <h2 class="fw-bold mb-2">Crea tu cuenta</h2>
-        <p class="text-muted">
-            Únete a K-SHOP y disfruta de compras rápidas, seguras y personalizadas.
-        </p>
-    </div>
+    <div class="row min-vh-100">
 
-    <div class="row justify-content-center">
-        <div class="col-12 col-lg-7 col-xl-6">
+        <!-- COLUMNA FORMULARIO -->
+        <div class="col-lg-6 d-flex align-items-center justify-content-center bg-white">
 
-            <div class="card shadow-sm border-0 rounded-3">
-                <div class="card-header bg-dark text-white text-center rounded-top py-2">
-                    <h5 class="mb-0">
-                        <i class="bi bi-person-plus-fill me-2"></i>Formulario de Registro
-                    </h5>
+            <div class="w-100 px-4" style="max-width: 500px;">
+
+                <!-- TITULO -->
+                <h2 class="fw-bold mb-2">
+                    Crear cuenta
+                </h2>
+
+                <p class="text-muted mb-4">
+                    Regístrate para comprar más rápido, ver tus pedidos y recibir ofertas exclusivas.
+                </p>
+
+                @if (!empty($mensaje))
+                    <div class="alert alert-info">
+                        {{ $mensaje }}
+                    </div>
+                @endif
+
+                <!-- FORM -->
+                <form method="POST" action="{{ route('cliente.registrar') }}" class="row g-3">
+                    @csrf
+
+                    <!-- Nombre -->
+                    <div class="col-12">
+                        <label class="form-label small fw-semibold">
+                            Nombre completo *
+                        </label>
+
+                        <input 
+                            type="text"
+                            name="nombre"
+                            class="form-control form-control-lg rounded-0"
+                            required
+                        >
+                    </div>
+
+                    <!-- Correo -->
+                    <div class="col-12">
+                        <label class="form-label small fw-semibold">
+                            Correo electrónico *
+                        </label>
+
+                        <input 
+                            type="email"
+                            name="correo"
+                            class="form-control form-control-lg rounded-0"
+                            required
+                        >
+                    </div>
+
+                    <!-- Contraseña -->
+                    <div class="col-md-6">
+                        <label class="form-label small fw-semibold">
+                            Contraseña *
+                        </label>
+
+                        <input 
+                            type="password"
+                            name="contrasena"
+                            class="form-control form-control-lg rounded-0"
+                            required
+                        >
+                    </div>
+
+                    <!-- Teléfono -->
+                    <div class="col-md-6">
+                        <label class="form-label small fw-semibold">
+                            Teléfono
+                        </label>
+
+                        <input 
+                            type="text"
+                            name="telefono"
+                            class="form-control form-control-lg rounded-0"
+                        >
+                    </div>
+
+                    <!-- Documento -->
+                    <div class="col-12">
+                        <label class="form-label small fw-semibold">
+                            Documento de identidad
+                        </label>
+
+                        <input 
+                            type="text"
+                            name="documento"
+                            class="form-control form-control-lg rounded-0"
+                        >
+                    </div>
+
+                    <!-- BOTÓN -->
+                    <div class="col-12 mt-3">
+
+                        <button class="btn btn-dark w-100 py-3 rounded-0 fw-semibold">
+                            Crear cuenta
+                        </button>
+
+                    </div>
+
+                </form>
+
+                <!-- LOGIN LINK -->
+                <div class="mt-4 text-center">
+
+                    <span class="text-muted">
+                        ¿Ya tienes una cuenta?
+                    </span>
+
+                    <a href="{{ route('login') }}" 
+                       class="fw-semibold text-dark text-decoration-none ms-1">
+                        Iniciar sesión
+                    </a>
+
                 </div>
 
-                <div class="card-body bg-light p-4">
-                    <p class="text-muted small mb-4 text-center">
-                        Completa tus datos para comenzar a disfrutar de nuestros servicios.
-                    </p>
-
-                    @if (!empty($mensaje))
-                        <div class="alert alert-info text-center">
-                            {{ $mensaje }}
-                        </div>
-                    @endif
-
-                    <form method="POST" action="{{ route('cliente.registrar') }}" class="row g-3">
-                        @csrf
-
-                        <!-- Nombre -->
-                        <div class="col-md-6">
-                            <input type="text" name="nombre" class="form-control rounded-2" placeholder="Nombre completo" required>
-                        </div>
-
-                        <!-- Correo -->
-                        <div class="col-md-6">
-                            <input type="email" name="correo" class="form-control rounded-2" placeholder="Correo electrónico" required>
-                        </div>
-
-                        <!-- Contraseña -->
-                        <div class="col-md-6">
-                            <input type="password" name="contrasena" class="form-control rounded-2" placeholder="Contraseña" required>
-                        </div>
-
-                        <!-- Teléfono -->
-                        <div class="col-md-6">
-                            <input type="text" name="telefono" class="form-control rounded-2" placeholder="Teléfono">
-                        </div>
-
-                        <!-- Documento -->
-                        <div class="col-md-12">
-                            <input type="text" name="documento" class="form-control rounded-2" placeholder="Documento de identidad">
-                        </div>
-
-                        <div class="col-12 text-center mt-3">
-                            <button type="submit" class="btn btn-dark btn-lg w-75">
-                                <i class="bi bi-check-circle me-2"></i>Crear Cuenta
-                            </button>
-                        </div>
-
-                    </form>
-                </div>
-            </div>
-
-            <div class="text-center mt-4">
-                <p class="mb-2">¿Ya tienes una cuenta?</p>
-                <a href="{{ route('login') }}" class="btn btn-outline-secondary btn-lg w-50">
-                    <i class="bi bi-box-arrow-in-right me-2"></i>Iniciar Sesión
-                </a>
             </div>
 
         </div>
+
+
+        <!-- COLUMNA IMAGEN -->
+        <div class="col-lg-6 d-none d-lg-flex align-items-center justify-content-center bg-light">
+
+            <img 
+                src="{{ asset('img/foto_registro.png') }}"
+                class="img-fluid w-75"
+                alt="Productos K-SHOP"
+            >
+
+        </div>
+
     </div>
+
 </main>
 
 <footer class="bg-dark text-white text-center py-4 mt-auto">
