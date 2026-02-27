@@ -26,6 +26,7 @@ Route::get('/productos', [ProductoController::class, 'index'])->name('productos.
 Route::get('/productos/catalogovista', [ProductoController::class, 'vistacatalogo'])->name('productos.vistaCatalogo');
 Route::get('/categorias', [ProductoController::class, 'gestionCategorias'])->name('categorias.index');
 Route::get('/productos/buscar', [ProductoController::class, 'listar'])->name('productos.buscar');
+Route::get('/producto/{id}', [ProductoController::class, 'detalle'])->name('producto.detalle');
 
 
 Route::get('/tienda', [ProductoController::class, 'catalogo'])->name('tienda.catalogo');
@@ -73,7 +74,6 @@ Route::middleware(['verificar.sesion'])->group(function () {
     Route::get('/productos/categorizar', [ProductoController::class, 'categorizar'])->name('productos.categorizar');
     Route::post('/productos/categorizar', [ProductoController::class, 'guardarCategorias'])->name('productos.categorizar.guardar');
     Route::post( '/productos/asignar-categoria', [ProductoController::class, 'asignarCategoria'])->name('productos.asignarCategoria');
-    Route::get('/producto/{id}', [ProductoController::class, 'detalle'])->name('producto.detalle');
     Route::get('/productos/catalogo', [ProductoController::class, 'catalogo'])->name('productos.catalogo');
 
 

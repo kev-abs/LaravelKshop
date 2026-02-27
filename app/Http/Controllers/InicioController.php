@@ -1,14 +1,16 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Models\producto\Producto;
 
-use Illuminate\Http\Request;
-use App\Http\Controllers\Producto\Controller;
-
-class InicioController 
+class InicioController
 {
     public function index()
     {
-        return view('inicio');
+        $productosDestacados = Producto::orderBy('ID_Producto', 'desc')
+            ->take(8)
+            ->get();
+
+        return view('inicio', compact('productosDestacados'));
     }
 }
