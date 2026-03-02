@@ -37,10 +37,9 @@
         </div>
     <?php endif; ?>
 
-    <div class="col-md-8 mx-auto">
-        <div class="card shadow-sm border-0">
-            <div class="card-header bg-success text-white text-center">
-                <h5 class="mb-0"><i class="bi bi-plus-circle me-2"></i>Formulario de Producto</h5>
+    <div class="card shadow-sm border-0 rounded-3 mb-5">
+            <div class="card-header bg-dark text-white text-center rounded-top py-2">
+                <h5 class="mb-0"><i class="bi bi-box-seam me-2"></i>Formulario de Producto</h5>
             </div>
             <div class="card-body">
                <form method="POST" action="{{ route('productos.store') }}" enctype="multipart/form-data">

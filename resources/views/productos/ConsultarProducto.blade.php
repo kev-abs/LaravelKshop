@@ -44,18 +44,17 @@
 
 
     <!-- Botón agregar producto -->
-    <div class="text-end mb-4">
-        <a href="{{ route('productos.create') }}" class="btn btn-success">
-            <i class="bi bi-plus-circle me-2"></i>Agregar Producto
-        </a>
-    </div>
-    <!-- Botón categorizar producto -->
-     <div class="text-end mb-2">
-        <a href="{{ route('productos.categorizar') }}" class="btn btn-success">
-            <i class="bi bi-plus-circle me-2"></i>Categorizar Producto
-        </a>
-    </div>
-
+     <div class="d-flex justify-content-center gap-3 mb-4">
+    <a href="{{ route('productos.create') }}" class="btn btn-dark btn-lg">
+        <i class="bi bi-box-seam me-2"></i>Agregar producto
+    </a>
+    <a href="{{ route('productos.categorizar') }}" class="btn btn-dark btn-lg">
+        <i class="bi bi-tags me-2"></i>Categorizar producto
+    </a>
+    <a href="{{ route('productos.productosPorCategoria') }}" class="btn btn-dark btn-lg">
+        <i class="bi bi-tags me-2"></i>Categorías
+    </a>
+</div>
 
     <!-- Tabla de productos -->
     @if(isset($productos) && count($productos) > 0)
