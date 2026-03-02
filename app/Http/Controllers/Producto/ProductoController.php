@@ -339,15 +339,16 @@ public function eliminarCategoria($id)
     $request->descripcion,
     $request->precio,
     $request->stock,
-    $request->idProveedor,
+    $request->id_Proveedor,
     $request->file("imagen"),
     $request->imagen_actual,   
     $request->estado
 );
 
-    if (!$resultado["success"]) {
-        return back()->with("error", $resultado["error"]);
-    }
+    if (isset($resultado['error'])) {
+    return back()->with("error", $resultado['error']);
+}
+
 
     return redirect()->route("productos.index")->with("success", "Producto actualizado");
 }

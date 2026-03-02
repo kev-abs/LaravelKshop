@@ -120,6 +120,7 @@ Route::post('/productos/categorizar', [ProductoController::class, 'guardarCatego
 Route::post( '/productos/asignar-categoria', [ProductoController::class, 'asignarCategoria'])->name('productos.asignarCategoria');
 Route::get('/api/producto-categoria/por-categoria',  [ProductoCategoriaController::class, 'porCategoria'])->name('productos.productosPorCategoria');
 Route::get('/producto/{id}', [ProductoController::class, 'detalle'])->name('producto.detalle');
+Route::get('/producto/{id}', [ProductoController::class, 'detalle']) ->name('producto.detalle');
 Route::get('/productos/buscar', [ProductoController::class, 'listar'])->name('productos.buscar');
 Route::get('/productos/editar-categoria/{id}', [ProductoController::class, 'editarCategoria'])->name('productos.editarCategoria');
 Route::post('/productos/editar-categoria/{id}', [ProductoController::class, 'actualizarCategoria'])->name('productos.actualizarCategoria');

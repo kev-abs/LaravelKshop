@@ -33,7 +33,7 @@
 
     <div class="col-md-8 mx-auto">
         <div class="card shadow-sm border-0">
-            <div class="card-header bg-primary text-white text-center">
+            <div class="card-header bg-dark text-white text-center rounded-top py-2">
                 <h5 class="mb-0"><i class="bi bi-pencil-square me-2"></i>Formulario de Actualización</h5>
             </div>
 
