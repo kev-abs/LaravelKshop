@@ -124,11 +124,11 @@ class ComposerStaticInitf893d55e652bfc8f543e6e2e81bcebb9
     );
 
     public static $prefixLengthsPsr4 = array (
-        'v' =>
+        'v' => 
         array (
             'voku\\' => 5,
         ),
-        'W' =>
+        'W' => 
         array (
             'Whoops\\' => 7,
         ),
@@ -565,7 +565,7 @@ class ComposerStaticInitf893d55e652bfc8f543e6e2e81bcebb9
         array (
             0 => __DIR__ . '/..' . '/guzzlehttp/uri-template/src',
         ),
-        'GuzzleHttp\\Psr7\\' =>
+        'GuzzleHttp\\Psr7\\' => 
         array (
             0 => __DIR__ . '/..' . '/guzzlehttp/psr7/src',
         ),
@@ -605,53 +605,53 @@ class ComposerStaticInitf893d55e652bfc8f543e6e2e81bcebb9
         array (
             0 => __DIR__ . '/..' . '/dompdf/dompdf/src',
         ),
-        'Doctrine\\Inflector\\' =>
+        'Doctrine\\Inflector\\' => 
         array (
             0 => __DIR__ . '/..' . '/doctrine/inflector/src',
         ),
-        'Doctrine\\Common\\Lexer\\' =>
+        'Doctrine\\Common\\Lexer\\' => 
         array (
             0 => __DIR__ . '/..' . '/doctrine/lexer/src',
         ),
-        'Dflydev\\DotAccessData\\' =>
+        'Dflydev\\DotAccessData\\' => 
         array (
             0 => __DIR__ . '/..' . '/dflydev/dot-access-data/src',
         ),
-        'DeepCopy\\' =>
+        'DeepCopy\\' => 
         array (
             0 => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy',
         ),
-        'Database\\Seeders\\' =>
+        'Database\\Seeders\\' => 
         array (
             0 => __DIR__ . '/../..' . '/database/seeders',
             1 => __DIR__ . '/..' . '/laravel/pint/database/seeders',
         ),
-        'Database\\Factories\\' =>
+        'Database\\Factories\\' => 
         array (
             0 => __DIR__ . '/../..' . '/database/factories',
             1 => __DIR__ . '/..' . '/laravel/pint/database/factories',
         ),
-        'Cron\\' =>
+        'Cron\\' => 
         array (
             0 => __DIR__ . '/..' . '/dragonmantank/cron-expression/src/Cron',
         ),
-        'Carbon\\Doctrine\\' =>
+        'Carbon\\Doctrine\\' => 
         array (
             0 => __DIR__ . '/..' . '/carbonphp/carbon-doctrine-types/src/Carbon/Doctrine',
         ),
-        'Carbon\\' =>
+        'Carbon\\' => 
         array (
             0 => __DIR__ . '/..' . '/nesbot/carbon/src/Carbon',
         ),
-        'Brick\\Math\\' =>
+        'Brick\\Math\\' => 
         array (
             0 => __DIR__ . '/..' . '/brick/math/src',
         ),
-        'Barryvdh\\DomPDF\\' =>
+        'Barryvdh\\DomPDF\\' => 
         array (
             0 => __DIR__ . '/..' . '/barryvdh/laravel-dompdf/src',
         ),
-        'App\\' =>
+        'App\\' => 
         array (
             0 => __DIR__ . '/../..' . '/app',
             1 => __DIR__ . '/..' . '/laravel/pint/app',
@@ -666,7 +666,6 @@ class ComposerStaticInitf893d55e652bfc8f543e6e2e81bcebb9
         'App\\Http\\Controllers\\CheckoutController' => __DIR__ . '/../..' . '/app/Http/Controllers/CheckoutController.php',
         'App\\Http\\Controllers\\ClienteController' => __DIR__ . '/../..' . '/app/Http/Controllers/ClienteController.php',
         'App\\Http\\Controllers\\ClienteCuponController' => __DIR__ . '/../..' . '/app/Http/Controllers/ClienteCuponController.php',
-        'App\\Http\\Controllers\\Controller' => __DIR__ . '/../..' . '/app/Http/Controllers/Controller.php',
         'App\\Http\\Controllers\\CuponController' => __DIR__ . '/../..' . '/app/Http/Controllers/CuponController.php',
         'App\\Http\\Controllers\\EnvioController' => __DIR__ . '/../..' . '/app/Http/Controllers/EnvioController.php',
         'App\\Http\\Controllers\\InicioController' => __DIR__ . '/../..' . '/app/Http/Controllers/InicioController.php',
@@ -681,6 +680,8 @@ class ComposerStaticInitf893d55e652bfc8f543e6e2e81bcebb9
         'App\\Http\\Controllers\\Usuario\\VendedorController' => __DIR__ . '/../..' . '/app/Http/Controllers/Usuario/VendedorController.php',
         'App\\Http\\Middleware\\VerificarAdmin' => __DIR__ . '/../..' . '/app/Http/Middleware/VerificarAdmin.php',
         'App\\Http\\Middleware\\VerificarCliente' => __DIR__ . '/../..' . '/app/Http/Middleware/VerificarCliente.php',
+        'App\\Http\\Middleware\\VerificarSesion' => __DIR__ . '/../..' . '/app/Http/Middleware/VerificarSesion.php',
+        'App\\Mail\\CodigoRecuperacionMail' => __DIR__ . '/../..' . '/app/Mail/CodigoRecuperacionMail.php',
         'App\\Models\\User' => __DIR__ . '/../..' . '/app/Models/User.php',
         'App\\Models\\producto\\Producto' => __DIR__ . '/../..' . '/app/Models/producto/Producto.php',
         'App\\Providers\\AppServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AppServiceProvider.php',

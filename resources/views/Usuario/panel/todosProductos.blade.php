@@ -63,52 +63,71 @@ placeholder="Buscar productos..."
 </form>
 
     <!-- Productos -->
-    <div class="row g-4">
-        @forelse($productos as $p)
-            <div class="col-md-3">
-                <div class="card h-100 shadow-sm">
-                    @if(!empty($p['imagen']))
-                        <img src="http://localhost/api/uploads/productos/{{ $p['imagen'] }}" 
-                             class="card-img-top" alt="{{ $p['nombre'] }}">
+<div class="row g-4">
+@forelse($productos as $p)
+    <div class="col-md-3">
+        <div class="card h-100 shadow-sm">
+
+            @if(!empty(data_get($p,'imagen')))
+                <img src="http://localhost:8080/uploads/productos/{{ data_get($p,'imagen') }}"
+                     class="card-img-top"
+                     alt="{{ data_get($p,'nombre') }}">
+            @else
+                <div class="bg-light text-center py-5">Sin imagen</div>
+            @endif
+
+            <div class="card-body text-center">
+
+                <h5 class="card-title">
+                    {{ data_get($p,'nombre') }}
+                </h5>
+
+                <p class="card-text text-muted">
+                    {{ data_get($p,'descripcion','') }}
+                </p>
+
+                <p class="fw-bold">
+                    ${{ data_get($p,'precio',0) }}
+                </p>
+
+                <p class="mb-2">
+                    Stock:
+                    @if(data_get($p,'stock',0) <= 0)
+                        <span class="text-danger fw-bold">Agotado</span>
                     @else
-                        <div class="bg-light text-center py-5">Sin imagen</div>
+                        <span class="text-muted">
+                            {{ data_get($p,'stock') }}
+                        </span>
                     @endif
-                    <div class="card-body text-center">
-                        <h5 class="card-title">{{ $p['nombre'] }}</h5>
-                        <p class="card-text text-muted">{{ $p['descripcion'] }}</p>
-                        <p class="fw-bold">${{ $p['precio'] }}</p>
-                        <p class="mb-2">
-    Stock:
-    @if(($p['stock'] ?? 0) <= 0)
-        <span class="text-danger fw-bold">Agotado</span>
-    @else
-        <span class="text-muted">{{ $p['stock'] }}</span>
-    @endif
-</p>
+                </p>
 
-                        <a href="{{ route('producto.detalle', $p['id_Producto']) }}"
-                        class="btn btn-outline-dark btn-sm mb-1">Ver Producto
-                    </a>
-                    <form action="{{ route('cliente.listaDeseos.agregar') }}" method="POST" class="d-inline">
-              @csrf
-              <input type="hidden" name="ID_Producto" value="{{ $p['id_Producto'] }}">
+                <a href="{{ route('producto.detalle', data_get($p,'id_Producto')) }}"
+                   class="btn btn-outline-dark btn-sm mb-1">
+                   Ver Producto
+                </a>
 
-              <button type="submit" class="btn btn-outline-danger btn-sm">
-                <i class="bi bi-heart"></i> Añadir a Favoritos
-              </button>
-            </form>
-          </div>
-        </div>
-      </div>
-    @empty
-      <p class="text-center text-muted">No hay productos disponibles</p>
-    @endforelse
-  </div>
-                </div>
+                <form action="{{ route('cliente.listaDeseos.agregar') }}"
+                      method="POST"
+                      class="d-inline">
+                    @csrf
+
+                    <input type="hidden"
+                           name="ID_Producto"
+                           value="{{ data_get($p,'id_Producto') }}">
+
+                    <button type="submit"
+                            class="btn btn-outline-danger btn-sm">
+                        <i class="bi bi-heart"></i> Añadir a Favoritos
+                    </button>
+                </form>
+
             </div>
-
-
-
+        </div>
+    </div>
+@empty
+    <p class="text-center text-muted">No hay productos disponibles</p>
+@endforelse
+</div>
 
     <div class="text-center my-4">
         <a href="{{ route('panel.cliente') }}" class="btn btn-outline-secondary btn-lg btn-hover">

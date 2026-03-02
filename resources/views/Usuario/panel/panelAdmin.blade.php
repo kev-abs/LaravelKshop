@@ -8,7 +8,6 @@ class Administrador
 {
     public function handle($request, Closure $next)
     {
-        // Laravel usa session()
         if (session('rol') !== 'administrador') {
             return redirect()->route('login');
         }
@@ -49,9 +48,12 @@ class Administrador
 
     <!-- BOTÓN CERRAR SESIÓN -->
     <nav class="d-flex align-items-center gap-3">
-      <a href="{{ route('logout') }}" class="btn btn-outline-dark border-0 text-dark">
-        Cerrar Sesión
-      </a>
+      <form method="POST" action="{{ route('logout') }}">
+          @csrf
+          <button type="submit" class="btn btn-outline-dark">
+              Cerrar sesión
+          </button>
+      </form>
     </nav>
   </div>
 </header>
@@ -148,6 +150,7 @@ class Administrador
               <li>
               <a href="{{ route('cupon.editarVista') }}" class="text-white text-decoration-none">➤ Editar / Eliminar cupón </a>
               </li>
+<<<<<<< HEAD
 
               <!-- PROVEEDORES -->
               <li class="mt-4 mb-2 fw-bold">Proveedores</li>
@@ -160,6 +163,8 @@ class Administrador
               <li>
                 <a href="{{ route('proveedor.editar') }}" class="text-white text-decoration-none">➤ Editar / Eliminar proveedor</a>
               </li>
+=======
+>>>>>>> origin
             </ul>
           </div>
         </div>

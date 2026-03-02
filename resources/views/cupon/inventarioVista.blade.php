@@ -21,10 +21,14 @@
     <div class="container my-5 text-center">
         <h1 class="fw-bold">Modulo de Inventario</h1>
         <p class="text-muted">
-        Desde aquí podrás gestionar a los <strong>Ingresos De Compra</strong> y <strong>Cupones</strong> de K-SHOP.
+        Desde aquí podrás gestionar el <strong>Inventario</strong> de K-SHOP.
         </p>
 
        <div class="row g-4 justify-content-center">
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin
             <!-- Card Cupones -->
             <div class="col-md-6">
                 <div class="card h-100 shadow-sm">
