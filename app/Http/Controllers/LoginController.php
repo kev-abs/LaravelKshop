@@ -2,14 +2,26 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Producto\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 
-class LoginController 
+class LoginController
 {
+
+
+
+    public function logout(Request $request)
+    {
+        Session::flush(); // elimina toda la sesión
+
+        $request->session()->invalidate(); 
+        $request->session()->regenerateToken();
+
+        return redirect()->route('login');
+    }
+
     public function mostrarFormulario()
     {
         return view('logueo.login');

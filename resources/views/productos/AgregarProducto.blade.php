@@ -16,7 +16,12 @@
       <a href="{{route('panel.admin')}}" class="text-decoration-none fs-7 fw-bold text-dark">K-SHOP | Admin</a>
     </div>
         <nav>
-            <a href="Inicio/Controlador/Logueo/CerrarSesion.php" class="btn btn-outline-dark">Cerrar Sesión</a>
+            <form method="POST" action="{{ route('logout') }}">
+                @csrf
+                <button type="submit" class="btn btn-outline-dark">
+                    Cerrar sesión
+                </button>
+            </form>
         </nav>
     </div>
 </header>

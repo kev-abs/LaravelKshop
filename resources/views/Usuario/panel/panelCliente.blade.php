@@ -23,21 +23,28 @@
 
     <form action="{{ route('productos.buscar') }}" method="GET" class="d-flex">
 
-<input 
-type="text" 
-name="nombre"
-value="{{ request('nombre') }}"
-class="form-control me-2"
-placeholder="Buscar productos..."
->
+      <input
+        type="text"
+        name="nombre"
+        value="{{ request('nombre') }}"
+        class="form-control me-2"
+        placeholder="Buscar productos..."
+      >
 
-<button class="btn btn-dark">
-<i class="bi bi-search"></i>
-</button>
+      <button class="btn btn-dark">
+        <i class="bi bi-search"></i>
+      </button>
 
-</form>
+    </form>
 
-    <nav><a href="{{ route('logout') }}" class="btn btn-outline-dark">Cerrar Sesión</a></nav>
+    <nav>
+      <form method="POST" action="{{ route('logout') }}">
+          @csrf
+          <button type="submit" class="btn btn-outline-dark">
+              Cerrar sesión
+          </button>
+      </form>
+  </nav>
   </div>
 </header>
 
