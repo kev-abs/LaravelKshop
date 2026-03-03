@@ -32,16 +32,19 @@ placeholder="Buscar productos..."
 </form>
 
     <div class="d-flex align-items-center">
-      <a class="navbar-brand fw-bold" href="{{ route('panel.cliente') }}">
+    < class="navbar-brand fw-bold" href="{{ route('panel.cliente') }}">
         <img src="{{ asset('img/logo_kshopsinfondo.png') }}" width="83" class="me-2">
         <span class="fw-bold text-dark">K-SHOP | Cliente</span>
-      </a>
+    </>
     </div>
 
     <nav>
-      <a href="{{ route('logout') }}" class="btn btn-outline-dark border-0">
-        Cerrar Sesión
-      </a>
+        <form method="POST" action="{{ route('logout') }}">
+            @csrf
+            <button type="submit" class="btn btn-outline-dark">
+                Cerrar sesión
+            </button>
+        </form>
     </nav>
 
   </div>

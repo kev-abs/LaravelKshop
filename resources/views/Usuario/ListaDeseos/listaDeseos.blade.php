@@ -39,9 +39,12 @@ placeholder="Buscar productos..."
 </button>
 
 </form>
-    <a href="{{ route('logout') }}" class="btn btn-outline-dark border-0">
-      <i class="bi bi-box-arrow-right"></i> Salir
-    </a>
+      <form method="POST" action="{{ route('logout') }}">
+          @csrf
+          <button type="submit" class="btn btn-outline-dark">
+              Cerrar sesión
+          </button>
+      </form>
   </div>
 </header>
 

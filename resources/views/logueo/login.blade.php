@@ -54,45 +54,110 @@ placeholder="Buscar productos..."
   </div>
 </header>
 
-<main class="flex-fill d-flex justify-content-center align-items-center" 
-      style="background: linear-gradient(135deg, #f5f7fa, #c3cfe2);">
+<main class="container-fluid flex-fill">
+  
+  <div class="row min-vh-100">
 
-  <div class="card shadow-lg rounded-5 p-5" style="width: 100%; max-width: 420px;">
-    <div class="card-body">
+    <!-- LOGIN -->
+    <div class="col-lg-6 d-flex align-items-center justify-content-center bg-white">
 
-      <!-- Título -->
-      <h2 class="card-title text-center mb-4 fw-bold text-dark">Iniciar Sesión</h2>
+      <div class="w-100 px-4" style="max-width: 420px;">
 
-      <form action="{{ route('login.procesar') }}" method="POST" class="d-flex flex-column gap-3">
-        @csrf
+        <!-- TITULO -->
+        <h2 class="fw-bold mb-4">
+          Iniciar sesión
+        </h2>
 
-        <div class="input-group">
-            <span class="input-group-text bg-white"><i class="bi bi-envelope-fill"></i></span>
-            <input type="email" name="correo" class="form-control" placeholder="Correo electrónico" required>
+        <!-- FORM -->
+        <form action="{{ route('login.procesar') }}" method="POST">
+          @csrf
+
+          <!-- EMAIL -->
+          <div class="mb-3">
+            <label class="form-label fw-semibold small">
+              Correo electrónico *
+            </label>
+
+            <input 
+              type="email" 
+              name="correo"
+              class="form-control form-control-lg rounded-0"
+              required
+            >
+          </div>
+
+          <!-- PASSWORD -->
+          <div class="mb-2">
+            <label class="form-label fw-semibold small">
+              Contraseña *
+            </label>
+
+            <input 
+              type="password" 
+              name="contrasena"
+              class="form-control form-control-lg rounded-0"
+              required
+            >
+          </div>
+
+          <!-- FORGOT -->
+          <div class="mb-3">
+            <a href="{{route('password.email')}}" 
+               class="text-dark small text-decoration-none">
+               ¿Olvidaste tu contraseña?
+            </a>
+          </div>
+
+          <!-- LOGIN BTN -->
+          <button type="submit" class="btn btn-dark w-100 py-3 rounded-0 fw-semibold">
+            Iniciar sesión
+          </button>
+
+        </form>
+
+        <!-- ERROR -->
+        @if(session('error'))
+        <div class="alert alert-danger mt-3">
+          {{ session('error') }}
+        </div>
+        @endif
+
+        <!-- REGISTER -->
+        <div class="mt-4">
+
+          <h6 class="fw-bold">
+            Crear una cuenta
+          </h6>
+
+          <p class="text-muted small">
+            Regístrate para comprar más rápido y ver tus pedidos.
+          </p>
+
+          <a href="{{route('cliente.registrar')}}" 
+             class="btn btn-outline-dark w-100 py-3 rounded-0 fw-semibold">
+            Crear cuenta
+          </a>
+
         </div>
 
-        <div class="input-group">
-            <span class="input-group-text bg-white"><i class="bi bi-lock-fill"></i></span>
-            <input type="password" name="contrasena" class="form-control" placeholder="Contraseña" required>
-        </div>
-
-        <button type="submit" class="btn btn-dark fw-bold mt-2 w-100">Ingresar</button>
-      </form>
-
-      @if(session('error'))
-            <div class="alert alert-danger text-center mt-3">{{ session('error') }}</div>
-      @endif
-
-
-      <!-- Links -->
-      <div class="text-center mt-4">
-        <a href="{{route('cliente.registrar')}}" class="link-dark d-block mb-1">¿No tienes cuenta? Regístrate</a>
-        <a href="{{route('password.email')}}" class="link-dark d-block mb-1">Olvidé mi contraseña</a>
-        <a href="/ModeloVistaControlador/index.php?Controller=inicio" class="link-dark d-block mt-2">← Volver al inicio</a>
       </div>
 
     </div>
+
+
+    <!-- IMAGEN -->
+    <div class="col-lg-6 d-none d-lg-flex align-items-center justify-content-center bg-light">
+
+      <img 
+        src="{{ asset('img/foto _inicio.png') }}"
+        class="img-fluid w-75"
+        alt="Productos K-SHOP"
+      >
+
+    </div>
+
   </div>
+
 </main>
 
 

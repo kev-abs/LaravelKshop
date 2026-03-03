@@ -8,7 +8,6 @@ class Administrador
 {
     public function handle($request, Closure $next)
     {
-        // Laravel usa session()
         if (session('rol') !== 'administrador') {
             return redirect()->route('login');
         }
@@ -49,9 +48,12 @@ class Administrador
 
     <!-- BOTÓN CERRAR SESIÓN -->
     <nav class="d-flex align-items-center gap-3">
-      <a href="{{ route('logout') }}" class="btn btn-outline-dark border-0 text-dark">
-        Cerrar Sesión
-      </a>
+      <form method="POST" action="{{ route('logout') }}">
+          @csrf
+          <button type="submit" class="btn btn-outline-dark">
+              Cerrar sesión
+          </button>
+      </form>
     </nav>
   </div>
 </header>
@@ -147,18 +149,6 @@ class Administrador
               </li>
               <li>
               <a href="{{ route('cupon.editarVista') }}" class="text-white text-decoration-none">➤ Editar / Eliminar cupón </a>
-              </li>
-
-              <!-- INGRESO COMPRA -->
-              <li class="mb-2 fw-bold">Ingreso Compra</li>
-              <li>
-                <a href="{{ url('/ingresocompra') }}" class="text-white text-decoration-none"> ➤ Listar ingresos</a>
-              </li>
-              <li>
-                <a href="{{ url('/ingresocompra/crear') }}" class="text-white text-decoration-none"> ➤ Agregar ingreso</a>
-              </li>
-               <li>
-                <a href="{{ route('ingresocompra.editDelete') }}" class="text-white text-decoration-none"> ➤ Editar / Eliminar ingreso</a>            
               </li>
             </ul>
           </div>

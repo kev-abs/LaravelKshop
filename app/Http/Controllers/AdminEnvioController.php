@@ -3,7 +3,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Http;
 
-class AdminEnvioController extends Controller
+class AdminEnvioController
 {
     public function index()
     {

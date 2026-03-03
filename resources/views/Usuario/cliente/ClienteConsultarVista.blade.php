@@ -18,7 +18,12 @@
             </a>
         </div>
         <nav>
-            <a href="{{ route('inicio') }}" class="btn btn-outline-dark">Cerrar Sesión</a>
+            <form method="POST" action="{{ route('logout') }}">
+                @csrf
+                <button type="submit" class="btn btn-outline-dark">
+                    Cerrar sesión
+                </button>
+            </form>
         </nav>
     </div>
 </header>
