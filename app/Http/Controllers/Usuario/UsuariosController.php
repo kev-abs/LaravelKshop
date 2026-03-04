@@ -4,7 +4,10 @@ namespace App\Http\Controllers\Usuario;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\CodigoRegistroMail;
 use App\Exceptions\DocumentoInvalidoException;
 use App\Exceptions\TelefonoInvalidoException;
 use App\Exceptions\CorreoInvalidoException;
@@ -43,7 +46,16 @@ class UsuariosController
         $clientes = DB::table('cliente as c')
             ->leftJoin('historial_login as h', 'c.ID_Cliente', '=', 'h.ID_Cliente')
             ->select(
-                'c.*',
+                'c.ID_Cliente',
+                'c.Nombre',
+                'c.Correo',
+                'c.Contrasena',
+                'c.Foto',
+                'c.Documento',
+                'c.Telefono',
+                'c.Estado',
+                'c.Fecha_Registro',
+                'c.verificado',
                 DB::raw('COUNT(h.ID_Login) as total_logins')
             )
             ->groupBy(
@@ -55,7 +67,8 @@ class UsuariosController
                 'c.Documento',
                 'c.Telefono',
                 'c.Estado',
-                'c.Fecha_Registro'
+                'c.Fecha_Registro',
+                'c.verificado'
             )
             ->orderBy($orden, $direccion)
             ->get();
@@ -86,6 +99,16 @@ class UsuariosController
     }
 
 
+
+    public function mostrarVistaVerificacion()
+{
+    if (!Session::has('correo_verificacion')) {
+        return redirect()->route('login');
+    }
+
+    return view('Usuario.cliente.registro.verificar_registro');
+}
+
     public function agregarCliente(Request $request)
     {
         $mensaje = "";
@@ -95,47 +118,6 @@ class UsuariosController
             $data = $request->only(['nombre', 'correo', 'contrasena', 'documento', 'telefono']);
 
             // Validar datos
-            $validator = Validator::make($data, [
-                'nombre' => 'required|string|max:100',
-                'correo' => 'required|email|max:100|unique:cliente,Correo',
-                'contrasena' => 'required|min:6',
-                'documento' => 'required|digits_between:6,15|unique:cliente,Documento',
-                'telefono' => 'required|regex:/^[0-9]{10}$/',
-            ]);
-
-            if ($validator->fails()) {
-                $errors = $validator->errors();
-
-                if ($errors->has('correo')) throw new CorreoInvalidoException();
-                if ($errors->has('documento')) throw new DocumentoInvalidoException();
-                if ($errors->has('telefono')) throw new TelefonoInvalidoException();
-                if ($errors->has('contrasena')) throw new ContrasenaInvalidaException();
-
-                $mensaje = "Error en los datos ingresados.";
-            } else {
-                DB::table('cliente')->insert([
-                    'Nombre' => $data['nombre'],
-                    'Correo' => $data['correo'],
-                    'Contrasena' => bcrypt($data['contrasena']),
-                    'Documento' => $data['documento'],
-                    'Telefono' => $data['telefono'],
-                ]);
-
-                $mensaje = "Cliente agregado correctamente.";
-            }
-        }
-
-        return view('Usuario.cliente.ClienteAgregarVista', compact('mensaje'));
-    }
-
-    public function registrarCliente(Request $request)
-    {
-        $mensaje = "";
-
-        if ($request->isMethod('post')) {
-
-            $data = $request->only(['nombre', 'correo', 'contrasena', 'documento', 'telefono']);
-
             $validator = Validator::make($data, [
                 'nombre' => 'required|string|max:100',
                 'correo' => 'required|email|max:100|unique:cliente,Correo',
@@ -171,11 +153,144 @@ class UsuariosController
                     'Telefono' => $data['telefono'],
                 ]);
 
-                $mensaje = "Registro completado exitosamente.";
+                $mensaje = "Cliente agregado correctamente.";
+            }
+        }
+
+        return view('Usuario.cliente.ClienteAgregarVista', compact('mensaje'));
+    }
+
+    public function registrarCliente(Request $request)
+    {
+        $mensaje = "";
+
+        if ($request->isMethod('post')) {
+
+            $data = $request->only(['nombre', 'correo', 'contrasena', 'documento', 'telefono']);
+
+            $validator = Validator::make($data, [
+                'nombre' => 'required|string|max:100',
+                'correo' => 'required|email|max:100|unique:cliente,Correo',
+                'contrasena' => 'required|min:6',
+                'documento' => 'required|digits_between:6,15|unique:cliente,Documento',
+                'telefono' => 'required|regex:/^[0-9]{10}$/',
+            ]);
+
+            if ($validator->fails()) {
+
+                $errors = $validator->errors();
+
+                if ($errors->has('correo')) {
+                    return back()->withInput()->with('error', 'El correo electrónico ingresado no es válido o ya está en uso.');
+                }
+
+                if ($errors->has('documento')) {
+                    return back()->withInput()->with('error', 'El documento ingresado es inválido o ya existe.');
+                }
+
+                if ($errors->has('telefono')) {
+                    return back()->withInput()->with('error', 'El número de teléfono no cumple con el formato requerido.');
+                }
+
+                if ($errors->has('contrasena')) {
+                    return back()->withInput()->with('error', 'La contraseña es demasiado débil o está vacía.');
+                }
+
+            } else {
+
+                $codigo = rand(100000, 999999);
+
+                DB::table('cliente')->insert([
+                    'Nombre' => $data['nombre'],
+                    'Correo' => $data['correo'],
+                    'Contrasena' => bcrypt($data['contrasena']),
+                    'Documento' => $data['documento'],
+                    'Telefono' => $data['telefono'],
+                    'codigo_verificacion' => $codigo,
+                    'codigo_expira' => now()->addMinutes(2),
+                    'verificado' => 0
+                ]);
+
+                Mail::to($data['correo'])
+                    ->send(new CodigoRegistroMail($codigo, $data['nombre']));
+
+                Session::put('correo_verificacion', $data['correo']);
+                return redirect()->route('registro.verificar');
             }
         }
 
         return view('Usuario.cliente.registro.ClienteRegistrarVista', compact('mensaje'));
+    }
+    public function confirmarCodigoRegistro(Request $request)
+    {
+        $correo = Session::get('correo_verificacion');
+
+        if (!$correo) {
+            return redirect()->route('login');
+        }
+
+        $request->validate([
+            'codigo' => 'required'
+        ]);
+
+        $cliente = DB::table('cliente')
+            ->where('Correo', $correo)
+            ->first();
+
+        if (!$cliente) {
+            return back()->with('error', 'Cuenta no encontrada.');
+        }
+
+        if ($cliente->codigo_verificacion != $request->codigo) {
+            return back()->with('error', 'Código incorrecto.');
+        }
+
+        if (now()->greaterThan($cliente->codigo_expira)) {
+            return back()->with('error', 'El código ha expirado.');
+        }
+
+        DB::table('cliente')
+            ->where('Correo', $correo)
+            ->update([
+                'verificado' => 1,
+                'codigo_verificacion' => null,
+                'codigo_expira' => null
+            ]);
+
+        Session::forget('correo_verificacion');
+
+        return redirect()->route('login')
+            ->with('mensaje', 'Cuenta verificada correctamente.');
+    }
+    public function reenviarCodigoRegistro()
+    {
+        $correo = Session::get('correo_verificacion');
+
+        if (!$correo) {
+            return redirect()->route('login');
+        }
+
+        $cliente = DB::table('cliente')
+            ->where('Correo', $correo)
+            ->first();
+
+        if (!$cliente) {
+            return back()->with('error', 'Cuenta no encontrada.');
+        }
+
+        $codigo = rand(100000, 999999);
+
+        DB::table('cliente')
+            ->where('Correo', $correo)
+            ->update([
+                'codigo_verificacion' => $codigo,
+                'codigo_expira' => now()->addMinutes(2)
+            ]);
+
+        Mail::to($cliente->Correo)
+            ->send(new CodigoRegistroMail($codigo, $cliente->Nombre));
+
+        return back()->with('mensaje', 'Nuevo código enviado.');
     }
 
     public function mostrarEditarCliente($id)
