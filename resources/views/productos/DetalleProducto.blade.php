@@ -81,9 +81,10 @@ $ {{ number_format($producto['precio'],0,',','.') }}
                         @csrf
                         <input type="hidden" name="idProducto" value="{{ $producto['id_Producto'] }}">
                         <input type="hidden" name="cantidad" value="1">
-                        <button type="submit" class="btn btn-primary w-100">
-                            <i class="bi bi-cart-plus me-1"></i> Agregar al carrito
-                        </button>
+                        <button class="btn btn-dark">
+                        <i class="bi bi-cart-plus me-1"></i> Agregar al carrito
+                    </button>
+
                     </form>
 
 </div>

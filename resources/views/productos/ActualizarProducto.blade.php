@@ -90,6 +90,18 @@
                         </select>
                     </div>
 
+                    <div class="mb-3">
+    <label class="form-label">Género</label>
+    <select name="genero" class="form-select" required>
+        <option value="">Seleccione...</option>
+        <option value="hombre"      {{ ($producto['genero'] ?? '') === 'hombre'      ? 'selected' : '' }}>Hombre</option>
+        <option value="mujer"       {{ ($producto['genero'] ?? '') === 'mujer'       ? 'selected' : '' }}>Mujer</option>
+        <option value="accesorios"  {{ ($producto['genero'] ?? '') === 'accesorios'  ? 'selected' : '' }}>Accesorios</option>
+        <option value="unisex"      {{ ($producto['genero'] ?? '') === 'unisex'      ? 'selected' : '' }}>Unisex</option>
+    </select>
+</div>
+
+
 
                     {{-- IMAGEN ACTUAL --}}
                     @if(!empty($producto['imagen']))

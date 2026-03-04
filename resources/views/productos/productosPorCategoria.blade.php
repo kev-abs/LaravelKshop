@@ -63,6 +63,7 @@
                                         <th>Descripción</th>
                                         <th>Precio</th>
                                         <th>Imagen</th>
+                                        <th>Género</th>
                                         <th>Acciones</th>
                                     </tr>
                                 </thead>
@@ -82,6 +83,19 @@
                                         <span class="text-muted">Sin imagen</span>
                                     @endif
                                 </td>
+                                <td>
+    @php
+        $g = strtolower($p['genero'] ?? 'unisex');
+        $iconos = [
+            'hombre'     => ['bi-gender-male',    'text-primary'],
+            'mujer'      => ['bi-gender-female',   'text-danger'],
+            'accesorios' => ['bi-bag',             'text-warning'],
+            'unisex'     => ['bi-gender-ambiguous','text-secondary'],
+        ];
+        [$icon, $color] = $iconos[$g] ?? $iconos['unisex'];
+    @endphp
+    <i class="bi {{ $icon }} {{ $color }} me-1"></i>{{ ucfirst($g) }}
+</td>
                                 <td>
     <a href="{{ route('productos.editarCategoria', $p['id_Producto']) }}" 
        class="btn btn-warning btn-sm">

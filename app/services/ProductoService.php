@@ -45,6 +45,7 @@ class ProductoService
                     'id_Proveedor'=> $fila['id_Proveedor'] ?? null,
                     'imagen'      => $fila['imagen'] ?? null,
                     'estado'      => $fila['estado'] ?? null,
+                    'genero'      => $fila['genero'] ?? null,
                 ];
             })
             ->toArray();
@@ -54,7 +55,7 @@ class ProductoService
 
 
     /*POST - Agregar producto */
-    public function agregarProducto($nombre, $descripcion, $precio, $stock, $idProveedor, $imagen = null, $estado = null)
+    public function agregarProducto($nombre, $descripcion, $precio, $stock, $idProveedor, $imagen = null, $estado = null, $genero = null)
 {
     // Iniciamos request como multipart
     $request = Http::withToken($this->jwtToken)->asMultipart();
@@ -66,6 +67,7 @@ class ProductoService
     $request = $request->attach('stock', $stock);
     $request = $request->attach('idProveedor', $idProveedor);
     $request = $request->attach('estado', $estado);
+    $request = $request->attach('genero', $genero ?? 'unisex');
 
     // Adjuntar imagen solo si viene
     if ($imagen) {
@@ -98,7 +100,8 @@ class ProductoService
     $idProveedor,
     $imagen,
     $imagenActual,
-    $estado
+    $estado,
+    $genero
 ) {
     $url = "{$this->apiUrl}/actualizar/{$id}";
 
@@ -110,6 +113,7 @@ class ProductoService
         ['name' => 'stock', 'contents' => (string) $stock],
         ['name' => 'idProveedor', 'contents' => (string) $idProveedor], // coincide con @RequestParam("idProveedor")
         ['name' => 'estado', 'contents' => (string) $estado],
+        ['name' => 'genero', 'contents' => (string) ($genero ?? 'unisex')],
         ['name' => 'imagen_actual', 'contents' => (string) $imagenActual],
     ];
 

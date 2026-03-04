@@ -35,12 +35,13 @@
     <button type="button" data-bs-target="#carouselKshop" data-bs-slide-to="0" class="active"></button>
     <button type="button" data-bs-target="#carouselKshop" data-bs-slide-to="1"></button>
     <button type="button" data-bs-target="#carouselKshop" data-bs-slide-to="2"></button>
+    <button type="button" data-bs-target="#carouselKshop" data-bs-slide-to="3"></button>
   </div>
 
   <div class="carousel-inner">
     <div class="carousel-item active" data-bs-interval="5000">
       <a href="{{ route('productos.vistaCatalogo') }}">
-        <img src="{{ asset('img/ropa caballero.jpeg') }}" class="d-block w-100" alt="Moda masculina">
+        <img src="{{ asset('img/logokshop.png') }}" class="d-block w-100" alt="K-SHOP">
       </a>
       <div class="carousel-caption">
         <h1 class="text-light">K-SHOP</h1>
@@ -48,6 +49,18 @@
         <a href="{{ route('productos.vistaCatalogo') }}" class="btn btn-light fw-semibold text-dark px-4 py-2 mt-3">Explorar colección</a>
       </div>
     </div>
+
+    <div class="carousel-item" data-bs-interval="5000">
+      <a href="{{ route('productos.vistaCatalogo') }}">
+        <img src="{{ asset('img/ropa caballero.jpeg') }}" class="d-block w-100" alt="Moda masculina">
+      </a>
+      <div class="carousel-caption">
+        <h1 class="text-light">Moda Masculina</h1>
+        <p>Elegancia, comodidad y estilo</p>
+        <a href="{{ route('productos.vistaCatalogo') }}" class="btn btn-light fw-semibold text-dark px-4 py-2 mt-3">Descubrir</a>
+      </div>
+    </div>
+  
 
     <div class="carousel-item" data-bs-interval="5000">
       <a href="{{ route('productos.vistaCatalogo') }}">
@@ -60,13 +73,13 @@
       </div>
     </div>
 
-    <div class="carousel-item" data-bs-interval="5000">
+  <div class="carousel-item" data-bs-interval="5000">
       <a href="{{ route('productos.vistaCatalogo') }}">
-        <img src="{{ asset('img/ropa niño.jpg') }}" class="d-block w-100" alt="Moda infantil">
+        <img src="{{ asset('img/accesorios.png') }}" class="d-block w-100" alt="Accesorios">
       </a>
       <div class="carousel-caption">
-        <h1 class="text-light">Moda Infantil</h1>
-        <p>Comodidad y alegría para los más pequeños</p>
+        <h1 class="text-light">Accesorios</h1>
+        <p>Un toque que mejorara tu estilo</p>
         <a href="{{ route('productos.vistaCatalogo') }}" class="btn btn-light fw-semibold text-dark px-4 py-2 mt-3">Descubrir</a>
       </div>
     </div>
@@ -88,7 +101,7 @@
       @foreach([
         ['img' => 'img/RopaDama2.png', 'titulo' => 'Moda femenina'],
         ['img' => 'img/RopaCaballero2.png', 'titulo' => 'Moda masculina'],
-        ['img' => 'img/RopaNiños2.png', 'titulo' => 'Moda infantil'],
+        ['img' => 'img/gafascard.jpg', 'titulo' => 'Accesorios'],
       ] as $cat)
       <div class="col-md-4">
         <div class="category-card shadow-sm">

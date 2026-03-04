@@ -4,10 +4,11 @@ namespace App\Http\Controllers\Producto;
 
 use Illuminate\Http\Client\RequestException;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Http\Request;
 
 class ProductoCategoriaController
 {
-    public function PorCategoria()
+    public function PorCategoria(Request $request)
 {
     $response = Http::get('http://localhost:8080/api/producto-categoria/por-categoria');
 
@@ -16,7 +17,23 @@ class ProductoCategoriaController
     }
 
     $categorias = $response->json();
+    $genero     = $request->query('genero');
 
-    return view('productos.productosPorCategoria', compact('categorias'));
+    // Filtrar productos por género dentro de cada categoría
+    if (!empty($genero)) {
+        $categorias = collect($categorias)->map(function($cat) use ($genero) {
+            $cat['productos'] = collect($cat['productos'] ?? [])
+                ->filter(fn($p) => strtolower($p['genero'] ?? '') === strtolower($genero))
+                ->values()
+                ->toArray();
+            return $cat;
+        })
+        ->filter(fn($cat) => count($cat['productos']) > 0)
+        ->values()
+        ->toArray();
+    }
+    
+
+    return view('productos.productosPorCategoria', compact('categorias', 'genero'));
 }
 }
