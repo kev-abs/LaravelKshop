@@ -42,47 +42,387 @@ placeholder="Buscar productos..."
 
 </form>
 
-      <form method="POST" action="{{ route('logout') }}">
+    <form method="POST" action="{{ route('logout') }}">
           @csrf
           <button type="submit" class="btn btn-outline-dark">
               Cerrar sesión
           </button>
       </form>
-  </div>
 </header>
 
 <main class="container my-5">
 
   <h2 class="fw-bold text-center mb-4">Todos los Productos</h2>
+      {{-- MENÚ DESPLEGABLE DE CATEGORÍAS --}}
+<style>
+  .cat-dropdown {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 2rem;
+  }
+  .cat-dropdown .dropdown-toggle {
+    border-radius: 999px;
+    padding: 10px 24px;
+    background: #fff;
+    border: 1.5px solid #dee2e6;
+    color: #333;
+    font-size: 0.88rem;
+    font-weight: 500;
+    transition: all 0.2s;
+  }
+  .cat-dropdown .dropdown-toggle:hover,
+  .cat-dropdown .dropdown-toggle.active-cat {
+    border-color: #212529;
+    background: #212529;
+    color: #fff;
+  }
+  .cat-dropdown .dropdown-menu {
+    border-radius: 14px;
+    border: none;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+    padding: 8px;
+    min-width: 200px;
+    animation: dropIn 0.2s cubic-bezier(.4,0,.2,1);
+  }
+  @keyframes dropIn {
+    from { opacity: 0; transform: translateY(-8px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .cat-dropdown .dropdown-item {
+    border-radius: 8px;
+    padding: 8px 14px;
+    font-size: 0.85rem;
+    color: #333;
+    transition: all 0.15s;
+  }
+  .cat-dropdown .dropdown-item:hover {
+    background: #f5f5f5;
+    color: #212529;
+  }
+  .cat-dropdown .dropdown-item.active {
+    background: #212529;
+    color: #fff;
+  }
+  .cat-dropdown {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 2rem;
+  }
+  .cat-dropdown .dropdown-toggle {
+    border-radius: 999px;
+    padding: 10px 24px;
+    background: #fff;
+    border: 1.5px solid #dee2e6;
+    color: #333;
+    font-size: 0.88rem;
+    font-weight: 500;
+    transition: all 0.2s;
+  }
+  .cat-dropdown .dropdown-toggle.active-cat {
+    border-color: #212529;
+    background: #212529;
+    color: #fff;
+  }
+  .cat-dropdown .dropdown-menu {
+    border-radius: 14px;
+    border: none;
+    background: #fff !important;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+    padding: 8px;
+    min-width: 200px;
+  }
+  .cat-dropdown .dropdown-item {
+    border-radius: 8px;
+    padding: 8px 14px;
+    font-size: 0.85rem;
+    color: #333 !important;
+    background: transparent !important;
+    transition: all 0.15s;
+}
+  .cat-dropdown .dropdown-item:hover {
+    background: #f5f5f5 !important;
+    color: #212529 !important;
+  }
+  .cat-dropdown .dropdown-item.selected-cat {
+    background: #212529 !important;
+    color: #fff !important;
+  }
+</style>
 
-  <div class="row g-4">
-    @forelse ($productos as $p)
-      <div class="col-6 col-md-4 col-lg-3">
-        <div class="card h-100 shadow-sm border-0">
-          <img src="http://localhost:8080/uploads/productos/{{ $p->Imagen }}" class="card-img-top" style="height:180px; object-fit:cover">
-          <div class="card-body text-center">
-            <h6 class="fw-bold">{{ $p->Nombre }}</h6>
-            <p class="text-muted mb-1">Precio: $ {{ number_format($p->Precio, 0, ',', '.') }}</p>
-            <p class="text-muted mb-2">Stock: {{ $p->Stock ?? 'Disponible' }}</p>
+@if(!empty($categorias))
+<div class="cat-dropdown">
+  <div class="dropdown">
+    <button class="btn dropdown-toggle {{ !empty($categoriaId) ? 'active-cat' : '' }}"
+        type="button" data-bs-toggle="dropdown">
+  <i class="bi bi-tags me-2"></i>
+  Todas las categorías
+</button>
+    <ul class="dropdown-menu">
+      <li>
+        <a class="dropdown-item {{ empty($categoriaId) ? 'selected-cat' : '' }}"
+           href="{{ route('cliente.productos', array_filter(['genero' => $genero ?? null])) }}">
+          <i class="bi bi-grid me-2"></i> Todas
+        </a>
+      </li>
+      <li><hr class="dropdown-divider mx-2"></li>
+      @foreach($categorias as $cat)
+@php
+  $catId  = $cat->idCategoria ?? null;
+  $catNom = $cat->nombre ?? '';
+@endphp
+<li>
+  <a class="dropdown-item {{ !empty($categoriaId) && (string)$categoriaId === (string)$catId ? 'selected-cat' : '' }}"
+     href="{{ route('cliente.productos', array_filter(['categoria' => $catId, 'genero' => $genero ?? null])) }}">
+    {{ $catNom }}
+  </a>
+</li>
+@endforeach
+    </ul>
+  </div>
+</div>
+@endif
+  {{-- FILTROS DE GÉNERO --}}
+<style>
+  .gender-filters {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin: 0 auto 2.5rem;
+    padding: 6px;
+    background: #f5f5f5;
+    border-radius: 999px;
+    width: fit-content;
+  }
 
-            <a href="{{ route('producto.detalle', $p->ID_Producto) }}"
-   class="btn btn-outline-dark btn-sm mb-1">
-   Ver Producto
-</a>
-            <form action="{{ route('cliente.listaDeseos.agregar') }}" method="POST" class="d-inline">
+  .gender-btn {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    padding: 10px 22px;
+    border-radius: 999px;
+    border: none;
+    background: transparent;
+    color: #555;
+    font-size: 0.88rem;
+    font-weight: 500;
+    letter-spacing: 0.3px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.25s cubic-bezier(.4,0,.2,1);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .gender-btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: #212529;
+    border-radius: 999px;
+    transform: scale(0.6);
+    opacity: 0;
+    transition: all 0.25s cubic-bezier(.4,0,.2,1);
+  }
+
+  .gender-btn:hover::before {
+    transform: scale(1);
+    opacity: 0.08;
+  }
+
+  .gender-btn span, .gender-btn i {
+    position: relative;
+    z-index: 1;
+  }
+
+  .gender-btn.active {
+    background: #212529;
+    color: #fff;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.18);
+    transform: translateY(-1px);
+  }
+
+  .gender-btn.active::before { display: none; }
+
+  .gender-btn:hover:not(.active) {
+    color: #212529;
+    transform: translateY(-1px);
+  }
+
+  /* Entrada animada */
+  .gender-filters .gender-btn {
+    animation: filterIn 0.4s cubic-bezier(.4,0,.2,1) both;
+  }
+  .gender-filters .gender-btn:nth-child(1) { animation-delay: 0.05s; }
+  .gender-filters .gender-btn:nth-child(2) { animation-delay: 0.12s; }
+  .gender-filters .gender-btn:nth-child(3) { animation-delay: 0.19s; }
+  .gender-filters .gender-btn:nth-child(4) { animation-delay: 0.26s; }
+
+  @keyframes filterIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .product-card .btn-fav.active {
+    border-color: #e74c3c;
+    color: #e74c3c;
+    background: #fff5f5;
+}
+</style>
+
+<div class="gender-filters">
+
+  <a href="{{ route('cliente.productos') }}"
+     class="gender-btn {{ is_null($genero ?? null) ? 'active' : '' }}">
+    <i class="bi bi-grid-3x3-gap"></i>
+    <span>Todos</span>
+  </a>
+
+  <a href="{{ route('cliente.productos', ['genero' => 'hombre']) }}"
+     class="gender-btn {{ ($genero ?? null) === 'hombre' ? 'active' : '' }}">
+    <i class="bi bi-gender-male"></i>
+    <span>Hombre</span>
+  </a>
+
+  <a href="{{ route('cliente.productos', ['genero' => 'mujer']) }}"
+     class="gender-btn {{ ($genero ?? null) === 'mujer' ? 'active' : '' }}">
+    <i class="bi bi-gender-female"></i>
+    <span>Mujer</span>
+  </a>
+
+  <a href="{{ route('cliente.productos', ['genero' => 'accesorios']) }}"
+     class="gender-btn {{ ($genero ?? null) === 'accesorios' ? 'active' : '' }}">
+    <i class="bi bi-bag"></i>
+    <span>Accesorios</span>
+  </a>
+
+</div>
+<style>
+  .product-card {
+    border: none;
+    border-radius: 16px;
+    overflow: hidden;
+    transition: transform 0.3s cubic-bezier(.4,0,.2,1), box-shadow 0.3s cubic-bezier(.4,0,.2,1);
+    background: #fff;
+    animation: cardIn 0.5s cubic-bezier(.4,0,.2,1) both;
+  }
+  .product-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.12);
+  }
+  .product-card .img-wrap {
+    position: relative;
+    overflow: hidden;
+    height: 220px;
+    background: #f8f8f8;
+  }
+  .product-card .img-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s cubic-bezier(.4,0,.2,1);
+  }
+  .product-card:hover .img-wrap img { transform: scale(1.07); }
+  .product-card .img-wrap .no-img {
+    display: flex; align-items: center; justify-content: center;
+    height: 100%; color: #ccc; font-size: 2.5rem;
+  }
+  .product-card .stock-badge {
+    position: absolute; top: 12px; right: 12px;
+    border-radius: 999px; padding: 4px 10px;
+    font-size: 0.72rem; font-weight: 600;
+  }
+  .product-card .card-body { padding: 1.1rem 1.2rem 1.3rem; }
+  .product-card .card-title {
+    font-size: 0.95rem; font-weight: 700; color: #1a1a1a;
+    margin-bottom: 4px; white-space: nowrap;
+    overflow: hidden; text-overflow: ellipsis;
+  }
+  .product-card .price {
+    font-size: 1.15rem; font-weight: 800;
+    color: #212529; margin-bottom: 14px;
+  }
+  .product-card .actions { display: flex; gap: 8px; }
+  .product-card .btn-ver {
+    flex: 1; background: #212529; color: #fff;
+    border: none; border-radius: 10px; padding: 8px 0;
+    font-size: 0.8rem; font-weight: 600;
+    transition: background 0.2s, transform 0.2s;
+    text-decoration: none; display: flex;
+    align-items: center; justify-content: center; gap: 5px;
+  }
+  .product-card .btn-ver:hover {
+    background: #3a3a3a; transform: translateY(-1px); color: #fff;
+  }
+  .product-card .btn-fav {
+    width: 38px; height: 38px; border-radius: 10px;
+    border: 1.5px solid #f0f0f0; background: #fff; color: #ccc;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1rem; transition: all 0.2s; cursor: pointer; flex-shrink: 0;
+  }
+  .product-card .btn-fav:hover { border-color: #e74c3c; color: #e74c3c; transform: scale(1.1); }
+  .product-card .btn-fav.active { border-color: #e74c3c; color: #e74c3c; background: #fff5f5; }
+  @keyframes cardIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .row .col-6:nth-child(1) .product-card { animation-delay: 0.05s; }
+  .row .col-6:nth-child(2) .product-card { animation-delay: 0.10s; }
+  .row .col-6:nth-child(3) .product-card { animation-delay: 0.15s; }
+  .row .col-6:nth-child(4) .product-card { animation-delay: 0.20s; }
+  .row .col-6:nth-child(5) .product-card { animation-delay: 0.25s; }
+  .row .col-6:nth-child(6) .product-card { animation-delay: 0.30s; }
+  .row .col-6:nth-child(7) .product-card { animation-delay: 0.35s; }
+  .row .col-6:nth-child(8) .product-card { animation-delay: 0.40s; }
+</style>
+
+<div class="row g-4">
+  @forelse ($productos as $p)
+    @php $esFavorito = in_array($p->ID_Producto, $favoritos ?? []); @endphp
+    <div class="col-6 col-md-4 col-lg-3">
+      <div class="product-card shadow-sm">
+
+        <div class="img-wrap">
+          @if($p->Imagen)
+            <img src="http://localhost:8080/uploads/productos/{{ $p->Imagen }}" alt="{{ $p->Nombre }}">
+          @else
+            <div class="no-img"><i class="bi bi-image"></i></div>
+          @endif
+
+          @if($p->Stock <= 0)
+            <span class="stock-badge bg-danger text-white">Agotado</span>
+          @elseif($p->Stock <= 5)
+            <span class="stock-badge bg-warning text-dark">Últimas {{ $p->Stock }}</span>
+          @endif
+        </div>
+
+        <div class="card-body">
+          <div class="card-title">{{ $p->Nombre }}</div>
+          <div class="price">${{ number_format($p->Precio, 0, ',', '.') }}</div>
+
+          <div class="actions">
+            <a href="{{ route('producto.detalle', $p->ID_Producto) }}" class="btn-ver">
+              <i class="bi bi-eye"></i> Ver
+            </a>
+
+            <form action="{{ route('cliente.listaDeseos.agregar') }}" method="POST">
               @csrf
               <input type="hidden" name="ID_Producto" value="{{ $p->ID_Producto }}">
-              <button type="submit" class="btn btn-outline-danger btn-sm">
-                <i class="bi bi-heart"></i> Añadir a Favoritos
+              <button type="submit" class="btn-fav {{ $esFavorito ? 'active' : '' }}" title="Añadir a favoritos">
+                <i class="bi {{ $esFavorito ? 'bi-heart-fill' : 'bi-heart' }}"></i>
               </button>
             </form>
           </div>
         </div>
+
       </div>
-    @empty
-      <p class="text-center text-muted">No hay productos disponibles</p>
-    @endforelse
-  </div>
+    </div>
+  @empty
+    <div class="col-12 text-center py-5 text-muted">
+      <i class="bi bi-box-open fs-1 d-block mb-3"></i>
+      No hay productos disponibles
+    </div>
+  @endforelse
+</div>
 
 </main>
 

@@ -35,14 +35,12 @@ class ProductoController
 }
 public function todosProductos(Request $request)
 {
-
     $productos = $this->productoService->obtenerProductos()['data'] ?? []; 
     $categorias = $this->productoService->obtenerCategorias()['data'] ?? [];
    
     $categoriasConProductos = $this->productoService->obtenerCategoriasConProductos(); 
 
     if (isset($categoriasConProductos['error'])) {
- 
         $categoriasConProductos = []; 
     }
    
@@ -72,24 +70,37 @@ public function todosProductos(Request $request)
         return $p;
     })->values()->all();
 
+    // ── Filtro por categoría (ya existía) ──────────────────────────
     $categoriaId = (string) $request->query('categoria'); 
 
-if (!empty($categoriaId)) {
-    $productosFinales = collect($productosFinales)
-        ->filter(function($p) use ($categoriaId) {
-            
-            $categoriasProductoString = array_map('strval', $p['categorias']); 
-            
-            return in_array($categoriaId, $categoriasProductoString);
-        })
-        ->values()
-        ->all();
-}
+    if (!empty($categoriaId)) {
+        $productosFinales = collect($productosFinales)
+            ->filter(function($p) use ($categoriaId) {
+                $categoriasProductoString = array_map('strval', $p['categorias']); 
+                return in_array($categoriaId, $categoriasProductoString);
+            })
+            ->values()
+            ->all();
+    }
+$categoriasDropdown = DB::table('categoria')->get();
+    // ── Filtro por género (NUEVO) ───────────────────────────────────
+    $genero = $request->query('genero');
 
+    if (!empty($genero)) {
+        $productosFinales = collect($productosFinales)
+            ->filter(function($p) use ($genero) {
+                return isset($p['genero']) && strtolower($p['genero']) === strtolower($genero);
+            })
+            ->values()
+            ->all();
+    }
+dd(DB::select('SELECT ID_Categoria, Nombre FROM categoria'));
     return view('Usuario.panel.todosProductos', [
-        'productos' => $productosFinales,
-        'categorias' => $categorias,
+        'productos'   => $productosFinales,
+        'categorias'  => $categorias,
         'categoriaId' => $categoriaId,
+        'genero'      => $genero ?? null,
+        'categoriasDropdown' => DB::table('categoria')->get(),
     ]);
 }
 
@@ -217,20 +228,35 @@ public function actualizarCategoria(Request $request, $id)
 public function listar(Request $request)
 {
     $response = Http::get('http://localhost:8080/productos/filtrar', [
-
-        'nombre' => $request->query('nombre'),
-        'idCategoria' => $request->query('idCategoria') 
-
+        'nombre'      => $request->query('nombre'),
+        'idCategoria' => $request->query('idCategoria')
     ]);
 
-    $productos = $response->json();
+    $productos = collect($response->json())->map(function($p) {
+    return (object) [
+        'ID_Producto' => $p['id_Producto'] ?? null,
+        'Nombre'      => $p['nombre']      ?? null,
+        'Descripcion' => $p['descripcion'] ?? null,
+        'Precio'      => $p['precio']      ?? null,
+        'Stock'       => $p['stock']       ?? null,
+        'Imagen'      => $p['imagen']      ?? null,
+        'Estado'      => $p['estado']      ?? null,
+        'Genero'      => $p['genero']      ?? null,
+    ];
+});
 
-    $categorias = $this->productoService->obtenerCategorias()['data'] ?? [];
-
+    $categorias = DB::select('SELECT ID_Categoria as idCategoria, Nombre as nombre FROM categoria');
     $categoriaId = $request->query('categoria');
+    $genero      = $request->query('genero');
 
-    return view('Usuario.panel.todosProductos',
-        compact('productos','categorias','categoriaId')
+    $idCliente = session('id_cliente');
+    $favoritos = DB::table('lista_deseos')
+                   ->where('ID_Cliente', $idCliente)
+                   ->pluck('ID_Producto')
+                   ->toArray();
+
+    return view('Usuario.ListaDeseos.productos',
+        compact('productos', 'categorias', 'categoriaId', 'genero', 'favoritos')
     );
 }
 
@@ -299,7 +325,8 @@ public function eliminarCategoria($id)
             $request->stock,
             $request->id_Proveedor,
             $request->file("imagen"),
-            $request->estado
+            $request->estado,
+            $request->genero
         );
 
         if (!$resultado["success"]) {
@@ -339,10 +366,11 @@ public function eliminarCategoria($id)
     $request->descripcion,
     $request->precio,
     $request->stock,
-    $request->id_Proveedor,
+    $request->idProveedor,
     $request->file("imagen"),
     $request->imagen_actual,   
-    $request->estado
+    $request->estado,
+    $request->genero
 );
 
     if (isset($resultado['error'])) {

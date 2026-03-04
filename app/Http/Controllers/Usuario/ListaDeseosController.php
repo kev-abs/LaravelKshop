@@ -3,20 +3,86 @@
 namespace App\Http\Controllers\Usuario;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\DB;
+
 
 class ListaDeseosController
 {
-    public function productos()
-    {
-        if (session('rol') !== 'cliente') {
-            return redirect()->route('login');
-        }
-
-        $productos = DB::table('producto')->get();
-
-        return view('Usuario.ListaDeseos.productos', compact('productos'));
+ public function productos(Request $request)
+{
+    if (session('rol') !== 'cliente') {
+        return redirect()->route('login');
     }
+
+    $genero      = $request->query('genero');
+    $categoriaId = $request->query('categoria');
+
+    $query = DB::table('producto as p');
+
+    if (!empty($genero)) {
+        $query->where('p.Genero', $genero);
+    }
+
+    if (!empty($categoriaId)) {
+        $query->join('producto_categoria as pc', 'p.ID_Producto', '=', 'pc.ID_Producto')
+              ->where('pc.ID_Categoria', $categoriaId);
+    }
+
+    $productos = $query->select('p.*')->get();
+
+    // Categorías directo de la BD
+  $categorias = DB::select('SELECT ID_Categoria as idCategoria, Nombre as nombre FROM categoria');
+
+    $idCliente = session('id_cliente');
+    $favoritos = DB::table('lista_deseos')
+                   ->where('ID_Cliente', $idCliente)
+                   ->pluck('ID_Producto')
+                   ->toArray();
+
+  return view('Usuario.ListaDeseos.productos', compact(
+    'productos',
+    'genero',
+    'favoritos',
+    'categorias',
+    'categoriaId'
+
+    ));
+}
+public function listar(Request $request)
+{
+    $response = Http::get('http://localhost:8080/productos/filtrar', [
+        'nombre'      => $request->query('nombre'),
+        'idCategoria' => $request->query('idCategoria')
+    ]);
+
+    $productos = collect($response->json())->map(function($p) {
+        return (object) [
+            'ID_Producto' => $p['id_Producto'] ?? null,
+            'Nombre'      => $p['nombre']      ?? null,
+            'Descripcion' => $p['descripcion'] ?? null,
+            'Precio'      => $p['precio']      ?? null,
+            'Stock'       => $p['stock']       ?? null,
+            'Imagen'      => $p['imagen']      ?? null,
+            'Estado'      => $p['estado']      ?? null,
+            'Genero'      => $p['genero']      ?? null,
+        ];
+    });
+
+    $categorias  = DB::select('SELECT ID_Categoria as idCategoria, Nombre as nombre FROM categoria');
+    $categoriaId = $request->query('categoria');
+    $genero      = $request->query('genero');
+
+    $idCliente = session('id_cliente');
+    $favoritos = DB::table('lista_deseos')
+                   ->where('ID_Cliente', $idCliente)
+                   ->pluck('ID_Producto')
+                   ->toArray();
+
+    return view('Usuario.ListaDeseos.productos',
+        compact('productos', 'categorias', 'categoriaId', 'genero', 'favoritos')
+    );
+}
     public function index()
     {
         if (session('rol') !== 'cliente') {
