@@ -2,7 +2,6 @@
 
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
-use Throwable;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Database\QueryException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;

@@ -51,6 +51,9 @@ Route::get('/reset-password', [AuthController::class, 'mostrarFormularioReset'])
 Route::post('/reset-password', [AuthController::class, 'actualizarContrasena'])->name('password.update');
 Route::post('/reenviar-codigo', [AuthController::class, 'enviarCodigo'])->name('password.enviar.codigo');
 Route::match(['get','post'],'/usuarios/cliente/registrar',[UsuariosController::class,'registrarCliente'])->name('cliente.registrar');
+Route::get('/usuarios/cliente/verificar', [UsuariosController::class, 'mostrarVistaVerificacion'])->name('registro.verificar');
+Route::post('/usuarios/cliente/verificar/confirmar',[UsuariosController::class, 'confirmarCodigoRegistro'])->name('registro.confirmar');
+Route::post('/usuarios/cliente/verificar/reenviar',[UsuariosController::class, 'reenviarCodigoRegistro'])->name('registro.reenviar');
 
 
 Route::middleware(['verificar.sesion'])->group(function () {
