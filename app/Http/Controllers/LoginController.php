@@ -39,6 +39,13 @@ class LoginController
 
         if ($cliente && Hash::check($contrasena, $cliente->Contrasena)) {
 
+            // BLOQUEAR SI NO ESTÁ VERIFICADO
+            if ((int)$cliente->verificado === 0) {
+                Session::put('correo_verificacion', $cliente->Correo);
+
+                return redirect()->route('registro.verificar')->with('info', 'Tu cuenta no está verificada. Ingresa el código enviado a tu correo.');
+            }
+
             DB::table('historial_login')->insert([
                 'ID_Cliente' => $cliente->ID_Cliente,
                 'Fecha_Login' => now()
@@ -49,7 +56,6 @@ class LoginController
             Session::put('rol', 'cliente');
 
             return redirect()->route('panel.cliente');
-
         }
 
         // --- 2. Empleado ---
