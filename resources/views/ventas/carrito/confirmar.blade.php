@@ -7,7 +7,7 @@
 
         <div class="row">
 
-            {{-- 🛍 RESUMEN PRODUCTOS --}}
+            {{-- RESUMEN PRODUCTOS --}}
             <div class="col-md-7">
 
                 @foreach ($carrito['items'] as $item)
