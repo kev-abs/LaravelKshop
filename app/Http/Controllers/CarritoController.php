@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
+use App\Http\Controllers\CuponController;
 
 class CarritoController
 {
@@ -15,7 +16,15 @@ class CarritoController
 
         $carrito = $response->json();
 
-        return view('ventas.carrito.index', compact('carrito'));
+        // Traer cupones disponibles usando directamente el controlador
+        $cuponController = new CuponController();
+        $cuponesResponse = $cuponController->apiMisCupones($idCliente);
+        $cupones = $cuponesResponse->getData(true);
+
+        if (!is_array($cupones)) { $cupones = []; }
+
+
+        return view('ventas.carrito.index', compact('carrito', 'cupones'));
     }
 
     public function store(Request $request)
@@ -70,15 +79,30 @@ public function checkout(Request $request)
     return redirect()->route('checkout.historial');
 }
 
-    public function confirmar()
+    public function confirmar(Request $request)
 {
     $idCliente = session('id_cliente');
 
     $response = Http::get("http://localhost:8080/carrito/$idCliente");
-
     $carrito = $response->json();
 
-    return view('ventas.carrito.confirmar', compact('carrito'));
+    // Cupón y descuento
+    $idCupon = $request->query('idCuponClienteAsignado'); 
+    $descuento = $request->query('descuento', 0); // default 0
+
+    // Aplicar descuento al subtotal
+    if($descuento > 0){
+        $carrito['subtotal'] = $carrito['subtotal'] * (1 - $descuento/100);
+
+        // También puedes guardar el subtotal descontado en cada item si quieres mostrarlo
+        foreach($carrito['items'] as &$item){
+            $item['total'] = $item['total'] * (1 - $descuento/100);
+        }
+    }
+
+    $idCupon = $request->query('idCuponClienteAsignado'); // cupón pasado desde index.blade.php
+
+    return view('ventas.carrito.confirmar', compact('carrito', 'idCupon', 'descuento'));
 }
 
 }

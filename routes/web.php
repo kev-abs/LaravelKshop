@@ -19,6 +19,7 @@ use App\Http\Controllers\ClienteCuponController;
 use App\Http\Controllers\CarritoController;
 use App\Http\Controllers\ProveedorController;
 
+
 Route::get('/ventas', function () {return view('ventas.ventas');})->name('ventas.ventas');
 
 
@@ -101,7 +102,7 @@ Route::middleware(['verificar.sesion'])->group(function () {
 
     Route::get('/cupon/asignar', [CuponController::class, 'asignarVista'])->name('cupon.asignarVista');
     Route::post('/cupon/asignar', [CuponController::class, 'asignar'])->name('cupon.asignar');
-
+    Route::get('/usuario/mis-cupones/{idCliente}', [CuponController::class, 'apiMisCupones']);  
 
     //GESTION DE INVENTARIO
     Route::get('/inventario/productos', [ProductoController::class, 'inventario'])->name('productos.inventario');

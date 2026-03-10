@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 USE Carbon\Carbon;
 
+
 class CuponController
 {
     public function index()
@@ -185,4 +186,24 @@ class CuponController
         return redirect()->back()->with('success', 'Cupón asignado correctamente');
     }
     
+    // ================= API: OBTENER CUPONES ACTIVOS =================
+    public function apiMisCupones($idCliente)
+    {
+        $cupones = DB::table('cupon_cliente as cc')
+            ->join('cupon as c', 'c.id_cupon', '=', 'cc.ID_Cupon')
+            ->select(
+                'cc.ID_Cliente',
+                'c.codigo',
+                'c.descuento',
+                'c.fecha_expiracion',
+                'cc.Usado',
+                'cc.ID_Cupon as ID_CuponClienteAsignado'
+            )
+            ->where('cc.ID_Cliente', $idCliente)
+            ->where('cc.Usado', 0) // Solo cupones habilitados
+            ->where('c.fecha_expiracion', '>=', Carbon::today())
+            ->get();
+
+        return response()->json($cupones);
+    }
 }
