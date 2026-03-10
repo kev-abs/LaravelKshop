@@ -6,6 +6,10 @@ $vendorDir = dirname(__DIR__);
 $baseDir = dirname($vendorDir);
 
 return array(
+    'App\\Exceptions\\ContrasenaInvalidaException' => $baseDir . '/app/Exceptions/ContrasenaInvalidaException.php',
+    'App\\Exceptions\\CorreoInvalidoException' => $baseDir . '/app/Exceptions/CorreoInvalidoException.php',
+    'App\\Exceptions\\DocumentoInvalidoException' => $baseDir . '/app/Exceptions/DocumentoInvalidoException.php',
+    'App\\Exceptions\\TelefonoInvalidoException' => $baseDir . '/app/Exceptions/TelefonoInvalidoException.php',
     'App\\Http\\Controllers\\AdminEnvioController' => $baseDir . '/app/Http/Controllers/AdminEnvioController.php',
     'App\\Http\\Controllers\\AdminPedidoController' => $baseDir . '/app/Http/Controllers/AdminPedidoController.php',
     'App\\Http\\Controllers\\AuthController' => $baseDir . '/app/Http/Controllers/AuthController.php',
@@ -6670,6 +6674,7 @@ return array(
     'Termwind\\ValueObjects\\Styles' => $vendorDir . '/nunomaduro/termwind/src/ValueObjects/Styles.php',
     'Tests\\Feature\\CuponTest' => $baseDir . '/tests/Feature/CuponTest.php',
     'Tests\\Feature\\ExampleTest' => $baseDir . '/tests/Feature/ExampleTest.php',
+    'Tests\\Feature\\ProductoTest' => $baseDir . '/tests/Feature/ProductoTest.php',
     'Tests\\Feature\\ProveedorTest' => $baseDir . '/tests/Feature/ProveedorTest.php',
     'Tests\\TestCase' => $baseDir . '/tests/TestCase.php',
     'Tests\\Unit\\ExampleTest' => $baseDir . '/tests/Unit/ExampleTest.php',

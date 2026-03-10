@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+USE Carbon\Carbon;
 
 class CuponController
 {
@@ -88,36 +89,32 @@ class CuponController
 
         return back()->with('mensaje', 'Cupón eliminado correctamente');
     }
+
+    // ================= MIS CUPONES =================
     public function misCupones()
     {
-        // --- Valor temporal para demo ---
-        $clienteId = 1;
         $clienteId = session('id_cliente');
-        dd($clienteId);
         if (!$clienteId) {
             return redirect()->route('login'); 
         }
 
-        
-        $cupones = DB::table('cupon_cliente')
-            ->leftJoin('cupon', 'cupon.id_cupon', '=', 'cupon_cliente.ID_Cupon')
+        $cupones = DB::table('cupon_cliente as cc')
+            ->join('cupon as c', 'c.id_cupon', '=', 'cc.ID_Cupon')
             ->select(
-                'cupon_cliente.ID_Cliente',
-                'cupon_cliente.ID_Cupon',
-                'cupon.codigo',
-                'cupon.descuento',
-                'cupon_cliente.Usado'
+                'cc.ID_Cliente',
+                'c.codigo',
+                'c.descuento',
+                'c.fecha_expiracion',
+                'cc.Usado',
+                'cc.ID_Cupon as ID_CuponClienteAsignado' // Alias para redimir
             )
-            ->where('cupon_cliente.ID_Cliente', $clienteId)
+            ->where('cc.ID_Cliente', $clienteId)
             ->get();
-        
-             // Para verificar que sí estamos obteniendo cupones
-            if ($cupones->isEmpty()) {
-                dd("No se encontraron cupones para el cliente con ID: $clienteId");
-            }
-        return view('usuario.cupones.index', compact('cupones'));
+
+        return view('Usuario.cliente.cupones.index', compact('cupones'));
     }
 
+    // ================= REDIMIR CUPON =================
     public function redimir(Request $request)
     {
         $clienteId = $request->input('ID_Cliente'); 
@@ -135,4 +132,57 @@ class CuponController
         return redirect()->back()->with('success', '¡Cupón redimido correctamente!');
     }
 
+    // ========================= VALIDAR CUPON (API) =========================
+    public function validarCupon($codigo, $idCliente)
+    {
+        $cupon = DB::table('cupon as c')
+            ->join('cupon_cliente as cc', 'c.id_cupon', '=', 'cc.ID_Cupon')
+            ->where('c.codigo', $codigo)
+            ->where('cc.ID_Cliente', $idCliente)
+            ->where('cc.Usado', 0)
+            ->where('c.estado', 1)
+            ->where('c.fecha_expiracion', '>=', Carbon::today())
+            ->select('c.*')
+            ->first();
+
+        return $cupon; // null si no existe
+    }
+
+    // ========================= USAR CUPON (API) =========================
+    public function usarCupon($idCliente, $idCupon)
+    {
+        DB::table('cupon_cliente')
+            ->where('ID_Cliente', $idCliente)
+            ->where('ID_Cupon', $idCupon)
+            ->update(['Usado' => 1]);
+    }
+
+    // ========================= ASIGNAR CUPON (API) =========================
+    public function asignarCupon($idCliente, $idCupon)
+    {
+        DB::table('cupon_cliente')->insert([
+            'ID_Cliente' => $idCliente,
+            'ID_Cupon'   => $idCupon,
+            'Usado'      => 0
+        ]);
+    }
+
+    // ========================= VISTA ASIGNAR =========================
+    public function asignarVista()
+    {
+        // Traer clientes y cupones válidos
+        $clientes = DB::table('cliente')->get(); // ID_Cliente y Nombre están garantizados
+        $cupones  = DB::table('cupon')
+                    ->where('estado', 1)
+                    ->where('fecha_expiracion', '>=', Carbon::today())
+                    ->get();
+
+        return view('cupon.asignar', compact('clientes', 'cupones'));
+    }
+    public function asignar(Request $request)
+    {
+        $this->asignarCupon($request->ID_Cliente, $request->ID_Cupon);
+        return redirect()->back()->with('success', 'Cupón asignado correctamente');
+    }
+    
 }

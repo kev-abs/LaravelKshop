@@ -659,6 +659,10 @@ class ComposerStaticInitf893d55e652bfc8f543e6e2e81bcebb9
     );
 
     public static $classMap = array (
+        'App\\Exceptions\\ContrasenaInvalidaException' => __DIR__ . '/../..' . '/app/Exceptions/ContrasenaInvalidaException.php',
+        'App\\Exceptions\\CorreoInvalidoException' => __DIR__ . '/../..' . '/app/Exceptions/CorreoInvalidoException.php',
+        'App\\Exceptions\\DocumentoInvalidoException' => __DIR__ . '/../..' . '/app/Exceptions/DocumentoInvalidoException.php',
+        'App\\Exceptions\\TelefonoInvalidoException' => __DIR__ . '/../..' . '/app/Exceptions/TelefonoInvalidoException.php',
         'App\\Http\\Controllers\\AdminEnvioController' => __DIR__ . '/../..' . '/app/Http/Controllers/AdminEnvioController.php',
         'App\\Http\\Controllers\\AdminPedidoController' => __DIR__ . '/../..' . '/app/Http/Controllers/AdminPedidoController.php',
         'App\\Http\\Controllers\\AuthController' => __DIR__ . '/../..' . '/app/Http/Controllers/AuthController.php',
@@ -7323,6 +7327,7 @@ class ComposerStaticInitf893d55e652bfc8f543e6e2e81bcebb9
         'Termwind\\ValueObjects\\Styles' => __DIR__ . '/..' . '/nunomaduro/termwind/src/ValueObjects/Styles.php',
         'Tests\\Feature\\CuponTest' => __DIR__ . '/../..' . '/tests/Feature/CuponTest.php',
         'Tests\\Feature\\ExampleTest' => __DIR__ . '/../..' . '/tests/Feature/ExampleTest.php',
+        'Tests\\Feature\\ProductoTest' => __DIR__ . '/../..' . '/tests/Feature/ProductoTest.php',
         'Tests\\Feature\\ProveedorTest' => __DIR__ . '/../..' . '/tests/Feature/ProveedorTest.php',
         'Tests\\TestCase' => __DIR__ . '/../..' . '/tests/TestCase.php',
         'Tests\\Unit\\ExampleTest' => __DIR__ . '/../..' . '/tests/Unit/ExampleTest.php',
