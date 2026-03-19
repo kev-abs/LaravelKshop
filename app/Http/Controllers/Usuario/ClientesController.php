@@ -13,13 +13,8 @@ use App\Exceptions\TelefonoInvalidoException;
 use App\Exceptions\CorreoInvalidoException;
 use App\Exceptions\ContrasenaInvalidaException;
 
-class UsuariosController
+class ClientesController
 {
-
-    public function index() {
-        return view('Usuario.usuarioVista');
-    }
-
     // -------- CLIENTES --------
     public function consultarClientes(Request $request)
     {
@@ -379,79 +374,4 @@ class UsuariosController
 
         return view('panelcliente.historial', compact('pedidos'));
     }
-
-
-    // -------- EMPLEADOS --------
-
-    public function consultarEmpleados()
-    {
-        $empleados = DB::table('Empleado')->get();
-        return view('Usuario.Empleado.EmpleadoConsultarVista', compact('empleados'));
-    }
-
-    public function agregarEmpleado(Request $request)
-    {
-        $mensaje = "";
-
-        if ($request->isMethod('post')) {
-            $data = $request->only(['nombre', 'cargo', 'correo', 'contrasena', 'estado']);
-
-            if ($data['nombre'] && $data['cargo'] && $data['correo'] && $data['contrasena']) {
-
-                DB::table('Empleado')->insert([
-                    'Nombre' => $data['nombre'],
-                    'Cargo' => $data['cargo'],
-                    'Correo' => $data['correo'],
-                    'Contrasena' => bcrypt($data['contrasena']),
-                    'Estado' => $data['estado'],
-                ]);
-
-                $mensaje = "Empleado agregado correctamente.";
-            } else {
-                $mensaje = "Campos obligatorios vacíos.";
-            }
-        }
-
-        return view('Usuario.Empleado.EmpleadoAgregarVista', compact('mensaje'));
-    }
-
-    public function editarEliminarEmpleado(Request $request)
-    {
-        $mensaje = "";
-
-        if ($request->isMethod('post')) {
-
-            if ($request->accion === "actualizar") {
-
-                DB::table('Empleado')
-                    ->where('ID_Empleado', $request->id_Empleado)
-                    ->update([
-                        'Nombre' => $request->nombre,
-                        'Cargo' => $request->cargo,
-                        'Correo' => $request->correo,
-                        'Contrasena' => $request->contrasena ? bcrypt($request->contrasena) : DB::raw('Contrasena'),
-                        'Estado' => $request->estado
-                    ]);
-
-                $mensaje = "Empleado actualizado correctamente.";
-            }
-
-            if ($request->accion === "eliminar") {
-
-                DB::table('Empleado')
-                    ->where('ID_Empleado', $request->id_Empleado)
-                    ->delete();
-
-                $mensaje = "Empleado eliminado.";
-            }
-        }
-
-        return view('Usuario.Empleado.EmpleadoActualizarEliminarVista', compact('mensaje'));
-    }
-    public function buscarEmpleado($id)
-    {
-        $empleado = DB::table('empleado')->where('ID_Empleado', $id)->first();
-        return response()->json($empleado);
-    }
-    
 }

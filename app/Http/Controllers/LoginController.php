@@ -16,7 +16,7 @@ class LoginController
     {
         Session::flush(); // elimina toda la sesión
 
-        $request->session()->invalidate(); 
+        $request->session()->invalidate();
         $request->session()->regenerateToken();
 
         return redirect()->route('login');
@@ -66,7 +66,7 @@ class LoginController
         if ($empleado) {
             $cargo = strtolower(trim($empleado->Cargo));
 
-            // vendedor 
+            // vendedor
             if ($cargo === "vendedor") {
                 if (Hash::check($contrasena, $empleado->Contrasena)) {
 
@@ -74,13 +74,19 @@ class LoginController
                     Session::put('nombre', $empleado->Nombre);
                     Session::put('rol', 'vendedor');
 
-                    return redirect()->route('panel.vendedor');
+                    return redirect()->route('panel.admin');
                 }
             }
 
-        
             if ($cargo === "administrador") {
-                if (Hash::check($contrasena, $empleado->Contrasena)) {
+                
+                $passwordDB = $empleado->Contrasena;
+
+                if (str_starts_with($passwordDB, '$2a$')) {
+                    $passwordDB = preg_replace('/^\$2a\$/', '$2y$', $passwordDB);
+                }
+
+                if (Hash::check($contrasena, $passwordDB)) {
 
                     Session::put('id_empleado', $empleado->ID_Empleado);
                     Session::put('nombre', $empleado->Nombre);

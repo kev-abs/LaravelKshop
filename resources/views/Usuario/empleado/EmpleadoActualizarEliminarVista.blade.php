@@ -57,65 +57,69 @@
                         <?= $mensaje ?>
                     </div>
                 @endif
-                    <form method="POST" class="row g-3">
+                @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul class="mb-0">
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
+                @if(session('success'))
+                    <div class="alert alert-success">
+                        {{ session('success') }}
+                    </div>
+                @endif
+                    <form method="POST" action="{{ route('empleados.editar') }}" class="row g-3">
                         @csrf
-                        <input type="hidden" name="accion" value="actualizar">
+
+                        <!-- ID oculto -->
+                        <input type="hidden" name="id_Empleado" value="{{ $empleado->ID_Empleado }}">
 
                         <div class="col-md-6">
-                            <input type="number" name="id_Empleado" class="form-control rounded-2" placeholder="ID Empleado" required>
+                            <input type="text" name="nombre" class="form-control rounded-2"
+                                value="{{ $empleado->Nombre }}" placeholder="Nombre" required>
                         </div>
+
                         <div class="col-md-6">
-                            <input type="text" name="nombre" class="form-control rounded-2" placeholder="Nombre" required>
+                            <select name="cargo" class="form-select rounded-2" required>
+                                <option value="Administrador" {{ $empleado->Cargo == 'Administrador' ? 'selected' : '' }}>Administrador</option>
+                                <option value="Vendedor" {{ $empleado->Cargo == 'Vendedor' ? 'selected' : '' }}>Vendedor</option>
+                            </select>
                         </div>
+
                         <div class="col-md-6">
-                            <input type="password" name="contrasena" class="form-control rounded-2" placeholder="Contraseña" required>
+                            <input type="email" name="correo" class="form-control rounded-2"
+                                value="{{ $empleado->Correo }}" placeholder="Correo" required>
                         </div>
+
                         <div class="col-md-6">
-                            <input type="text" name="cargo" class="form-control rounded-2" placeholder="Cargo" required>
+                            <input type="password" name="contrasena" class="form-control rounded-2"
+                                placeholder="Nueva contraseña (opcional)">
                         </div>
+
                         <div class="col-md-6">
-                            <input type="email" name="correo" class="form-control rounded-2" placeholder="Correo" required>
+                            <input type="text" name="telefono" class="form-control rounded-2"
+                                value="{{ $empleado->Telefono }}" placeholder="Teléfono" required>
                         </div>
+
                         <div class="col-md-6">
-                            <select name="estado" class="form-select rounded-2">
-                                <option value="" disabled selected>Estado</option>
-                                <option value="Activo">Activo</option>
-                                <option value="Inactivo">Inactivo</option>
-                                <option value="Suspendido">Suspendido</option>
+                            <input type="text" name="documento" class="form-control rounded-2"
+                                value="{{ $empleado->Documento }}" placeholder="Documento" required>
+                        </div>
+
+                        <div class="col-md-6">
+                            <select name="estado" class="form-select rounded-2" required>
+                                <option value="Activo" {{ $empleado->Estado == 'Activo' ? 'selected' : '' }}>Activo</option>
+                                <option value="Inactivo" {{ $empleado->Estado == 'Inactivo' ? 'selected' : '' }}>Inactivo</option>
+                                <option value="Suspendido" {{ $empleado->Estado == 'Suspendido' ? 'selected' : '' }}>Suspendido</option>
                             </select>
                         </div>
 
                         <div class="col-12 text-center mt-3">
                             <button type="submit" class="btn btn-dark btn-lg w-75">
-                                <i class="bi bi-check-circle me-2"></i>Actualizar
-                            </button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-
-        <!-- Eliminar Empleado -->
-        <div class="col-12 col-lg-6">
-            <div class="card shadow-sm border-0 rounded-3">
-                <div class="card-header bg-danger text-white text-center rounded-top py-2">
-                <h5 class="mb-0">
-                    <i class="bi bi-trash-fill me-2"></i>Eliminar Empleado
-                </h5>
-                </div>
-                <div class="card-body bg-light p-4">
-                <p class="text-muted small mb-4">
-                    Elimina empleados que ya no formen parte del equipo para mantener tu registro limpio y eficiente.
-                </p>
-                    <form method="POST" class="row g-3 justify-content-center">
-                        @csrf
-                        <input type="hidden" name="accion" value="eliminar">
-                        <div class="col-8 col-md-6">
-                            <input type="number" name="id_Empleado" class="form-control rounded-2" placeholder="ID Empleado" required>
-                        </div>
-                        <div class="col-12 text-center mt-3">
-                            <button type="submit" class="btn btn-outline-danger btn-lg w-75">
-                                <i class="bi bi-x-circle me-2"></i>Eliminar
+                                <i class="bi bi-check-circle me-2"></i>Actualizar Empleado
                             </button>
                         </div>
                     </form>
@@ -159,6 +163,8 @@ $(document).ready(function () {
                     $("input[name='nombre']").val("");
                     $("input[name='contrasena']").val("");
                     $("input[name='cargo']").val("");
+                    $("input[name='telefono']").val("");
+                    $("input[name='documento']").val("");
                     $("input[name='correo']").val("");
                     $("select[name='estado']").val("");
                     return;
@@ -167,6 +173,8 @@ $(document).ready(function () {
                 $("input[name='nombre']").val(data.Nombre);
                 $("input[name='contrasena']").val("");
                 $("input[name='cargo']").val(data.Cargo);
+                $("input[name='telefono']").val(data.Telefono);
+                $("input[name='documento']").val(data.Documento);
                 $("input[name='correo']").val(data.Correo);
                 $("select[name='estado']").val(data.Estado);
             }
