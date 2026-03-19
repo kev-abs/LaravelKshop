@@ -115,13 +115,6 @@
 
 </form>
 
-
-    <div class="text-center mt-5">
-        <a href="{{ route('productos.index') }}" class="btn btn-outline-secondary btn-lg w-50">
-            <i class="bi bi-arrow-left me-2"></i>Volver
-        </a>
-    </div>
-
 </main>
 
 <footer class="bg-dark text-white text-center py-4 mt-auto">
