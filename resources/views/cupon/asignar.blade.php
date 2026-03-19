@@ -10,13 +10,11 @@
 <header class="bg-white sticky-top py-3 border-bottom shadow-sm">
     <div class="container d-flex justify-content-between align-items-center">
         <div class="d-flex align-items-center">
-            <img src="{{ asset('img/logo_kshopsinfondo.png') }}" width="83" class="me-2">
-            <span class="fw-bold text-dark">K-SHOP | Asignar Cupón</span>
+           <a class="d-flex align-items-center text-decoration-none" href="{{ route('cupon.inventarioVista') }}">
+          <img src="{{asset('img/logo_kshopsinfondo.png')}}" alt="Logo K-Shop" width="83" class="me-2">
+          <span class="fw-bold text-dark">K-SHOP | Asignar Cupón</span>
+        </a>
         </div>
-        <form method="POST" action="{{ route('logout') }}">
-            @csrf
-            <button type="submit" class="btn btn-outline-dark">Cerrar sesión</button>
-        </form>
     </div>
 </header>
 
@@ -56,12 +54,6 @@
 
         <button type="submit" class="btn btn-success">Asignar Cupón</button>
     </form>
-
-    <div class="text-center mt-4">
-        <a href="{{ route('cupon.inventarioVista') }}" class="btn btn-outline-dark w-50">
-            <i class="bi bi-arrow-left me-2"></i> Volver al Inventario
-        </a>
-    </div>
 </div>
 
 <footer class="bg-dark text-white text-center py-4 mt-auto">
