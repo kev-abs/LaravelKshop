@@ -34,7 +34,7 @@
     <div class="text-center mb-5">
         <h2 class="fw-bold mb-2">Gestión de Clientes</h2>
         <p class="text-muted">
-            Mantén la información de tus clientes siempre actualizada. 
+            Mantén la información de tus clientes siempre actualizada.
             Actualiza datos importantes o elimina registros antiguos de forma segura y rápida.
         </p>
     </div>

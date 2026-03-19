@@ -136,8 +136,12 @@ Route::middleware(['verificar.sesion'])->group(function () {
 
 
     Route::get('/usuarios/empleados', [UsuariosController::class, 'consultarEmpleados'])->name('empleados.consultar');
+    Route::get('/usuarios/empleado/editar/{id}',[UsuariosController::class, 'mostrarEditarEmpleado'])->name('empleado.editar.form');
     Route::match(['get','post'], '/usuarios/empleados/agregar', [UsuariosController::class, 'agregarEmpleado'])->name('empleados.agregar');
-    Route::match(['get','post'], '/usuarios/empleados/editar', [UsuariosController::class, 'editarEliminarEmpleado'])->name('empleados.editar');
+    Route::get('/verificar-empleado', function () {return view('Usuario.Empleado.EmpleadoVerificar');})->name('empleados.verificarVista');
+    Route::post('/verificar-empleado', [UsuariosController::class, 'verificarEmpleado'])->name('empleados.verificar');
+    Route::match(['get','post'], '/usuarios/empleados/editar', [UsuariosController::class, 'actualizarEmpleado'])->name('empleados.editar');
+    Route::delete('/usuarios/empleados/eliminar/{id}',[UsuariosController::class, 'eliminarEmpleado'])->name('empleado.eliminar');
     Route::get('/usuarios/empleados/buscar/{id}', [UsuariosController::class, 'buscarEmpleado']);
 
     Route::get('/cliente/lista-deseos', [ListaDeseosController::class, 'index'])->name('cliente.listaDeseos');
