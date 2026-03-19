@@ -90,6 +90,18 @@
                         </select>
                     </div>
 
+                    <div class="mb-3">
+    <label class="form-label">Género</label>
+    <select name="genero" class="form-select" required>
+        <option value="">Seleccione...</option>
+        <option value="hombre"      {{ ($producto['genero'] ?? '') === 'hombre'      ? 'selected' : '' }}>Hombre</option>
+        <option value="mujer"       {{ ($producto['genero'] ?? '') === 'mujer'       ? 'selected' : '' }}>Mujer</option>
+        <option value="accesorios"  {{ ($producto['genero'] ?? '') === 'accesorios'  ? 'selected' : '' }}>Accesorios</option>
+        <option value="unisex"      {{ ($producto['genero'] ?? '') === 'unisex'      ? 'selected' : '' }}>Unisex</option>
+    </select>
+</div>
+
+
 
                     {{-- IMAGEN ACTUAL --}}
                     @if(!empty($producto['imagen']))
@@ -115,13 +127,7 @@
                     <button type="submit" class="btn btn-primary w-100 mt-3">Actualizar Producto</button>
                 </form>
             </div>
-        </div>
-
-        <div class="text-center mt-4">
-            <a href="{{ route('productos.index') }}" class="btn btn-outline-secondary btn-lg w-50">
-                <i class="bi bi-arrow-left me-2"></i>Volver
-            </a>
-        </div>
+</div>
     </div>
 </main>
 

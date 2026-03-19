@@ -87,29 +87,126 @@ placeholder="Buscar productos..."
     <div class="alert alert-success">{{ session('success') }}</div>
   @endif
 
-  @if(count($deseos) > 0)
-    <div class="row row-cols-2 row-cols-md-3 row-cols-lg-4 g-4 justify-content-center">
-      @foreach($deseos as $d)
-        <div class="col">
-          <div class="card h-100 shadow-sm border-0">
-            <img src="http://localhost:8080/uploads/productos/{{ $d->Imagen ?? '' }}" class="card-img-top" style="height:180px; object-fit:cover">
-            <div class="card-body text-center">
-              <h6 class="fw-bold">{{ $d->Nombre ?? '' }}</h6>
-              <p class="fw-bold mb-2">$ {{ number_format($d->Precio ?? 0, 0, ',', '.') }}</p>
+  <style>
+  .wish-card {
+    border: none;
+    border-radius: 16px;
+    overflow: hidden;
+    transition: transform 0.3s cubic-bezier(.4,0,.2,1), box-shadow 0.3s cubic-bezier(.4,0,.2,1);
+    background: #fff;
+    animation: cardIn 0.5s cubic-bezier(.4,0,.2,1) both;
+  }
+  .wish-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.12);
+  }
+  .wish-card .img-wrap {
+    position: relative;
+    overflow: hidden;
+    height: 220px;
+    background: #f8f8f8;
+  }
+  .wish-card .img-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s cubic-bezier(.4,0,.2,1);
+  }
+  .wish-card:hover .img-wrap img { transform: scale(1.07); }
+  .wish-card .card-body { padding: 1.1rem 1.2rem 1.3rem; }
+  .wish-card .card-title {
+    font-size: 0.95rem; font-weight: 700; color: #1a1a1a;
+    margin-bottom: 4px; white-space: nowrap;
+    overflow: hidden; text-overflow: ellipsis;
+  }
+  .wish-card .price {
+    font-size: 1.15rem; font-weight: 800;
+    color: #212529; margin-bottom: 14px;
+  }
+  .wish-card .actions { display: flex; gap: 8px; }
+  .wish-card .btn-carrito {
+    flex: 1; background: #212529; color: #fff;
+    border: none; border-radius: 10px; padding: 8px 0;
+    font-size: 0.8rem; font-weight: 600;
+    transition: background 0.2s, transform 0.2s;
+    display: flex; align-items: center;
+    justify-content: center; gap: 5px; cursor: pointer;
+  }
+  .wish-card .btn-carrito:hover {
+    background: #3a3a3a; transform: translateY(-1px);
+  }
+  .wish-card .btn-eliminar {
+    width: 38px; height: 38px; border-radius: 10px;
+    border: 1.5px solid #fde8e8; background: #fff5f5;
+    color: #e74c3c; display: flex; align-items: center;
+    justify-content: center; font-size: 1rem;
+    transition: all 0.2s; cursor: pointer; flex-shrink: 0;
+  }
+  .wish-card .btn-eliminar:hover {
+    background: #e74c3c; color: #fff; transform: scale(1.1);
+  }
+  @keyframes cardIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .row .col:nth-child(1) .wish-card { animation-delay: 0.05s; }
+  .row .col:nth-child(2) .wish-card { animation-delay: 0.10s; }
+  .row .col:nth-child(3) .wish-card { animation-delay: 0.15s; }
+  .row .col:nth-child(4) .wish-card { animation-delay: 0.20s; }
+  .row .col:nth-child(5) .wish-card { animation-delay: 0.25s; }
+  .row .col:nth-child(6) .wish-card { animation-delay: 0.30s; }
+  .row .col:nth-child(7) .wish-card { animation-delay: 0.35s; }
+  .row .col:nth-child(8) .wish-card { animation-delay: 0.40s; }
+</style>
+
+@if(count($deseos) > 0)
+  <div class="row row-cols-2 row-cols-md-3 row-cols-lg-4 g-4 justify-content-center">
+    @foreach($deseos as $d)
+      <div class="col">
+        <div class="wish-card shadow-sm">
+
+          <div class="img-wrap">
+            @if($d->Imagen)
+              <img src="http://localhost:8080/uploads/productos/{{ $d->Imagen }}" alt="{{ $d->Nombre }}">
+            @else
+              <div style="display:flex;align-items:center;justify-content:center;height:100%;color:#ccc;font-size:2.5rem;">
+                <i class="bi bi-image"></i>
+              </div>
+            @endif
+          </div>
+
+          <div class="card-body">
+            <div class="card-title">{{ $d->Nombre }}</div>
+            <div class="price">${{ number_format($d->Precio ?? 0, 0, ',', '.') }}</div>
+
+            <div class="actions">
+              {{-- Botón añadir al carrito --}}
+              <button class="btn-carrito">
+                <i class="bi bi-cart-plus"></i> Añadir al carrito
+              </button>
+
+              {{-- Botón eliminar de favoritos --}}
               <form action="{{ route('cliente.listaDeseos.eliminar', $d->ID_Lista) }}" method="POST">
                 @csrf
                 @method('DELETE')
-                <button class="btn btn-outline-danger btn-sm">Eliminar</button>
+                <button type="submit" class="btn-eliminar" title="Eliminar de favoritos">
+                  <i class="bi bi-trash"></i>
+                </button>
               </form>
             </div>
           </div>
-        </div>
-      @endforeach
-    </div>
 
-  @else
-    <div class="alert alert-warning text-center">No tienes productos en tu lista de deseos.</div>
-  @endif
+        </div>
+      </div>
+    @endforeach
+  </div>
+
+@else
+  <div class="text-center py-5 text-muted">
+    <i class="bi bi-heart fs-1 d-block mb-3"></i>
+    No tienes productos en tu lista de deseos.
+  </div>
+@endif
 </main>
 
 <footer class="bg-dark text-white text-center py-4 mt-auto">

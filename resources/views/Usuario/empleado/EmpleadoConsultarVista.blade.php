@@ -58,6 +58,8 @@
                                 <th>Cargo</th>
                                 <th>Correo</th>
                                 <th>Contraseña</th>
+                                <th>Telefono</th>
+                                <th>Documento</th>
                                 <th>Estado</th>
                                 <th>Fecha Contratación</th>
                                 <th>Acciones</th>
@@ -71,6 +73,8 @@
                                     <td>{{ $e->Cargo }}</td>
                                     <td>{{ $e->Correo }}</td>
                                     <td>{{ $e->Contrasena }}</td>
+                                    <td>{{ $e->Telefono }}</td>
+                                    <td>{{ $e->Documento }}</td>
 
                                     <td>
                                         @if($e->Estado === 'Activo')
@@ -84,10 +88,59 @@
 
                                     <td>{{ $e->Fecha_Contratacion }}</td>
 
-                                    <td>
-                                        <a href="{{ route('empleados.editar', $e->ID_Empleado) }}" class="btn btn-sm btn-outline-dark">
+                                    <td class="d-flex justify-content-center gap-2">
+
+                                        <!-- EDITAR -->
+                                        <a href="{{ route('empleado.editar.form', $e->ID_Empleado) }}"
+                                        class="btn btn-sm btn-outline-primary">
                                             <i class="bi bi-pencil-square"></i>
                                         </a>
+
+                                        <!-- ELIMINAR -->
+                                        <form action="{{ route('empleado.eliminar', $e->ID_Empleado) }}"
+                                            method="POST">
+                                            @csrf
+                                            @method('DELETE')
+
+                                            <button type="button"
+                                                    class="btn btn-sm btn-outline-danger"
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#modalEliminar{{ $e->ID_Empleado }}">
+                                                <i class="bi bi-trash-fill"></i>
+                                            </button>
+
+                                            <!-- Modal -->
+                                            <div class="modal fade" id="modalEliminar{{ $e->ID_Empleado }}" tabindex="-1">
+                                                <div class="modal-dialog modal-dialog-centered">
+                                                    <div class="modal-content rounded-4 shadow">
+
+                                                        <div class="modal-body text-center p-4">
+                                                            <i class="bi bi-exclamation-circle text-danger fs-1 mb-3"></i>
+                                                            <h5 class="fw-bold">¿Eliminar empleado?</h5>
+                                                            <p class="text-muted small">
+                                                                Esta acción no se puede deshacer.
+                                                            </p>
+
+                                                            <div class="d-flex justify-content-center gap-3 mt-3">
+                                                                <button type="submit" class="btn btn-danger px-4">
+                                                                    Sí, eliminar
+                                                                </button>
+
+                                                                <button type="button"
+                                                                        class="btn btn-outline-secondary px-4"
+                                                                        data-bs-dismiss="modal">
+                                                                    Cancelar
+                                                                </button>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </form>
+
+
                                     </td>
 
                                 </tr>
@@ -117,6 +170,6 @@
         <p class="mb-0">&copy; 2025 Tienda K-Shop - Todos los derechos reservados</p>
     </div>
 </footer>
-
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

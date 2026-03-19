@@ -208,6 +208,23 @@ class Administrador
         </div>
       </div>
 
+      <!--Configuración-->
+      <div class="accordion-item bg-dark text-white">
+        <h2 class="accordion-header">
+          <button class="accordion-button collapsed bg-dark text-white"
+                  type="button" data-bs-toggle="collapse" data-bs-target="#modConfigurar">
+            Configuración
+          </button>
+        </h2>
+        <div id="modConfigurar" class="accordion-collapse collapse" data-bs-parent="#accordionModulos">
+          <div class="accordion-body">
+            <ul class="list-unstyled">
+              <li><a href="{{ route('empleado.configuracion') }}" class="text-white text-decoration-none">➤ Configurar cuenta </a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
 </div>
