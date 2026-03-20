@@ -5,6 +5,7 @@
   <title>Inicio - KSHOP</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+  <link href="{{ asset('css/index.css') }}" rel="stylesheet">
   <link href="{{ asset('css/iniciostyle.css') }}" rel="stylesheet">
 </head>
 <body>
@@ -29,158 +30,168 @@
   </div>
 </header>
 
-<!-- ====================== CARRUSEL ====================== -->
-<div id="carouselKshop" class="carousel slide carousel-fade" data-bs-ride="carousel">
-  <div class="carousel-indicators">
-    <button type="button" data-bs-target="#carouselKshop" data-bs-slide-to="0" class="active"></button>
-    <button type="button" data-bs-target="#carouselKshop" data-bs-slide-to="1"></button>
-    <button type="button" data-bs-target="#carouselKshop" data-bs-slide-to="2"></button>
-    <button type="button" data-bs-target="#carouselKshop" data-bs-slide-to="3"></button>
+<!-- ================= HERO ================= -->
+<section class="position-relative text-white" style="height:90vh;">
+  <img src="{{ asset('img/unnamed.jpg') }}"
+       class="w-100 h-100 position-absolute top-0 start-0"
+       style="object-fit:cover; filter:brightness(0.45);">
+
+  <div class="container position-relative h-100 d-flex flex-column justify-content-center">
+    <h1 class="display-2 fw-bold">K-SHOP</h1>
+    <p class="fs-4 text-light">Moda urbana y estilo contemporáneo</p>
+
+    <a href="{{ route('productos.vistaCatalogo') }}"
+       class="btn btn-light text-dark px-5 py-2 rounded-pill mt-3 fw-semibold">
+       <i class="bi bi-bag me-2"></i> Explorar colección
+    </a>
   </div>
+</section>
 
-  <div class="carousel-inner">
-    <div class="carousel-item active" data-bs-interval="5000">
-      <a href="{{ route('productos.vistaCatalogo') }}">
-        <img src="{{ asset('img/logokshop.png') }}" class="d-block w-100" alt="K-SHOP">
-      </a>
-      <div class="carousel-caption">
-        <h1 class="text-light">K-SHOP</h1>
-        <p>Estilo sin límites para todos los gustos</p>
-        <a href="{{ route('productos.vistaCatalogo') }}" class="btn btn-light fw-semibold text-dark px-4 py-2 mt-3">Explorar colección</a>
-      </div>
-    </div>
+<!-- ================= CATEGORÍAS (MEJORADAS) ================= -->
+<section class="py-5">
+  <div class="container">
+    <h2 class="text-center fw-bold mb-5">CATEGORÍAS</h2>
 
-    <div class="carousel-item" data-bs-interval="5000">
-      <a href="{{ route('productos.vistaCatalogo') }}">
-        <img src="{{ asset('img/ropa caballero.jpeg') }}" class="d-block w-100" alt="Moda masculina">
-      </a>
-      <div class="carousel-caption">
-        <h1 class="text-light">Moda Masculina</h1>
-        <p>Elegancia, comodidad y estilo</p>
-        <a href="{{ route('productos.vistaCatalogo') }}" class="btn btn-light fw-semibold text-dark px-4 py-2 mt-3">Descubrir</a>
-      </div>
-    </div>
-  
-
-    <div class="carousel-item" data-bs-interval="5000">
-      <a href="{{ route('productos.vistaCatalogo') }}">
-        <img src="{{ asset('img/ropa dama.jpg') }}" class="d-block w-100" alt="Moda femenina">
-      </a>
-      <div class="carousel-caption">
-        <h1 class="text-light">Moda Femenina</h1>
-        <p>Tu actitud, tu tendencia, tu esencia</p>
-        <a href="{{ route('productos.vistaCatalogo') }}" class="btn btn-light fw-semibold px-4 py-2 mt-3">Ver estilos</a>
-      </div>
-    </div>
-
-  <div class="carousel-item" data-bs-interval="5000">
-      <a href="{{ route('productos.vistaCatalogo') }}">
-        <img src="{{ asset('img/accesorios.png') }}" class="d-block w-100" alt="Accesorios">
-      </a>
-      <div class="carousel-caption">
-        <h1 class="text-light">Accesorios</h1>
-        <p>Un toque que mejorara tu estilo</p>
-        <a href="{{ route('productos.vistaCatalogo') }}" class="btn btn-light fw-semibold text-dark px-4 py-2 mt-3">Descubrir</a>
-      </div>
-    </div>
-  </div>
-
-  <button class="carousel-control-prev" type="button" data-bs-target="#carouselKshop" data-bs-slide="prev">
-    <span class="carousel-control-prev-icon"></span>
-  </button>
-  <button class="carousel-control-next" type="button" data-bs-target="#carouselKshop" data-bs-slide="next">
-    <span class="carousel-control-next-icon"></span>
-  </button>
-</div>
-
-<!-- ====================== CATEGORÍAS ====================== -->
-<section class="py-5 bg-light">
-  <div class="container text-center">
-    <h2 class="fw-bold mb-5 text-uppercase text-dark">Explora por categoría</h2>
     <div class="row g-4">
-      @foreach([
-        ['img' => 'img/RopaDama2.png', 'titulo' => 'Moda femenina'],
-        ['img' => 'img/RopaCaballero2.png', 'titulo' => 'Moda masculina'],
-        ['img' => 'img/gafascard.jpg', 'titulo' => 'Accesorios'],
+
+      @foreach ([
+        ['nombre'=>'Accesorios','icon'=>'bi-watch'],
+        ['nombre'=>'Camisetas','icon'=>'bi-person'],
+        ['nombre'=>'Chaquetas','icon'=>'bi-cloud'],
+        ['nombre'=>'Pantalones','icon'=>'bi-columns'],
+        ['nombre'=>'Calzado','icon'=>'bi-shop']
       ] as $cat)
-      <div class="col-md-4">
-        <div class="category-card shadow-sm">
-          <a href="{{ route('productos.vistaCatalogo') }}">
-            <img src="{{ asset($cat['img']) }}" alt="{{ $cat['titulo'] }}">
-            <div class="category-overlay">
-              <h4>{{ $cat['titulo'] }}</h4>
-            </div>
-          </a>
-        </div>
+
+      <div class="col-6 col-md-4 col-lg">
+        <a href="{{ route('productos.vistaCatalogo') }}" class="text-decoration-none">
+          <div class="category-card text-center p-5 h-100 border rounded">
+
+            <i class="bi {{ $cat['icon'] }} fs-1 mb-3"></i>
+            <h5 class="fw-bold">{{ $cat['nombre'] }}</h5>
+
+          </div>
+        </a>
       </div>
+
       @endforeach
+
     </div>
   </div>
 </section>
 
-<!-- ================== PRODUCTOS DESTACADOS ====================== -->
-<section class="py-5">
+<!-- ================= MAS VISTOS (GRANDE) ================= -->
+<section class="py-5 bg-light">
   <div class="container">
-    <h2 class="fw-bold text-center mb-5 text-uppercase">Lo más nuevo</h2>
+    <h2 class="text-center fw-bold mb-5">MÁS VISTOS</h2>
 
-    @if(isset($productosDestacados) && $productosDestacados->isNotEmpty())
-    <div class="row g-4 justify-content-center">
-      @foreach ($productosDestacados as $p)
-        <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-          <div class="card h-100 shadow-sm border-0 text-center">
+    <div class="row g-4">
 
-            {{-- IMAGEN --}}
-            @if(!empty($p->Imagen))
-              <a href="{{ route('producto.detalle', $p->ID_Producto) }}">
-                <img src="http://localhost:8080/uploads/productos/{{ $p->Imagen }}"
-                    class="card-img-top"
-                    style="height:230px; object-fit:cover;"
-                    alt="{{ $p->Nombre }}">
-              </a>
-            @else
-              <img src="{{ asset('img/no-image.png') }}"
-                  class="card-img-top"
-                  style="height:230px; object-fit:cover;"
-                  alt="Sin imagen">
-            @endif
+      @foreach ($productos->take(5) as $index => $p)
 
-            <div class="card-body d-flex flex-column justify-content-between">
-              <div>
-                <h6 class="fw-bold">{{ $p->Nombre }}</h6>
+      <div class="{{ $index == 0 ? 'col-lg-6 col-md-12' : 'col-md-6 col-lg-3' }}">
 
-                <p class="text-muted small">
-                  {{ $p->Descripcion ?? 'Sin descripción disponible' }}
-                </p>
+        <div class="position-relative overflow-hidden featured-card">
 
-                <p class="fw-bold mb-1">
-                  ${{ number_format($p->Precio, 0, ',', '.') }}
-                </p>
+          <img src="http://localhost:8080/uploads/productos/{{ $p->Imagen }}"
+              class="w-100"
+              object-fit:cover;>
 
-                @if($p->Stock <= 0)
-                  <span class="text-danger fw-bold small">Agotado</span>
-                @else
-                  <span class="text-success fw-semibold small">
-                    Stock: {{ $p->Stock }}
-                  </span>
-                @endif
-              </div>
+          <div class="overlay d-flex flex-column justify-content-end p-3">
+            <h6 class="fw-bold text-white">{{ $p->Nombre }}</h6>
 
-              <div class="mt-3">
-                <a href="{{ route('producto.detalle', $p->ID_Producto) }}"
-                  class="btn btn-dark btn-sm rounded-pill w-100">
-                  <i class="bi bi-eye me-1"></i> Ver producto
-                </a>
-              </div>
-            </div>
-
+            <a href="{{ route('producto.detalle', $p->ID_Producto) }}"
+               class="btn btn-light btn-sm rounded-pill mt-2">
+               <i class="bi bi-eye"></i> Ver
+            </a>
           </div>
-        </div>
-        @endforeach
-    </div>
-    @else
-      <p class="text-center text-muted">No hay productos destacados aún.</p>
-    @endif
 
+        </div>
+
+      </div>
+
+      @endforeach
+
+    </div>
+  </div>
+</section>
+
+<!-- ================= CINTA PRO ================= -->
+<section class="py-5">
+  <div class="container-fluid">
+    <h2 class="text-center fw-bold mb-4">NUEVAS TENDENCIAS</h2>
+
+    <div class="scroll-container d-flex gap-4 px-4">
+
+      @foreach ($productos as $p)
+      <div class="card border-0 flex-shrink-0 product-card shadow-sm" style="width:260px;">
+
+        <div class="overflow-hidden">
+          <img src="http://localhost:8080/uploads/productos/{{ $p->Imagen }}"
+               class="w-100"
+               style="height:260px; object-fit:cover;">
+        </div>
+
+        <div class="card-body text-center">
+          <h6 class="fw-semibold">{{ $p->Nombre }}</h6>
+          <p class="fw-bold mb-0">${{ number_format($p->Precio, 0, ',', '.') }}</p>
+        </div>
+
+      </div>
+      @endforeach
+
+    </div>
+  </div>
+</section>
+
+<!-- ================= RECOMENDADOS ================= -->
+<section class="py-5 bg-light">
+  <div class="container">
+    <h2 class="text-center fw-bold mb-5">RECOMENDADOS</h2>
+
+    <div class="row g-4">
+
+      @foreach ($productos2 as $p)
+      <div class="col-6 col-md-4 col-lg-3">
+
+        <div class="card border-0 product-card h-100">
+
+          <div class="position-relative overflow-hidden">
+            <img src="http://localhost:8080/uploads/productos/{{ $p->Imagen }}"
+                 class="w-100"
+                 style="height:300px; object-fit:cover;">
+
+            <div class="overlay d-flex justify-content-center align-items-center">
+              <a href="{{ route('producto.detalle', $p->ID_Producto) }}"
+                 class="btn btn-light rounded-pill">
+                 <i class="bi bi-eye"></i> Ver producto
+              </a>
+            </div>
+          </div>
+
+          <div class="card-body text-center">
+            <h6 class="fw-bold">{{ $p->Nombre }}</h6>
+            <p class="fw-bold">${{ number_format($p->Precio, 0, ',', '.') }}</p>
+          </div>
+
+        </div>
+
+      </div>
+      @endforeach
+
+    </div>
+  </div>
+</section>
+
+<!-- ================= BANNER ================= -->
+<section class="py-5 text-white text-center" style="background:black;">
+  <div class="container">
+    <h2 class="fw-bold">K-SHOP STREETWEAR</h2>
+    <p>Colecciones diseñadas para destacar</p>
+
+    <a href="{{ route('productos.vistaCatalogo') }}"
+       class="btn btn-light text-dark rounded-pill px-4">
+       <i class="bi bi-arrow-right"></i> Ir al catálogo
+    </a>
   </div>
 </section>
 <!-- ====================== NEWSLETTER ====================== -->
@@ -223,7 +234,6 @@
         <div class="d-flex gap-3 justify-content-center justify-content-md-start">
           <a href="#" class="text-white fs-5"><i class="bi bi-facebook"></i></a>
           <a href="#" class="text-white fs-5"><i class="bi bi-instagram"></i></a>
-          <a href="#" class="text-white fs-5"><i class="bi bi-whatsapp"></i></a>
         </div>
       </div>
     </div>
