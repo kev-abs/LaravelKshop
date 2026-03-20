@@ -10,7 +10,7 @@
 
                 <div>
                     <h5 class="fw-semibold mb-1">
-                        Pedido #{{ $pedido['idPedido'] }}
+                        Pedido {{ $pedido['idPedido'] }}
                     </h5>
 
                     <div class="text-muted small">
@@ -98,13 +98,15 @@
 
                     {{-- IMAGEN --}}
                     <div style="width: 100px;">
-                        @if (!empty($item['imagen']))
-                            <img src="http://localhost:8080/uploads/productos/{{ $item['imagen'] }}"
-                                class="img-fluid rounded-3" style="height:100px; object-fit:cover;">
-                        @else
-                            <img src="{{ asset('img/no-image.png') }}" class="img-fluid rounded-3"
-                                style="height:100px; object-fit:cover;">
-                        @endif
+                                            {{-- IMAGEN --}}
+                            @if (!empty($item['imagen']))
+                                <img src="http://localhost:8080/uploads/productos/{{ $item['imagen'] }}"
+                                    class="img-fluid rounded" style="height:90px; object-fit:cover;"
+                                    alt="{{ $item['nombre'] }}">
+                            @else
+                                <img src="{{ asset('img/no-image.png') }}" class="img-fluid rounded"
+                                    style="height:90px; object-fit:cover;" alt="Sin imagen">
+                            @endif
                     </div>
 
                     {{-- INFO --}}
@@ -146,16 +148,6 @@
         @endif
 
 
-
-
-
-
-        {{-- BOTÓN VOLVER --}}
-        <div class="mt-4">
-            <a href="{{ route('checkout.historial') }}" class="btn btn-outline-dark btn-sm rounded-pill px-4">
-                ← Volver a mis pedidos
-            </a>
-        </div>
 
     </div>
 @endsection

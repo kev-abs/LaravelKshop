@@ -83,11 +83,6 @@
         @endif
 
 
-        <div class="mt-4">
-            <a href="{{ route('panel.cliente') }}" class="btn btn-outline-dark btn-sm rounded-pill px-4">
-                ← Volver
-            </a>
-        </div>
 
     </div>
 
