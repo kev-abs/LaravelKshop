@@ -1,0 +1,47 @@
+/* CATEGORÍAS */
+.category-card {
+  transition: 0.3s;
+}
+.category-card:hover {
+  background: black;
+  color: white;
+  transform: translateY(-5px);
+}
+
+/* FEATURED */
+.featured-card {
+  transition: 0.4s;
+}
+.featured-card:hover {
+  transform: scale(1.02);
+}
+
+/* OVERLAY */
+.overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
+  opacity: 0;
+  transition: 0.3s;
+}
+.featured-card:hover .overlay,
+.product-card:hover .overlay {
+  opacity: 1;
+}
+
+/* SCROLL */
+.scroll-container {
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.scroll-container::-webkit-scrollbar {
+  display: none;
+}
+
+/* PRODUCTOS */
+.product-card {
+  transition: 0.3s;
+}
+.product-card:hover {
+  transform: translateY(-10px);
+}

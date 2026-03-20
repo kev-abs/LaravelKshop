@@ -23,6 +23,26 @@ use App\Http\Controllers\Usuario\EmpleadosController;
 
 Route::get('/ventas', function () {return view('ventas.ventas');})->name('ventas.ventas');
 
+
+Route::get('/productos', [ProductoController::class, 'index'])->name('productos.index');
+Route::get('/productos/catalogovista', [ProductoController::class, 'vistacatalogo'])->name('productos.vistaCatalogo');
+Route::get('/productos/categorizar', [ProductoController::class, 'categorizar'])->name('productos.categorizar');
+Route::post('/productos/categorizar', [ProductoController::class, 'guardarCategorias'])->name('productos.categorizar.guardar');
+Route::post( '/productos/asignar-categoria', [ProductoController::class, 'asignarCategoria'])->name('productos.asignarCategoria');
+Route::get('/api/producto-categoria/por-categoria',  [ProductoCategoriaController::class, 'porCategoria'])->name('productos.productosPorCategoria');
+Route::get('/producto/{id}', [ProductoController::class, 'detalle'])->name('producto.detalle');
+Route::get('/producto/{id}', [ProductoController::class, 'detalle']) ->name('producto.detalle');
+Route::get('/productos/buscar', [ProductoController::class, 'listar'])->name('productos.buscar');
+Route::get('/productos/editar-categoria/{id}', [ProductoController::class, 'editarCategoria'])->name('productos.editarCategoria');
+Route::post('/productos/editar-categoria/{id}', [ProductoController::class, 'actualizarCategoria'])->name('productos.actualizarCategoria');
+Route::get('/categorias', [ProductoController::class, 'gestionCategorias'])->name('categorias.index');
+Route::get('/productos/buscar', [ProductoController::class, 'listar'])->name('productos.buscar');
+Route::get('/producto/{id}', [ProductoController::class, 'detalle'])->name('producto.detalle');
+
+
+Route::get('/tienda', [ProductoController::class, 'catalogo'])->name('tienda.catalogo');
+
+
 Route::get('/', [InicioController::class, 'index'])->name('inicio');
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 Route::get('/login', [LoginController::class, 'mostrarFormulario'])->name('login');
@@ -32,10 +52,10 @@ Route::post('/forgot-password', [AuthController::class, 'enviarCodigo'])->name('
 Route::get('/reset-password', [AuthController::class, 'mostrarFormularioReset'])->name('password.reset');
 Route::post('/reset-password', [AuthController::class, 'actualizarContrasena'])->name('password.update');
 Route::post('/reenviar-codigo', [AuthController::class, 'enviarCodigo'])->name('password.enviar.codigo');
-Route::match(['get','post'],'/usuarios/cliente/registrar',[UsuariosController::class,'registrarCliente'])->name('cliente.registrar');
-Route::get('/usuarios/cliente/verificar', [UsuariosController::class, 'mostrarVistaVerificacion'])->name('registro.verificar');
-Route::post('/usuarios/cliente/verificar/confirmar',[UsuariosController::class, 'confirmarCodigoRegistro'])->name('registro.confirmar');
-Route::post('/usuarios/cliente/verificar/reenviar',[UsuariosController::class, 'reenviarCodigoRegistro'])->name('registro.reenviar');
+Route::match(['get','post'],'/usuarios/cliente/registrar',[ClientesController::class,'registrarCliente'])->name('cliente.registrar');
+Route::get('/usuarios/cliente/verificar', [ClientesController::class, 'mostrarVistaVerificacion'])->name('registro.verificar');
+Route::post('/usuarios/cliente/verificar/confirmar',[ClientesController::class, 'confirmarCodigoRegistro'])->name('registro.confirmar');
+Route::post('/usuarios/cliente/verificar/reenviar',[ClientesController::class, 'reenviarCodigoRegistro'])->name('registro.reenviar');
 
 
 Route::middleware(['verificar.sesion'])->group(function () {
@@ -70,21 +90,6 @@ Route::middleware(['verificar.sesion'])->group(function () {
     Route::post( '/productos/asignar-categoria', [ProductoController::class, 'asignarCategoria'])->name('productos.asignarCategoria');
     Route::get('/productos/catalogo', [ProductoController::class, 'catalogo'])->name('productos.catalogo');
 
-Route::get('/tienda', [ProductoController::class, 'catalogo'])->name('tienda.catalogo');
-Route::get('/productos', [ProductoController::class, 'index'])->name('productos.index');
-Route::get('/productos/catalogovista', [ProductoController::class, 'vistacatalogo'])->name('productos.vistaCatalogo');
-Route::get('/productos/categorizar', [ProductoController::class, 'categorizar'])->name('productos.categorizar');
-Route::post('/productos/categorizar', [ProductoController::class, 'guardarCategorias'])->name('productos.categorizar.guardar');
-Route::post( '/productos/asignar-categoria', [ProductoController::class, 'asignarCategoria'])->name('productos.asignarCategoria');
-Route::get('/api/producto-categoria/por-categoria',  [ProductoCategoriaController::class, 'porCategoria'])->name('productos.productosPorCategoria');
-Route::get('/producto/{id}', [ProductoController::class, 'detalle'])->name('producto.detalle');
-Route::get('/producto/{id}', [ProductoController::class, 'detalle']) ->name('producto.detalle');
-Route::get('/productos/buscar', [ProductoController::class, 'listar'])->name('productos.buscar');
-Route::get('/productos/editar-categoria/{id}', [ProductoController::class, 'editarCategoria'])->name('productos.editarCategoria');
-Route::post('/productos/editar-categoria/{id}', [ProductoController::class, 'actualizarCategoria'])->name('productos.actualizarCategoria');
-Route::get('/categorias', [ProductoController::class, 'gestionCategorias'])->name('categorias.index');
-Route::get('/productos/buscar', [ProductoController::class, 'listar'])->name('productos.buscar');
-Route::get('/producto/{id}', [ProductoController::class, 'detalle'])->name('producto.detalle');
 
     //Cupones
     Route::get('/cupon', [CuponController::class, 'index'])->name('cupon.inventarioVista');
@@ -101,7 +106,6 @@ Route::get('/producto/{id}', [ProductoController::class, 'detalle'])->name('prod
     Route::get('/inventario/productos', [ProductoController::class, 'inventario'])->name('productos.inventario');
 
     //Rutas modulo de Usuarios
-    Route::get('/usuarios/clientes/panelCliente', [UsuariosController::class, 'panelCliente'])->name('panelCliente');
     Route::get('/panel/admin', [AdminController::class, 'panel'])->name('panel.admin');
 
     Route::get('/usuarioVista', [EmpleadosController::class,'index'])->name('usuariosVista');
@@ -191,6 +195,5 @@ Route::get('/producto/{id}', [ProductoController::class, 'detalle'])->name('prod
         Route::get('/admin/envios', [AdminEnvioController::class, 'index'])->name('ventas.envios');
         Route::get('/admin/pedidos/{id}', [AdminPedidoController::class, 'detalle'])->name('admin.pedido.detalle');
         Route::post('/admin/pedido/{id}/estado', [AdminPedidoController::class, 'cambiarEstado'])->name('admin.pedido.estado');
-        Route::put('/admin/envios/{id}', [AdminEnvioController::class, 'cambiarEstado'])->name('admin.envio.estado');
     });
 });
