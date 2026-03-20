@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use App\Http\Controllers\CuponController;
+use Illuminate\Support\Facades\DB;
 
 class CarritoController
 {
@@ -69,14 +70,50 @@ public function checkout(Request $request)
 {
     $idCliente = session('id_cliente');
 
-    Http::post("http://localhost:8080/carrito/checkout", [
-        "idCliente" => $idCliente,
-        "direccion" => $request->direccion,
-        "ciudad" => $request->ciudad,
-        "metodoPago" => $request->metodoPago
+    $idCuponCliente      = $request->input('idCuponClienteAsignado'); // este es ID_Cupon
+    $descuento           = 0;
+    $porcentajeDescuento = 0;
+
+    if ($idCuponCliente) {
+        $cupon = DB::table('cupon_cliente')
+            ->join('cupon', 'cupon_cliente.ID_Cupon', '=', 'cupon.ID_Cupon')
+            ->where('cupon_cliente.ID_Cupon', $idCuponCliente)    // ← corregido
+            ->where('cupon_cliente.ID_Cliente', session('id_cliente'))
+            ->where('cupon_cliente.Usado', 0)
+            ->select('cupon.descuento')
+            ->first();
+
+        if ($cupon) {
+            $porcentajeDescuento = $cupon->descuento;
+
+            $carritoResponse = Http::get("http://localhost:8080/carrito/$idCliente");
+            $carrito         = $carritoResponse->json();
+            $subtotal        = $carrito['subtotal'];
+            $descuento       = $subtotal * $porcentajeDescuento / 100;
+
+            // Marcar como usado
+            DB::table('cupon_cliente')
+                ->where('ID_Cupon', $idCuponCliente)        // ← corregido
+                ->where('ID_Cliente', session('id_cliente'))
+                ->update(['Usado' => 1]);
+        }
+    }
+
+       $response = Http::asJson()->post("http://localhost:8080/carrito/checkout", [
+        "idCliente"           => $idCliente,
+        "direccion"           => $request->direccion,
+        "ciudad"              => $request->ciudad,
+        "metodoPago"          => $request->metodoPago,
+        "descuento"           => $descuento,
+        "porcentajeDescuento" => (int) $porcentajeDescuento
     ]);
 
+    if (!$response->successful()) {
+        return back()->with('error', 'Error: ' . $response->body());
+    }
+
     return redirect()->route('checkout.historial');
+
 }
 
     public function confirmar(Request $request)
@@ -104,5 +141,38 @@ public function checkout(Request $request)
 
     return view('ventas.carrito.confirmar', compact('carrito', 'idCupon', 'descuento'));
 }
+
+// Aplicar cupón a la sesión
+public function aplicarCupon(Request $request)
+{
+    $cuponCliente = DB::table('cupon_cliente')
+        ->join('cupones', 'cupon_cliente.ID_Cupon', '=', 'cupones.ID_Cupon')
+        ->where('cupon_cliente.ID_Cupon', $request->ID_CuponCliente)  // ← ID_Cupon
+        ->where('cupon_cliente.ID_Cliente', session('id_cliente'))
+        ->where('cupon_cliente.Usado', 0)
+        ->select('cupon_cliente.ID_Cupon', 'cupones.codigo', 'cupones.descuento')
+        ->first();
+
+    if (!$cuponCliente) {
+        return back()->with('error', 'Cupón no válido.');
+    }
+
+    session([
+        'cupon_aplicado'  => true,
+        'cupon_id'        => $cuponCliente->ID_Cupon,   // ← ID_Cupon
+        'cupon_codigo'    => $cuponCliente->codigo,
+        'cupon_descuento' => $cuponCliente->descuento,
+    ]);
+
+    return back()->with('success', 'Cupón aplicado correctamente.');
+}
+
+// Quitar cupón de la sesión
+public function quitarCupon()
+{
+    session()->forget(['cupon_aplicado', 'cupon_id', 'cupon_codigo', 'cupon_descuento']);
+    return back();
+}
+
 
 }

@@ -1,6 +1,10 @@
 @extends('ventas.layouts.app')
 
 @section('content')
+
+    @if(session('error'))
+        <div class="alert alert-danger">{{ session('error') }}</div>
+    @endif
     <div class="container my-5" style="max-width: 1100px;">
 
         <h5 class="mb-4 fw-semibold">Confirmar compra</h5>
@@ -76,14 +80,14 @@
                     {{-- SECCIÓN CUPONES --}}
                     <div class="mb-3">
                         <label class="form-label small fw-medium">
-                            🎟️ ¿Tienes un cupón?
+                             ¿Tienes un cupón?
                         </label>
 
                         @if(!empty($idCupon) && $descuento > 0)
                             {{-- CUPÓN ACTIVO --}}
                             <div class="alert alert-success py-2 px-3 d-flex justify-content-between align-items-center mb-0">
                                 <span class="small">
-                                    ✅ Cupón aplicado — <strong>{{ $descuento }}% OFF</strong>
+                                    Cupón aplicado — <strong>{{ $descuento }}% OFF</strong>
                                 </span>
                                 <a href="{{ route('carrito.cupon.quitar') }}" class="btn btn-sm btn-outline-danger py-0">✕</a>
                             </div>

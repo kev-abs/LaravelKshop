@@ -92,7 +92,7 @@ return Application::configure(basePath: dirname(__DIR__))
             return response()->json([
                 'success' => false,
                 'type' => 'DATABASE_ERROR',
-                'message' => 'Error en la base de datos',
+                'message' => $e->getMessage(),
             ], 500);
 
         });
