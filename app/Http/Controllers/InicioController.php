@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Models\producto\Producto;
+use Illuminate\Support\Facades\DB;
 
 class InicioController
 {
@@ -11,6 +12,20 @@ class InicioController
             ->take(8)
             ->get();
 
-        return view('inicio', compact('productosDestacados'));
+        $productos = DB::table('producto')
+            ->inRandomOrder()
+            ->take(20)
+            ->get();
+
+        $productos2 = DB::table('producto')
+            ->inRandomOrder()
+            ->take(8)
+            ->get();
+
+        return view('inicio', compact(
+            'productosDestacados',
+            'productos',
+            'productos2'
+        ));
     }
 }

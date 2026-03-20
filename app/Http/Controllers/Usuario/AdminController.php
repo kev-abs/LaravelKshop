@@ -9,17 +9,17 @@ class AdminController
 {
     public function panel()
     {
-        if (session('rol') !== 'administrador') {
+        if (!in_array(session('rol'), ['administrador', 'vendedor'])) {
             return redirect()->route('login')->with('error', 'Acceso no autorizado');
         }
 
         $idEmpleado = session('id_empleado');
 
-        $admin = DB::table('Empleado')
+        $empleado = DB::table('Empleado')
             ->where('ID_Empleado', $idEmpleado)
             ->first();
 
-        return view('Usuario.panel.panelAdmin', compact('admin'));
+        return view('Usuario.panel.panelAdmin', compact('empleado'));
     }
     public function perfilAdmin()
     {

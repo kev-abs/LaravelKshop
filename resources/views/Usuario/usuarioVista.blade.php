@@ -79,9 +79,6 @@
                         <a href="{{ route('empleados.agregar') }}" class="btn btn-outline-dark">
                             <i class="bi bi-person-plus"></i> Agregar
                         </a>
-                        <a href="{{ route('empleados.editar') }}" class="btn btn-outline-dark">
-                            <i class="bi bi-pencil-square"></i> Actualizar/Eliminar
-                        </a>
                     </div>
                 </div>
             </div>

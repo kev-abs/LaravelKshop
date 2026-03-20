@@ -33,34 +33,26 @@
             @csrf
 
             <div class="text-center mb-3">
-              <img src="{{ asset('img/perfiles/' . ($admin->Foto ?? 'foto_perfil_admin.png')) }}"
-                   class="rounded-circle mb-2"
-                   width="120">
+              <img src="{{ asset('img/perfiles/' . ($admin->Foto ?? 'foto_perfil_admin.png')) }}"class="rounded-circle mb-2"width="120">
             </div>
 
             <div class="mb-3">
               <label class="form-label">Nombre</label>
-              <input type="text" name="Nombre"
-                     class="form-control"
-                     value="{{ $admin->Nombre }}" required>
+              <input type="text" name="Nombre"class="form-control"value="{{ $admin->Nombre }}" required>
             </div>
 
             <div class="mb-3">
               <label class="form-label">Correo</label>
-              <input type="email" name="Correo"
-                     class="form-control"
-                     value="{{ $admin->Correo }}" required>
+              <input type="email" name="Correo"class="form-control"value="{{ $admin->Correo }}" required>
             </div>
 
             <div class="mb-3">
               <label class="form-label">Foto de perfil</label>
-              <input type="file" name="foto"
-                     class="form-control">
+              <input type="file" name="foto"class="form-control">
             </div>
 
             <div class="d-flex justify-content-between">
-              <a href="{{ route('admin.perfil') }}"
-                 class="btn btn-secondary">Cancelar</a>
+              <a href="{{ route('admin.perfil') }}"class="btn btn-secondary">Cancelar</a>
 
               <button type="submit"
                       class="btn btn-dark">
