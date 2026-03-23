@@ -17,7 +17,6 @@
                         <th>Dirección</th>
                         <th>Ciudad</th>
                         <th>Estado</th>
-                        <th>Acción</th>
                     </tr>
                 </thead>
 

@@ -2,91 +2,116 @@
 
 @section('content')
 
-    <div class="container my-5" style="max-width: 950px;">
+    <div class="container my-5" style="max-width: 1200px;">
 
-        <h5 class="mb-4 fw-semibold">Carrito</h5>
-
-        @if (empty($carrito['items']))
-            <p class="text-muted">Tu carrito está vacío.</p>
-        @else
-            @foreach ($carrito['items'] as $item)
-                <div class="d-flex align-items-center py-4 border-bottom item-row" data-id="{{ $item['idProducto'] }}"
-                    data-precio="{{ $item['precio'] }}">
-
-                    {{-- IMAGEN --}}
-                    <div style="width: 120px;">
-                        @if (!empty($item['imagen']))
-                            <img src="http://localhost:8080/uploads/productos/{{ $item['imagen'] }}" class="img-fluid rounded"
-                                style="height:120px; object-fit:cover;">
-                        @else
-                            <img src="{{ asset('img/no-image.png') }}" class="img-fluid rounded"
-                                style="height:120px; object-fit:cover;">
-                        @endif
-                    </div>
-
-                    {{-- INFO --}}
-                    <div class="flex-grow-1 ms-4">
-
-                        <div class="d-flex justify-content-between align-items-start">
-
-                            <div>
-                                <div class="fw-medium">
-                                    {{ $item['nombre'] }}
-                                </div>
-
-                                <div class="text-muted small mt-1">
-                                    ${{ number_format($item['precio'], 0, ',', '.') }}
-                                </div>
-                            </div>
-
-                            {{-- TOTAL PRODUCTO --}}
-                            <div class="fw-semibold item-total">
-                                ${{ number_format($item['total'], 0, ',', '.') }}
-                            </div>
-
-                        </div>
-
-                        {{-- CONTROLES --}}
-                        <div class="d-flex align-items-center mt-3 gap-2">
-
-                            <button class="btn btn-sm btn-light border minus" style="width:34px;height:34px;">-</button>
-
-                            <span class="small item-cantidad">
-                                {{ $item['cantidad'] }}
-                            </span>
-
-                            <button class="btn btn-sm btn-light border plus" style="width:34px;height:34px;">+</button>
-
-                            {{-- ELIMINAR --}}
-                            <button class="btn p-0 border-0 ms-3 delete-btn" style="color:#dc3545;">
-                                <i class="bi bi-trash"></i>
-                            </button>
-
-                        </div>
-
-                    </div>
-                </div>
-            @endforeach
-
-            <div class="mt-4 pt-4 border-top">
-                <div class="d-flex justify-content-between mb-3">
-                    <span class="fw-medium">Subtotal</span>
-                    <span class="fw-semibold" id="subtotal">
-                        ${{ number_format($carrito['subtotal'], 0, ',', '.') }}
-                    </span>
-                </div>
-
-                <a href="{{ route('carrito.confirmar') }}" class="btn btn-dark w-100 py-2" style="font-size:0.95rem;">
-                    Comprar
-                </a>
+        {{-- 🔥 FILA 1: TÍTULO --}}
+        <div class="row mb-4">
+            <div class="col-12">
+                <h5 class="fw-semibold mb-0">Carrito</h5>
             </div>
-        @endif
+        </div>
 
+        {{-- 🔥 FILA 2: CONTENIDO --}}
+        <div class="row align-items-start">
 
-        <div class="mt-4">
-            <a href="{{ route('panel.cliente') }}" class="btn btn-outline-dark btn-sm rounded-pill px-4">
-                ← Volver
-            </a>
+            {{-- 🛍 PRODUCTOS --}}
+            <div class="col-md-8">
+
+                @if (empty($carrito['items']))
+                    <p class="text-muted">Tu carrito está vacío.</p>
+                @else
+                    <div class="row g-4">
+                        @foreach ($carrito['items'] as $item)
+                            <div class="col-md-6 item-row" data-id="{{ $item['idProducto'] }}"
+                                data-precio="{{ $item['precio'] }}">
+
+                                <div class="card border-0 rounded-4 shadow-sm h-100">
+
+                                    {{-- IMAGEN --}}
+                                    <img src="http://localhost:8080/uploads/productos/{{ $item['imagen'] }}"
+                                        class="card-img-top rounded-top-4" style="height:250px; object-fit:cover;">
+
+                                    <div class="card-body">
+
+                                        <div class="fw-semibold" style="font-size:0.9rem;">
+                                            {{ $item['nombre'] }}
+                                        </div>
+
+                                        <div class="text-muted mb-2" style="font-size:0.85rem;">
+                                            ${{ number_format($item['precio'], 0, ',', '.') }}
+                                        </div>
+
+                                        {{-- CONTROLES --}}
+                                        <div class="d-flex align-items-center gap-2">
+
+                                            <button class="btn btn-sm btn-light border rounded-circle minus"
+                                                style="width:30px;height:30px;">-</button>
+
+                                            <span class="fw-semibold item-cantidad">
+                                                {{ $item['cantidad'] }}
+                                            </span>
+
+                                            <button class="btn btn-sm btn-light border rounded-circle plus"
+                                                style="width:30px;height:30px;">+</button>
+
+                                            <button class="btn p-0 border-0 ms-auto delete-btn text-danger">
+                                                <i class="bi bi-trash"></i>
+                                            </button>
+
+                                        </div>
+
+                                        {{-- TOTAL --}}
+                                        <div class="fw-bold mt-2 item-total">
+                                            ${{ number_format($item['total'], 0, ',', '.') }}
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                @endif
+
+            </div>
+
+            {{-- 💰 RESUMEN --}}
+            <div class="col-md-4" style="position: sticky; top: 100px; align-self: flex-start;">
+
+                <div class="card border-0 shadow-sm rounded-3">
+
+                    <div class="card-body">
+
+                        <div class="d-flex justify-content-between mb-2">
+                            <span>Subtotal</span>
+                            <span id="subtotal">
+                                ${{ number_format($carrito['subtotal'], 0, ',', '.') }}
+                            </span>
+                        </div>
+
+                        <div class="d-flex justify-content-between mb-2">
+                            <span>Gastos de envío</span>
+                            <span class="text-success">Gratis</span>
+                        </div>
+
+                        <hr>
+
+                        <div class="d-flex justify-content-between fw-bold mb-3">
+                            <span>Total</span>
+                            <span id="total">
+                                ${{ number_format($carrito['subtotal'], 0, ',', '.') }}
+                            </span>
+                        </div>
+
+                        <a href="{{ route('carrito.confirmar') }}" class="btn btn-success w-100">
+                            Realizar compra
+                        </a>
+
+                    </div>
+                </div>
+
+            </div>
+
         </div>
 
     </div>
@@ -96,7 +121,6 @@
         document.addEventListener("DOMContentLoaded", function() {
 
             const csrfToken = "{{ csrf_token() }}";
-
 
             document.querySelectorAll(".plus, .minus").forEach(button => {
 
@@ -144,7 +168,6 @@
 
             });
 
-            // ELIMINAR PRODUCTO
             document.querySelectorAll(".delete-btn").forEach(button => {
 
                 button.addEventListener("click", function() {
@@ -184,6 +207,9 @@
                 });
 
                 document.getElementById("subtotal").innerText =
+                    "$" + subtotal.toLocaleString("es-CO");
+
+                document.getElementById("total").innerText =
                     "$" + subtotal.toLocaleString("es-CO");
             }
 
