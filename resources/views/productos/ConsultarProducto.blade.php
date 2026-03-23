@@ -152,12 +152,7 @@
     @endif
 
 
-    <div class="text-center mt-5">
-        <a href="{{ route('panel.admin') }}" class="btn btn-outline-secondary btn-lg w-50">
-            <i class="bi bi-arrow-left me-2"></i>Volver
-        </a>
-    </div>
-
+    
 </main>
 
 

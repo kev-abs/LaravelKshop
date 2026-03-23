@@ -127,13 +127,7 @@
                     <button type="submit" class="btn btn-primary w-100 mt-3">Actualizar Producto</button>
                 </form>
             </div>
-        </div>
-
-        <div class="text-center mt-4">
-            <a href="{{ route('productos.index') }}" class="btn btn-outline-secondary btn-lg w-50">
-                <i class="bi bi-arrow-left me-2"></i>Volver
-            </a>
-        </div>
+</div>
     </div>
 </main>
 

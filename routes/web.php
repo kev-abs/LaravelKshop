@@ -195,5 +195,6 @@ Route::middleware(['verificar.sesion'])->group(function () {
         Route::get('/admin/envios', [AdminEnvioController::class, 'index'])->name('ventas.envios');
         Route::get('/admin/pedidos/{id}', [AdminPedidoController::class, 'detalle'])->name('admin.pedido.detalle');
         Route::post('/admin/pedido/{id}/estado', [AdminPedidoController::class, 'cambiarEstado'])->name('admin.pedido.estado');
+        Route::put('/admin/envios/{id}', [AdminEnvioController::class, 'cambiarEstado'])->name('admin.envio.estado');
     });
 });

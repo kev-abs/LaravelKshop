@@ -25,7 +25,6 @@
             <th>Fecha</th>
             <th>Total</th>
             <th>Estado</th>
-            <th class="text-end">Acciones</th>
         </tr>
     </thead>
 
@@ -75,14 +74,6 @@
                         </button>
                     </form>
                 </td>
-
-                <td class="text-end">
-                    <a href="{{ route('admin.pedido.detalle', $pedido['idPedido']) }}"
-                       class="btn btn-sm btn-outline-primary">
-                        <i class="bi bi-eye"></i>
-                    </a>
-                </td>
-
             </tr>
         @endforeach
     </tbody>

@@ -31,6 +31,8 @@
         <h2 class="fw-bold">Agregar Producto</h2>
         <p class="text-muted">Completa el formulario para registrar un nuevo producto en el sistema.</p>
     </div>
+    
+
      <?php if (!empty($mensaje)): ?>
         <div class="mb-3">
             <?=$mensaje; ?>
@@ -108,12 +110,6 @@
 </form>
 
             </div>
-        </div>
-
-        <div class="text-center mt-4">
-            <a href="{{ route('productos.index') }}" class="btn btn-outline-secondary btn-lg w-50">
-                <i class="bi bi-arrow-left me-2"></i>Volver
-            </a>
         </div>
     </div>
 </main>

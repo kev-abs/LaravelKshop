@@ -102,7 +102,7 @@ body{
                 </td>
                 <td class="title">
                     <h3>COMPROBANTE DE COMPRA</h3>
-                    Pedido #{{ $pedido['idPedido'] }}<br>
+                    Pedido {{ $pedido['idPedido'] }}<br>
                     {{ \Carbon\Carbon::parse($pedido['fecha'])->format('d/m/Y H:i') }}
                 </td>
             </tr>
