@@ -100,8 +100,10 @@
                     <div style="width: 110px;">
 
                         @if (!empty($item['imagen']))
-                            <img src="http://localhost:8080/uploads/productos/{{ $item['imagen'] }}"
-                                class="img-fluid rounded-3" style="height:110px; width:100%; object-fit:cover;">
+
+                            <img src="http://35.175.5.116:8080/uploads/productos/{{ $item['imagen'] }}"
+                                class="img-fluid rounded-3" style="height:100px; object-fit:cover;">
+
                         @else
                             <img src="{{ asset('img/no-image.png') }}" class="img-fluid rounded-3"
                                 style="height:110px; width:100%; object-fit:cover;">

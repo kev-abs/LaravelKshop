@@ -167,7 +167,7 @@ placeholder="Buscar productos..."
 
           <div class="img-wrap">
             @if($d->Imagen)
-              <img src="http://localhost:8080/uploads/productos/{{ $d->Imagen }}" alt="{{ $d->Nombre }}">
+              <img src="http://35.175.5.116:8080/uploads/productos/{{ $d->Imagen }}" alt="{{ $d->Nombre }}">
             @else
               <div style="display:flex;align-items:center;justify-content:center;height:100%;color:#ccc;font-size:2.5rem;">
                 <i class="bi bi-image"></i>

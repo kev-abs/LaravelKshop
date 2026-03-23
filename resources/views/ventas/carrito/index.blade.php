@@ -2,7 +2,27 @@
 
 @section('content')
 
-    <div class="container my-5" style="max-width: 1200px;">
+    <div class="container my-5" style="max-width: 950px;">
+
+        <h5 class="mb-4 fw-semibold">Carrito</h5>
+
+        @if (empty($carrito['items']))
+            <p class="text-muted">Tu carrito está vacío.</p>
+        @else
+            @foreach ($carrito['items'] as $item)
+                <div class="d-flex align-items-center py-4 border-bottom item-row" data-id="{{ $item['idProducto'] }}"
+                    data-precio="{{ $item['precio'] }}">
+
+                    {{-- IMAGEN --}}
+                    <div style="width: 120px;">
+                        @if (!empty($item['imagen']))
+                            <img src="http://35.175.5.116:8080/uploads/productos/{{ $item['imagen'] }}" class="img-fluid rounded"
+                                style="height:120px; object-fit:cover;">
+                        @else
+                            <img src="{{ asset('img/no-image.png') }}" class="img-fluid rounded"
+                                style="height:120px; object-fit:cover;">
+                        @endif
+                    </div>
 
         {{-- 🔥 FILA 1: TÍTULO --}}
         <div class="row mb-4">
@@ -28,7 +48,7 @@
                                 <div class="card border-0 rounded-4 shadow-sm h-100">
 
                                     {{-- IMAGEN --}}
-                                    <img src="http://localhost:8080/uploads/productos/{{ $item['imagen'] }}"
+                                    <img src="http://35.175.5.116:8080/uploads/productos/{{ $item['imagen'] }}"
                                         class="card-img-top rounded-top-4" style="height:250px; object-fit:cover;">
 
                                     <div class="card-body">

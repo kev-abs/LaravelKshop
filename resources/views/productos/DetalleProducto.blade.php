@@ -49,7 +49,7 @@ K-SHOP | Cliente
 <div class="col-md-6">
 
 @if(!empty($producto['imagen']))
-                    <img src="http://localhost:8080/uploads/productos/{{ $producto['imagen'] }}"
+                    <img src="http://35.175.5.116:8080/uploads/productos/{{ $producto['imagen'] }}"
                          class="card-img-top"
                          style="height:300px; object-fit:cover;"
                          alt="{{ $producto['nombre'] }}">

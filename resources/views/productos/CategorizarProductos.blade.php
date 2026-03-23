@@ -84,7 +84,7 @@
                         <td>{{ $p['descripcion'] }}</td>
                         <td>
                             @if ($p['imagen'])
-                                <img src="http://localhost:8080/uploads/productos/{{ $p['imagen'] }}"
+                                <img src="http://35.175.5.116:8080/uploads/productos/{{ $p['imagen'] }}"
                                      width="70"
                                      class="img-thumbnail">
                             @else
