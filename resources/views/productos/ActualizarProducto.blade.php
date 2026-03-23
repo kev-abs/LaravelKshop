@@ -108,7 +108,7 @@
                         <div class="mb-3 text-center">
                             <label class="form-label fw-bold">Imagen actual</label><br>
 
-                            <img src="http://localhost:8080/uploads/productos/{{ $producto['imagen'] }}"
+                            <img src="http://35.175.5.116:8080/uploads/productos/{{ $producto['imagen'] }}"
                                  alt="Imagen del producto"
                                  width="180"
                                  class="img-thumbnail border">

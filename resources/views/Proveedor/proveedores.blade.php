@@ -56,7 +56,7 @@
 </div>
 
 <script>
-const API = "http://localhost:8080/proveedor";
+const API = "http://35.175.5.116:8080/proveedor";
 let editando = false;
 
 document.addEventListener("DOMContentLoaded", cargarProveedores);
