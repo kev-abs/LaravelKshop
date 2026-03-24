@@ -4,6 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
+use App\Http\Controllers\CuponController;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Collection;
+
+
 
 class CarritoController
 {
@@ -15,7 +20,15 @@ class CarritoController
 
         $carrito = $response->json();
 
-        return view('ventas.carrito.index', compact('carrito'));
+        // Traer cupones disponibles usando directamente el controlador
+        $cuponController = new CuponController();
+        $cuponesResponse = $cuponController->apiMisCupones($idCliente);
+        $cupones = $cuponesResponse->getData(true);
+
+        if (!is_array($cupones)) { $cupones = []; }
+
+
+        return view('ventas.carrito.index', compact('carrito', 'cupones'));
     }
 
     public function store(Request $request)
@@ -60,25 +73,106 @@ public function checkout(Request $request)
 {
     $idCliente = session('id_cliente');
 
-    Http::post("http://localhost:8080/carrito/checkout", [
-        "idCliente" => $idCliente,
-        "direccion" => $request->direccion,
-        "ciudad" => $request->ciudad,
-        "metodoPago" => $request->metodoPago
+    $idCuponCliente = session('cupon_id');// este es ID_Cupon
+    $descuento           = 0;
+    $porcentajeDescuento = session('cupon_descuento', 0);
+
+    if ($idCuponCliente) {
+        $cupon = DB::table('cupon_cliente')
+            ->join('cupon', 'cupon_cliente.ID_Cupon', '=', 'cupon.ID_Cupon')
+            ->where('cupon_cliente.ID_Cupon', $idCuponCliente)    // ← corregido
+            ->where('cupon_cliente.ID_Cliente', session('id_cliente'))
+            ->where('cupon_cliente.Usado', 0)
+            ->select('cupon.descuento')
+            ->first();
+
+        if ($cupon) {
+            $porcentajeDescuento = $cupon->descuento;
+
+            $carritoResponse = Http::get("http://localhost:8080/carrito/$idCliente");
+            $carrito         = $carritoResponse->json();
+            $subtotal        = $carrito['subtotal'];
+            $descuento       = $subtotal * $porcentajeDescuento / 100;
+
+            // Marcar como usado
+            DB::table('cupon_cliente')
+                ->where('ID_Cupon', $idCuponCliente)        // ← corregido
+                ->where('ID_Cliente', session('id_cliente'))
+                ->update(['Usado' => 1]);
+        }
+    }
+
+       $response = Http::asJson()->post("http://localhost:8080/carrito/checkout", [
+        "idCliente"           => $idCliente,
+        "direccion"           => $request->direccion,
+        "ciudad"              => $request->ciudad,
+        "metodoPago"          => $request->metodoPago,
+        "descuento"           => $descuento,
+        "porcentajeDescuento" => (int) $porcentajeDescuento
     ]);
 
+    if (!$response->successful()) {
+        return back()->with('error', 'Error: ' . $response->body());
+    }
+
     return redirect()->route('checkout.historial');
+
 }
 
-    public function confirmar()
+public function confirmar()
 {
     $idCliente = session('id_cliente');
 
     $response = Http::get("http://localhost:8080/carrito/$idCliente");
-
     $carrito = $response->json();
 
-    return view('ventas.carrito.confirmar', compact('carrito'));
+    // Cupón desde sesión
+    $idCupon = session('cupon_id');
+    $descuento = session('cupon_descuento', 0);
+
+    // 🔥 AQUÍ VA
+    $cuponController = new CuponController();
+    $cuponesResponse = $cuponController->apiMisCupones($idCliente);
+    $cuponesDisponibles = collect($cuponesResponse->getData(true));
+
+    return view('ventas.carrito.confirmar', compact(
+        'carrito',
+        'idCupon',
+        'descuento',
+        'cuponesDisponibles'
+    ));
 }
+
+// Aplicar cupón a la sesión
+public function aplicarCupon(Request $request)
+{
+    $cuponCliente = DB::table('cupon_cliente')
+        ->join('cupon', 'cupon_cliente.ID_Cupon', '=', 'cupon.ID_Cupon')
+        ->where('cupon_cliente.ID_Cupon', $request->ID_CuponCliente)
+        ->where('cupon_cliente.ID_Cliente', session('id_cliente'))
+        ->where('cupon_cliente.Usado', 0)
+        ->select('cupon_cliente.ID_Cupon', 'cupon.codigo', 'cupon.descuento')
+        ->first();
+
+    if (!$cuponCliente) {
+        return back()->with('error', 'Cupón no válido.');
+    }
+
+    session([
+        'cupon_id'        => $cuponCliente->ID_Cupon,
+        'cupon_codigo'    => $cuponCliente->codigo,
+        'cupon_descuento' => $cuponCliente->descuento,
+    ]);
+
+    return back()->with('success', 'Cupón aplicado correctamente.');
+}
+
+// Quitar cupón de la sesión
+public function quitarCupon()
+{
+    session()->forget(['cupon_aplicado', 'cupon_id', 'cupon_codigo', 'cupon_descuento']);
+    return back();
+}
+
 
 }

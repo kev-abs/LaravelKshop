@@ -109,8 +109,7 @@
                         </a>
 
                     </div>
-                </div>
-
+</div>
             </div>
         </div>
 
@@ -121,6 +120,20 @@
         document.addEventListener("DOMContentLoaded", function() {
 
             const csrfToken = "{{ csrf_token() }}";
+
+            const cuponSelect = document.getElementById('cuponSelect');
+            cuponSelect?.addEventListener('change', function() {recalcularSubtotal(); // Recalcula subtotal cuando se cambia el cupón
+        });
+
+        const btnComprar = document.getElementById('btnComprar');
+        btnComprar?.addEventListener('click', function(e) {
+            const cuponSelect = document.getElementById('cuponSelect');
+            if(cuponSelect && cuponSelect.value) {
+                e.preventDefault(); // detener navegación por un momento
+                // redirigir a confirmar con el cupón en la URL
+                window.location.href = "{{ route('carrito.confirmar') }}?idCuponClienteAsignado=" + cuponSelect.value + "&descuento=" + cuponSelect.options[cuponSelect.selectedIndex].dataset.descuento;
+            }
+        });
 
             document.querySelectorAll(".plus, .minus").forEach(button => {
 
@@ -205,6 +218,14 @@
                     );
                     subtotal += precio * cantidad;
                 });
+
+                // Aplicar descuento si hay cupón activo
+                let cuponSelect = document.getElementById('cuponSelect');
+                let descuento = 0;
+                if(cuponSelect && cuponSelect.value) {
+                    descuento = parseFloat(cuponSelect.options[cuponSelect.selectedIndex].dataset.descuento) || 0;
+                    subtotal = subtotal * (1 - descuento / 100);
+                }
 
                 document.getElementById("subtotal").innerText =
                     "$" + subtotal.toLocaleString("es-CO");
