@@ -198,13 +198,26 @@
 <section class="newsletter py-5 text-center">
   <div class="container">
     <h3 class="fw-bold mb-3">¡Únete a nuestra comunidad K-SHOP!</h3>
-    <p class="text-secondary mb-4">Recibe descuentos exclusivos y las últimas tendencias directamente en tu correo</p>
-    <form class="row justify-content-center g-2">
-      <div class="col-md-4 col-sm-8">
-        <input type="email" class="form-control form-control-lg" placeholder="Tu correo electrónico">
+    <p class="text-secondary mb-4">
+      Recibe descuentos exclusivos y las últimas tendencias directamente en tu correo
+    </p>
+    @if(session('success'))
+      <div class="alert alert-success">
+        {{ session('success') }}
       </div>
-      <div class="col-md-2 col-sm-4">
-        <button type="submit" class="btn btn-warning btn-lg fw-semibold w-100 text-dark">Suscribirme</button>
+    @endif
+
+    <form action="{{ route('newsletter.store') }}" method="POST" class="row justify-content-center g-2">
+      @csrf
+
+      <naclasse="col-md-4 col-sm-8">
+        <input type="email" name="correo" class="form-control form-control-lg" placeholder="Tu correo electrónico" classed>
+      </naclasse=>
+
+      <div class="col-md-2 col-sm-4 d-flex">
+        <button type="submit" class="btn btn-success btn-lg fw-semibold w-100 text-white text-center">
+          Suscribirme
+        </button>
       </div>
     </form>
   </div>

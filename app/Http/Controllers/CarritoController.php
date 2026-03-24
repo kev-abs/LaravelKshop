@@ -60,7 +60,7 @@ public function checkout(Request $request)
 {
     $idCliente = session('id_cliente');
 
-    Http::post("http://localhost:8080/carrito/checkout", [
+    Http::post("http://35.175.5.116:8080/carrito/checkout", [
         "idCliente" => $idCliente,
         "direccion" => $request->direccion,
         "ciudad" => $request->ciudad,
@@ -74,7 +74,7 @@ public function checkout(Request $request)
 {
     $idCliente = session('id_cliente');
 
-    $response = Http::get("http://localhost:8080/carrito/$idCliente");
+    $response = Http::get("http://35.175.5.116:8080/carrito/$idCliente");
 
     $carrito = $response->json();
 

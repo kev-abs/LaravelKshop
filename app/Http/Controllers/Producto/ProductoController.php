@@ -106,7 +106,7 @@ dd(DB::select('SELECT ID_Categoria, Nombre FROM categoria'));
 
 public function detalle($id)
 {
-    $response = Http::get("http://localhost:8080/productos/".$id);
+    $response = Http::get("http://35.175.5.116:8080/productos/".$id);
 
     $producto = $response->json();
 
@@ -122,7 +122,7 @@ public function detalle($id)
     $resultado = $this->productoService->obtenerProductos();
     $productos = $resultado["success"] ? $resultado["data"] : [];
 
-    $response = Http::get('http://localhost:8080/proveedor');
+    $response = Http::get('http://35.175.5.116:8080/proveedor');
     $proveedores = $response->successful() ? $response->json() : [];
 
     return view("productos.ConsultarProducto", compact("productos", "proveedores"));
@@ -151,7 +151,7 @@ public function categorizar()
     $categorias = $this->productoService->obtenerCategorias()['data'] ?? [];
 
     // Traer productos ya categorizados
-    $response = Http::get('http://localhost:8080/api/producto-categoria/por-categoria');
+    $response = Http::get('http://35.175.5.116:8080/api/producto-categoria/por-categoria');
     $categorizados = $response->successful() ? $response->json() : [];
 
     // Extraer IDs ya categorizados
@@ -192,7 +192,7 @@ public function editarCategoria($id)
 {
     $categorias = $this->productoService->obtenerCategorias()['data'] ?? [];
 
-    $response = Http::get('http://localhost:8080/api/producto-categoria/por-categoria');
+    $response = Http::get('http://35.175.5.116:8080/api/producto-categoria/por-categoria');
     $categorizados = $response->successful() ? $response->json() : [];
 
     // Buscar el producto y su categoría actual
@@ -214,7 +214,7 @@ public function editarCategoria($id)
 
 public function actualizarCategoria(Request $request, $id)
 {
-    $response = Http::post('http://localhost:8080/api/producto-categoria/asignar-multiple', [
+    $response = Http::post('http://35.175.5.116:8080/api/producto-categoria/asignar-multiple', [
         'idCategoria' => (int) $request->idCategoria,
         'productos' => [(int) $id]
     ]);
@@ -227,7 +227,7 @@ public function actualizarCategoria(Request $request, $id)
 }
 public function listar(Request $request)
 {
-    $response = Http::get('http://localhost:8080/productos/filtrar', [
+    $response = Http::get('http://35.175.5.116:8080/productos/filtrar', [
         'nombre'      => $request->query('nombre'),
         'idCategoria' => $request->query('idCategoria')
     ]);
@@ -263,7 +263,7 @@ public function listar(Request $request)
 // ================= CATEGORÍAS =================
 public function gestionCategorias()
 {
-    $response = Http::get('http://localhost:8080/api/categorias');
+    $response = Http::get('http://35.175.5.116:8080/api/categorias');
     $categorias = $response->successful() ? $response->json() : [];
 
     return view('categorias.index', compact('categorias'));
@@ -273,7 +273,7 @@ public function crearCategoria(Request $request)
 {
     $request->validate(['nombre' => 'required|string']);
 
-    Http::post('http://localhost:8080/api/categorias', [
+    Http::post('http://35.175.5.116:8080/api/categorias', [
         'nombre' => $request->nombre
     ]);
 
@@ -282,7 +282,7 @@ public function crearCategoria(Request $request)
 
 public function editarCategoriaForm($id)
 {
-    $response = Http::get('http://localhost:8080/api/categorias');
+    $response = Http::get('http://35.175.5.116:8080/api/categorias');
     $categorias = $response->successful() ? $response->json() : [];
     $categoria = collect($categorias)->firstWhere('idCategoria', (int)$id);
 
@@ -293,7 +293,7 @@ public function actualizarCategoriaForm(Request $request, $id)
 {
     $request->validate(['nombre' => 'required|string']);
 
-    Http::put("http://localhost:8080/api/categorias/{$id}", [
+    Http::put("http://35.175.5.116:8080/api/categorias/{$id}", [
         'nombre' => $request->nombre
     ]);
 
@@ -302,7 +302,7 @@ public function actualizarCategoriaForm(Request $request, $id)
 
 public function eliminarCategoria($id)
 {
-    Http::delete("http://localhost:8080/api/categorias/{$id}");
+    Http::delete("http://35.175.5.116:8080/api/categorias/{$id}");
 
     return redirect()->route('categorias.index')->with('success', 'Categoría eliminada correctamente');
 }
@@ -310,7 +310,7 @@ public function eliminarCategoria($id)
     // ================= AGREGAR =================
     public function create()
 {
-    $response = Http::get('http://localhost:8080/proveedor');
+    $response = Http::get('http://35.175.5.116:8080/proveedor');
     $proveedores = $response->successful() ? $response->json() : [];
 
     return view("productos.AgregarProducto", compact("proveedores"));
@@ -348,7 +348,7 @@ public function eliminarCategoria($id)
 
     $producto = $resultado["data"];
 
-    $response = Http::get('http://localhost:8080/proveedor');
+    $response = Http::get('http://35.175.5.116:8080/proveedor');
 
     $proveedores = $response->successful()
         ? $response->json()
