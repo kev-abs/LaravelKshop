@@ -129,6 +129,35 @@
 
                     </div>
                 </div>
+            @endforeach
+
+            {{-- CUPONES --}}
+            @if(!empty($cupones))
+                <div class="mb-3">
+                    <label for="cuponSelect" class="form-label fw-medium">Aplicar cupón</label>
+                    <select id="cuponSelect" class="form-select" style="max-width: 250px;">
+                        <option value="">-- Seleccionar cupón --</option>
+                        @foreach($cupones as $c)
+                            @if(is_array($c) && isset($c['Usado']) && !$c['Usado'])
+                                <option value="{{ $c['ID_CuponClienteAsignado'] }}" data-descuento="{{ $c['descuento'] }}">
+                                    {{ $c['codigo'] }} - {{ $c['descuento'] }}% de descuento
+                                </option>
+                            @endif
+                        @endforeach
+                    </select>
+                </div>
+             @endif
+
+            <div class="mt-4 pt-4 border-top">
+                <div class="d-flex justify-content-between mb-3">
+                    <span class="fw-medium">Subtotal</span>
+                    <span class="fw-semibold" id="subtotal">
+                        ${{ number_format($carrito['subtotal'], 0, ',', '.') }}
+                    </span>
+                </div>
+
+                <a href="{{ route('carrito.confirmar') }}" class="btn btn-dark w-100 py-2" style="font-size:0.95rem;" id="btnComprar">
+                    Comprar </a>
 
             </div>
 
@@ -141,6 +170,20 @@
         document.addEventListener("DOMContentLoaded", function() {
 
             const csrfToken = "{{ csrf_token() }}";
+
+            const cuponSelect = document.getElementById('cuponSelect');
+            cuponSelect?.addEventListener('change', function() {recalcularSubtotal(); // Recalcula subtotal cuando se cambia el cupón
+        });
+
+        const btnComprar = document.getElementById('btnComprar');
+        btnComprar?.addEventListener('click', function(e) {
+            const cuponSelect = document.getElementById('cuponSelect');
+            if(cuponSelect && cuponSelect.value) {
+                e.preventDefault(); // detener navegación por un momento
+                // redirigir a confirmar con el cupón en la URL
+                window.location.href = "{{ route('carrito.confirmar') }}?idCuponClienteAsignado=" + cuponSelect.value + "&descuento=" + cuponSelect.options[cuponSelect.selectedIndex].dataset.descuento;
+            }
+        });
 
             document.querySelectorAll(".plus, .minus").forEach(button => {
 
@@ -225,6 +268,14 @@
                     );
                     subtotal += precio * cantidad;
                 });
+
+                // Aplicar descuento si hay cupón activo
+                let cuponSelect = document.getElementById('cuponSelect');
+                let descuento = 0;
+                if(cuponSelect && cuponSelect.value) {
+                    descuento = parseFloat(cuponSelect.options[cuponSelect.selectedIndex].dataset.descuento) || 0;
+                    subtotal = subtotal * (1 - descuento / 100);
+                }
 
                 document.getElementById("subtotal").innerText =
                     "$" + subtotal.toLocaleString("es-CO");
