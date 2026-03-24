@@ -77,7 +77,7 @@
                                         <td>${{ number_format($p['precio'], 0, ',', '.') }}</td>
                                         <td>
                                     @if ($p['imagen'])
-                                        <img src="http://localhost:8080/uploads/productos/{{ $p['imagen'] }}" width="80" alt="Producto">
+                                        <img src="http://35.175.5.116:8080/uploads/productos/{{ $p['imagen'] }}" width="80" alt="Producto">
 
                                     @else
                                         <span class="text-muted">Sin imagen</span>

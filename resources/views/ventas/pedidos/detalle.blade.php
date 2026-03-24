@@ -10,7 +10,7 @@
 
                 <div>
                     <h5 class="fw-semibold mb-1">
-                        Pedido #{{ $pedido['idPedido'] }}
+                        Pedido {{ $pedido['idPedido'] }}
                     </h5>
 
                     <div class="text-muted small">
@@ -94,17 +94,21 @@
             <h6 class="fw-semibold mb-3">Productos</h6>
 
             @foreach ($detalles as $item)
-                <div class="d-flex align-items-center py-3 border-bottom">
+                <div class="d-flex align-items-center py-3 border-bottom" style="border-color:#eee;">
 
                     {{-- IMAGEN --}}
-                    <div style="width: 100px;">
+                    <div style="width: 110px;">
+
                         @if (!empty($item['imagen']))
-                            <img src="http://localhost:8080/uploads/productos/{{ $item['imagen'] }}"
+
+                            <img src="http://35.175.5.116:8080/uploads/productos/{{ $item['imagen'] }}"
                                 class="img-fluid rounded-3" style="height:100px; object-fit:cover;">
+
                         @else
                             <img src="{{ asset('img/no-image.png') }}" class="img-fluid rounded-3"
-                                style="height:100px; object-fit:cover;">
+                                style="height:110px; width:100%; object-fit:cover;">
                         @endif
+
                     </div>
 
                     {{-- INFO --}}
@@ -146,16 +150,6 @@
         @endif
 
 
-
-
-
-
-        {{-- BOTÓN VOLVER --}}
-        <div class="mt-4">
-            <a href="{{ route('checkout.historial') }}" class="btn btn-outline-dark btn-sm rounded-pill px-4">
-                ← Volver a mis pedidos
-            </a>
-        </div>
 
     </div>
 @endsection

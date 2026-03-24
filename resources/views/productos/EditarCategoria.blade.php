@@ -36,7 +36,7 @@
 
                 <div class="text-center mb-4">
                     @if($productoEncontrado['imagen'])
-                        <img src="http://localhost:8080/uploads/productos/{{ $productoEncontrado['imagen'] }}"
+                        <img src="http://35.175.5.116:8080/uploads/productos/{{ $productoEncontrado['imagen'] }}"
                              width="120" class="img-thumbnail">
                     @else
                         <span class="text-muted">Sin imagen</span>

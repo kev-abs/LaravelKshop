@@ -92,7 +92,7 @@
 
         <div class="position-relative overflow-hidden featured-card">
 
-          <img src="http://localhost:8080/uploads/productos/{{ $p->Imagen }}"
+          <img src="http://35.175.5.116:8080/uploads/productos/{{ $p->Imagen }}"
               class="w-100"
               object-fit:cover;>
 
@@ -126,7 +126,7 @@
       <div class="card border-0 flex-shrink-0 product-card shadow-sm" style="width:260px;">
 
         <div class="overflow-hidden">
-          <img src="http://localhost:8080/uploads/productos/{{ $p->Imagen }}"
+          <img src="http://35.175.5.116:8080/uploads/productos/{{ $p->Imagen }}"
                class="w-100"
                style="height:260px; object-fit:cover;">
         </div>
@@ -156,7 +156,7 @@
         <div class="card border-0 product-card h-100">
 
           <div class="position-relative overflow-hidden">
-            <img src="http://localhost:8080/uploads/productos/{{ $p->Imagen }}"
+            <img src="http://35.175.5.116:8080/uploads/productos/{{ $p->Imagen }}"
                  class="w-100"
                  style="height:300px; object-fit:cover;">
 

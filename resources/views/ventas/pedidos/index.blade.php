@@ -20,7 +20,7 @@
 
                                 <div class="d-flex justify-content-between mb-2">
                                     <span class="fw-medium small text-muted">
-                                        Pedido #{{ $pedido['idPedido'] }}
+                                        Pedido {{ $pedido['idPedido'] }}
                                     </span>
                                     <span class="small text-muted">
                                         {{ \Carbon\Carbon::parse($pedido['fecha'])->format('d/m/Y') }}
@@ -74,12 +74,6 @@
             </div>
         @endif
 
-        {{-- BOTÓN VOLVER --}}
-        <div class="mt-4">
-            <a href="{{ route('panel.cliente') }}" class="btn btn-outline-dark btn-sm rounded-pill px-4">
-                ← Volver
-            </a>
-        </div>
 
     </div>
 
