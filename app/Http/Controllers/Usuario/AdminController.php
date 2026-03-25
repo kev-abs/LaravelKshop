@@ -70,7 +70,7 @@ class AdminController
         $request->validate([
             'Nombre' => 'required|string|max:100',
             'Correo' => 'required|email',
-            'foto'   => 'nullable|image|mimes:jpg,jpeg,png|max:2048'
+            'foto'   => 'nullable|image|mimes:jpg,jpeg,png|max:5000'
         ]);
 
         $data = [
