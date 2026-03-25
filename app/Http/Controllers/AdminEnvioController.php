@@ -9,7 +9,7 @@ class AdminEnvioController
 {
     public function index()
     {
-        $response = Http::get("http://localhost:8080/envio");
+        $response = Http::get("http://35.175.5.116:8080/envio");
         $envios = $response->json();
 
         return view('admin.envios.index', compact('envios'));
@@ -19,7 +19,7 @@ class AdminEnvioController
     {
         $estado = $request->estado;
 
-        Http::put("http://localhost:8080/envio/$id/estado/$estado");
+        Http::put("http://35.175.5.116:8080/envio/$id/estado/$estado");
 
         return back()->with('success', 'Estado actualizado correctamente');
     }

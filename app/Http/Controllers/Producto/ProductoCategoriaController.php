@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Producto;
 
-use Illuminate\Http\Client\RequestException;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Http\Request;
 
@@ -10,7 +9,7 @@ class ProductoCategoriaController
 {
     public function PorCategoria(Request $request)
 {
-    $response = Http::get('http://localhost:8080/api/producto-categoria/por-categoria');
+    $response = Http::get('http://35.175.5.116:8080/api/producto-categoria/por-categoria');
 
     if (!$response->successful()) {
         return back()->with('error', 'No se pudieron cargar las categorías');

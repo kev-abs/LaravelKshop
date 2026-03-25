@@ -1,40 +1,17 @@
 @extends('ventas.layouts.app')
 
 @section('content')
-
-    <div class="container my-5" style="max-width: 950px;">
-
-        <h5 class="mb-4 fw-semibold">Carrito</h5>
-
-        @if (empty($carrito['items']))
-            <p class="text-muted">Tu carrito está vacío.</p>
-        @else
-            @foreach ($carrito['items'] as $item)
-                <div class="d-flex align-items-center py-4 border-bottom item-row" data-id="{{ $item['idProducto'] }}"
-                    data-precio="{{ $item['precio'] }}">
-
-                    {{-- IMAGEN --}}
-                    <div style="width: 120px;">
-                        @if (!empty($item['imagen']))
-                            <img src="http://35.175.5.116:8080/uploads/productos/{{ $item['imagen'] }}" class="img-fluid rounded"
-                                style="height:120px; object-fit:cover;">
-                        @else
-                            <img src="{{ asset('img/no-image.png') }}" class="img-fluid rounded"
-                                style="height:120px; object-fit:cover;">
-                        @endif
-                    </div>
-
-        {{-- 🔥 FILA 1: TÍTULO --}}
+        {{--  FILA 1: TÍTULO --}}
         <div class="row mb-4">
             <div class="col-12">
                 <h5 class="fw-semibold mb-0">Carrito</h5>
             </div>
         </div>
 
-        {{-- 🔥 FILA 2: CONTENIDO --}}
+        {{--  FILA 2: CONTENIDO --}}
         <div class="row align-items-start">
 
-            {{-- 🛍 PRODUCTOS --}}
+            {{-- PRODUCTOS --}}
             <div class="col-md-8">
 
                 @if (empty($carrito['items']))
@@ -95,7 +72,7 @@
 
             </div>
 
-            {{-- 💰 RESUMEN --}}
+            {{--  RESUMEN --}}
             <div class="col-md-4" style="position: sticky; top: 100px; align-self: flex-start;">
 
                 <div class="card border-0 shadow-sm rounded-3">
