@@ -81,7 +81,8 @@
                                 @foreach ($carrito['items'] as $item)
                                     <div class="mb-3">
 
-                                        <img src="http://localhost:8080/uploads/productos/{{ $item['imagen'] }}"
+                                        <img src="http://35.175.5.116:8080/uploads/productos/{{ $item['imagen'] }}"
+
                                             class="img-fluid rounded-3 mb-2"
                                             style="height:140px; width:100%; object-fit:cover;">
 

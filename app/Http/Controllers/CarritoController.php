@@ -16,7 +16,7 @@ class CarritoController
     {
         $idCliente = session('id_cliente');
 
-        $response = Http::get("http://localhost:8080/carrito/$idCliente");
+        $response = Http::get("http://35.175.5.116:8080/carrito/$idCliente");
 
         $carrito = $response->json();
 
@@ -35,7 +35,7 @@ class CarritoController
     {
         $idCliente = session('id_cliente');
 
-        Http::asJson()->post("http://localhost:8080/carrito", [
+        Http::asJson()->post("http://35.175.5.116:8080/carrito", [
             "idCliente" => $idCliente,
             "idProducto" => (int) $request->idProducto,
             "cantidad" => (int) $request->cantidad
@@ -48,7 +48,7 @@ class CarritoController
     {
         $idCliente = session('id_cliente');
 
-        Http::asJson()->put("http://localhost:8080/carrito/cantidad", [
+        Http::asJson()->put("http://35.175.5.116:8080/carrito/cantidad", [
             "idCliente" => $idCliente,
             "idProducto" => (int) $request->idProducto,
             "cantidad" => (int) $request->cantidad
@@ -61,7 +61,7 @@ class CarritoController
     {
         $idCliente = session('id_cliente');
 
-        Http::asJson()->delete("http://localhost:8080/carrito/producto", [
+        Http::asJson()->delete("http://35.175.5.116:8080/carrito/producto", [
             "idCliente" => $idCliente,
             "idProducto" => (int) $request->idProducto
         ]);
@@ -89,7 +89,7 @@ public function checkout(Request $request)
         if ($cupon) {
             $porcentajeDescuento = $cupon->descuento;
 
-            $carritoResponse = Http::get("http://localhost:8080/carrito/$idCliente");
+            $carritoResponse = Http::get("http://35.175.5.116:8080/carrito/$idCliente");
             $carrito         = $carritoResponse->json();
             $subtotal        = $carrito['subtotal'];
             $descuento       = $subtotal * $porcentajeDescuento / 100;
@@ -102,7 +102,7 @@ public function checkout(Request $request)
         }
     }
 
-       $response = Http::asJson()->post("http://localhost:8080/carrito/checkout", [
+       $response = Http::asJson()->post("http://35.175.5.116:8080/carrito/checkout", [
         "idCliente"           => $idCliente,
         "direccion"           => $request->direccion,
         "ciudad"              => $request->ciudad,
@@ -114,6 +114,12 @@ public function checkout(Request $request)
     if (!$response->successful()) {
         return back()->with('error', 'Error: ' . $response->body());
     }
+    Http::post("http://35.175.5.116:8080/carrito/checkout", [
+        "idCliente" => $idCliente,
+        "direccion" => $request->direccion,
+        "ciudad" => $request->ciudad,
+        "metodoPago" => $request->metodoPago
+    ]);
 
     return redirect()->route('checkout.historial');
 
@@ -123,14 +129,14 @@ public function confirmar()
 {
     $idCliente = session('id_cliente');
 
-    $response = Http::get("http://localhost:8080/carrito/$idCliente");
+    $response = Http::get("http://35.175.5.116:8080/carrito/$idCliente");
+
     $carrito = $response->json();
 
     // Cupón desde sesión
     $idCupon = session('cupon_id');
     $descuento = session('cupon_descuento', 0);
 
-    // 🔥 AQUÍ VA
     $cuponController = new CuponController();
     $cuponesResponse = $cuponController->apiMisCupones($idCliente);
     $cuponesDisponibles = collect($cuponesResponse->getData(true));
