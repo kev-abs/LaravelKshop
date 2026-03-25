@@ -11,7 +11,7 @@ class PedidoController
     {
         $idCliente = session('id_cliente');
 
-        $response = Http::get("http://localhost:8080/pedido/cliente/$idCliente");
+        $response = Http::get("http://35.175.5.116:8080/pedido/cliente/$idCliente");
         $pedidos = $response->json();
 
         return view('ventas.pedidos.index', compact('pedidos'));
@@ -21,13 +21,13 @@ class PedidoController
     {
         $idCliente = session('id_cliente');
 
-        $pedido = Http::get("http://localhost:8080/pedido/$id")->json();
+        $pedido = Http::get("http://35.175.5.116:8080/pedido/$id")->json();
 
         if (!$pedido || $pedido['idCliente'] != $idCliente) {
             abort(403);
         }
 
-        $detalles = Http::get("http://localhost:8080/pedido/$id/detalle")->json();
+        $detalles = Http::get("http://35.175.5.116:8080/pedido/$id/detalle")->json();
 
         return view('ventas.pedidos.detalle', compact('pedido', 'detalles'));
     }
@@ -36,8 +36,8 @@ class PedidoController
     {
         $idCliente = session('id_cliente');
 
-        $pedido = Http::get("http://localhost:8080/pedido/$id")->json();
-        $detalles = Http::get("http://localhost:8080/pedido/$id/detalle")->json();
+        $pedido = Http::get("http://35.175.5.116:8080/pedido/$id")->json();
+        $detalles = Http::get("http://35.175.5.116:8080/pedido/$id/detalle")->json();
 
         $this->validarComprobante($pedido, $idCliente);
 
@@ -48,8 +48,8 @@ class PedidoController
     {
         $idCliente = session('id_cliente');
 
-        $pedido = Http::get("http://localhost:8080/pedido/$id")->json();
-        $detalles = Http::get("http://localhost:8080/pedido/$id/detalle")->json();
+        $pedido = Http::get("http://35.175.5.116:8080/pedido/$id")->json();
+        $detalles = Http::get("http://35.175.5.116:8080/pedido/$id/detalle")->json();
 
         $this->validarComprobante($pedido, $idCliente);
 

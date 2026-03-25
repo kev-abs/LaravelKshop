@@ -51,7 +51,7 @@ class ListaDeseosController
 }
 public function listar(Request $request)
 {
-    $response = Http::get('http://localhost:8080/productos/filtrar', [
+    $response = Http::get('http://35.175.5.116:8080/productos/filtrar', [
         'nombre'      => $request->query('nombre'),
         'idCategoria' => $request->query('idCategoria')
     ]);

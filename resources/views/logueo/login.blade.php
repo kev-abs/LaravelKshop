@@ -10,48 +10,77 @@
 <body class="d-flex flex-column min-vh-100">
 
 <!-- ENCABEZADO -->
-<header class="bg-white sticky-top py-3 border-bottom shadow-sm">
-  <div class="container d-flex flex-wrap justify-content-between align-items-center">
+<header class="bg-white sticky-top border-bottom shadow-sm">
+  <nav class="navbar navbar-expand-lg container">
 
     <!-- LOGO -->
-    <div class="d-flex align-items-center">
-      <img src="{{ asset('img/logo_kshopsinfondo.png') }}" alt="Logo K-Shop" width="83" height="" class="me-2">
-      <a href="{{ route('inicio') }}" class="text-decoration-none fs-7 fw-bold text-dark">K-SHOP</a>
+    <a class="navbar-brand d-flex align-items-center fw-bold" href="{{ route('inicio') }}">
+      <img src="{{ asset('img/logo_kshopsinfondo.png') }}" width="60" class="me-2">
+      K-SHOP
+    </a>
+
+    <!-- BOTÓN HAMBURGUESA -->
+    <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarKshop">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- CONTENIDO -->
+    <div class="collapse navbar-collapse" id="navbarKshop">
+
+      <!-- BÚSQUEDA (solo en PC centrada) -->
+      <form action="{{ route('productos.buscar') }}" method="GET" 
+            class="d-none d-lg-flex mx-auto" style="max-width: 400px; width:100%;">
+
+        <input 
+          type="text" 
+          name="nombre"
+          value="{{ request('nombre') }}"
+          class="form-control me-2"
+          placeholder="Buscar productos..."
+        >
+
+        <button class="btn btn-dark">
+          <i class="bi bi-search"></i>
+        </button>
+      </form>
+
+      <!-- MENÚ -->
+      <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-3">
+
+        <li class="nav-item">
+          <a href="{{ route('productos.vistaCatalogo') }}" class="nav-link">
+            Productos
+          </a>
+        </li>
+
+        <!-- BUSCADOR EN MÓVIL -->
+        <li class="nav-item d-lg-none w-100 my-2">
+          <form action="{{ route('productos.buscar') }}" method="GET" class="d-flex">
+            <input type="text" name="nombre" class="form-control me-2" placeholder="Buscar...">
+            <button class="btn btn-dark">
+              <i class="bi bi-search"></i>
+            </button>
+          </form>
+        </li>
+
+        <li class="nav-item">
+          <a href="#" class="nav-link">
+            <i class="bi bi-cart-fill"></i>
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a href="{{ route('login') }}" class="btn btn-outline-dark">
+            <i class="bi bi-person-circle me-1"></i>
+            <span class="d-none d-lg-inline">Iniciar sesión</span>
+          </a>
+        </li>
+
+      </ul>
+
     </div>
 
-    <!-- BARRA DE BÚSQUEDA CENTRADA (invisible en móvil) -->
-        <form action="{{ route('productos.buscar') }}" method="GET" class="d-flex">
-
-<input 
-type="text" 
-name="nombre"
-value="{{ request('nombre') }}"
-class="form-control me-2"
-placeholder="Buscar productos..."
->
-
-<button class="btn btn-dark">
-<i class="bi bi-search"></i>
-</button>
-
-</form>
-
-    <!-- MENÚ NAVEGACIÓN -->
-    <nav class="d-flex align-items-center gap-3">
-      <a href="{{ route('productos.vistaCatalogo') }}" class="nav-link text-dark">Productos</a>
-    
-
-      <!-- CARRITO -->
-      <a href="index.php?Controller=carrito&action=mostrar" class="btn btn-outline-dark border-0">
-        <i class="bi bi-cart-fill"></i>
-      </a>
-
-      <!-- INICIAR SESIÓN -->
-      <a href="{{ route('login') }}" class="btn btn-outline-dark border-0 text-dark">
-        <i class="bi bi-person-circle me-1"></i>Iniciar Sesión
-      </a>
-    </nav>
-  </div>
+  </nav>
 </header>
 
 <main class="container-fluid flex-fill">

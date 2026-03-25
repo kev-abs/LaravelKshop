@@ -1,31 +1,34 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Models\producto\Producto;
-use Illuminate\Support\Facades\DB;
 
 class InicioController
 {
     public function index()
     {
-        $productosDestacados = Producto::orderBy('ID_Producto', 'desc')
-            ->take(8)
+        $masVistos = Producto::orderBy('ID_Producto', 'desc')
+            ->take(5)
             ->get();
 
-        $productos = DB::table('producto')
-            ->inRandomOrder()
-            ->take(20)
+        $tendencias = Producto::whereNotIn('ID_Producto', $masVistos->pluck('ID_Producto'))
+            ->orderBy('ID_Producto', 'desc')
+            ->take(10)
             ->get();
 
-        $productos2 = DB::table('producto')
+        $recomendados = Producto::whereNotIn('ID_Producto',
+                $masVistos->pluck('ID_Producto')
+                    ->merge($tendencias->pluck('ID_Producto'))
+            )
             ->inRandomOrder()
             ->take(8)
             ->get();
 
         return view('inicio', compact(
-            'productosDestacados',
-            'productos',
-            'productos2'
+            'masVistos',
+            'tendencias',
+            'recomendados'
         ));
     }
 }

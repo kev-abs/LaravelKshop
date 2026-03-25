@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminEnvioController;
 use App\Http\Controllers\InicioController;
 use App\Http\Controllers\LoginController;
-use App\Http\Controllers\Usuario\UsuariosController;
+use App\Http\Controllers\NewsletterController;
 use App\Http\Controllers\Producto\ProductoController;
 use App\Http\Controllers\Producto\ProductoCategoriaController;
 use App\Http\Controllers\AuthController;
@@ -20,6 +20,7 @@ use App\Http\Controllers\CarritoController;
 use App\Http\Controllers\ProveedorController;
 use App\Http\Controllers\Usuario\ClientesController;
 use App\Http\Controllers\Usuario\EmpleadosController;
+use App\Http\Controllers\ContactoController;
 
 
 Route::get('/ventas', function () {return view('ventas.ventas');})->name('ventas.ventas');
@@ -45,9 +46,14 @@ Route::get('/tienda', [ProductoController::class, 'catalogo'])->name('tienda.cat
 
 
 Route::get('/', [InicioController::class, 'index'])->name('inicio');
+Route::view('/faq', 'Footer.faq')->name('faq');
+Route::view('/terminos', 'Footer.terminos')->name('terminos');
+Route::get('/contacto', [ContactoController::class, 'index'])->name('contacto');
+Route::post('/contacto', [ContactoController::class, 'enviar'])->name('contacto.enviar');
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 Route::get('/login', [LoginController::class, 'mostrarFormulario'])->name('login');
 Route::post('/login', [LoginController::class, 'manejarPeticion'])->name('login.procesar');
+Route::post('/newsletter', [NewsletterController::class, 'store'])->name('newsletter.store');
 Route::get('/forgot-password', [AuthController::class, 'mostrarFormularioCodigo'])->name('password.request');
 Route::post('/forgot-password', [AuthController::class, 'enviarCodigo'])->name('password.email');
 Route::get('/reset-password', [AuthController::class, 'mostrarFormularioReset'])->name('password.reset');

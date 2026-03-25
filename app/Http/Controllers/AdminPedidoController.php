@@ -10,7 +10,7 @@ class AdminPedidoController
 {
     public function index()
     {
-        $response = Http::get("http://localhost:8080/pedido"); 
+        $response = Http::get("http://35.175.5.116:8080/pedido"); 
         $pedidos = $response->json();
 
         return view('admin.pedidos.index', compact('pedidos'));
@@ -20,7 +20,7 @@ class AdminPedidoController
     {
         $estado = $request->estado;
 
-        Http::put("http://localhost:8080/pedido/$id/estado/$estado");
+        Http::put("http://35.175.5.116:8080/pedido/$id/estado/$estado");
 
         return back()->with('success', 'Estado actualizado correctamente');
     }

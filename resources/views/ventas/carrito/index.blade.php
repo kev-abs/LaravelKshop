@@ -15,7 +15,7 @@
         {{--  FILA 2: CONTENIDO --}}
         <div class="row align-items-start">
 
-            {{-- 🛍 PRODUCTOS --}}
+            {{-- PRODUCTOS --}}
             <div class="col-md-8">
 
                 @if (empty($carrito['items']))
@@ -76,7 +76,7 @@
 
             </div>
 
-            {{-- 💰 RESUMEN --}}
+            {{--  RESUMEN --}}
             <div class="col-md-4" style="position: sticky; top: 100px; align-self: flex-start;">
 
                 <div class="card border-0 shadow-sm rounded-3">

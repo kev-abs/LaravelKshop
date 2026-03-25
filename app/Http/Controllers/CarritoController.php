@@ -114,6 +114,12 @@ public function checkout(Request $request)
     if (!$response->successful()) {
         return back()->with('error', 'Error: ' . $response->body());
     }
+    Http::post("http://35.175.5.116:8080/carrito/checkout", [
+        "idCliente" => $idCliente,
+        "direccion" => $request->direccion,
+        "ciudad" => $request->ciudad,
+        "metodoPago" => $request->metodoPago
+    ]);
 
     return redirect()->route('checkout.historial');
 
@@ -124,6 +130,8 @@ public function confirmar()
     $idCliente = session('id_cliente');
 
     $response = Http::get("http://localhost:8080/carrito/$idCliente");
+    $response = Http::get("http://35.175.5.116:8080/carrito/$idCliente");
+
     $carrito = $response->json();
 
     // Cupón desde sesión
