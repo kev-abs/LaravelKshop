@@ -120,6 +120,12 @@ Route::get('/carrito/cupon/quitar', [CarritoController::class, 'quitarCupon'])->
     //GESTION DE INVENTARIO
     Route::get('/inventario/productos', [ProductoController::class, 'inventario'])->name('productos.inventario');
 
+    //REPORTES
+    Route::get('/admin/reportes/ventas', [PedidoController::class, 'estadisticasVentas'])->name('reportes.ventas');
+    Route::get('/admin/reportes/productos', [PedidoController::class, 'productosMasVendidos'])->name('reportes.productos');
+    Route::get('/admin/reportes/clientes', [PedidoController::class, 'clientesFrecuentes'])->name('reportes.clientes');
+    Route::get('/admin/reportes/cupones', [PedidoController::class, 'efectividadCupones'])->name('reportes.cupones');
+
     //Rutas modulo de Usuarios
     Route::get('/panel/admin', [AdminController::class, 'panel'])->name('panel.admin');
 
