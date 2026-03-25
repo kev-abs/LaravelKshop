@@ -89,6 +89,7 @@
        class="w-100 h-100 position-absolute top-0 start-0"
        style="object-fit:cover; filter:brightness(0.45);">
 
+<<<<<<< HEAD
   <div class="container position-relative h-100 d-flex flex-column justify-content-center">
     <h1 class="display-2 fw-bold">K-SHOP</h1>
     <p class="fs-4 text-light">Moda urbana y estilo contemporáneo</p>
@@ -97,9 +98,18 @@
        class="btn btn-light text-dark px-5 py-2 rounded-pill mt-3 fw-semibold">
        <i class="bi bi-bag me-2"></i> Explorar colección
     </a>
+=======
+<!-- ====================== CARRUSEL ====================== -->
+<div id="carouselKshop" class="carousel slide carousel-fade" data-bs-ride="carousel">
+  <div class="carousel-indicators">
+    <button type="button" data-bs-target="#carouselKshop" data-bs-slide-to="0" class="active"></button>
+    <button type="button" data-bs-target="#carouselKshop" data-bs-slide-to="1"></button>
+    <button type="button" data-bs-target="#carouselKshop" data-bs-slide-to="2"></button>
+>>>>>>> parent of 4cb488b (categorizacion cliente)
   </div>
 </section>
 
+<<<<<<< HEAD
 <!-- ================= CATEGORÍAS (MEJORADAS) ================= -->
 <section class="py-5">
   <div class="container">
@@ -113,6 +123,60 @@
         ['nombre'=>'Chaquetas','icon'=>'bi-cloud'],
         ['nombre'=>'Pantalones','icon'=>'bi-columns'],
         ['nombre'=>'Calzado','icon'=>'bi-shop']
+=======
+  <div class="carousel-inner">
+    <div class="carousel-item active" data-bs-interval="5000">
+      <a href="{{ route('productos.vistaCatalogo') }}">
+        <img src="{{ asset('img/ropa caballero.jpeg') }}" class="d-block w-100" alt="Moda masculina">
+      </a>
+      <div class="carousel-caption">
+        <h1 class="text-light">K-SHOP</h1>
+        <p>Estilo sin límites para todos los gustos</p>
+        <a href="{{ route('productos.vistaCatalogo') }}" class="btn btn-light fw-semibold text-dark px-4 py-2 mt-3">Explorar colección</a>
+      </div>
+    </div>
+
+    <div class="carousel-item" data-bs-interval="5000">
+      <a href="{{ route('productos.vistaCatalogo') }}">
+        <img src="{{ asset('img/ropa dama.jpg') }}" class="d-block w-100" alt="Moda femenina">
+      </a>
+      <div class="carousel-caption">
+        <h1 class="text-light">Moda Femenina</h1>
+        <p>Tu actitud, tu tendencia, tu esencia</p>
+        <a href="{{ route('productos.vistaCatalogo') }}" class="btn btn-light fw-semibold px-4 py-2 mt-3">Ver estilos</a>
+      </div>
+    </div>
+
+    <div class="carousel-item" data-bs-interval="5000">
+      <a href="{{ route('productos.vistaCatalogo') }}">
+        <img src="{{ asset('img/ropa niño.jpg') }}" class="d-block w-100" alt="Moda infantil">
+      </a>
+      <div class="carousel-caption">
+        <h1 class="text-light">Moda Infantil</h1>
+        <p>Comodidad y alegría para los más pequeños</p>
+        <a href="{{ route('productos.vistaCatalogo') }}" class="btn btn-light fw-semibold text-dark px-4 py-2 mt-3">Descubrir</a>
+      </div>
+    </div>
+  </div>
+
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselKshop" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon"></span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselKshop" data-bs-slide="next">
+    <span class="carousel-control-next-icon"></span>
+  </button>
+</div>
+
+<!-- ====================== CATEGORÍAS ====================== -->
+<section class="py-5 bg-light">
+  <div class="container text-center">
+    <h2 class="fw-bold mb-5 text-uppercase text-dark">Explora por categoría</h2>
+    <div class="row g-4">
+      @foreach([
+        ['img' => 'img/RopaDama2.png', 'titulo' => 'Moda femenina'],
+        ['img' => 'img/RopaCaballero2.png', 'titulo' => 'Moda masculina'],
+        ['img' => 'img/RopaNiños2.png', 'titulo' => 'Moda infantil'],
+>>>>>>> parent of 4cb488b (categorizacion cliente)
       ] as $cat)
 
       <div class="col-6 col-md-4 col-lg">

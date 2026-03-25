@@ -18,7 +18,6 @@ class Producto extends Model
         'Stock',
         'ID_Proveedor',
         'Imagen',
-        'Estado',
-        'Genero',
+        'Estado'
     ];
 }

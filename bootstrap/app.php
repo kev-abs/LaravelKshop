@@ -1,6 +1,11 @@
 <?php
 
 use Illuminate\Foundation\Application;
+<<<<<<< HEAD
+=======
+use Illuminate\Foundation\Configuration\Exceptions;
+use Throwable;
+>>>>>>> parent of 4cb488b (categorizacion cliente)
 use Illuminate\Validation\ValidationException;
 use Illuminate\Database\QueryException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;

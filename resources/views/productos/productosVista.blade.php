@@ -67,12 +67,16 @@
         <span class="text-muted">{{ $p['stock'] }}</span>
     @endif
 </p>
+<<<<<<< HEAD
 <div class="mt-3">
                 <a href="{{ route('producto.detalle', $p['id_Producto']) }}"
                   class="btn btn-dark btn-sm rounded-pill w-100">
                   <i class="bi bi-eye me-1"></i> Ver producto
                 </a>
               </div>
+=======
+
+>>>>>>> parent of 4cb488b (categorizacion cliente)
                 </div>
             </div>
         </div>
