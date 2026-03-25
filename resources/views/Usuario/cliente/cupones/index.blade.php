@@ -5,7 +5,7 @@
   <title>Mis Cupones | K-SHOP</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- Bootstrap -->
+  <!-- Bootstrap y icons -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
 </head>
@@ -20,12 +20,12 @@
         K-SHOP | Cliente
       </a>
     </div>
-      <form method="POST" action="{{ route('logout') }}">
-          @csrf
-          <button type="submit" class="btn btn-outline-dark">
-              Cerrar sesión
-          </button>
-      </form>
+    <form method="POST" action="{{ route('logout') }}">
+        @csrf
+        <button type="submit" class="btn btn-outline-dark">
+            Cerrar sesión
+        </button>
+    </form>
   </div>
 </header>
 
@@ -48,18 +48,22 @@
           <div class="card-body text-center">
             <h5 class="fw-bold">{{ $c->codigo }}</h5>
             <p class="text-muted mb-2">{{ $c->descuento }}% de descuento</p>
-
+            
             @if(!$c->Usado)
               <span class="badge bg-success mb-3 d-inline-block">Disponible</span>
               <form action="{{ route('usuario.cupon.redimir') }}" method="POST">
-                @csrf
-                <input type="hidden" name="ID_Cliente" value="{{ $c->ID_Cliente }}">
-                <input type="hidden" name="ID_Cupon" value="{{ $c->ID_Cupon }}">
-                <button type="submit" class="btn btn-warning btn-sm">Redimir cupón</button>
+                  @csrf
+                  <input type="hidden" name="ID_Cliente" value="{{ $c->ID_Cliente }}">
+                  <input type="hidden" name="ID_Cupon" value="{{ $c->ID_CuponClienteAsignado }}">
+                  <button type="submit" class="btn btn-warning btn-sm">Redimir cupón</button>
               </form>
             @else
               <span class="badge bg-secondary">Usado</span>
             @endif
+
+            <p class="text-muted mt-2 mb-0" style="font-size:0.85rem">
+              Válido hasta: {{ \Carbon\Carbon::parse($c->fecha_expiracion)->format('d/m/Y') }}
+            </p>
           </div>
         </div>
       </div>
@@ -77,7 +81,6 @@
 
 </div>
 
-<!-- Footer fijo al fondo -->
 <footer class="bg-dark text-white text-center py-4 mt-auto">
   <div class="container">
     <p class="mb-0">&copy; 2025 K-SHOP - Panel Cliente</p>

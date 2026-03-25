@@ -150,6 +150,18 @@ class Administrador
               <li>
               <a href="{{ route('cupon.editarVista') }}" class="text-white text-decoration-none">➤ Editar / Eliminar cupón </a>
               </li>
+
+              <!-- PROVEEDORES -->
+              <li class="mt-4 mb-2 fw-bold">Proveedores</li>
+              <li>
+                <a href="{{ route('proveedor.consultar') }}" class="text-white text-decoration-none">➤ Listar proveedores</a>
+              </li>
+              <li>
+                <a href="{{ route('proveedor.agregar') }}" class="text-white text-decoration-none">➤ Agregar proveedor</a>
+              </li>
+              <li>
+                <a href="{{ route('proveedor.editar') }}" class="text-white text-decoration-none">➤ Editar / Eliminar proveedor</a>
+              </li>
             </ul>
           </div>
         </div>

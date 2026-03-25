@@ -25,7 +25,6 @@
         </p>
 
        <div class="row g-4 justify-content-center">
-
             <!-- Card Cupones -->
             <div class="col-md-6">
                 <div class="card h-100 shadow-sm">
@@ -42,6 +41,9 @@
                             </a>
                             <a href="{{route('cupon.editarVista')}}" class="btn btn-outline-dark">
                                 <i class="bi bi-pencil-square"></i> Actualizar / Eliminar
+                            </a>
+                             <a href="{{ route('cupon.asignarVista') }}" class="btn btn-outline-dark">
+                                 <i class="bi bi-pencil-square"></i> Asignar
                             </a>
                         </div>
                     </div>

@@ -21,6 +21,7 @@ use App\Http\Controllers\ProveedorController;
 use App\Http\Controllers\Usuario\ClientesController;
 use App\Http\Controllers\Usuario\EmpleadosController;
 
+
 Route::get('/ventas', function () {return view('ventas.ventas');})->name('ventas.ventas');
 
 
@@ -102,6 +103,14 @@ Route::middleware(['verificar.sesion'])->group(function () {
     Route::delete('/cupon/eliminar', [CuponController::class, 'destroy'])->name('cupon.eliminar');
     Route::put('/cupon/editar', [CuponController::class, 'update'])->name('cupon.update');
     Route::delete('/cupon/eliminar', [CuponController::class, 'destroy'])->name('cupon.eliminar');
+    Route::post('/carrito/cupon/aplicar', [CarritoController::class, 'aplicarCupon'])->name('carrito.cupon.aplicar');
+Route::get('/carrito/cupon/quitar', [CarritoController::class, 'quitarCupon'])->name('carrito.cupon.quitar');
+
+    //Asignar cupon a cliente
+
+    Route::get('/cupon/asignar', [CuponController::class, 'asignarVista'])->name('cupon.asignarVista');
+    Route::post('/cupon/asignar', [CuponController::class, 'asignar'])->name('cupon.asignar');
+    Route::get('/usuario/mis-cupones/{idCliente}', [CuponController::class, 'apiMisCupones']);  
 
     //GESTION DE INVENTARIO
     Route::get('/inventario/productos', [ProductoController::class, 'inventario'])->name('productos.inventario');
@@ -167,8 +176,7 @@ Route::middleware(['verificar.sesion'])->group(function () {
     Route::post('/cliente/lista-deseos/agregar', [ListaDeseosController::class, 'agregar'])->name('cliente.listaDeseos.agregar');
     Route::delete('/cliente/lista-deseos/{idLista}', [ListaDeseosController::class, 'eliminar'])->name('cliente.listaDeseos.eliminar');
     Route::get('/cliente/productos', [ListaDeseosController::class, 'productos'])->name('cliente.productos');
-    Route::get('/cliente/cupones', [ClienteCuponController::class, 'index'])->name('cliente.cupones');
-    Route::get('/usuario/mis-cupones', [CuponController::class, 'misCupones'])->name('usuario.mis_cupones');
+    Route::get('/cliente/cupones', [CuponController::class, 'misCupones'])->name('cliente.cupones');
     Route::post('/usuario/cupon/redimir', [CuponController::class, 'redimir'])->name('usuario.cupon.redimir');
 
 
