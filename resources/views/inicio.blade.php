@@ -10,26 +10,79 @@
 </head>
 <body>
 
-<!-- HEADER -->
 <header class="bg-white shadow-sm sticky-top border-bottom py-3">
-  <div class="container d-flex justify-content-between align-items-center">
-    <div class="d-flex align-items-center">
-      <img src="{{ asset('img/logo_kshopsinfondo.png') }}" width="70" alt="K-SHOP" class="me-2">
-      <a href="/" class="fw-bold text-dark fs-4 text-decoration-none">K-SHOP</a>
+  <div class="container-fluid px-4">
+
+    <div class="row align-items-center">
+
+      <!-- LOGO -->
+      <div class="col-6 col-md-3 d-flex align-items-center">
+        <img src="{{ asset('img/logo_kshopsinfondo.png') }}" width="85" class="me-2">
+        <a href="/" class="fw-bold text-dark fs-3 text-decoration-none">
+          K-SHOP
+        </a>
+      </div>
+
+      <!-- BUSCADOR (PC) -->
+      <div class="col-md-6 d-none d-md-block">
+        <form action="{{ route('productos.buscar') }}" method="GET" class="d-flex">
+          <input 
+            type="text" 
+            name="nombre" 
+            class="form-control form-control-lg me-2" 
+            placeholder="Buscar productos..."
+          >
+
+          <button class="btn btn-dark px-4">
+            <i class="bi bi-search"></i>
+          </button>
+        </form>
+      </div>
+
+      <!-- MENÚ -->
+      <div class="col-6 col-md-3 d-flex justify-content-end align-items-center gap-3">
+
+        <!-- PRODUCTOS -->
+        <a href="{{ route('productos.vistaCatalogo') }}" 
+           class="nav-link text-dark fw-semibold d-none d-md-block">
+          Productos
+        </a>
+
+        <!-- CARRITO -->
+        <a href="#" class="btn btn-outline-dark border-0">
+          <i class="bi bi-cart-fill fs-5"></i>
+        </a>
+
+        <!-- LOGIN -->
+        <a href="{{ route('login') }}" class="btn btn-outline-dark px-3">
+          <i class="bi bi-person-circle me-1"></i>
+          <span class="d-none d-md-inline">Iniciar sesión</span>
+        </a>
+
+      </div>
+
     </div>
 
-    <form action="{{ route('productos.buscar') }}" method="GET" class="d-flex">
-      <input type="text" name="nombre" class="form-control me-2" placeholder="Buscar productos...">
-      <button class="btn btn-dark"><i class="bi bi-search"></i></button>
-    </form>
+    <!-- BUSCADOR MÓVIL -->
+    <div class="row mt-3 d-md-none">
+      <div class="col-12">
+        <form action="{{ route('productos.buscar') }}" method="GET" class="d-flex">
+          <input 
+            type="text" 
+            name="nombre" 
+            class="form-control me-2" 
+            placeholder="Buscar productos..."
+          >
 
-    <nav class="d-flex align-items-center gap-3">
-      <a href="{{ route('productos.vistaCatalogo') }}" class="nav-link text-dark">Productos</a>
-      <a href="{{ route('login') }}" class="btn btn-outline-dark border-0"><i class="bi bi-person-circle me-1"></i>Iniciar sesión</a>
-    </nav>
+          <button class="btn btn-dark">
+            <i class="bi bi-search"></i>
+          </button>
+        </form>
+      </div>
+    </div>
+
   </div>
 </header>
-
 <!-- ================= HERO ================= -->
 <section class="position-relative text-white" style="height:90vh;">
   <img src="{{ asset('img/unnamed.jpg') }}"
@@ -79,22 +132,22 @@
   </div>
 </section>
 
-<!-- ================= MAS VISTOS (GRANDE) ================= -->
+<!-- ================= MÁS VISTOS ================= -->
 <section class="py-5 bg-light">
   <div class="container">
     <h2 class="text-center fw-bold mb-5">MÁS VISTOS</h2>
 
     <div class="row g-4">
 
-      @foreach ($productos->take(5) as $index => $p)
+      @foreach ($masVistos as $index => $p)
 
       <div class="{{ $index == 0 ? 'col-lg-6 col-md-12' : 'col-md-6 col-lg-3' }}">
 
         <div class="position-relative overflow-hidden featured-card">
 
           <img src="http://35.175.5.116:8080/uploads/productos/{{ $p->Imagen }}"
-              class="w-100"
-              object-fit:cover;>
+               class="w-100"
+               style="height: 100%; object-fit:cover;">
 
           <div class="overlay d-flex flex-column justify-content-end p-3">
             <h6 class="fw-bold text-white">{{ $p->Nombre }}</h6>
@@ -115,14 +168,14 @@
   </div>
 </section>
 
-<!-- ================= CINTA PRO ================= -->
+<!-- ================= NUEVAS TENDENCIAS ================= -->
 <section class="py-5">
   <div class="container-fluid">
     <h2 class="text-center fw-bold mb-4">NUEVAS TENDENCIAS</h2>
 
     <div class="scroll-container d-flex gap-4 px-4">
 
-      @foreach ($productos as $p)
+      @foreach ($tendencias as $p)
       <div class="card border-0 flex-shrink-0 product-card shadow-sm" style="width:260px;">
 
         <div class="overflow-hidden">
@@ -150,7 +203,7 @@
 
     <div class="row g-4">
 
-      @foreach ($productos2 as $p)
+      @foreach ($recomendados as $p)
       <div class="col-6 col-md-4 col-lg-3">
 
         <div class="card border-0 product-card h-100">
@@ -235,20 +288,12 @@
       <div class="col-md-3 mb-4">
         <h6 class="fw-bold">Ayuda</h6>
         <ul class="list-unstyled small">
-          <li><a href="#" class="text-white text-decoration-none">Preguntas frecuentes</a></li>
-          <li><a href="#" class="text-white text-decoration-none">Política de devoluciones</a></li>
-          <li><a href="#" class="text-white text-decoration-none">Contáctanos</a></li>
-          <li><a href="#" class="text-white text-decoration-none">Sobre nosotros</a></li>
+          <li><a href="{{ route('faq') }}" class="text-white text-decoration-none">Preguntas frecuentes</a></li>
+          <li><a href="{{ route('contacto') }}" class="text-white text-decoration-none">Contáctanos</a></li>
+          <li><a href="{{ route('terminos') }}" class="text-white text-decoration-none">Sobre nosotros</a></li>
         </ul>
       </div>
 
-      <div class="col-md-3 mb-4">
-        <h6 class="fw-bold">Síguenos</h6>
-        <div class="d-flex gap-3 justify-content-center justify-content-md-start">
-          <a href="#" class="text-white fs-5"><i class="bi bi-facebook"></i></a>
-          <a href="#" class="text-white fs-5"><i class="bi bi-instagram"></i></a>
-        </div>
-      </div>
     </div>
 
     <div class="text-center py-3 border-top border-secondary mt-3 small">
