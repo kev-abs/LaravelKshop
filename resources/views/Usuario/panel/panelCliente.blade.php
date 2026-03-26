@@ -131,25 +131,23 @@
     <div class="row g-4">
 
       @foreach ([
-        ['nombre'=>'Accesorios','icon'=>'bi-watch'],
-        ['nombre'=>'Camisetas','icon'=>'bi-person'],
-        ['nombre'=>'Chaquetas','icon'=>'bi-cloud'],
-        ['nombre'=>'Pantalones','icon'=>'bi-columns'],
-        ['nombre'=>'Calzado','icon'=>'bi-shop']
-      ] as $cat)
+    ['nombre'=>'Accesorios', 'icon'=>'bi-watch',   'id'=>3],
+    ['nombre'=>'Camisetas',  'icon'=>'bi-person',   'id'=>1],
+    ['nombre'=>'Chaquetas',  'icon'=>'bi-cloud',    'id'=>5],
+    ['nombre'=>'Pantalones', 'icon'=>'bi-columns',  'id'=>4],
+    ['nombre'=>'Calzado',    'icon'=>'bi-shop',     'id'=>2],
+] as $cat)
 
-      <div class="col-6 col-md-4 col-lg">
-        <a href="{{ route('cliente.productos') }}" class="text-decoration-none">
-          <div class="category-card text-center p-5 h-100 border rounded">
-
+<div class="col-6 col-md-4 col-lg">
+    <a href="{{ route('cliente.productos', ['categoria' => $cat['id']]) }}" class="text-decoration-none">
+        <div class="category-card text-center p-5 h-100 border rounded">
             <i class="bi {{ $cat['icon'] }} fs-1 mb-3"></i>
             <h5 class="fw-bold">{{ $cat['nombre'] }}</h5>
+        </div>
+    </a>
+</div>
 
-          </div>
-        </a>
-      </div>
-
-      @endforeach
+@endforeach
 
     </div>
   </div>

@@ -91,17 +91,6 @@
     </div>
 
     <div class="mb-3">
-    <label class="form-label">Género</label>
-    <select name="genero" class="form-select" required>
-        <option value="">Seleccione...</option>
-        <option value="hombre">Hombre</option>
-        <option value="mujer">Mujer</option>
-        <option value="accesorios">Accesorios</option>
-        <option value="unisex">Unisex</option>
-    </select>
-</div>
-
-    <div class="mb-3">
         <label class="form-label">Imagen (opcional)</label>
         <input type="file" name="imagen" class="form-control">
     </div>
