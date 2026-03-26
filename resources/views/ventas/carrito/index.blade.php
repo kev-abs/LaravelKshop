@@ -15,7 +15,6 @@
 
         <div class="row align-items-start">
 
-
             <div class="col-md-8">
 
                 @if (empty($carrito['items']))
@@ -75,7 +74,6 @@
                 @endif
 
             </div>
-
 
             <div class="col-md-4" style="position: sticky; top: 100px; align-self: flex-start;">
 

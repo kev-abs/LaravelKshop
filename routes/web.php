@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminEnvioController;
 use App\Http\Controllers\InicioController;
 use App\Http\Controllers\LoginController;
-use App\Http\Controllers\Usuario\UsuariosController;
+use App\Http\Controllers\NewsletterController;
 use App\Http\Controllers\Producto\ProductoController;
 use App\Http\Controllers\Producto\ProductoCategoriaController;
 use App\Http\Controllers\AuthController;
@@ -20,6 +20,7 @@ use App\Http\Controllers\CarritoController;
 use App\Http\Controllers\ProveedorController;
 use App\Http\Controllers\Usuario\ClientesController;
 use App\Http\Controllers\Usuario\EmpleadosController;
+use App\Http\Controllers\ContactoController;
 
 
 Route::get('/ventas', function () {return view('ventas.ventas');})->name('ventas.ventas');
@@ -30,7 +31,6 @@ Route::get('/productos/catalogovista', [ProductoController::class, 'vistacatalog
 Route::get('/productos/categorizar', [ProductoController::class, 'categorizar'])->name('productos.categorizar');
 Route::post('/productos/categorizar', [ProductoController::class, 'guardarCategorias'])->name('productos.categorizar.guardar');
 Route::post( '/productos/asignar-categoria', [ProductoController::class, 'asignarCategoria'])->name('productos.asignarCategoria');
-Route::get('/api/producto-categoria/por-categoria',  [ProductoCategoriaController::class, 'porCategoria'])->name('productos.productosPorCategoria');
 Route::get('/producto/{id}', [ProductoController::class, 'detalle'])->name('producto.detalle');
 Route::get('/producto/{id}', [ProductoController::class, 'detalle']) ->name('producto.detalle');
 Route::get('/productos/buscar', [ProductoController::class, 'listar'])->name('productos.buscar');
@@ -45,9 +45,14 @@ Route::get('/tienda', [ProductoController::class, 'catalogo'])->name('tienda.cat
 
 
 Route::get('/', [InicioController::class, 'index'])->name('inicio');
+Route::view('/faq', 'Footer.faq')->name('faq');
+Route::view('/terminos', 'Footer.terminos')->name('terminos');
+Route::get('/contacto', [ContactoController::class, 'index'])->name('contacto');
+Route::post('/contacto', [ContactoController::class, 'enviar'])->name('contacto.enviar');
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 Route::get('/login', [LoginController::class, 'mostrarFormulario'])->name('login');
 Route::post('/login', [LoginController::class, 'manejarPeticion'])->name('login.procesar');
+Route::post('/newsletter', [NewsletterController::class, 'store'])->name('newsletter.store');
 Route::get('/forgot-password', [AuthController::class, 'mostrarFormularioCodigo'])->name('password.request');
 Route::post('/forgot-password', [AuthController::class, 'enviarCodigo'])->name('password.email');
 Route::get('/reset-password', [AuthController::class, 'mostrarFormularioReset'])->name('password.reset');
@@ -78,14 +83,14 @@ Route::middleware(['verificar.sesion'])->group(function () {
     Route::get('/productos/editar/{id}', [ProductoController::class, 'edit'])->name('productos.edit');
     Route::put('/productos/editar/{id}', [ProductoController::class, 'update'])->name('productos.update');
     Route::delete('/productos/eliminar/{id}', [ProductoController::class, 'destroy'])->name('productos.destroy');
-
+Route::get('/producto-categoria/por-categoria',  [ProductoCategoriaController::class, 'porCategoria'])->name('productos.productosPorCategoria');
     Route::post('/categorias', [ProductoController::class, 'crearCategoria'])->name('categorias.store');
     Route::get('/categorias/editar/{id}', [ProductoController::class, 'editarCategoriaForm'])->name('categorias.edit');
     Route::put('/categorias/editar/{id}', [ProductoController::class, 'actualizarCategoriaForm'])->name('categorias.update');
     Route::delete('/categorias/eliminar/{id}', [ProductoController::class, 'eliminarCategoria'])->name('categorias.destroy');
     Route::get('/productos/editar-categoria/{id}', [ProductoController::class, 'editarCategoria'])->name('productos.editarCategoria');
     Route::post('/productos/editar-categoria/{id}', [ProductoController::class, 'actualizarCategoria'])->name('productos.actualizarCategoria');
-    Route::get('/api/producto-categoria/por-categoria',  [ProductoCategoriaController::class, 'porCategoria'])->name('productos.productosPorCategoria');
+
     Route::get('/productos/categorizar', [ProductoController::class, 'categorizar'])->name('productos.categorizar');
     Route::post('/productos/categorizar', [ProductoController::class, 'guardarCategorias'])->name('productos.categorizar.guardar');
     Route::post( '/productos/asignar-categoria', [ProductoController::class, 'asignarCategoria'])->name('productos.asignarCategoria');

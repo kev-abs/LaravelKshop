@@ -63,7 +63,6 @@
                                         <th>Descripción</th>
                                         <th>Precio</th>
                                         <th>Imagen</th>
-                                        <th>Género</th>
                                         <th>Acciones</th>
                                     </tr>
                                 </thead>
@@ -71,7 +70,7 @@
                                 <tbody>
                                 @foreach($categoria['productos'] as $p)
                                     <tr>
-                                        <td>{{ $p['id_Producto'] }}</td>
+                                        <td>{{ $p['idProducto'] }}</td>
                                         <td class="fw-semibold">{{ $p['nombre'] }}</td>
                                         <td>{{ $p['descripcion'] ?? '—' }}</td>
                                         <td>${{ number_format($p['precio'], 0, ',', '.') }}</td>
@@ -84,20 +83,7 @@
                                     @endif
                                 </td>
                                 <td>
-    @php
-        $g = strtolower($p['genero'] ?? 'unisex');
-        $iconos = [
-            'hombre'     => ['bi-gender-male',    'text-primary'],
-            'mujer'      => ['bi-gender-female',   'text-danger'],
-            'accesorios' => ['bi-bag',             'text-warning'],
-            'unisex'     => ['bi-gender-ambiguous','text-secondary'],
-        ];
-        [$icon, $color] = $iconos[$g] ?? $iconos['unisex'];
-    @endphp
-    <i class="bi {{ $icon }} {{ $color }} me-1"></i>{{ ucfirst($g) }}
-</td>
-                                <td>
-    <a href="{{ route('productos.editarCategoria', $p['id_Producto']) }}" 
+    <a href="{{ route('productos.editarCategoria', $p['idProducto']) }}" 
        class="btn btn-warning btn-sm">
         <i class="bi bi-pencil"></i> Editar categoría
     </a>

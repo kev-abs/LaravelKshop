@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\DB;
 
 class ProveedorController
 {
-    private $apiUrl = "http://localhost:8080/proveedores";
+    private $apiUrl = "http://35.175.5.116:8080/proveedores";
 
     // LISTAR
     public function index()

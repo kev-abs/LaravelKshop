@@ -1,0 +1,75 @@
+    /* ===== BOTÓN MENÚ FLOTANTE ===== */
+    .menu-float {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      z-index: 1000;
+    }
+
+    .menu-float .btn {
+      background: transparent;
+      border: 1px solid white;
+      color: white;
+      backdrop-filter: blur(6px);
+    }
+
+    .menu-float .btn:hover {
+      background: white;
+      color: black;
+    }
+
+    /* ===== HERO ===== */
+    .hero {
+      position: relative;
+      height: 90vh;
+      overflow: hidden;
+    }
+
+    .hero img {
+      filter: brightness(0.45);
+    }
+
+    /* ===== CATEGORÍAS ===== */
+    .category-card {
+      transition: 0.3s;
+    }
+
+    .category-card:hover {
+      background: black;
+      color: white;
+      transform: translateY(-5px);
+    }
+
+    /* ===== PRODUCTOS ===== */
+    .product-card {
+      transition: 0.3s;
+    }
+
+    .product-card:hover {
+      transform: translateY(-6px);
+    }
+
+    /* ===== OVERLAY ===== */
+    .overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.5);
+      opacity: 0;
+      transition: 0.3s;
+    }
+
+    .product-card:hover .overlay,
+    .featured-card:hover .overlay {
+      opacity: 1;
+    }
+
+    /* ===== SCROLL HORIZONTAL ===== */
+    .scroll-container {
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+
+    .scroll-container::-webkit-scrollbar {
+      display: none;
+    }
+
