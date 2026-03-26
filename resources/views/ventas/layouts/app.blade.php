@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <title>K-SHOP | Ventas</title>
@@ -8,18 +9,20 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
 
 </head>
+
 <body class="d-flex flex-column min-vh-100">
 
-    {{-- HEADER --}}
+
     @include('ventas.layouts.header')
 
-    {{-- CONTENIDO --}}
+
     <main class="container my-4 flex-grow-1">
         @yield('content')
     </main>
 
-    {{-- FOOTER --}}
+
     @include('ventas.layouts.footer')
 
 </body>
+
 </html>
