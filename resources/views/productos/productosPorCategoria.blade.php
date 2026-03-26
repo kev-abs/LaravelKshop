@@ -70,7 +70,7 @@
                                 <tbody>
                                 @foreach($categoria['productos'] as $p)
                                     <tr>
-                                        <td>{{ $p['idProducto'] }}</td>
+                                        <td>{{ $p['id_Producto'] }}</td>
                                         <td class="fw-semibold">{{ $p['nombre'] }}</td>
                                         <td>{{ $p['descripcion'] ?? '—' }}</td>
                                         <td>${{ number_format($p['precio'], 0, ',', '.') }}</td>
@@ -83,7 +83,7 @@
                                     @endif
                                 </td>
                                 <td>
-    <a href="{{ route('productos.editarCategoria', $p['idProducto']) }}" 
+    <a href="{{ route('productos.editarCategoria', $p['id_Producto']) }}" 
        class="btn btn-warning btn-sm">
         <i class="bi bi-pencil"></i> Editar categoría
     </a>

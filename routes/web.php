@@ -31,6 +31,7 @@ Route::get('/productos/catalogovista', [ProductoController::class, 'vistacatalog
 Route::get('/productos/categorizar', [ProductoController::class, 'categorizar'])->name('productos.categorizar');
 Route::post('/productos/categorizar', [ProductoController::class, 'guardarCategorias'])->name('productos.categorizar.guardar');
 Route::post( '/productos/asignar-categoria', [ProductoController::class, 'asignarCategoria'])->name('productos.asignarCategoria');
+Route::get('/producto-categoria/por-categoria',  [ProductoCategoriaController::class, 'porCategoria'])->name('productos.productosPorCategoria');
 Route::get('/producto/{id}', [ProductoController::class, 'detalle'])->name('producto.detalle');
 Route::get('/producto/{id}', [ProductoController::class, 'detalle']) ->name('producto.detalle');
 Route::get('/productos/buscar', [ProductoController::class, 'listar'])->name('productos.buscar');
@@ -39,10 +40,13 @@ Route::post('/productos/editar-categoria/{id}', [ProductoController::class, 'act
 Route::get('/categorias', [ProductoController::class, 'gestionCategorias'])->name('categorias.index');
 Route::get('/productos/buscar', [ProductoController::class, 'listar'])->name('productos.buscar');
 Route::get('/producto/{id}', [ProductoController::class, 'detalle'])->name('producto.detalle');
-
+Route::get('/productos/catalogo', [ProductoController::class, 'catalogo'])->name('productos.catalogo');
 
 Route::get('/tienda', [ProductoController::class, 'catalogo'])->name('tienda.catalogo');
+Route::get('/productos/categorizar', [ProductoController::class, 'categorizar'])->name('productos.categorizar');
 
+
+ Route::get('/cliente/productos', [ProductoController::class, 'panelCliente'])->name('cliente.Productos');
 
 Route::get('/', [InicioController::class, 'index'])->name('inicio');
 Route::view('/faq', 'Footer.faq')->name('faq');
@@ -83,7 +87,6 @@ Route::middleware(['verificar.sesion'])->group(function () {
     Route::get('/productos/editar/{id}', [ProductoController::class, 'edit'])->name('productos.edit');
     Route::put('/productos/editar/{id}', [ProductoController::class, 'update'])->name('productos.update');
     Route::delete('/productos/eliminar/{id}', [ProductoController::class, 'destroy'])->name('productos.destroy');
-Route::get('/producto-categoria/por-categoria',  [ProductoCategoriaController::class, 'porCategoria'])->name('productos.productosPorCategoria');
     Route::post('/categorias', [ProductoController::class, 'crearCategoria'])->name('categorias.store');
     Route::get('/categorias/editar/{id}', [ProductoController::class, 'editarCategoriaForm'])->name('categorias.edit');
     Route::put('/categorias/editar/{id}', [ProductoController::class, 'actualizarCategoriaForm'])->name('categorias.update');
@@ -91,10 +94,10 @@ Route::get('/producto-categoria/por-categoria',  [ProductoCategoriaController::c
     Route::get('/productos/editar-categoria/{id}', [ProductoController::class, 'editarCategoria'])->name('productos.editarCategoria');
     Route::post('/productos/editar-categoria/{id}', [ProductoController::class, 'actualizarCategoria'])->name('productos.actualizarCategoria');
 
-    Route::get('/productos/categorizar', [ProductoController::class, 'categorizar'])->name('productos.categorizar');
+    
     Route::post('/productos/categorizar', [ProductoController::class, 'guardarCategorias'])->name('productos.categorizar.guardar');
     Route::post( '/productos/asignar-categoria', [ProductoController::class, 'asignarCategoria'])->name('productos.asignarCategoria');
-    Route::get('/productos/catalogo', [ProductoController::class, 'catalogo'])->name('productos.catalogo');
+    
 
 
     //Cupones
@@ -135,7 +138,7 @@ Route::get('/carrito/cupon/quitar', [CarritoController::class, 'quitarCupon'])->
     Route::get('/cliente/perfil', [ClienteController::class, 'perfil'])->name('cliente.perfil');
     Route::get('/panel/cliente/perfil/editar', [ClienteController::class, 'editarPerfil'])->name('cliente.perfil.editar');
     Route::post('/panel/cliente/perfil/actualizar', [ClienteController::class, 'actualizarPerfil'])->name('cliente.perfil.actualizar');
-    Route::get('/cliente/productos', [ProductoController::class, 'panelCliente'])->name('cliente.Productos');
+   
     Route::get('/cliente/productos', [ProductoController::class, 'todosProductos'])->name('cliente.todosProductos');
 
      //Rutas modulo de Usuarios

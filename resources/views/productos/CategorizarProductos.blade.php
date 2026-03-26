@@ -136,7 +136,7 @@
         }
 
         try {
-            await fetch('http://localhost:8080/api/producto-categoria/asignar-multiple', {
+            await fetch('http://35.175.5.116:8080/api/producto-categoria/asignar-multiple', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

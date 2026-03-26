@@ -69,7 +69,7 @@ placeholder="Buscar productos..."
         <div class="card h-100 shadow-sm">
 
             @if(!empty(data_get($p,'imagen')))
-                <img src="http://localhost:8080/uploads/productos/{{ data_get($p,'imagen') }}"
+                <img src="http://35.175.5.116:8080/uploads/productos/{{ data_get($p,'imagen') }}"
                      class="card-img-top"
                      alt="{{ data_get($p,'nombre') }}">
             @else

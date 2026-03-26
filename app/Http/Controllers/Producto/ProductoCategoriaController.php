@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers\Producto;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 
-class ProductoCategoriaController
+class ProductoCategoriaController extends Controller
 {
-    public function PorCategoria(Request $request)
+    public function porCategoria(Request $request)
     {
-        $response = Http::get('http://localhost:8080/api/producto-categoria/por-categoria');
+        $response = Http::get('http://35.175.5.116:8080/api/producto-categoria/por-categoria');
 
         if (!$response->successful()) {
             return back()->with('error', 'No se pudieron cargar las categorías');
