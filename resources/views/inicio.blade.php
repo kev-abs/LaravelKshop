@@ -116,7 +116,7 @@
       ] as $cat)
 
       <div class="col-6 col-md-4 col-lg">
-        <a href="{{ route('productos.vistaCatalogo') }}" class="text-decoration-none">
+        <a href="{{ route('cliente.productos') }}" class="text-decoration-none">
           <div class="category-card text-center p-5 h-100 border rounded">
 
             <i class="bi {{ $cat['icon'] }} fs-1 mb-3"></i>

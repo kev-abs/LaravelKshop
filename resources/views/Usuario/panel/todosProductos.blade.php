@@ -82,18 +82,9 @@ placeholder="Buscar productos..."
                     {{ data_get($p,'nombre') }}
                 </h5>
 
-<<<<<<< HEAD
-      <div class="img-wrap">
-        @if($imagen)
-          <img src="http://35.175.5.116:8080/uploads/productos/{{ $imagen }}" alt="{{ $nombre }}">
-        @else
-          <div class="no-img"><i class="bi bi-image"></i></div>
-        @endif
-=======
                 <p class="card-text text-muted">
                     {{ data_get($p,'descripcion','') }}
                 </p>
->>>>>>> parent of 4cb488b (categorizacion cliente)
 
                 <p class="fw-bold">
                     ${{ data_get($p,'precio',0) }}
