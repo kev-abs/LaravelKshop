@@ -27,7 +27,7 @@
 
                                 <div class="card border-0 rounded-4 shadow-sm h-100">
 
-                                    {{-- IMAGEN --}}
+
                                     <img src="http://35.175.5.116:8080/uploads/productos/{{ $item['imagen'] }}"
                                         class="card-img-top rounded-top-4" style="height:250px; object-fit:cover;">
 
@@ -41,7 +41,7 @@
                                             ${{ number_format($item['precio'], 0, ',', '.') }}
                                         </div>
 
-                                        {{-- CONTROLES --}}
+
                                         <div class="d-flex align-items-center gap-2">
 
                                             <button class="btn btn-sm btn-light border rounded-circle minus"
