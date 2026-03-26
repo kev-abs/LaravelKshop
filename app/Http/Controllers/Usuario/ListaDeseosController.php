@@ -3,21 +3,17 @@
 namespace App\Http\Controllers\Usuario;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\DB;
+
 
 class ListaDeseosController
 {
-    public function productos()
-    {
-        if (session('rol') !== 'cliente') {
-            return redirect()->route('login');
-        }
-
-        $productos = DB::table('producto')->get();
-
-        return view('Usuario.ListaDeseos.productos', compact('productos'));
+ public function productos(Request $request)
+{
+    if (session('rol') !== 'cliente') {
+        return redirect()->route('login');
     }
-<<<<<<< HEAD
 
     $genero      = $request->query('genero');
     $categoriaId = $request->query('categoria');
@@ -87,8 +83,6 @@ public function listar(Request $request)
         compact('productos', 'categorias', 'categoriaId', 'genero', 'favoritos')
     );
 }
-=======
->>>>>>> parent of 4cb488b (categorizacion cliente)
     public function index()
     {
         if (session('rol') !== 'cliente') {

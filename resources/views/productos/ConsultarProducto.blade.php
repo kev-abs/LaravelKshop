@@ -51,7 +51,7 @@
     <a href="{{ route('productos.categorizar') }}" class="btn btn-dark btn-lg">
         <i class="bi bi-tags me-2"></i>Categorizar producto
     </a>
-    <a href="{{ route('productos.productosPorCategoria') }}" class="btn btn-dark btn-lg">
+    <a href="{{ route('categorias.index') }}" class="btn btn-dark btn-lg">
         <i class="bi bi-tags me-2"></i>Categorías
     </a>
 </div>

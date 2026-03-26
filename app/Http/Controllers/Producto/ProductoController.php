@@ -140,19 +140,18 @@ public function categorizar()
     $categorias = $this->productoService->obtenerCategorias()['data'] ?? [];
 
     // Traer productos ya categorizados
-    $response = Http::get('http://35.175.5.116:8080/api/producto-categoria/por-categoria');
-    $categorizados = $response->successful() ? $response->json() : [];
+$response = Http::get('http://localhost:8080/api/producto-categoria/por-categoria');
+$categorizados = $response->successful() ? $response->json() : [];
+
 
     // Extraer IDs ya categorizados
-    $idsCategorizados = collect($categorizados)
-        ->flatMap(fn($cat) => collect($cat['productos'])->pluck('id_Producto'))
-        ->toArray();
+   $idsCategorizados = collect($categorizados)
+    ->flatMap(fn($cat) => collect($cat['productos'])->pluck('idProducto')) 
+    ->toArray();
 
-    // Filtrar solo los sin categoría
-    $productos = collect($productos)->filter(function($p) use ($idsCategorizados) {
-        return !in_array($p['id_Producto'], $idsCategorizados);
-    })->values()->toArray();
-
+$productos = collect($productos)->filter(function($p) use ($idsCategorizados) {
+    return !in_array($p['id_Producto'], $idsCategorizados); 
+})->values()->toArray();
     return view('productos.CategorizarProductos', compact('productos', 'categorias'));
 }
 public function asignarCategoria(Request $request)
@@ -181,7 +180,7 @@ public function editarCategoria($id)
 {
     $categorias = $this->productoService->obtenerCategorias()['data'] ?? [];
 
-    $response = Http::get('http://35.175.5.116:8080/api/producto-categoria/por-categoria');
+    $response = Http::get('http://localhost:8080/api/producto-categoria/por-categoria');
     $categorizados = $response->successful() ? $response->json() : [];
 
     // Buscar el producto y su categoría actual
@@ -190,7 +189,7 @@ public function editarCategoria($id)
 
     foreach ($categorizados as $cat) {
         foreach ($cat['productos'] as $p) {
-            if ($p['id_Producto'] == $id) {
+            if ($p['idProducto'] == $id) {
                 $productoEncontrado = $p;
                 $categoriaActual = $cat['idCategoria'];
                 break 2;
@@ -203,7 +202,7 @@ public function editarCategoria($id)
 
 public function actualizarCategoria(Request $request, $id)
 {
-    $response = Http::post('http://35.175.5.116:8080/api/producto-categoria/asignar-multiple', [
+    $response = Http::post('http://localhost:8080/api/producto-categoria/asignar-multiple', [
         'idCategoria' => (int) $request->idCategoria,
         'productos' => [(int) $id]
     ]);
@@ -216,7 +215,7 @@ public function actualizarCategoria(Request $request, $id)
 }
 public function listar(Request $request)
 {
-    $response = Http::get('http://35.175.5.116:8080/productos/filtrar', [
+    $response = Http::get('http://localhost:8080/productos/filtrar', [
         'nombre'      => $request->query('nombre'),
         'idCategoria' => $request->query('idCategoria')
     ]);

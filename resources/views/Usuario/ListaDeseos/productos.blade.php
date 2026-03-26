@@ -42,30 +42,159 @@ placeholder="Buscar productos..."
 
 </form>
 
-      <form method="POST" action="{{ route('logout') }}">
+    <form method="POST" action="{{ route('logout') }}">
           @csrf
           <button type="submit" class="btn btn-outline-dark">
               Cerrar sesión
           </button>
       </form>
-  </div>
 </header>
 
 <main class="container my-5">
 
   <h2 class="fw-bold text-center mb-4">Todos los Productos</h2>
+      {{-- MENÚ DESPLEGABLE DE CATEGORÍAS --}}
+<style>
+  .cat-dropdown {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 2rem;
+  }
+  .cat-dropdown .dropdown-toggle {
+    border-radius: 999px;
+    padding: 10px 24px;
+    background: #fff;
+    border: 1.5px solid #dee2e6;
+    color: #333;
+    font-size: 0.88rem;
+    font-weight: 500;
+    transition: all 0.2s;
+  }
+  .cat-dropdown .dropdown-toggle:hover,
+  .cat-dropdown .dropdown-toggle.active-cat {
+    border-color: #212529;
+    background: #212529;
+    color: #fff;
+  }
+  .cat-dropdown .dropdown-menu {
+    border-radius: 14px;
+    border: none;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+    padding: 8px;
+    min-width: 200px;
+    animation: dropIn 0.2s cubic-bezier(.4,0,.2,1);
+  }
+  @keyframes dropIn {
+    from { opacity: 0; transform: translateY(-8px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .cat-dropdown .dropdown-item {
+    border-radius: 8px;
+    padding: 8px 14px;
+    font-size: 0.85rem;
+    color: #333;
+    transition: all 0.15s;
+  }
+  .cat-dropdown .dropdown-item:hover {
+    background: #f5f5f5;
+    color: #212529;
+  }
+  .cat-dropdown .dropdown-item.active {
+    background: #212529;
+    color: #fff;
+  }
+  .cat-dropdown {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 2rem;
+  }
+  .cat-dropdown .dropdown-toggle {
+    border-radius: 999px;
+    padding: 10px 24px;
+    background: #fff;
+    border: 1.5px solid #dee2e6;
+    color: #333;
+    font-size: 0.88rem;
+    font-weight: 500;
+    transition: all 0.2s;
+  }
+  .cat-dropdown .dropdown-toggle.active-cat {
+    border-color: #212529;
+    background: #212529;
+    color: #fff;
+  }
+  .cat-dropdown .dropdown-menu {
+    border-radius: 14px;
+    border: none;
+    background: #fff !important;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+    padding: 8px;
+    min-width: 200px;
+  }
+  .cat-dropdown .dropdown-item {
+    border-radius: 8px;
+    padding: 8px 14px;
+    font-size: 0.85rem;
+    color: #333 !important;
+    background: transparent !important;
+    transition: all 0.15s;
+}
+  .cat-dropdown .dropdown-item:hover {
+    background: #f5f5f5 !important;
+    color: #212529 !important;
+  }
+  .cat-dropdown .dropdown-item.selected-cat {
+    background: #212529 !important;
+    color: #fff !important;
+  }
+</style>
 
-  <div class="row g-4">
-    @forelse ($productos as $p)
-      <div class="col-6 col-md-4 col-lg-3">
-        <div class="card h-100 shadow-sm border-0">
-          <img src="http://localhost:8080/uploads/productos/{{ $p->Imagen }}" class="card-img-top" style="height:180px; object-fit:cover">
-          <div class="card-body text-center">
-            <h6 class="fw-bold">{{ $p->Nombre }}</h6>
-            <p class="text-muted mb-1">Precio: $ {{ number_format($p->Precio, 0, ',', '.') }}</p>
-            <p class="text-muted mb-2">Stock: {{ $p->Stock ?? 'Disponible' }}</p>
+@if(!empty($categorias))
+<div class="cat-dropdown">
+  <div class="dropdown">
+    <button class="btn dropdown-toggle {{ !empty($categoriaId) ? 'active-cat' : '' }}"
+        type="button" data-bs-toggle="dropdown">
+  <i class="bi bi-tags me-2"></i>
+  Todas las categorías
+</button>
+    <ul class="dropdown-menu">
+      <li>
+        <a class="dropdown-item {{ empty($categoriaId) ? 'selected-cat' : '' }}"
+           href="{{ route('cliente.productos', array_filter(['genero' => $genero ?? null])) }}">
+          <i class="bi bi-grid me-2"></i> Todas
+        </a>
+      </li>
+      <li><hr class="dropdown-divider mx-2"></li>
+      @foreach($categorias as $cat)
+@php
+  $catId  = $cat->idCategoria ?? null;
+  $catNom = $cat->nombre ?? '';
+@endphp
+<li>
+  <a class="dropdown-item {{ !empty($categoriaId) && (string)$categoriaId === (string)$catId ? 'selected-cat' : '' }}"
+     href="{{ route('cliente.productos', array_filter(['categoria' => $catId, 'genero' => $genero ?? null])) }}">
+    {{ $catNom }}
+  </a>
+</li>
+@endforeach
+    </ul>
+  </div>
+</div>
+@endif
+  {{-- FILTROS DE GÉNERO --}}
+<style>
+  .gender-filters {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin: 0 auto 2.5rem;
+    padding: 6px;
+    background: #f5f5f5;
+    border-radius: 999px;
+    width: fit-content;
+  }
 
-<<<<<<< HEAD
   .gender-btn {
     display: flex;
     align-items: center;
@@ -276,26 +405,24 @@ placeholder="Buscar productos..."
             </a>
 
             <form action="{{ route('cliente.listaDeseos.agregar') }}" method="POST">
-=======
-            <a href="{{ route('producto.detalle', $p->ID_Producto) }}"
-   class="btn btn-outline-dark btn-sm mb-1">
-   Ver Producto
-</a>
-            <form action="{{ route('cliente.listaDeseos.agregar') }}" method="POST" class="d-inline">
->>>>>>> parent of 4cb488b (categorizacion cliente)
               @csrf
               <input type="hidden" name="ID_Producto" value="{{ $p->ID_Producto }}">
-              <button type="submit" class="btn btn-outline-danger btn-sm">
-                <i class="bi bi-heart"></i> Añadir a Favoritos
+              <button type="submit" class="btn-fav {{ $esFavorito ? 'active' : '' }}" title="Añadir a favoritos">
+                <i class="bi {{ $esFavorito ? 'bi-heart-fill' : 'bi-heart' }}"></i>
               </button>
             </form>
           </div>
         </div>
+
       </div>
-    @empty
-      <p class="text-center text-muted">No hay productos disponibles</p>
-    @endforelse
-  </div>
+    </div>
+  @empty
+    <div class="col-12 text-center py-5 text-muted">
+      <i class="bi bi-box-open fs-1 d-block mb-3"></i>
+      No hay productos disponibles
+    </div>
+  @endforelse
+</div>
 
 </main>
 
