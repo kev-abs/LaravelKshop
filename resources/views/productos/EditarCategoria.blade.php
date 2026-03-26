@@ -43,7 +43,7 @@
                     @endif
                 </div>
 
-                <form action="{{ route('productos.actualizarCategoria', $productoEncontrado['id_Producto']) }}" method="POST">
+                <form action="{{ route('productos.actualizarCategoria', $productoEncontrado['idProducto']) }}" method="POST">
                     @csrf
 
                     <div class="mb-3">
