@@ -3,7 +3,7 @@
 @section('content')
     <div class="container my-5" style="max-width: 1100px;">
 
-        {{-- HEADER EN TARJETA --}}
+
         <div class="bg-white shadow-sm rounded-4 p-4 mb-4">
 
             <div class="d-flex justify-content-between align-items-start flex-wrap">
@@ -24,7 +24,7 @@
 
             </div>
 
-            {{-- ESTADOS --}}
+
             <div class="mt-3 d-flex gap-2 flex-wrap small">
 
                 <span class="badge bg-light text-dark border rounded-pill px-3 py-2">
@@ -44,10 +44,10 @@
         </div>
 
 
-        {{-- ENVÍO Y PAGO --}}
+
         <div class="row g-4 mb-5">
 
-            {{-- ENVÍO --}}
+
             <div class="col-md-6">
                 <div class="bg-white shadow-sm rounded-4 p-4 h-100">
 
@@ -66,7 +66,7 @@
                 </div>
             </div>
 
-            {{-- PAGO --}}
+
             <div class="col-md-6">
                 <div class="bg-white shadow-sm rounded-4 p-4 h-100">
 
@@ -88,7 +88,7 @@
         </div>
 
 
-        {{-- PRODUCTOS --}}
+
         <div class="bg-white shadow-sm rounded-4 p-4">
 
             <h6 class="fw-semibold mb-3">Productos</h6>
@@ -96,22 +96,21 @@
             @foreach ($detalles as $item)
                 <div class="d-flex align-items-center py-3 border-bottom" style="border-color:#eee;">
 
-                    {{-- IMAGEN --}}
                     <div style="width: 110px;">
+                        @php
+                            $img = $item['imagen'] ?? null;
+                        @endphp
 
-                        @if (!empty($item['imagen']))
-                            <img src="http://35.175.5.116:8080/uploads/productos/{{ $item['imagen'] }}"
+                        @if ($img)
+                            <img src="http://35.175.5.116:8080/uploads/productos/{{ $img }}"
                                 class="img-fluid rounded-3" style="height:110px; width:100%; object-fit:cover;">
                         @else
-                            <img src="{{ asset('img/no-image.png') }}" class="img-fluid rounded-3"
+                            <img src="https://via.placeholder.com/110x110?text=Sin+Imagen" class="img-fluid rounded-3"
                                 style="height:110px; width:100%; object-fit:cover;">
                         @endif
-
                     </div>
 
-                    {{-- INFO --}}
                     <div class="flex-grow-1 ms-4">
-
                         <div class="fw-medium" style="font-size:0.95rem;">
                             {{ $item['nombre'] }}
                         </div>
@@ -123,10 +122,8 @@
                         <div class="text-muted small">
                             ${{ number_format($item['precioUnitario'], 0, ',', '.') }}
                         </div>
-
                     </div>
 
-                    {{-- TOTAL --}}
                     <div class="fw-medium">
                         ${{ number_format($item['total'], 0, ',', '.') }}
                     </div>

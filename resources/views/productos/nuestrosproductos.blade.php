@@ -13,47 +13,39 @@
 
 <!-- ================= ENCABEZADO ================= -->
 <header class="bg-white sticky-top py-3 border-bottom shadow-sm">
-  <div class="container d-flex justify-content-between align-items-center">
-        <!-- BARRA DE BÚSQUEDA -->
-<form action="{{ route('productos.buscar') }}" method="GET" class="d-flex">
+    <div class="container d-flex justify-content-between align-items-center">
+    <!-- BARRA DE BÚSQUEDA -->
+    <form action="{{ route('productos.buscar') }}" method="GET" class="d-flex">
 
-<input 
-type="text" 
-name="nombre"
-value="{{ request('nombre') }}"
-class="form-control me-2"
-placeholder="Buscar productos..."
->
+    <input type="text" name="nombre"value="{{ request('nombre') }}"class="form-control me-2"placeholder="Buscar productos...">
 
-<button class="btn btn-dark">
-<i class="bi bi-search"></i>
-</button>
+    <button class="btn btn-dark">
+        <i class="bi bi-search"></i>
+    </button>
 
-</form>
+    </form>
 
-    <div class="d-flex align-items-center">
-    < class="navbar-brand fw-bold" href="{{ route('panel.cliente') }}">
-        <img src="{{ asset('img/logo_kshopsinfondo.png') }}" width="83" class="me-2">
-        <span class="fw-bold text-dark">K-SHOP | Cliente</span>
-    </>
+        <div class="d-flex align-items-center">
+        < class="navbar-brand fw-bold" href="{{ route('panel.cliente') }}">
+            <img src="{{ asset('img/logo_kshopsinfondo.png') }}" width="83" class="me-2">
+            <span class="fw-bold text-dark">K-SHOP | Cliente</span>
+        </>
+        </div>
+
+        <nav>
+            <form method="POST" action="{{ route('logout') }}">
+                @csrf
+                <button type="submit" class="btn btn-outline-dark">
+                    Cerrar sesión
+                </button>
+            </form>
+        </nav>
+
     </div>
-
-    <nav>
-        <form method="POST" action="{{ route('logout') }}">
-            @csrf
-            <button type="submit" class="btn btn-outline-dark">
-                Cerrar sesión
-            </button>
-        </form>
-    </nav>
-
-  </div>
 </header>
 
 <div class="container my-5 flex-grow-1">
-    <h2 class="text-center fw-bold mb-5">Nuestros Productos</h2>
     
-
     @if(!empty($productos))
     <div class="row g-4">
         @foreach($productos as $p)
@@ -62,15 +54,9 @@ placeholder="Buscar productos..."
 
                 {{-- IMAGEN --}}
                 @if(!empty($p['imagen']))
-                    <img src="http://35.175.5.116:8080/uploads/productos/{{ $p['imagen'] }}"
-                         class="card-img-top"
-                         style="height:200px; object-fit:cover;"
-                         alt="{{ $p['nombre'] }}">
+                    <img src="http://35.175.5.116:8080/uploads/productos/{{ $p['imagen'] }}"class="card-img-top"style="height:200px; object-fit:cover;"alt="{{ $p['nombre'] }}">
                 @else
-                    <img src="{{ asset('img/no-image.png') }}"
-                         class="card-img-top"
-                         style="height:200px; object-fit:cover;"
-                         alt="Sin imagen">
+                    <img src="{{ asset('img/no-image.png') }}"class="card-img-top"style="height:200px; object-fit:cover;"alt="Sin imagen">
                 @endif
 
                 <div class="card-body text-center d-flex flex-column">
@@ -78,13 +64,13 @@ placeholder="Buscar productos..."
                     <p class="text-muted mb-1 small">{{ $p['descripcion'] }}</p>
                     <p class="fw-bold mb-2">${{ number_format($p['precio'], 0, ',', '.') }}</p>
                     <p class="mb-2">
-    Stock:
-    @if(($p['stock'] ?? 0) <= 0)
-        <span class="text-danger fw-bold">Agotado</span>
-    @else
-        <span class="text-muted">{{ $p['stock'] }}</span>
-    @endif
-</p>
+                        Stock:
+                        @if(($p['stock'] ?? 0) <= 0)
+                            <span class="text-danger fw-bold">Agotado</span>
+                        @else
+                            <span class="text-muted">{{ $p['stock'] }}</span>
+                        @endif
+                    </p>
 
 
                     {{-- AGREGAR AL CARRITO --}}
@@ -108,15 +94,31 @@ placeholder="Buscar productos..."
     @endif
 </div>
 
-<footer class="bg-dark text-white text-center py-4 mt-auto">
-    <div class="container">
-        <div class="mb-3">
-            <a href="#" class="text-white me-3">Términos</a>
-            <a href="#" class="text-white me-3">Privacidad</a>
-            <a href="#" class="text-white">Ayuda</a>
-        </div>
-        <p class="mb-0">&copy; 2025 Tienda K-Shop</p>
+<!-- FOOTER -->
+<footer class="bg-dark text-white pt-5">
+  <div class="container text-center text-md-start">
+    <div class="row">
+
+      <div class="col-md-4 mb-4">
+        <h5>K-SHOP</h5>
+        <p>Moda moderna y urbana.</p>
+      </div>
+
+      <div class="col-md-3 mb-4">
+        <h6 class="fw-bold">Ayuda</h6>
+        <ul class="list-unstyled small">
+          <li><a href="{{ route('faq') }}" class="text-white text-decoration-none">Preguntas frecuentes</a></li>
+          <li><a href="{{ route('contacto') }}" class="text-white text-decoration-none">Contáctanos</a></li>
+          <li><a href="{{ route('terminos') }}" class="text-white text-decoration-none">Sobre nosotros</a></li>
+        </ul>
+      </div>
+
     </div>
+
+    <div class="text-center border-top pt-3">
+      &copy; 2026 K-SHOP
+    </div>
+  </div>
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

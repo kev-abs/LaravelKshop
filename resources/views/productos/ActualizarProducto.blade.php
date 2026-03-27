@@ -90,18 +90,6 @@
                         </select>
                     </div>
 
-                    <div class="mb-3">
-    <label class="form-label">Género</label>
-    <select name="genero" class="form-select" required>
-        <option value="">Seleccione...</option>
-        <option value="hombre"      {{ ($producto['genero'] ?? '') === 'hombre'      ? 'selected' : '' }}>Hombre</option>
-        <option value="mujer"       {{ ($producto['genero'] ?? '') === 'mujer'       ? 'selected' : '' }}>Mujer</option>
-        <option value="accesorios"  {{ ($producto['genero'] ?? '') === 'accesorios'  ? 'selected' : '' }}>Accesorios</option>
-        <option value="unisex"      {{ ($producto['genero'] ?? '') === 'unisex'      ? 'selected' : '' }}>Unisex</option>
-    </select>
-</div>
-
-
 
                     {{-- IMAGEN ACTUAL --}}
                     @if(!empty($producto['imagen']))
@@ -131,8 +119,9 @@
     </div>
 </main>
 
+<!-- FOOTER -->
 <footer class="bg-dark text-white text-center py-4 mt-auto">
-    <p class="mb-0">&copy; 2025 Tienda K-Shop - Todos los derechos reservados</p>
+<p class="mb-0">&copy; 2026 K-SHOP</p>
 </footer>
 
 </body>

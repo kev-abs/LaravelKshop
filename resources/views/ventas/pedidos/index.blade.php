@@ -15,7 +15,7 @@
                     <div class="col-md-6 col-lg-4">
                         <div class="border rounded p-4 h-100 d-flex flex-column justify-content-between">
 
-                            {{-- HEADER --}}
+
                             <div>
 
                                 <div class="d-flex justify-content-between mb-2">

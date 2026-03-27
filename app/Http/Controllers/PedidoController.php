@@ -32,6 +32,20 @@ class PedidoController
 
         $detalles = Http::get("http://35.175.5.116:8080/pedido/$id/detalle")->json();
 
+
+        foreach ($detalles as &$item) {
+
+            $productoResponse = Http::get("http://35.175.5.116:8080/productos/" . $item['idProducto']);
+
+            if ($productoResponse->successful()) {
+                $producto = $productoResponse->json();
+
+                $item['imagen'] = $producto['imagen'] ?? null;
+            } else {
+                $item['imagen'] = null;
+            }
+        }
+
         return view('ventas.pedidos.detalle', compact('pedido', 'detalles'));
     }
 
@@ -44,7 +58,7 @@ class PedidoController
 
         $this->validarComprobante($pedido, $idCliente);
 
-        return view('ventas.pedidos.comprobante', compact('pedido','detalles'));
+        return view('ventas.pedidos.comprobante', compact('pedido', 'detalles'));
     }
 
     public function comprobantePdf($id)
@@ -64,15 +78,12 @@ class PedidoController
         return $pdf->download("Comprobante_Pedido_{$id}.pdf");
     }
 
-    
     private function validarComprobante($pedido, $idCliente)
     {
-        // Validar existencia y propiedad del pedido
         if (!$pedido || $pedido['idCliente'] != $idCliente) {
             abort(403);
         }
 
-        // Validar estado de pago
         if (strtoupper($pedido['estadoPago']) !== 'APROBADO') {
             abort(403, 'El comprobante solo está disponible cuando el pago esté aprobado.');
         }
@@ -80,7 +91,7 @@ class PedidoController
 
     public function estadisticasVentas(Request $request)
     {
-        // 🔎 Filtros
+        //  Filtros
         $inicio = $request->input('fecha_inicio');
         $fin = $request->input('fecha_fin');
 
@@ -281,12 +292,12 @@ class PedidoController
             ];
         }
 
-        // ordenar por más usados
+        
         usort($cupones, function ($a, $b) {
             return $b['usados'] <=> $a['usados'];
         });
 
-        // TOP 5
+       
         $cupones = array_slice($cupones, 0, 5);
 
         return view('Usuario.panel.reportes.efectividad_cupones', compact('cupones'));

@@ -219,31 +219,26 @@ class EmpleadosController
     {
         $request->validate([
             'actual' => 'required',
-            'nueva' => [
-                'required',
-                'min:6',
-                'max:12',
-                'regex:/[A-Z]/',
-                'regex:/[a-z]/',
-                'regex:/[0-9]/',
-            ],
+            'nueva' => 'required|min:6',
             'confirmar' => 'required|same:nueva'
         ]);
 
-        $admin = DB::table('empleado')
-            ->where('ID_Empleado', session('id'))
+        $id = session('id_empleado');
+
+        $empleado = DB::table('empleado')
+            ->where('ID_Empleado', $id)
             ->first();
 
-        if (!$admin) {
+        if (!$empleado) {
             return back()->with('error', 'Usuario no encontrado');
         }
 
-        if (!Hash::check($request->actual, $admin->Contrasena)) {
-            return back()->with('error', 'Contraseña actual incorrecta');
+        if (!Hash::check($request->actual, $empleado->Contrasena)) {
+            return back()->with('error', 'La contraseña actual es incorrecta');
         }
 
         DB::table('empleado')
-            ->where('ID_Empleado', $admin->ID_Empleado)
+            ->where('ID_Empleado', $id)
             ->update([
                 'Contrasena' => Hash::make($request->nueva)
             ]);

@@ -46,6 +46,12 @@
     </select>
 </div>
 
+<div class="text-end">
+    <button type="submit" id="btnAsignar" class="btn btn-dark btn-lg">
+    <i class="bi bi-check2-circle me-2"></i>
+    Asignar categoría
+</button>
+</div>
 @if(isset($productos) && count($productos) > 0)
 
 <div class="card shadow-sm border-0 rounded-3 mb-4">
@@ -100,12 +106,6 @@
     </div>
 </div>
 
-<div class="text-end">
-    <button type="submit" id="btnAsignar" class="btn btn-primary">
-    <i class="bi bi-check2-circle me-2"></i>
-    Asignar categoría
-</button>
-</div>
 
 @else
 <div class="alert alert-warning text-center">
@@ -117,8 +117,9 @@
 
 </main>
 
+<!-- FOOTER -->
 <footer class="bg-dark text-white text-center py-4 mt-auto">
-    <p class="mb-0">&copy; 2025 Tienda K-Shop - Todos los derechos reservados</p>
+<p class="mb-0">&copy; 2026 K-SHOP</p>
 </footer>
 
  <!-- SCRIPT PARA ASIGNAR CATEGORÍAS -->
@@ -136,7 +137,7 @@
         }
 
         try {
-            await fetch('http://localhost:8080/api/producto-categoria/asignar-multiple', {
+            await fetch('http://35.175.5.116:8080/api/producto-categoria/asignar-multiple', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

@@ -86,7 +86,6 @@ placeholder="Buscar productos..."
   @if(session('success'))
     <div class="alert alert-success">{{ session('success') }}</div>
   @endif
-
   <style>
   .wish-card {
     border: none;
@@ -189,30 +188,22 @@ placeholder="Buscar productos..."
               <form action="{{ route('cliente.listaDeseos.eliminar', $d->ID_Lista) }}" method="POST">
                 @csrf
                 @method('DELETE')
-                <button type="submit" class="btn-eliminar" title="Eliminar de favoritos">
-                  <i class="bi bi-trash"></i>
-                </button>
+                <button class="btn btn-outline-danger btn-sm">Eliminar</button>
               </form>
             </div>
           </div>
-
         </div>
-      </div>
-    @endforeach
-  </div>
+      @endforeach
+    </div>
 
-@else
-  <div class="text-center py-5 text-muted">
-    <i class="bi bi-heart fs-1 d-block mb-3"></i>
-    No tienes productos en tu lista de deseos.
-  </div>
-@endif
+  @else
+    <div class="alert alert-warning text-center">No tienes productos en tu lista de deseos.</div>
+  @endif
 </main>
 
+<!-- FOOTER -->
 <footer class="bg-dark text-white text-center py-4 mt-auto">
-  <div class="container">
-    <p class="mb-0">&copy; 2025 K-SHOP - Panel Cliente</p>
-  </div>
+<p class="mb-0">&copy; 2026 K-SHOP</p>
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>

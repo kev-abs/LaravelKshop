@@ -51,7 +51,7 @@
     <a href="{{ route('productos.categorizar') }}" class="btn btn-dark btn-lg">
         <i class="bi bi-tags me-2"></i>Categorizar producto
     </a>
-    <a href="{{ route('productos.productosPorCategoria') }}" class="btn btn-dark btn-lg">
+    <a href="{{ route('categorias.index') }}" class="btn btn-dark btn-lg">
         <i class="bi bi-tags me-2"></i>Categorías
     </a>
 </div>
@@ -79,7 +79,6 @@
                                 <th>Proveedor</th>
                                 <th>Imagen</th>
                                 <th>Estado</th>
-                                <th>Género</th>
                                 <th>Acciones</th>
                             </tr>
                         </thead>
@@ -108,19 +107,6 @@
                                 </td>
 
                                 <td>{{ $p['estado'] }}</td>
-                                <td>
-    @php
-        $g = strtolower($p['genero'] ?? 'unisex');
-        $iconos = [
-            'hombre'     => ['bi-gender-male',    'text-primary'],
-            'mujer'      => ['bi-gender-female',   'text-danger'],
-            'accesorios' => ['bi-bag',             'text-warning'],
-            'unisex'     => ['bi-gender-ambiguous','text-secondary'],
-        ];
-        [$icon, $color] = $iconos[$g] ?? $iconos['unisex'];
-    @endphp
-    <i class="bi {{ $icon }} {{ $color }} me-1"></i>{{ ucfirst($g) }}
-</td>
 
                                 <td>
                                     <a href="{{ route('productos.edit', $p['id_Producto']) }}" 
@@ -156,15 +142,9 @@
 </main>
 
 
+<!-- FOOTER -->
 <footer class="bg-dark text-white text-center py-4 mt-auto">
-    <div class="container">
-        <div class="mb-3">
-            <a href="#" class="text-white me-3">Términos y condiciones</a>
-            <a href="#" class="text-white me-3">Política de privacidad</a>
-            <a href="#" class="text-white me-3">Ayuda</a>
-        </div>
-        <p class="mb-0">&copy; 2025 Tienda K-Shop - Todos los derechos reservados</p>
-    </div>
+<p class="mb-0">&copy; 2026 K-SHOP</p>
 </footer>
 
 </body>

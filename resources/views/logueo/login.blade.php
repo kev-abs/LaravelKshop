@@ -107,26 +107,23 @@
               Correo electrónico *
             </label>
 
-            <input 
-              type="email" 
-              name="correo"
-              class="form-control form-control-lg rounded-0"
-              required
-            >
+            <input type="email" name="correo"class="form-control form-control-lg rounded-0"required>
           </div>
-
           <!-- PASSWORD -->
           <div class="mb-2">
             <label class="form-label fw-semibold small">
               Contraseña *
             </label>
 
-            <input 
-              type="password" 
-              name="contrasena"
-              class="form-control form-control-lg rounded-0"
-              required
-            >
+            <div class="input-group">
+
+              <input type="password" name="contrasena"id="passwordInput"class="form-control form-control-lg rounded-0"required>
+
+              <button type="button" class="btn btn-outline-dark" onclick="togglePassword()">
+                <i class="bi bi-eye" id="eyeIcon"></i>
+              </button>
+
+            </div>
           </div>
 
           <!-- FORGOT -->
@@ -191,17 +188,48 @@
 
 
 
-  <footer class="bg-dark text-white text-center py-4 mt-auto">
-    <div class="container">
-      <div class="mb-3">
-        <a href="#" class="text-white me-3">Términos y condiciones</a>
-        <a href="#" class="text-white me-3">Política de privacidad</a>
-        <a href="#" class="text-white me-3">Ayuda</a>
-      </div>
-      <p class="mb-0">&copy; 2025 Tienda K-Shop - Todos los derechos reservados</p>
-    </div>
-  </footer>
+<!-- FOOTER -->
+<footer class="bg-dark text-white pt-5">
+  <div class="container text-center text-md-start">
+    <div class="row">
 
+      <div class="col-md-4 mb-4">
+        <h5>K-SHOP</h5>
+        <p>Moda moderna y urbana.</p>
+      </div>
+
+      <div class="col-md-3 mb-4">
+        <h6 class="fw-bold">Ayuda</h6>
+        <ul class="list-unstyled small">
+          <li><a href="{{ route('faq') }}" class="text-white text-decoration-none">Preguntas frecuentes</a></li>
+          <li><a href="{{ route('contacto') }}" class="text-white text-decoration-none">Contáctanos</a></li>
+          <li><a href="{{ route('terminos') }}" class="text-white text-decoration-none">Sobre nosotros</a></li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div class="text-center border-top pt-3">
+      &copy; 2026 K-SHOP
+    </div>
+  </div>
+</footer>
+<script>
+function togglePassword() {
+    const input = document.getElementById("passwordInput");
+    const icon = document.getElementById("eyeIcon");
+
+    if (input.type === "password") {
+        input.type = "text";
+        icon.classList.remove("bi-eye");
+        icon.classList.add("bi-eye-slash");
+    } else {
+        input.type = "password";
+        icon.classList.remove("bi-eye-slash");
+        icon.classList.add("bi-eye");
+    }
+}
+</script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

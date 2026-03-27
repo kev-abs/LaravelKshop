@@ -98,16 +98,13 @@
         </div>
     </div>
 
-    <div class="text-center mt-3">
-        <a href="{{ route('panel.admin') }}" class="btn btn-outline-secondary btn-lg w-50">
-            <i class="bi bi-arrow-left me-2"></i>Volver
-        </a>
-    </div>
+
 
 </main>
 
+<!-- FOOTER -->
 <footer class="bg-dark text-white text-center py-4 mt-auto">
-    <p class="mb-0">&copy; 2025 Tienda K-Shop - Todos los derechos reservados</p>
+<p class="mb-0">&copy; 2026 K-SHOP</p>
 </footer>
 
 </body>

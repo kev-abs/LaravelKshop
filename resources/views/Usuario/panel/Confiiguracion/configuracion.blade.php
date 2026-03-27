@@ -1,200 +1,143 @@
-@php
-  if (session('rol') !== 'administrador') {
-      header("Location: " . route('login'));
-      exit;
-  }
-@endphp
+@extends('layouts.admin')
 
-<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>K-SHOP - Panel Admin</title>
+@section('title', 'Configuración')
 
-  <!-- Bootstrap y Bootstrap Icons -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+@section('content')
 
-</head>
-<body class="d-flex flex-column min-vh-100">
+<div class="row">
 
-<!-- ENCABEZADO PANEL ADMIN -->
-<header class="bg-white sticky-top py-3 border-bottom shadow-sm">
-  <div class="container d-flex flex-wrap justify-content-between align-items-center">
+<!-- SIDEBAR -->
+<div class="col-md-3 mb-3">
+<div class="card shadow-sm">
+<div class="card-body">
 
-    <!-- LOGO -->
-    <div class="d-flex align-items-center">
-      <img src="{{ asset('img/logo_kshopsinfondo.png') }}" alt="Logo K-Shop" width="83" class="me-2">
-      <a href="{{route('panel.admin')}}" class="text-decoration-none fs-7 fw-bold text-dark">K-SHOP | Admin</a>
-    </div>
+<div class="list-group">
 
-    <!-- BARRA DE BÚSQUEDA -->
-    <form class="mx-auto d-none d-md-block w-50" action="/buscar" method="GET">
-      <input type="text" class="form-control" name="q" placeholder="Buscar en el panel...">
-    </form>
+<button class="list-group-item list-group-item-action active opcion" data-target="privacidad">
+<i class="bi bi-lock"></i> Privacidad
+</button>
 
-    <!-- BOTÓN CERRAR SESIÓN -->
-    <nav class="d-flex align-items-center gap-3">
-      <form method="POST" action="{{ route('logout') }}">
-          @csrf
-          <button type="submit" class="btn btn-outline-dark">
-              Cerrar sesión
-          </button>
-      </form>
-    </nav>
-  </div>
-</header>
+<button class="list-group-item list-group-item-action opcion" data-target="seguridad">
+<i class="bi bi-shield-lock"></i> Seguridad
+</button>
 
-<body class="bg-light">
+</div>
 
-<body class="bg-light" id="body">
+</div>
+</div>
+</div>
 
-<div class="container-fluid mt-4">
-    <div class="row">
+<!-- CONTENIDO -->
+<div class="col-md-9">
+<div class="card shadow-sm">
+<div class="card-body">
 
-        <!-- SIDEBAR -->
-        <div class="col-md-3">
-            <div class="card shadow-sm">
-                <div class="card-body">
+<!-- PRIVACIDAD -->
+<div class="contenido" id="privacidad">
 
-                    <h5><i class="bi bi-gear"></i> Configuración</h5>
+<h5 class="mb-3">
+<i class="bi bi-person-lines-fill"></i> Información del administrador
+</h5>
 
-                    <div class="list-group">
-                        <button class="list-group-item list-group-item-action active opcion" data-target="perfil">
-                            <i class="bi bi-person"></i> Perfil
-                        </button>
+<div class="row">
+<div class="col-md-6 mb-2"><strong>ID:</strong> {{ $admin->ID_Empleado }}</div>
+<div class="col-md-6 mb-2"><strong>Nombre:</strong> {{ $admin->Nombre }}</div>
+<div class="col-md-6 mb-2"><strong>Correo:</strong> {{ $admin->Correo }}</div>
+<div class="col-md-6 mb-2"><strong>Cargo:</strong> {{ $admin->Cargo }}</div>
+<div class="col-md-6 mb-2"><strong>Estado:</strong> {{ $admin->Estado }}</div>
+<div class="col-md-6 mb-2"><strong>Fecha de contratación:</strong> {{ $admin->Fecha_Contratacion }}</div>
+</div>
 
-                        <button class="list-group-item list-group-item-action opcion" data-target="seguridad">
-                            <i class="bi bi-shield-lock"></i> Seguridad
-                        </button>
+<hr>
 
-                        <button class="list-group-item list-group-item-action opcion" data-target="privacidad">
-                            <i class="bi bi-lock"></i> Privacidad
-                        </button>
+<div class="text-center">
+<img src="{{ asset('img/perfiles/' . ($admin->Foto ?? 'default.png')) }}"
+class="rounded-circle border shadow-sm" width="130">
+</div>
 
-                        <button class="list-group-item list-group-item-action opcion" data-target="modo">
-                            <i class="bi bi-moon"></i> Modo oscuro
-                        </button>
-                    </div>
+</div>
 
-                </div>
-            </div>
-        </div>
+<!-- SEGURIDAD -->
+<div class="contenido d-none" id="seguridad">
 
-        <!-- CONTENIDO -->
-        <div class="col-md-9">
-            <div class="card shadow-sm">
-                <div class="card-body">
+<h5 class="mb-3">
+<i class="bi bi-shield-lock"></i> Seguridad
+</h5>
 
-                    <!-- PERFIL -->
-                    <div class="contenido" id="perfil">
+@if(session('error'))
+<div class="alert alert-danger">{{ session('error') }}</div>
+@endif
 
-                        <div class="text-center bg-dark text-white p-4 rounded mb-4">
-                            <img src="{{ asset('img/perfiles/' . ($admin->Foto ?? 'default.png')) }}"class="rounded-circle mb-2"width="120" height="120">
+@if(session('success'))
+<div class="alert alert-success">{{ session('success') }}</div>
+@endif
 
-                            <h4>{{ $admin->Nombre }}</h4>
-                            <small>{{ $admin->Correo }}</small>
-                        </div>
+<form method="POST" action="{{ route('empleado.cambiar.password') }}">
+@csrf
 
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <strong>ID:</strong> {{ $admin->ID_Empleado }}
-                            </div>
+<div class="mb-3">
+<label class="form-label">Contraseña actual</label>
+<input type="password" name="actual" class="form-control" required>
+</div>
 
-                            <div class="col-md-6 mb-3">
-                                <strong>Estado:</strong> {{ $admin->Estado }}
-                            </div>
+<div class="mb-3">
+<label class="form-label">Nueva contraseña</label>
+<input type="password" name="nueva" class="form-control" required>
+</div>
 
-                            <div class="col-md-6 mb-3">
-                                <strong>Fecha:</strong> {{ $admin->Fecha_Contratacion }}
-                            </div>
+<div class="mb-3">
+<label class="form-label">Confirmar contraseña</label>
+<input type="password" name="confirmar" class="form-control" required>
+</div>
 
-                            <div class="col-md-6 mb-3">
-                                <strong>Rol:</strong> Administrador
-                            </div>
-                        </div>
-                    </div>
+<button class="btn btn-dark w-100">
+<i class="bi bi-check-circle"></i> Actualizar contraseña
+</button>
 
-                    <!-- SEGURIDAD -->
-                    <div class="contenido d-none" id="seguridad">
+</form>
 
-                        @if(session('error'))
-                            <div class="alert alert-danger">{{ session('error') }}</div>
-                        @endif
+</div>
 
-                        @if(session('success'))
-                            <div class="alert alert-success">{{ session('success') }}</div>
-                        @endif
+<!-- MODO OSCURO -->
+<div class="contenido d-none" id="modo">
 
-                        <form method="POST" action="{{ route('empleado.cambiar.password') }}">
-                            @csrf
+<h5 class="mb-3">
+<i class="bi bi-moon"></i> Apariencia
+</h5>
 
-                            <input type="password" name="actual" class="form-control mb-2" placeholder="Actual">
-                            <input type="password" name="nueva" class="form-control mb-2" placeholder="Nueva">
-                            <input type="password" name="confirmar" class="form-control mb-2" placeholder="Confirmar">
+<p class="text-muted">Activa o desactiva el modo oscuro en el panel.</p>
 
-                            <button class="btn btn-success">Actualizar contraseña</button>
-                        </form>
-                    </div>
+<button class="btn btn-dark w-100" onclick="toggleDarkMode()">
+<i class="bi bi-moon"></i> Activar / Desactivar
+</button>
 
-                    <!-- PRIVACIDAD -->
-                    <div class="contenido d-none" id="privacidad">
+</div>
 
-                        <h5>Datos visibles</h5>
-                        <ul class="list-group">
-                            <li class="list-group-item">Nombre: {{ $admin->Nombre }}</li>
-                            <li class="list-group-item">Correo: {{ $admin->Correo }}</li>
-                            <li class="list-group-item">Cargo: {{ $admin->Cargo }}</li>
-                            <li class="list-group-item">Estado: {{ $admin->Estado }}</li>
-                        </ul>
+</div>
+</div>
+</div>
 
-                    </div>
-
-                    <!-- MODO OSCURO -->
-                    <div class="contenido d-none" id="modo">
-
-                        <button class="btn btn-dark" onclick="toggleDarkMode()">
-                            Activar / Desactivar
-                        </button>
-
-                    </div>
-
-                </div>
-            </div>
-        </div>
-
-    </div>
 </div>
 
 <script>
+document.addEventListener("DOMContentLoaded", function () {
+
     const botones = document.querySelectorAll('.opcion');
     const contenidos = document.querySelectorAll('.contenido');
 
     botones.forEach(boton => {
         boton.addEventListener('click', () => {
+
             botones.forEach(btn => btn.classList.remove('active'));
             boton.classList.add('active');
 
             contenidos.forEach(c => c.classList.add('d-none'));
             document.getElementById(boton.dataset.target).classList.remove('d-none');
+
         });
     });
 
-    // MODO OSCURO
-    function toggleDarkMode() {
-        document.body.classList.toggle('bg-dark');
-        document.body.classList.toggle('text-white');
-
-        localStorage.setItem('darkMode', document.body.classList.contains('bg-dark'));
-    }
-
-    // cargar estado
-    if (localStorage.getItem('darkMode') === 'true') {
-        document.body.classList.add('bg-dark', 'text-white');
-    }
+});
 </script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
-</body>
-</html>
+@endsection

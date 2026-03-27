@@ -35,12 +35,14 @@ class ProductoController
 }
 public function todosProductos(Request $request)
 {
+
     $productos = $this->productoService->obtenerProductos()['data'] ?? []; 
     $categorias = $this->productoService->obtenerCategorias()['data'] ?? [];
    
     $categoriasConProductos = $this->productoService->obtenerCategoriasConProductos(); 
 
     if (isset($categoriasConProductos['error'])) {
+ 
         $categoriasConProductos = []; 
     }
    
@@ -70,37 +72,24 @@ public function todosProductos(Request $request)
         return $p;
     })->values()->all();
 
-    // ── Filtro por categoría (ya existía) ──────────────────────────
     $categoriaId = (string) $request->query('categoria'); 
 
-    if (!empty($categoriaId)) {
-        $productosFinales = collect($productosFinales)
-            ->filter(function($p) use ($categoriaId) {
-                $categoriasProductoString = array_map('strval', $p['categorias']); 
-                return in_array($categoriaId, $categoriasProductoString);
-            })
-            ->values()
-            ->all();
-    }
-$categoriasDropdown = DB::table('categoria')->get();
-    // ── Filtro por género (NUEVO) ───────────────────────────────────
-    $genero = $request->query('genero');
+if (!empty($categoriaId)) {
+    $productosFinales = collect($productosFinales)
+        ->filter(function($p) use ($categoriaId) {
+            
+            $categoriasProductoString = array_map('strval', $p['categorias']); 
+            
+            return in_array($categoriaId, $categoriasProductoString);
+        })
+        ->values()
+        ->all();
+}
 
-    if (!empty($genero)) {
-        $productosFinales = collect($productosFinales)
-            ->filter(function($p) use ($genero) {
-                return isset($p['genero']) && strtolower($p['genero']) === strtolower($genero);
-            })
-            ->values()
-            ->all();
-    }
-dd(DB::select('SELECT ID_Categoria, Nombre FROM categoria'));
     return view('Usuario.panel.todosProductos', [
-        'productos'   => $productosFinales,
-        'categorias'  => $categorias,
+        'productos' => $productosFinales,
+        'categorias' => $categorias,
         'categoriaId' => $categoriaId,
-        'genero'      => $genero ?? null,
-        'categoriasDropdown' => DB::table('categoria')->get(),
     ]);
 }
 
@@ -151,19 +140,18 @@ public function categorizar()
     $categorias = $this->productoService->obtenerCategorias()['data'] ?? [];
 
     // Traer productos ya categorizados
-    $response = Http::get('http://35.175.5.116:8080/api/producto-categoria/por-categoria');
-    $categorizados = $response->successful() ? $response->json() : [];
+$response = Http::get('http://35.175.5.116:8080/api/producto-categoria/por-categoria');
+$categorizados = $response->successful() ? $response->json() : [];
+
 
     // Extraer IDs ya categorizados
-    $idsCategorizados = collect($categorizados)
-        ->flatMap(fn($cat) => collect($cat['productos'])->pluck('id_Producto'))
-        ->toArray();
+   $idsCategorizados = collect($categorizados)
+    ->flatMap(fn($cat) => collect($cat['productos'])->pluck('id_Producto')) 
+    ->toArray();
 
-    // Filtrar solo los sin categoría
-    $productos = collect($productos)->filter(function($p) use ($idsCategorizados) {
-        return !in_array($p['id_Producto'], $idsCategorizados);
-    })->values()->toArray();
-
+$productos = collect($productos)->filter(function($p) use ($idsCategorizados) {
+    return !in_array($p['id_Producto'], $idsCategorizados); 
+})->values()->toArray();
     return view('productos.CategorizarProductos', compact('productos', 'categorias'));
 }
 public function asignarCategoria(Request $request)
@@ -201,7 +189,7 @@ public function editarCategoria($id)
 
     foreach ($categorizados as $cat) {
         foreach ($cat['productos'] as $p) {
-            if ($p['id_Producto'] == $id) {
+            if ($p['idProducto'] == $id) {
                 $productoEncontrado = $p;
                 $categoriaActual = $cat['idCategoria'];
                 break 2;
@@ -232,31 +220,14 @@ public function listar(Request $request)
         'idCategoria' => $request->query('idCategoria')
     ]);
 
-    $productos = collect($response->json())->map(function($p) {
-    return (object) [
-        'ID_Producto' => $p['id_Producto'] ?? null,
-        'Nombre'      => $p['nombre']      ?? null,
-        'Descripcion' => $p['descripcion'] ?? null,
-        'Precio'      => $p['precio']      ?? null,
-        'Stock'       => $p['stock']       ?? null,
-        'Imagen'      => $p['imagen']      ?? null,
-        'Estado'      => $p['estado']      ?? null,
-        'Genero'      => $p['genero']      ?? null,
-    ];
-});
+    $productos = $response->json();
 
-    $categorias = DB::select('SELECT ID_Categoria as idCategoria, Nombre as nombre FROM categoria');
+    $categorias = $this->productoService->obtenerCategorias()['data'] ?? [];
+
     $categoriaId = $request->query('categoria');
-    $genero      = $request->query('genero');
 
-    $idCliente = session('id_cliente');
-    $favoritos = DB::table('lista_deseos')
-                   ->where('ID_Cliente', $idCliente)
-                   ->pluck('ID_Producto')
-                   ->toArray();
-
-    return view('Usuario.ListaDeseos.productos',
-        compact('productos', 'categorias', 'categoriaId', 'genero', 'favoritos')
+    return view('Usuario.panel.todosProductos',
+        compact('productos','categorias','categoriaId')
     );
 }
 
@@ -325,8 +296,7 @@ public function eliminarCategoria($id)
             $request->stock,
             $request->id_Proveedor,
             $request->file("imagen"),
-            $request->estado,
-            $request->genero
+            $request->estado
         );
 
         if (!$resultado["success"]) {
@@ -366,11 +336,10 @@ public function eliminarCategoria($id)
     $request->descripcion,
     $request->precio,
     $request->stock,
-    $request->idProveedor,
+    $request->id_Proveedor,
     $request->file("imagen"),
     $request->imagen_actual,   
-    $request->estado,
-    $request->genero
+    $request->estado
 );
 
     if (isset($resultado['error'])) {

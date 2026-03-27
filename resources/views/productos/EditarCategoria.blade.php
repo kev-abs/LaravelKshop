@@ -43,7 +43,7 @@
                     @endif
                 </div>
 
-                <form action="{{ route('productos.actualizarCategoria', $productoEncontrado['id_Producto']) }}" method="POST">
+                <form action="{{ route('productos.actualizarCategoria', $productoEncontrado['idProducto']) }}" method="POST">
                     @csrf
 
                     <div class="mb-3">
@@ -83,8 +83,9 @@
 
 </main>
 
+<!-- FOOTER -->
 <footer class="bg-dark text-white text-center py-4 mt-auto">
-    <p class="mb-0">&copy; 2025 Tienda K-Shop - Todos los derechos reservados</p>
+<p class="mb-0">&copy; 2026 K-SHOP</p>
 </footer>
 
 </body>
