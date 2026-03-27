@@ -1,4 +1,5 @@
 <?php
+namespace App\Models\Logueo;
 class VerificarUsuarios {
     private $conexion;
 

@@ -20,7 +20,7 @@ class GuidelineWriter
     public function __construct(protected Agent $agent) {}
 
     /**
-     * @return \Laravel\Boost\Install\GuidelineWriter::NEW|\Laravel\Boost\Install\GuidelineWriter::REPLACED|\Laravel\Boost\Install\GuidelineWriter::FAILED|\Laravel\Boost\Install\GuidelineWriter::NOOP
+     * @return GuidelineWriter::NEW|GuidelineWriter::REPLACED|GuidelineWriter::FAILED|GuidelineWriter::NOOP
      */
     public function write(string $guidelines): int
     {
@@ -67,6 +67,9 @@ class GuidelineWriter
                 $separatingNewlines = empty($existingContent) ? '' : "\n\n===\n\n";
                 $newContent = $frontMatter.$existingContent.$separatingNewlines.$replacement;
             }
+
+            // Normalize multiple blank lines to single blank lines
+            $newContent = preg_replace("/\n{3,}/", "\n\n", (string) $newContent);
 
             // Ensure file content ends with a newline
             if (! str_ends_with((string) $newContent, "\n")) {

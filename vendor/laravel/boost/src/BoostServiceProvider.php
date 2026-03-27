@@ -12,8 +12,11 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\View\Compilers\BladeCompiler;
+use Laravel\Boost\Install\GuidelineAssist;
+use Laravel\Boost\Install\GuidelineConfig;
 use Laravel\Boost\Mcp\Boost;
 use Laravel\Boost\Middleware\InjectBoost;
+use Laravel\Boost\Services\BrowserLogger;
 use Laravel\Mcp\Facades\Mcp;
 use Laravel\Roster\Roster;
 
@@ -58,6 +61,13 @@ class BoostServiceProvider extends ServiceProvider
 
             return $roster;
         });
+
+        $this->app->singleton(GuidelineConfig::class, fn (): GuidelineConfig => new GuidelineConfig);
+
+        $this->app->singleton(GuidelineAssist::class, fn ($app): GuidelineAssist => new GuidelineAssist(
+            $app->make(Roster::class),
+            $app->make(GuidelineConfig::class)
+        ));
     }
 
     public function boot(Router $router): void
@@ -162,6 +172,10 @@ class BoostServiceProvider extends ServiceProvider
 
     protected function registerBrowserLogger(): void
     {
+        if (config('logging.channels.browser') !== null) {
+            return;
+        }
+
         config([
             'logging.channels.browser' => [
                 'driver' => 'single',
@@ -174,7 +188,7 @@ class BoostServiceProvider extends ServiceProvider
 
     protected function registerBladeDirectives(BladeCompiler $bladeCompiler): void
     {
-        $bladeCompiler->directive('boostJs', fn (): string => '<?php echo '.\Laravel\Boost\Services\BrowserLogger::class.'::getScript(); ?>');
+        $bladeCompiler->directive('boostJs', fn (): string => '<?php echo '.BrowserLogger::class.'::getScript(); ?>');
     }
 
     protected function hookIntoResponses(Router $router): void

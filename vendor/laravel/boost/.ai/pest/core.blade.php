@@ -19,9 +19,9 @@ it('is true', function () {
 
 ### Running Tests
 - Run the minimal number of tests using an appropriate filter before finalizing code edits.
-- To run all tests: `{{ $assist->artisanCommand('test') }}`.
-- To run all tests in a file: `{{ $assist->artisanCommand('test tests/Feature/ExampleTest.php') }}`.
-- To filter on a particular test name: `{{ $assist->artisanCommand('test --filter=testName') }}` (recommended after making a change to a related file).
+- To run all tests: `{{ $assist->artisanCommand('test --compact') }}`.
+- To run all tests in a file: `{{ $assist->artisanCommand('test --compact tests/Feature/ExampleTest.php') }}`.
+- To filter on a particular test name: `{{ $assist->artisanCommand('test --compact --filter=testName') }}` (recommended after making a change to a related file).
 - When the tests relating to your changes are passing, ask the user if they would like to run the entire test suite to ensure everything is still passing.
 
 ### Pest Assertions
@@ -40,7 +40,7 @@ it('returns all', function () {
 - You can also create partial mocks using the same import or self method.
 
 ### Datasets
-- Use datasets in Pest to simplify tests which have a lot of duplicated data. This is often the case when testing validation rules, so consider going with this solution when writing tests for validation rules.
+- Use datasets in Pest to simplify tests that have a lot of duplicated data. This is often the case when testing validation rules, so consider this solution when writing tests for validation rules.
 
 <code-snippet name="Pest Dataset Example" lang="php">
 it('has emails', function (string $email) {

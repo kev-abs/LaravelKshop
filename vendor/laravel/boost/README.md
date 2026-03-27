@@ -26,7 +26,7 @@ Boost also features a powerful Documentation API that combines a built-in MCP to
 Laravel Boost can be installed via Composer:
 
 ```bash
-composer require laravel/boost --dev
+composer require laravel/boost -w --dev
 ```
 
 Next, install the MCP server and coding guidelines:
@@ -39,7 +39,7 @@ Feel free to add the generated MCP configuration file, guideline files (`.mcp.js
 
 Once Laravel Boost has been installed, you're ready to start coding with Cursor, Claude Code, or your AI agent of choice.
 
-### Setup Your Code Editors
+### Set up Your Code Editors
 
 #### PhpStorm
 
@@ -96,7 +96,6 @@ Once Laravel Boost has been installed, you're ready to start coding with Cursor,
 | List Available Env Vars    | Inspect the available environment variable keys                                                                |
 | List Routes                | Inspect the application's routes                                                                               |
 | Read Log Entries           | Read the last N log entries                                                                                    |
-| Report Feedback            | Share Boost & Laravel AI feedback with the team, just say "give Boost feedback: x, y, and z"                   |
 | Search Docs                | Query the Laravel hosted documentation API service to retrieve documentation based on installed packages       |
 | Tinker                     | Execute arbitrary code within the context of the application                                                   |
 
@@ -104,23 +103,23 @@ Once Laravel Boost has been installed, you're ready to start coding with Cursor,
 
 Laravel Boost includes AI guidelines for the following packages and frameworks. The `core` guidelines provide generic, generalized advice to the AI for the given package that is applicable across all versions.
 
-| Package | Versions Supported |
-|---------|-------------------|
-| Core & Boost | core |
+| Package | Versions Supported     |
+|---------|------------------------|
+| Core & Boost | core                   |
 | Laravel Framework | core, 10.x, 11.x, 12.x |
-| Livewire | core, 2.x, 3.x |
-| Flux UI | core, free, pro |
-| Herd | core |
-| Inertia Laravel | core, 1.x, 2.x |
-| Inertia React | core, 1.x, 2.x |
-| Inertia Vue | core, 1.x, 2.x |
-| Pest | core, 4.x |
-| PHPUnit | core |
-| Pint | core |
-| Tailwind CSS | core, 3.x, 4.x |
-| Livewire Volt | core |
-| Laravel Folio | core |
-| Enforce Tests | conditional |
+| Livewire | core, 2.x, 3.x, 4.x    |
+| Flux UI | core, free, pro        |
+| Herd | core                   |
+| Inertia Laravel | core, 1.x, 2.x         |
+| Inertia React | core, 1.x, 2.x         |
+| Inertia Vue | core, 1.x, 2.x         |
+| Pest | core, 4.x              |
+| PHPUnit | core                   |
+| Pint | core                   |
+| Tailwind CSS | core, 3.x, 4.x         |
+| Livewire Volt | core                   |
+| Laravel Folio | core                   |
+| Enforce Tests | conditional            |
 
 ### Keeping Guidelines Up-to-Date
 
@@ -145,15 +144,15 @@ You may also automate this process by adding it to your Composer "post-update-cm
 ## Available Documentation
 
 | Package | Versions Supported |
-|---------|-------------------|
-| Laravel Framework | 10.x, 11.x, 12.x |
-| Filament | 2.x, 3.x, 4.x |
-| Flux UI | 2.x Free, 2.x Pro |
-| Inertia | 1.x, 2.x |
-| Livewire | 1.x, 2.x, 3.x |
-| Nova | 4.x, 5.x |
-| Pest | 3.x, 4.x |
-| Tailwind CSS | 3.x, 4.x |
+|---------|--------------------|
+| Laravel Framework | 10.x, 11.x, 12.x   |
+| Filament | 2.x, 3.x, 4.x, 5.x |
+| Flux UI | 2.x Free, 2.x Pro  |
+| Inertia | 1.x, 2.x           |
+| Livewire | 1.x, 2.x, 3.x, 4.x |
+| Nova | 4.x, 5.x           |
+| Pest | 3.x, 4.x           |
+| Tailwind CSS | 3.x, 4.x           |
 
 
 ## Adding Custom AI Guidelines

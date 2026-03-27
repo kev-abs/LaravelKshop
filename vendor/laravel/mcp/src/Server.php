@@ -6,14 +6,21 @@ namespace Laravel\Mcp;
 
 use Illuminate\Container\Container;
 use Illuminate\Support\Str;
+use Laravel\Mcp\Events\SessionInitialized;
+use Laravel\Mcp\Server\Attributes\Instructions;
+use Laravel\Mcp\Server\Attributes\Name;
+use Laravel\Mcp\Server\Attributes\Version;
+use Laravel\Mcp\Server\Concerns\ReadsAttributes;
 use Laravel\Mcp\Server\Contracts\Method;
 use Laravel\Mcp\Server\Contracts\Transport;
 use Laravel\Mcp\Server\Exceptions\JsonRpcException;
 use Laravel\Mcp\Server\Methods\CallTool;
+use Laravel\Mcp\Server\Methods\CompletionComplete;
 use Laravel\Mcp\Server\Methods\GetPrompt;
 use Laravel\Mcp\Server\Methods\Initialize;
 use Laravel\Mcp\Server\Methods\ListPrompts;
 use Laravel\Mcp\Server\Methods\ListResources;
+use Laravel\Mcp\Server\Methods\ListResourceTemplates;
 use Laravel\Mcp\Server\Methods\ListTools;
 use Laravel\Mcp\Server\Methods\Ping;
 use Laravel\Mcp\Server\Methods\ReadResource;
@@ -34,6 +41,16 @@ use Throwable;
  */
 abstract class Server
 {
+    use ReadsAttributes;
+
+    public const CAPABILITY_TOOLS = 'tools';
+
+    public const CAPABILITY_RESOURCES = 'resources';
+
+    public const CAPABILITY_PROMPTS = 'prompts';
+
+    public const CAPABILITY_COMPLETIONS = 'completions';
+
     protected string $name = 'Laravel MCP Server';
 
     protected string $version = '0.0.1';
@@ -46,6 +63,7 @@ abstract class Server
      * @var array<int, string>
      */
     protected array $supportedProtocolVersion = [
+        '2025-11-25',
         '2025-06-18',
         '2025-03-26',
         '2024-11-05',
@@ -55,13 +73,13 @@ abstract class Server
      * @var array<string, array<string, bool>|stdClass|string>
      */
     protected array $capabilities = [
-        'tools' => [
+        self::CAPABILITY_TOOLS => [
             'listChanged' => false,
         ],
-        'resources' => [
+        self::CAPABILITY_RESOURCES => [
             'listChanged' => false,
         ],
-        'prompts' => [
+        self::CAPABILITY_PROMPTS => [
             'listChanged' => false,
         ],
     ];
@@ -93,8 +111,10 @@ abstract class Server
         'tools/call' => CallTool::class,
         'resources/list' => ListResources::class,
         'resources/read' => ReadResource::class,
+        'resources/templates/list' => ListResourceTemplates::class,
         'prompts/list' => ListPrompts::class,
         'prompts/get' => GetPrompt::class,
+        'completion/complete' => CompletionComplete::class,
         'ping' => Ping::class,
     ];
 
@@ -209,12 +229,16 @@ abstract class Server
 
     public function createContext(): ServerContext
     {
+        $name = $this->resolveAttribute(Name::class);
+        $version = $this->resolveAttribute(Version::class);
+        $instructions = $this->resolveAttribute(Instructions::class);
+
         return new ServerContext(
             supportedProtocolVersions: $this->supportedProtocolVersion,
             serverCapabilities: $this->capabilities,
-            serverName: $this->name,
-            serverVersion: $this->version,
-            instructions: $this->instructions,
+            serverName: $name !== null ? $name->value : $this->name,
+            serverVersion: $version !== null ? $version->value : $this->version,
+            instructions: $instructions !== null ? $instructions->value : $this->instructions,
             maxPaginationLength: $this->maxPaginationLength,
             defaultPaginationLength: $this->defaultPaginationLength,
             tools: $this->tools,
@@ -272,7 +296,16 @@ abstract class Server
     {
         $response = (new Initialize)->handle($request, $context);
 
-        $this->transport->send($response->toJson(), $this->generateSessionId());
+        $sessionId = $this->generateSessionId();
+
+        Container::getInstance()->make('events')->dispatch(new SessionInitialized(
+            sessionId: $sessionId,
+            clientInfo: $request->params['clientInfo'] ?? null,
+            protocolVersion: $request->params['protocolVersion'] ?? null,
+            clientCapabilities: $request->params['capabilities'] ?? null,
+        ));
+
+        $this->transport->send($response->toJson(), $sessionId);
     }
 
     protected function generateSessionId(): string

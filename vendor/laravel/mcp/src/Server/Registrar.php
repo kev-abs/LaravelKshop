@@ -37,7 +37,7 @@ class Registrar
             fn (): HttpTransport => new HttpTransport(
                 $request = request(),
                 // @phpstan-ignore-next-line
-                (string) $request->header('Mcp-Session-Id')
+                (string) $request->header('MCP-Session-Id')
             ),
         ))->middleware([
             ReorderJsonAccept::class,
@@ -84,7 +84,7 @@ class Registrar
 
     public function oauthRoutes(string $oauthPrefix = 'oauth'): void
     {
-        $this->maybeAddMcpScope();
+        static::ensureMcpScope();
         Router::get('/.well-known/oauth-protected-resource/{path?}', fn (?string $path = '') => response()->json([
             'resource' => url('/'.$path),
             'authorization_servers' => [url('/'.$path)],
@@ -108,7 +108,7 @@ class Registrar
     /**
      * @return array<string, string>
      */
-    protected function maybeAddMcpScope(): array
+    public static function ensureMcpScope(): array
     {
         if (class_exists('Laravel\Passport\Passport') === false) {
             return [];

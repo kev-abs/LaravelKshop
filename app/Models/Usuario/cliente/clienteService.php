@@ -1,4 +1,5 @@
 <?php
+namespace App\Models\Usuario\cliente;
 class ClienteService {
     private $apiUrl;
 
