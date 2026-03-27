@@ -58,5 +58,15 @@
 
 </div>
 
+<footer class="bg-dark text-white text-center py-4 mt-auto">
+    <div class="container">
+        <div class="mb-3">
+            <a href="#" class="text-white me-3">Términos</a>
+            <a href="#" class="text-white me-3">Privacidad</a>
+            <a href="#" class="text-white">Ayuda</a>
+        </div>
+        <p class="mb-0">&copy; 2025 Tienda K-Shop - Todos los derechos reservados</p>
+    </div>
+</footer>
 </body>
 </html>

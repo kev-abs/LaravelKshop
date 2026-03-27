@@ -29,18 +29,21 @@
 
     <form method="POST" action="{{ route('cupon.asignar') }}" class="text-center">
         @csrf
+        <div class="row justify-content-center mb-4">
+
+    <div class="col-md-4">
+        <label class="form-label">Seleccionar Cliente</label>
+        <select name="ID_Cliente" class="form-select" required>
+            <option value="">-- Seleccione Cliente --</option>
+            @foreach($clientes as $cliente)
+                <option value="{{ $cliente->ID_Cliente }}">
+                    {{ $cliente->Nombre }}
+                </option>
+            @endforeach
+        </select>
+    </div>
+
         <div class="col-md-4">
-            <label class="form-label">Seleccionar Cliente</label>
-            <select name="ID_Cliente" class="form-select" required>
-                <option value="">-- Seleccione Cliente --</option>
-                 @foreach($clientes as $cliente)
-                     <option value="{{ $cliente->ID_Cliente }}">
-                        {{ $cliente->Nombre }} <!-- nombre completo -->
-                    </option>
-                 @endforeach
-            </select>
-        </div>
-            <div class="col-md-4">
             <label class="form-label">Seleccionar Cupón</label>
             <select name="ID_Cupon" class="form-select" required>
                 <option value="">-- Seleccione Cupón --</option>
@@ -52,7 +55,12 @@
             </select>
         </div>
 
-        <button type="submit" class="btn btn-success">Asignar Cupón</button>
+    </div>
+        <div class="text-center">
+            <button type="submit" class="btn btn-warning px-4">
+                <i class="bi bi-ticket-perforated"></i> Asignar Cupón
+            </button>
+        </div>
     </form>
 </div>
 

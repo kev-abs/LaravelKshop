@@ -32,7 +32,7 @@
                         <i class="bi bi-ticket-perforated-fill fs-1 text-warning mb-3"></i>
                         <h4 class="fw-bold">Gestión de Cupones</h4>
                         <p class="text-muted">Consultar, agregar, actualizar o eliminar cupones.</p>
-                        <div class="d-flex justify-content-center gap-2">
+                        <div class="d-flex flex-wrap justify-content-center gap-2">
                             <a href="{{route('cupon.consultar')}}" class="btn btn-outline-dark">
                                 <i class="bi bi-search"></i> Consultar
                             </a>
