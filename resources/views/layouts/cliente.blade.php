@@ -31,18 +31,6 @@
         <!-- ACCIONES -->
         <div class="d-flex align-items-center gap-2">
 
-            <!-- BOTÓN MENÚ -->
-            <button class="btn btn-outline-dark"
-                    data-bs-toggle="offcanvas"
-                    data-bs-target="#menuCliente">
-                <i class="bi bi-list"></i>
-            </button>
-
-            <!-- MODO OSCURO -->
-            <button onclick="toggleDarkMode()" class="btn btn-outline-dark">
-                <i class="bi bi-moon"></i>
-            </button>
-
             <!-- LOGOUT -->
             <form method="POST" action="{{ route('logout') }}">
                 @csrf

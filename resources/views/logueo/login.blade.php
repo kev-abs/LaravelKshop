@@ -107,26 +107,23 @@
               Correo electrónico *
             </label>
 
-            <input 
-              type="email" 
-              name="correo"
-              class="form-control form-control-lg rounded-0"
-              required
-            >
+            <input type="email" name="correo"class="form-control form-control-lg rounded-0"required>
           </div>
-
           <!-- PASSWORD -->
           <div class="mb-2">
             <label class="form-label fw-semibold small">
               Contraseña *
             </label>
 
-            <input 
-              type="password" 
-              name="contrasena"
-              class="form-control form-control-lg rounded-0"
-              required
-            >
+            <div class="input-group">
+
+              <input type="password" name="contrasena"id="passwordInput"class="form-control form-control-lg rounded-0"required>
+
+              <button type="button" class="btn btn-outline-dark" onclick="togglePassword()">
+                <i class="bi bi-eye" id="eyeIcon"></i>
+              </button>
+
+            </div>
           </div>
 
           <!-- FORGOT -->
@@ -217,7 +214,22 @@
     </div>
   </div>
 </footer>
+<script>
+function togglePassword() {
+    const input = document.getElementById("passwordInput");
+    const icon = document.getElementById("eyeIcon");
 
+    if (input.type === "password") {
+        input.type = "text";
+        icon.classList.remove("bi-eye");
+        icon.classList.add("bi-eye-slash");
+    } else {
+        input.type = "password";
+        icon.classList.remove("bi-eye-slash");
+        icon.classList.add("bi-eye");
+    }
+}
+</script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
