@@ -15,7 +15,7 @@ class CheckoutController
         $this->checkoutService = $checkoutService;
     }
 
-    // Mostrar formulario checkout
+
     public function index()
     {
         $carrito = session('carrito', []);
@@ -27,7 +27,7 @@ class CheckoutController
         return view('ventas.checkout', compact('carrito'));
     }
 
-    // Confirmar compra
+
     public function store(Request $request)
     {
         // Validar sesión cliente
@@ -37,7 +37,7 @@ class CheckoutController
                 ->with('error', 'Debes iniciar sesión para comprar');
         }
 
-        //  Validar formulario
+
         $request->validate([
             'direccion'     => 'required|string',
             'metodo_pago'   => 'required|string',

@@ -1,0 +1,212 @@
+[33m26ab93bb[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m Merge pull request #48 from kev-abs/Ram_Kevyn
+[33mfb12d2fd[m[33m ([m[1;31morigin/Ram_Kevyn[m[33m)[m Merge branch 'main' of https://github.com/kev-abs/LaravelKshop into Ram_Kevyn
+[33m0c35e3c2[m Merge pull request #47 from kev-abs/Ram_Kevin
+[33m8a187d37[m categorias en panel cliente
+[33md758895e[m[33m ([m[1;31morigin/Ram_Kevin[m[33m, [m[1;32mRam_Kevin[m[33m)[m Resolviendo conflicto en confirmar.blade.php
+[33mbf5605b0[m Cambios en carrito y pedido
+[33m3447ffac[m Merge pull request #46 from kev-abs/main
+[33mb2499501[m Merge pull request #45 from kev-abs/Ram_Kevyn
+[33m104d5f75[m Categorias ya correctas
+[33m42da1b63[m Revert "categorizacion cliente"
+[33m056fdc69[m Merge pull request #44 from kev-abs/Ram_Kevin
+[33me40381e6[m Merge branch 'main' into Ram_Kevin
+[33mc3482606[m Se reestablecio el diseño de la vista confirmar carrito
+[33mfa39c108[m ajuste en rutas carrito
+[33m88bce231[m Se agregaron servicios al cliente
+[33mf389de6a[m[33m ([m[1;31morigin/Ram_Manu[m[33m)[m Se agregaron los servicios al cliente y se ajustaron algunas vistas
+[33mffabec9c[m Merge branch 'main' into Ram_Manu
+[33m9dff67d8[m Merge branch 'Ram_Manu' of https://github.com/kev-abs/LaravelKshop into Ram_Manu
+[33mb9c4e48a[m ajuste en panel cliente
+[33m4d9c2839[m Cupones
+[33m3895d1f4[m ajustes vista productos en index
+[33m4d911deb[m Merge pull request #42 from kev-abs/Ram_Santi
+[33m09575782[m Merge branch 'main' into Ram_Santi
+[33mc034fb6b[m ..
+[33mebe5a7c3[m Ajustes en las vistas para carrito y pedido
+[33mdeb0f48b[m Merge pull request #41 from kev-abs/Ram_Kevin
+[33m71dbfae4[m img
+[33m90462cc9[m ajustes en index, se agrego la funcionalidad a el boton suscripcion a noticias, se Ajustaron rutas en los controllers para el despliegue
+[33m30487df3[m Merge pull request #40 from kev-abs/Ram_Manu
+[33md7489ca7[m Merge branch 'main' into Ram_Manu
+[33mf2f6fa75[m Ajuste en rutas para despliegue
+[33m838d24f0[m Merge pull request #39 from kev-abs/Ram_Kevin
+[33m9c50de61[m Ajustes en las vistas para carrito y pedido
+[33m23e781c6[m Cambio en vista para elminar botones
+[33m0ad3f13d[m cupon en carrito
+[33m86954c06[m Merge branch 'main' into Ram_Kevin
+[33m313769bf[m Merge remote-tracking branch 'origin' into Ram_Santi
+[33m2e757e24[m Merge pull request #38 from kev-abs/Ram_Manu
+[33me703ecc5[m ajustes en el index
+[33m76b8a8fb[m ..
+[33mc4e4e8ca[m solucion de vsitas
+[33m8b13aa9e[m se quitaron los botones de volver en productos
+[33m5cfe4182[m Merge pull request #37 from kev-abs/Ram_Manu
+[33mce7b5d71[m ajustes en panel admin, se agrego configuracion
+[33m21e21e93[m ajuste en el panel admin para acceso de vendedor, ajustes en el modulo usuarios en el apartado de empleados
+[33m4062dd68[m .
+[33me4e41b71[m cupones en carrito
+[33m762bb49f[m Cupones en carrito
+[33m474e1bb7[m Se actualizo el gitignore para vendor
+[33m75f228e5[m Merge pull request #36 from kev-abs/Ram_Kevin
+[33m60317b45[m Merge branch 'main' into Ram_Kevin
+[33m40e40e69[m Merge pull request #35 from kev-abs/Ram_Kevyn
+[33m4cb488bf[m categorizacion cliente
+[33m34473020[m Registro Con Verificacion
+[33m7c689c22[m registro con verificacion agregado correctamente
+[33m0d05cc12[m Consultar envios en admin corregido, realizado el cambio de estado
+[33m35a0c64f[m Fix merge conflict removing vendor
+[33m7c4de3c2[m Merge remote-tracking branch 'origin' into Ram_Santi
+[33mf261ffbe[m Merge pull request #33 from kev-abs/Ram_Manu
+[33m0c57c711[m .
+[33m78d408bb[m pruebas U.
+[33m8f83c9ee[m Remove vendor and phpunit cache from tracking
+[33m51bafe0f[m Merge pull request #32 from kev-abs/Ram_Kevyn
+[33m50ab2d2b[m Merge branch 'main' into Ram_Kevyn
+[33m92a05090[m rutas imagenes barra de busqueda
+[33mf710e5f8[m ajuste en vista inicio
+[33ma247c802[m Ajuste de Excepciones, registro y recuperacion de contraseña
+[33m07ac971d[m se ajustaron las vistas del registro y olvido de contraseñ, se ajustaron tambien las excepciones para el ingreso de datos
+[33m5c15a763[m ajuste en vistas login y registro
+[33ma6152c3d[m Merge pull request #30 from kev-abs/Ram_Manu
+[33m05bdbd21[m Se ajustó el envió directo de correos electronicos para la recuperacion de contraseñas de clientes
+[33me504f26c[m Merge branch 'main' into Ram_Manu
+[33mca706d58[m reajste de ruta
+[33m205cfe37[m Merge pull request #29 from kev-abs/Ram_Manu
+[33mb82fb85d[m Se ajusto el cerrar sesion para que rompiera completamente la sesión y se ajustaron las rutas de todos los arcvivos que tenian relacion con cerrar sesion
+[33mc0e7a0c7[m .
+[33mc0e6e8f4[m Merge forzado desde main aceptando theirs
+[33m13b037fa[m Merge branch 'main' into Ram_Kevin
+[33m3faad1ac[m Pruebas unitarias de de pedido y carrito
+[33m7be17e33[m Merge pull request #28 from kev-abs/Ram_Kevyn
+[33m39522a93[m categorias mejoradas
+[33m64f8bac9[m Actualizando gitignore para ignorar vendor
+[33m2ddd2cee[m Removiendo vendor del repositorio
+[33ma5e2bc1f[m Resolviendo conflictos con main
+[33m51111bdf[m modificaciones en carrito
+[33m80cedb41[m Pruebas unitarias
+[33mdb5544e8[m Merge remote-tracking branch 'origin' into Ram_Santi
+[33m27c4f3b9[m Resolviendo conflictos eliminando vendor
+[33m2818b610[m Funcionamiento de pedido en admin
+[33m43a9e283[m 
+[33m33faf91b[m solucion errores
+[33m9e64599c[m Merge pull request #27 from kev-abs/Ram_Manu
+[33m04ad48b1[m ajuste de rutas y cambio en el front de panel cliente
+[33me6a1bd19[m Merge pull request #26 from kev-abs/Ram_Santi
+[33m2a1297c2[m solucion de problemas
+[33m222789a4[m panel cliente ajustes
+[33m66c29c9a[m Merge branch 'main' into Ram_Manu
+[33m18571e98[m ajustes en panel admin
+[33m11e3e6c3[m Merge pull request #25 from kev-abs/Ram_Kevyn barra de busqueda
+[33m7fc3d4a7[m Merge branch 'main' into Ram_Kevyn
+[33ma6c5a559[m barra de buqueda e imagenes carrito
+[33m8bc05fde[m Merge pull request #24 from kev-abs/Ram_Santi
+[33m80cce220[m Merge branch 'main' of https://github.com/kev-abs/LaravelKshop into Ram_Santi
+[33mfc5fc48a[m .
+[33mf9e240f4[m CRUD completo de proveedores
+[33me0f0817b[m Comporbante de pago realizado
+[33m1e7de61e[m crud de proveedor
+[33m0aa04c1c[m ajsute de redirección
+[33m622397da[m Merge pull request #22 from kev-abs/Ram_Manu
+[33m31abd075[m tenemos funcional la consulta, se ajustó la actualizacion de clientes según lo requirio la auditoria, y ajustamos redirecciones
+[33me8d090c4[m se agregaron reportes en la consulta de clientes y la herramienta de filtrado de datos
+[33mfb899740[m Merge branch 'main' of https://github.com/kev-abs/LaravelKshop into Ram_Kevyn
+[33m1efd2982[m vista entre productos y carrito
+[33m40103998[m Merge branch 'main' of https://github.com/kev-abs/LaravelKshop
+[33m29b9b7ac[m Productos
+[33m28ed8a00[m Merge pull request #21 from kev-abs/Ram_Santi
+[33m55c423e1[m Merge branch 'Ram_Santi' of https://github.com/kev-abs/LaravelKshop into Ram_Santi
+[33m78f295d2[m se anexo el inventario y funciones
+[33md864fde2[m Merge branch 'main' of https://github.com/kev-abs/LaravelKshop
+[33m03cc9898[m .
+[33mc19a7737[m Cambios en panel de administrador en el modulo de ventas, Pedido funcional
+[33md7b2c544[m Merge aceptando main
+[33m021dee79[m Carrito y pedido funcional
+[33mcdadfba8[m ajustes en productos
+[33m46a269f0[m ajustes de ruta
+[33m9b4b59cd[m Productos
+[33m55363cc5[m vista de cupones en panel cliente
+[33m3afd7c34[m Historial de compras
+[33m3daf8488[m Merge pull request #20 from kev-abs/Ram_Santi
+[33m38c99e30[m Merge branch 'main' into Ram_Santi
+[33m3cbc2721[m cupon_cliente vista
+[33m0cf509df[m agregar cupon_cliente
+[33m16359e8e[m Merge branch 'Ram_Kevin'
+[33me2090a46[m Merge branch 'main' into Ram_Santi
+[33m3aa20a14[m agregar cupones
+[33m7b8ba413[m Merge branch 'main' into Ram_Kevin
+[33m5028f880[m Merge branch 'main' of https://github.com/kev-abs/LaravelKshop
+[33m607ee325[m se ajusto el login a panel cliente
+[33m71d1b766[m errores
+[33mad5c8758[m solucion error
+[33m9921f157[m Merge pull request #19 from kev-abs/Ram_Santi
+[33mdb8f6e72[m Merge branch 'main' into Ram_Santi
+[33m7ff867c7[m Merge branch 'main' into Ram_Kevin
+[33m801a53a7[m correccion error vista
+[33m5f277970[m Compra funcional
+[33m20d66bd5[m CRUD ingreso_compra
+[33mbbdaf326[m Merge pull request #18 from kev-abs/Ram_Kevyn
+[33mb734b1cd[m Merge branch 'main' into Ram_Kevyn
+[33m31648c56[m intento de barra de busqueda
+[33m9e9bb8c0[m Merge pull request #17 from kev-abs/Ram_Manu
+[33mdc60512d[m se ajustaron las vistas de panel cliente
+[33mfb4c9dc5[m Conflictos resueltos
+[33m5c2972e3[m Creacion de carrito en proceso
+[33md45a1fc9[m Merge pull request #16 from kev-abs/Ram_Kevyn
+[33ma7ad2145[m Categorias correctas
+[33m0b081b56[m Merge pull request #15 from kev-abs/Ram_Manu
+[33mcb6c163e[m panel cliente ajustado
+[33m29406012[m Merge pull request #14 from kev-abs/Ram_Manu
+[33mc50ab441[m Perfil Panel Admin ajustado
+[33m41a22fe7[m Merge branch 'main' into Ram_Kevin
+[33ma51ea3ee[m put en envio y pedido funcional
+[33m46010578[m solucion error vista
+[33m052555b2[m Merge pull request #13 from kev-abs/Ram_Santi
+[33m5af4be80[m CRUD cupon
+[33md5e04108[m Merge pull request #12 from kev-abs/Ram_Santi
+[33ma1614466[m solucion error
+[33m1567f6bd[m Diseño y solucion errores
+[33m784f7d61[m Solucion errores
+[33m36e802e6[m Merge pull request #11 from kev-abs/Ram_Manu
+[33m5a5c522f[m olvidar contraseña funcional
+[33m23dabc0d[m Merge pull request #10 from kev-abs/Ram_Manu
+[33m6137b1e7[m merge manu
+[33m8b152bdd[m resgistro cliente ajustado
+[33mbb0e0a87[m Configuracion de rutas en el panel de admin
+[33m558e35bd[m Conflictos resueltos
+[33m3a4082a1[m Conflictos resueltos
+[33med4e017a[m ruta ajustada
+[33mb2b671f6[m Merge pull request #9 from kev-abs/Ram_Santi
+[33m8c1890a4[m Merge branch 'main' into Ram_Santi
+[33m38a6009d[m Merge pull request #8 from kev-abs/Ram_Kevyn
+[33m6090f2fc[m productos que podrian interesar al cliente
+[33m6cfdd325[m conflictos resueltos
+[33mea07f587[m correccion categorias
+[33m9bafc3db[m categoria
+[33m00a80f86[m en proceso de crud
+[33m1249800b[m Merge pull request #6 from kev-abs/Ram_Manu
+[33mcbf74977[m PUT productos
+[33m50ca1df9[m Merge pull request #5 from kev-abs/Ram_Kevin
+[33m869fc04d[m Merge branch 'main' into Ram_Kevin
+[33ma9568ac0[m ajustado el controller para que lea claves encriptadas
+[33m71d48527[m Vista de ventas y envios funcional, envio realiza el metodo get
+[33mb59c25d4[m Merge pull request #4 from kev-abs/Ram_Manu
+[33m91b3602a[m CRUD de tablas empleados y clientes completo
+[33m6fbb9c22[m get y post clientes ajustado
+[33m01c26d56[m Merge branch 'main' into Ram_Kevyn
+[33m4791ee21[m n
+[33m86318e82[m Merge pull request #3 from kev-abs/Ram_Kevyn
+[33m6573177a[m Merge branch 'main' into Ram_Kevyn
+[33m414cb82e[m holi
+[33m3624b481[m Merge pull request #2 from kev-abs/Ram_Manu
+[33m0337b0fc[m acceso a paneladmin completo, acceso a modulo usuarios completo, crud usuarios en proceso
+[33ma3660a32[m logueo avanzando
+[33mbe5644db[m vistas
+[33m3d0e9b10[m Vista consultar y editar productos
+[33m9807881f[m get productos
+[33m48324737[m Se pueden ver los get
+[33m709cfc9f[m traer datos
+[33me04bfe68[m todo arriba
+[33me0932d6d[m Merge pull request #1 from kev-abs/Ram_Manu
+[33m5a006cb1[m .env subido
+[33m296506db[m laravel
+[33m48712252[m laravel
