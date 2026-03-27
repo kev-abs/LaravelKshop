@@ -20,7 +20,10 @@ use App\Http\Controllers\ProveedorController;
 use App\Http\Controllers\Usuario\ClientesController;
 use App\Http\Controllers\Usuario\EmpleadosController;
 use App\Http\Controllers\ContactoController;
-
+use App\Exports\ClientesExport;
+use App\Exports\EmpleadosExport;
+use App\Exports\ProductosExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 Route::get('/ventas', function () {return view('ventas.ventas');})->name('ventas.ventas');
 
@@ -110,7 +113,7 @@ Route::middleware(['verificar.sesion'])->group(function () {
     Route::put('/cupon/editar', [CuponController::class, 'update'])->name('cupon.update');
     Route::delete('/cupon/eliminar', [CuponController::class, 'destroy'])->name('cupon.eliminar');
     Route::post('/carrito/cupon/aplicar', [CarritoController::class, 'aplicarCupon'])->name('carrito.cupon.aplicar');
-Route::get('/carrito/cupon/quitar', [CarritoController::class, 'quitarCupon'])->name('carrito.cupon.quitar');
+    Route::get('/carrito/cupon/quitar', [CarritoController::class, 'quitarCupon'])->name('carrito.cupon.quitar');
 
     //Asignar cupon a cliente
 
@@ -120,6 +123,18 @@ Route::get('/carrito/cupon/quitar', [CarritoController::class, 'quitarCupon'])->
 
     //GESTION DE INVENTARIO
     Route::get('/inventario/productos', [ProductoController::class, 'inventario'])->name('productos.inventario');
+
+    //REPORTES
+    Route::get('/admin/reportes/ventas', [PedidoController::class, 'estadisticasVentas'])->name('reportes.ventas');
+    Route::get('/admin/reportes/productos', [PedidoController::class, 'productosMasVendidos'])->name('reportes.productos');
+    Route::get('/admin/reportes/clientes', [PedidoController::class, 'clientesFrecuentes'])->name('reportes.clientes');
+    Route::get('/admin/reportes/cupones', [PedidoController::class, 'efectividadCupones'])->name('reportes.cupones');
+
+    //EXPORTACIONES
+    Route::get('/admin/reportes/exportar', function () {return view('admin.exportar.Exportar_Datos');})->name('exportar.datos');
+    Route::get('/exportar/clientes', function () { return Excel::download(new ClientesExport, 'clientes.xlsx'); });
+    Route::get('/exportar/empleados', function () { return Excel::download(new EmpleadosExport, 'empleados.xlsx'); });
+    Route::get('/exportar/productos', function () { return Excel::download(new ProductosExport, 'productos.xlsx'); });
 
     //Rutas modulo de Usuarios
     Route::get('/panel/admin', [AdminController::class, 'panel'])->name('panel.admin');

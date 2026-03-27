@@ -57,7 +57,11 @@
             <input type="text" name="Direccion" class="form-control">
         </div>
 
-        <button class="btn btn-success w-100 mb-3">Guardar</button>
+        <div class="text-center">
+            <button type="submit" class="btn btn-warning px-4">
+                <i class="bi bi-truck"></i> Agregar Proveedor
+            </button>
+        </div>
     </form>
 
 </div>

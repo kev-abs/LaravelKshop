@@ -57,7 +57,7 @@ class CuponController
             }
         }
 
-        return view('cupon.agregar', compact('mensaje'));
+         return back()->with('mensaje', 'Cupón agregado correctamente');
     }
     // ================= ACTUALIZAR / ELIMINAR =================
 
