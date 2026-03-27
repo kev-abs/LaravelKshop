@@ -86,8 +86,6 @@ placeholder="Buscar productos..."
   @if(session('success'))
     <div class="alert alert-success">{{ session('success') }}</div>
   @endif
-
-<<<<<<< HEAD
   <style>
   .wish-card {
     border: none;

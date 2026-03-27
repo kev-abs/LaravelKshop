@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Usuario;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Mail;
@@ -373,5 +374,47 @@ class ClientesController
             ->get();
 
         return view('panelcliente.historial', compact('pedidos'));
+    }
+    public function configuracion()
+    {
+        $id = session('id_cliente');
+
+        $cliente = DB::table('cliente')
+            ->where('ID_Cliente', $id)
+            ->first();
+
+        return view('Usuario.panel.Confiiguracion.configuracionCliente', compact('cliente'));
+    }
+    public function cambiarPassword(Request $request)
+    {
+        if (session('rol') !== 'cliente') {
+            return redirect()->route('login');
+        }
+
+        $request->validate([
+            'actual' => 'required',
+            'nueva' => 'required|min:6',
+            'confirmar' => 'required'
+        ]);
+
+        $id = session('id_cliente');
+
+        $cliente = DB::table('cliente')->where('ID_Cliente', $id)->first();
+
+        if (!Hash::check($request->actual, $cliente->Contrasena)) {
+            return back()->with('error', 'Contraseña actual incorrecta');
+        }
+
+        if ($request->nueva !== $request->confirmar) {
+            return back()->with('error', 'Las contraseñas no coinciden');
+        }
+
+        DB::table('cliente')
+            ->where('ID_Cliente', $id)
+            ->update([
+                'Contrasena' => bcrypt($request->nueva)
+            ]);
+
+        return back()->with('success', 'Contraseña actualizada correctamente');
     }
 }
