@@ -98,10 +98,8 @@ class Administrador
             <ul class="list-unstyled">
               <li><a href="{{ route('empleados.consultar') }}" class="text-white text-decoration-none">➤ Consultar Empleados </a></li>
               <li><a href="{{ route('empleados.agregar') }}" class="text-white text-decoration-none">➤ Registrar Empleados</a></li>
-              <li><a href="{{ route('empleados.editar') }}" class="text-white text-decoration-none">➤ Actualizar o Eliminar empleados</a></li>
               <li><a href="{{ route('clientes.consultar') }}" class="text-white text-decoration-none">➤ Consultar Clientes</a></li>
               <li><a href="{{ route('clientes.agregar') }}" class="text-white text-decoration-none">➤ Agregar Cliente</a></li>
-              <li><a href="{{ route('clientes.update') }}" class="text-white text-decoration-none">➤ Actualizar o Eliminar Cliente</a></li>
             </ul>
           </div>
         </div>
@@ -138,18 +136,6 @@ class Administrador
         <div id="modGestion" class="accordion-collapse collapse" data-bs-parent="#accordionModulos">
           <div class="accordion-body">
             <ul class="list-unstyled">
-
-              <!-- CUPONES -->
-              <li class="mb-2 fw-bold">Cupones</li>
-              <li>
-                <a href="{{ route('cupon.consultar') }}" class="text-white text-decoration-none"> ➤ Listar cupones </a>
-              </li>
-              <li>
-                <a href="{{ route('cupon.agregar') }}" class="text-white text-decoration-none">➤ Agregar cupón</a>
-              </li>
-              <li>
-              <a href="{{ route('cupon.editarVista') }}" class="text-white text-decoration-none">➤ Editar / Eliminar cupón </a>
-              </li>
 
               <!-- PROVEEDORES -->
               <li class="mt-4 mb-2 fw-bold">Proveedores</li>
@@ -201,7 +187,6 @@ class Administrador
               <li><a href="{{ route('reportes.productos') }}" class="text-white text-decoration-none">➤ Productos Más Vendidos</a></li>
               <li><a href="{{ route('reportes.clientes') }}" class="text-white text-decoration-none">➤ Clientes Frecuentes</a></li>
               <li><a href="{{ route('productos.inventario', ['filtro' => 'bajo'])}}" class="text-white text-decoration-none">➤ Bajo Inventario</a></li>
-              <li><a href="{{ route('reportes.cupones') }}" class="text-white text-decoration-none">➤ Uso de Cupones</a></li>
               <li><a href="{{ route('exportar.datos') }}" class="text-white text-decoration-none">➤ Exportar Datos</a></li>
             </ul>
           </div>
@@ -277,18 +262,6 @@ class Administrador
           </a>
         </div>
 
-        <!-- Card Inventario -->
-        <div class="col-md-6 col-lg-3">
-          <a href="{{ route('cupon.inventarioVista') }}" class="text-decoration-none">
-            <div class="card h-100 shadow-sm border-0">
-              <div class="card-body text-center">
-                <i class="bi bi-box-seam fs-1 text-warning mb-3"></i>
-                <h5 class="card-title fw-bold">Inventario</h5>
-                <p class="card-text text-muted">Consulta el inventario en tiempo real y mantén actualizada la disponibilidad.</p>
-              </div>
-            </div>
-          </a>
-        </div>
 
         <!-- Card Ventas -->
         <div class="col-md-6 col-lg-3">

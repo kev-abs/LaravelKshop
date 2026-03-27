@@ -98,21 +98,6 @@ class="rounded-circle border shadow-sm" width="130">
 
 </div>
 
-<!-- MODO OSCURO -->
-<div class="contenido d-none" id="modo">
-
-<h5 class="mb-3">
-<i class="bi bi-moon"></i> Apariencia
-</h5>
-
-<p class="text-muted">Activa o desactiva el modo oscuro en el panel.</p>
-
-<button class="btn btn-dark w-100" onclick="toggleDarkMode()">
-<i class="bi bi-moon"></i> Activar / Desactivar
-</button>
-
-</div>
-
 </div>
 </div>
 </div>

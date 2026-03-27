@@ -11,7 +11,7 @@
 <header class="bg-white sticky-top py-3 border-bottom shadow-sm">
     <div class="container d-flex justify-content-between align-items-center">
         <div class="d-flex align-items-center">
-            <a class="d-flex align-items-center text-decoration-none" href="{{ route('cupon.inventarioVista') }}">
+            <a class="d-flex align-items-center text-decoration-none" href="{{ route('panel.admin') }}">
                 <img src="{{asset('img/logo_kshopsinfondo.png')}}" alt="Logo K-Shop" width="83" class="me-2">
                 <span class="fw-bold text-dark">K-SHOP | AGREGAR PROVEEDOR</span>
             </a>

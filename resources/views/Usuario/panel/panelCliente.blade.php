@@ -79,12 +79,6 @@
             </li>
 
             <li class="mb-3">
-                <a href="{{ route('cliente.cupones') }}" class="text-white text-decoration-none">
-                    <i class="bi bi-ticket-perforated me-2"></i> Mis Cupones
-                </a>
-            </li>
-
-            <li class="mb-3">
                 <a href="{{ route('cliente.configuracion') }}" class="text-white text-decoration-none">
                     <i class="bi bi-gear me-2"></i> Configuración
                 </a>
