@@ -58,10 +58,10 @@
         </div>
 
         <div class="text-center">
-    <button type="submit" class="btn btn-warning px-4">
-        <i class="bi bi-truck"></i> Agregar Proveedor
-    </button>
-</div>
+            <button type="submit" class="btn btn-warning px-4">
+                <i class="bi bi-truck"></i> Agregar Proveedor
+            </button>
+        </div>
     </form>
 
 </div>

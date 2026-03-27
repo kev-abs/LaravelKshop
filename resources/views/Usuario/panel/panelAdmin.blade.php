@@ -202,7 +202,7 @@ class Administrador
               <li><a href="{{ route('reportes.clientes') }}" class="text-white text-decoration-none">➤ Clientes Frecuentes</a></li>
               <li><a href="{{ route('productos.inventario', ['filtro' => 'bajo'])}}" class="text-white text-decoration-none">➤ Bajo Inventario</a></li>
               <li><a href="{{ route('reportes.cupones') }}" class="text-white text-decoration-none">➤ Uso de Cupones</a></li>
-              <li><a href="../reportes/exportar_datos.php" class="text-white text-decoration-none">➤ Exportar Datos</a></li>
+              <li><a href="{{ route('exportar.datos') }}" class="text-white text-decoration-none">➤ Exportar Datos</a></li>
             </ul>
           </div>
         </div>
