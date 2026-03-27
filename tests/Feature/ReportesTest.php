@@ -4,10 +4,16 @@ namespace Tests\Feature;
 
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\DB;
 
 class ReportesTest extends TestCase
 {
-     use RefreshDatabase; 
+     protected function setUp(): void
+    {
+        parent::setUp();
+        Http::fake(); 
+    }
     /** @test */
     public function carga_estadisticas_ventas()
     {
@@ -38,8 +44,15 @@ class ReportesTest extends TestCase
     /** @test */
     public function carga_efectividad_cupones()
     {
+        DB::shouldReceive('table')->andReturnSelf();
+        DB::shouldReceive('join')->andReturnSelf();
+        DB::shouldReceive('select')->andReturnSelf();
+        DB::shouldReceive('groupBy')->andReturnSelf();
+        DB::shouldReceive('raw')->andReturn(''); // 👈 ESTA ES LA CLAVE
+        DB::shouldReceive('get')->andReturn(collect([]));
+
         $response = $this->withSession(['rol' => 'administrador'])
-                         ->get('/admin/reportes/cupones');
+                        ->get('/admin/reportes/cupones');
 
         $response->assertStatus(200);
     }
