@@ -15,7 +15,6 @@ use App\Http\Controllers\Usuario\AdminController;
 use App\Http\Controllers\Usuario\VendedorController;
 use App\Http\Controllers\Usuario\ListaDeseosController;
 use App\Http\Controllers\ClienteController;
-use App\Http\Controllers\ClienteCuponController;
 use App\Http\Controllers\CarritoController;
 use App\Http\Controllers\ProveedorController;
 use App\Http\Controllers\Usuario\ClientesController;

@@ -48,22 +48,10 @@
         @yield('content')
     </main>
 
-    {{-- FOOTER --}}
-    <footer class="bg-dark text-white text-center py-4 mt-auto">
-        <div class="container">
-
-            <div class="mb-3">
-                <a href="#" class="text-white me-3 text-decoration-none">Términos</a>
-                <a href="#" class="text-white me-3 text-decoration-none">Privacidad</a>
-                <a href="#" class="text-white text-decoration-none">Ayuda</a>
-            </div>
-
-            <p class="mb-0 small">
-                &copy; 2025 Tienda K-Shop - Todos los derechos reservados
-            </p>
-
-        </div>
-    </footer>
+<!-- FOOTER -->
+<footer class="bg-dark text-white text-center py-4 mt-auto">
+<p class="mb-0">&copy; 2026 K-SHOP</p>
+</footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 

@@ -98,20 +98,12 @@
 
     </main>
 
-    <!-- FOOTER (idéntico al de Usuarios) -->
-    <footer class="bg-dark text-white text-center py-4 mt-auto">
-        <div class="container">
-            <div class="mb-3">
-                <a href="#" class="text-white me-3">Términos</a>
-                <a href="#" class="text-white me-3">Privacidad</a>
-                <a href="#" class="text-white">Ayuda</a>
-            </div>
+<!-- FOOTER -->
+<footer class="bg-dark text-white text-center py-4 mt-auto">
+<p class="mb-0">&copy; 2026 K-SHOP</p>
+</footer>
 
-            <p class="mb-0">&copy; 2025 Tienda K-Shop - Todos los derechos reservados</p>
-        </div>
-    </footer>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
 </html>
