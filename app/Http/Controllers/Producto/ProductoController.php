@@ -189,7 +189,7 @@ public function editarCategoria($id)
 
     foreach ($categorizados as $cat) {
         foreach ($cat['productos'] as $p) {
-            if ($p['idProducto'] == $id) {
+            if ($p['id_Producto'] == $id) {
                 $productoEncontrado = $p;
                 $categoriaActual = $cat['idCategoria'];
                 break 2;
@@ -289,6 +289,7 @@ public function eliminarCategoria($id)
 
     public function store(Request $request)
     {
+    
         $resultado = $this->productoService->agregarProducto(
             $request->nombre,
             $request->descripcion,
@@ -336,7 +337,7 @@ public function eliminarCategoria($id)
     $request->descripcion,
     $request->precio,
     $request->stock,
-    $request->id_Proveedor,
+    $request->idProveedor,
     $request->file("imagen"),
     $request->imagen_actual,   
     $request->estado
