@@ -55,6 +55,11 @@
     </table>
 </div>
 
+<!-- FOOTER -->
+<footer class="bg-dark text-white text-center py-4 mt-auto">
+<p class="mb-0">&copy; 2026 K-SHOP</p>
+</footer>
+
 <script>
 const API = "http://35.175.5.116:8080/proveedor";
 let editando = false;

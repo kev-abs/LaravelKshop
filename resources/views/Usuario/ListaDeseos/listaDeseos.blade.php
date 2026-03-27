@@ -86,8 +86,6 @@ placeholder="Buscar productos..."
   @if(session('success'))
     <div class="alert alert-success">{{ session('success') }}</div>
   @endif
-
-<<<<<<< HEAD
   <style>
   .wish-card {
     border: none;
@@ -187,17 +185,6 @@ placeholder="Buscar productos..."
               </button>
 
               {{-- Botón eliminar de favoritos --}}
-=======
-  @if(count($deseos) > 0)
-    <div class="row row-cols-2 row-cols-md-3 row-cols-lg-4 g-4 justify-content-center">
-      @foreach($deseos as $d)
-        <div class="col">
-          <div class="card h-100 shadow-sm border-0">
-            <img src="http://localhost:8080/uploads/productos/{{ $d->Imagen ?? '' }}" class="card-img-top" style="height:180px; object-fit:cover">
-            <div class="card-body text-center">
-              <h6 class="fw-bold">{{ $d->Nombre ?? '' }}</h6>
-              <p class="fw-bold mb-2">$ {{ number_format($d->Precio ?? 0, 0, ',', '.') }}</p>
->>>>>>> parent of 4cb488b (categorizacion cliente)
               <form action="{{ route('cliente.listaDeseos.eliminar', $d->ID_Lista) }}" method="POST">
                 @csrf
                 @method('DELETE')
@@ -214,10 +201,9 @@ placeholder="Buscar productos..."
   @endif
 </main>
 
+<!-- FOOTER -->
 <footer class="bg-dark text-white text-center py-4 mt-auto">
-  <div class="container">
-    <p class="mb-0">&copy; 2025 K-SHOP - Panel Cliente</p>
-  </div>
+<p class="mb-0">&copy; 2026 K-SHOP</p>
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>

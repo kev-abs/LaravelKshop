@@ -1,6 +1,4 @@
-<footer class="bg-dark text-white py-4 mt-5">
-    <div class="container text-center">
-        <p class="mb-1">© {{ date('Y') }} KSHOP - Todos los derechos reservados</p>
-        <small>Desarrollado por Manuel</small>
-    </div>
+<!-- FOOTER -->
+<footer class="bg-dark text-white text-center py-4 mt-auto">
+<p class="mb-0">&copy; 2026 K-SHOP</p>
 </footer>

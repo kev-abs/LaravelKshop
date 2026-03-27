@@ -86,15 +86,31 @@
     @endif
 </div>
 
-<footer class="bg-dark text-white text-center py-4 mt-auto">
-    <div class="container">
-        <div class="mb-3">
-            <a href="#" class="text-white me-3">Términos</a>
-            <a href="#" class="text-white me-3">Privacidad</a>
-            <a href="#" class="text-white">Ayuda</a>
-        </div>
-        <p class="mb-0">&copy; 2025 Tienda K-Shop</p>
+<!-- FOOTER -->
+<footer class="bg-dark text-white pt-5">
+  <div class="container text-center text-md-start">
+    <div class="row">
+
+      <div class="col-md-4 mb-4">
+        <h5>K-SHOP</h5>
+        <p>Moda moderna y urbana.</p>
+      </div>
+
+      <div class="col-md-3 mb-4">
+        <h6 class="fw-bold">Ayuda</h6>
+        <ul class="list-unstyled small">
+          <li><a href="{{ route('faq') }}" class="text-white text-decoration-none">Preguntas frecuentes</a></li>
+          <li><a href="{{ route('contacto') }}" class="text-white text-decoration-none">Contáctanos</a></li>
+          <li><a href="{{ route('terminos') }}" class="text-white text-decoration-none">Sobre nosotros</a></li>
+        </ul>
+      </div>
+
     </div>
+
+    <div class="text-center border-top pt-3">
+      &copy; 2026 K-SHOP
+    </div>
+  </div>
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

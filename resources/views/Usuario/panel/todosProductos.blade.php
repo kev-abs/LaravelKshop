@@ -4,167 +4,210 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Todos los Productos - K-Shop</title>
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+
     <style>
         .text-shadow { text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); }
-        .fade-in { opacity: 0; transform: translateY(20px); animation: fadeInUp 0.6s forwards; }
-        @keyframes fadeInUp { to { opacity:1; transform: translateY(0); } }
-        .btn-hover:hover { transform: translateY(-3px); transition: transform 0.3s; }
-        .product-card { transition: transform 0.3s ease, box-shadow 0.3s ease; cursor:pointer; }
-        .product-card.zoomed { transform: scale(1.05); z-index:10; box-shadow:0 10px 20px rgba(0,0,0,0.3); position:relative; }
+
+        .product-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor:pointer;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow:0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        .product-card img {
+            height:220px;
+            object-fit:cover;
+        }
+
+        .btn-hover:hover {
+            transform: translateY(-3px);
+            transition: 0.3s;
+        }
     </style>
 </head>
+
 <body class="d-flex flex-column min-vh-100">
 
-<!-- HEADER -->
+<!-- HEADER RESPONSIVE -->
 <header class="bg-white sticky-top py-3 border-bottom shadow-sm">
-    <div class="container d-flex flex-wrap justify-content-between align-items-center">
-        <div class="d-flex align-items-center">
-            <img src="{{ asset('img/logo_kshopsinfondo.png') }}" alt="Logo K-Shop" width="83" class="me-2">
-            <a href="{{ route('inicio') }}" class="text-decoration-none fs-7 fw-bold text-dark">K-SHOP</a>
+    <div class="container">
+
+        <div class="row align-items-center g-3">
+
+            <!-- LOGO -->
+            <div class="col-6 col-md-3 d-flex align-items-center">
+                <img src="{{ asset('img/logo_kshopsinfondo.png') }}" width="70" class="me-2">
+                <a href="{{ route('inicio') }}" class="text-decoration-none fw-bold text-dark">
+                    K-SHOP
+                </a>
+            </div>
+
+            <!-- BUSCADOR PC -->
+            <div class="col-md-6 d-none d-md-block">
+                <form action="{{ route('productos.buscar') }}" method="GET" class="d-flex">
+                    <input 
+                        type="text" 
+                        name="nombre"
+                        value="{{ request('nombre') }}"
+                        class="form-control me-2"
+                        placeholder="Buscar productos..."
+                    >
+                    <button class="btn btn-dark">
+                        <i class="bi bi-search"></i>
+                    </button>
+                </form>
+            </div>
+
+            <!-- MENÚ -->
+            <div class="col-6 col-md-3 d-flex justify-content-end align-items-center gap-2">
+
+                @guest
+                <a href="{{ route('login') }}" class="btn btn-outline-dark">
+                    <i class="bi bi-person-circle"></i>
+                </a>
+                @endguest
+
+            </div>
+
         </div>
-            <!-- BARRA DE BÚSQUEDA -->
-<form action="{{ route('productos.buscar') }}" method="GET" class="d-flex">
 
-<input 
-type="text" 
-name="nombre"
-value="{{ request('nombre') }}"
-class="form-control me-2"
-placeholder="Buscar productos..."
->
+        <!-- BUSCADOR MÓVIL -->
+        <div class="row mt-3 d-md-none">
+            <div class="col-12">
+                <form action="{{ route('productos.buscar') }}" method="GET" class="d-flex">
+                    <input 
+                        type="text" 
+                        name="nombre"
+                        value="{{ request('nombre') }}"
+                        class="form-control me-2"
+                        placeholder="Buscar productos..."
+                    >
+                    <button class="btn btn-dark">
+                        <i class="bi bi-search"></i>
+                    </button>
+                </form>
+            </div>
+        </div>
 
-<button class="btn btn-dark">
-<i class="bi bi-search"></i>
-</button>
-
-</form>
-    
-        <nav class="d-flex align-items-center gap-3">
-            <a href="{{ route('panel.cliente') }}" class="nav-link text-dark">Panel Cliente</a>
-            <a href="#" class="btn btn-outline-dark border-0">
-                <i class="bi bi-cart-fill"></i>
-            </a>
-            @guest
-            <a href="{{ route('login') }}" class="btn btn-outline-dark border-0 text-dark">
-                <i class="bi bi-person-circle me-1"></i>Iniciar Sesión
-            </a>
-            @endguest
-        </nav>
     </div>
 </header>
 
 <!-- MAIN -->
 <main class="container my-5">
 
-    <h2 class="text-center mb-4 fw-bold text-shadow">Todos los Productos</h2>
+    <!-- GRID RESPONSIVE -->
+    <div class="row g-4">
 
-</form>
+    @forelse($productos as $p)
+        <div class="col-12 col-sm-6 col-md-4 col-lg-3">
 
-    <!-- Productos -->
-<div class="row g-4">
-@forelse($productos as $p)
-    <div class="col-md-3">
-        <div class="card h-100 shadow-sm">
+            <div class="card h-100 shadow-sm product-card">
 
-            @if(!empty(data_get($p,'imagen')))
-                <img src="http://35.175.5.116:8080/uploads/productos/{{ data_get($p,'imagen') }}"
-                     class="card-img-top"
-                     alt="{{ data_get($p,'nombre') }}">
-            @else
-                <div class="bg-light text-center py-5">Sin imagen</div>
-            @endif
+                @if(!empty(data_get($p,'imagen')))
+                    <img src="http://35.175.5.116:8080/uploads/productos/{{ data_get($p,'imagen') }}"
+                         class="card-img-top"
+                         alt="{{ data_get($p,'nombre') }}">
+                @else
+                    <div class="bg-light text-center py-5">Sin imagen</div>
+                @endif
 
-            <div class="card-body text-center">
+                <div class="card-body text-center d-flex flex-column">
 
-                <h5 class="card-title">
-                    {{ data_get($p,'nombre') }}
-                </h5>
+                    <h5 class="card-title">
+                        {{ data_get($p,'nombre') }}
+                    </h5>
 
-                <p class="card-text text-muted">
-                    {{ data_get($p,'descripcion','') }}
-                </p>
+                    <p class="card-text text-muted small">
+                        {{ data_get($p,'descripcion','') }}
+                    </p>
 
-                <p class="fw-bold">
-                    ${{ data_get($p,'precio',0) }}
-                </p>
+                    <p class="fw-bold">
+                        ${{ number_format(data_get($p,'precio',0), 0, ',', '.') }}
+                    </p>
 
-                <p class="mb-2">
-                    Stock:
-                    @if(data_get($p,'stock',0) <= 0)
-                        <span class="text-danger fw-bold">Agotado</span>
-                    @else
-                        <span class="text-muted">
-                            {{ data_get($p,'stock') }}
-                        </span>
-                    @endif
-                </p>
+                    <p class="mb-2">
+                        Stock:
+                        @if(data_get($p,'stock',0) <= 0)
+                            <span class="text-danger fw-bold">Agotado</span>
+                        @else
+                            <span class="text-muted">
+                                {{ data_get($p,'stock') }}
+                            </span>
+                        @endif
+                    </p>
 
-                <a href="{{ route('producto.detalle', data_get($p,'id_Producto')) }}"
-                   class="btn btn-outline-dark btn-sm mb-1">
-                   Ver Producto
-                </a>
+                    <!-- BOTONES AL FONDO -->
+                    <div class="mt-auto">
 
-                <form action="{{ route('cliente.listaDeseos.agregar') }}"
-                      method="POST"
-                      class="d-inline">
-                    @csrf
+                        <a href="{{ route('producto.detalle', data_get($p,'id_Producto')) }}"
+                           class="btn btn-outline-dark btn-sm w-100 mb-2">
+                           Ver Producto
+                        </a>
 
-                    <input type="hidden"
-                           name="ID_Producto"
-                           value="{{ data_get($p,'id_Producto') }}">
+                        <form action="{{ route('cliente.listaDeseos.agregar') }}"
+                              method="POST">
+                            @csrf
 
-                    <button type="submit"
-                            class="btn btn-outline-danger btn-sm">
-                        <i class="bi bi-heart"></i> Añadir a Favoritos
-                    </button>
-                </form>
+                            <input type="hidden"
+                                   name="ID_Producto"
+                                   value="{{ data_get($p,'id_Producto') }}">
 
+                            <button type="submit"
+                                    class="btn btn-outline-danger btn-sm w-100">
+                                <i class="bi bi-heart"></i> Favoritos
+                            </button>
+                        </form>
+
+                    </div>
+
+                </div>
             </div>
-        </div>
-    </div>
-@empty
-    <p class="text-center text-muted">No hay productos disponibles</p>
-@endforelse
-</div>
 
-    <div class="text-center my-4">
-        <a href="{{ route('panel.cliente') }}" class="btn btn-outline-secondary btn-lg btn-hover">
-            <i class="bi bi-arrow-left me-2"></i>Volver al panel
-        </a>
+        </div>
+
+    @empty
+        <p class="text-center text-muted">No hay productos disponibles</p>
+    @endforelse
+
     </div>
 
 </main>
 
 <!-- FOOTER -->
-<footer class="bg-dark text-white text-center py-4 mt-auto">
-    <div class="container">
-        <div class="mb-3">
-            <a href="#" class="text-white me-3">Términos</a>
-            <a href="#" class="text-white me-3">Privacidad</a>
-            <a href="#" class="text-white">Ayuda</a>
-        </div>
-        <p class="mb-0">&copy; 2025 Tienda K-Shop - Todos los derechos reservados</p>
+<footer class="bg-dark text-white pt-5 mt-auto">
+  <div class="container text-center text-md-start">
+    <div class="row">
+
+      <div class="col-md-4 mb-4">
+        <h5>K-SHOP</h5>
+        <p>Moda moderna y urbana.</p>
+      </div>
+
+      <div class="col-md-3 mb-4">
+        <h6 class="fw-bold">Ayuda</h6>
+        <ul class="list-unstyled small">
+          <li><a href="{{ route('faq') }}" class="text-white text-decoration-none">Preguntas frecuentes</a></li>
+          <li><a href="{{ route('contacto') }}" class="text-white text-decoration-none">Contáctanos</a></li>
+          <li><a href="{{ route('terminos') }}" class="text-white text-decoration-none">Sobre nosotros</a></li>
+        </ul>
+      </div>
+
     </div>
+
+    <div class="text-center border-top pt-3">
+      &copy; 2026 K-SHOP
+    </div>
+  </div>
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<script>
-    // Zoom al click
-    const cards = document.querySelectorAll('.product-card');
-    cards.forEach(card => {
-        card.addEventListener('click', () => {
-            cards.forEach(c => c.classList.remove('zoomed'));
-            card.classList.add('zoomed');
-        });
-    });
 
-    document.body.addEventListener('click', e => {
-        if (!e.target.closest('.product-card')) {
-            cards.forEach(c => c.classList.remove('zoomed'));
-        }
-    });
-</script>
 </body>
 </html>

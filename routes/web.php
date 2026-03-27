@@ -15,7 +15,6 @@ use App\Http\Controllers\Usuario\AdminController;
 use App\Http\Controllers\Usuario\VendedorController;
 use App\Http\Controllers\Usuario\ListaDeseosController;
 use App\Http\Controllers\ClienteController;
-use App\Http\Controllers\ClienteCuponController;
 use App\Http\Controllers\CarritoController;
 use App\Http\Controllers\ProveedorController;
 use App\Http\Controllers\Usuario\ClientesController;
@@ -151,6 +150,8 @@ Route::get('/carrito/cupon/quitar', [CarritoController::class, 'quitarCupon'])->
         Route::delete('/eliminar/{id}', [ClientesController::class, 'eliminarCliente'])->name('clientes.eliminar');
         Route::get('/buscar/{id}', [ClientesController::class, 'buscarCliente']);
         Route::get('/historial', [ClientesController::class, 'historial'])->name('cliente.historial');
+        Route::get('/cliente/configuracionCliente', [ClientesController::class, 'configuracion'])->name('cliente.configuracion');
+        Route::post('/cliente/cambiar-password', [ClientesController::class, 'cambiarPassword'])->name('cliente.cambiar.password');
 
     });
     Route::prefix('registro')->group(function () {

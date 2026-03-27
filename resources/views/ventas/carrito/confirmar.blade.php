@@ -22,9 +22,19 @@
                 </div>
             </div>
 
-            <div class="row">
+                        {{-- IMAGEN --}}
+                        <div style="width: 90px;">
+                            @if (!empty($item['imagen']))
+                                <img src="http://35.175.5.116:8080/uploads/productos/{{ $item['imagen'] }}"
+                                    class="img-fluid rounded" style="height:90px; object-fit:cover;"
+                                    alt="{{ $item['nombre'] }}">
+                            @else
+                                <img src="{{ asset('img/no-image.png') }}" class="img-fluid rounded"
+                                    style="height:90px; object-fit:cover;" alt="Sin imagen">
+                            @endif
+                        </div>
 
-
+                {{--  FORMULARIO CENTRADO --}}
                 <div class="col-md-6 mx-auto">
 
                     <div class="card border-0 shadow-sm rounded-4">
@@ -136,3 +146,4 @@
         </div>
     </div>
 @endsection
+
