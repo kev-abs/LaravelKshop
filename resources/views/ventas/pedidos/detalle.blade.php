@@ -96,22 +96,21 @@
             @foreach ($detalles as $item)
                 <div class="d-flex align-items-center py-3 border-bottom" style="border-color:#eee;">
 
-
                     <div style="width: 110px;">
+                        @php
+                            $img = $item['imagen'] ?? null;
+                        @endphp
 
-                        @if (!empty($item['imagen']))
-                            <img src="http://35.175.5.116:8080/uploads/productos/{{ $item['imagen'] }}"
+                        @if ($img)
+                            <img src="http://35.175.5.116:8080/uploads/productos/{{ $img }}"
                                 class="img-fluid rounded-3" style="height:110px; width:100%; object-fit:cover;">
                         @else
-                            <img src="{{ asset('img/no-image.png') }}" class="img-fluid rounded-3"
+                            <img src="https://via.placeholder.com/110x110?text=Sin+Imagen" class="img-fluid rounded-3"
                                 style="height:110px; width:100%; object-fit:cover;">
                         @endif
-
                     </div>
 
-
                     <div class="flex-grow-1 ms-4">
-
                         <div class="fw-medium" style="font-size:0.95rem;">
                             {{ $item['nombre'] }}
                         </div>
@@ -123,9 +122,7 @@
                         <div class="text-muted small">
                             ${{ number_format($item['precioUnitario'], 0, ',', '.') }}
                         </div>
-
                     </div>
-
 
                     <div class="fw-medium">
                         ${{ number_format($item['total'], 0, ',', '.') }}

@@ -60,7 +60,7 @@
 
                                         </div>
 
-                                        {{-- TOTAL --}}
+
                                         <div class="fw-bold mt-2 item-total">
                                             ${{ number_format($item['total'], 0, ',', '.') }}
                                         </div>

@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>K-SHOP - Módulo Ventas</title>
 
-    <!-- Bootstrap CSS -->
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Bootstrap Icons -->
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
 </head>
 
@@ -69,7 +70,7 @@
                 </div>
             </div>
 
-            <!-- Card Envíos -->
+
             <div class="col-md-6">
                 <div class="card h-100 shadow-sm">
                     <div class="card-body text-center">
@@ -90,7 +91,7 @@
 
         </div>
 
-        <!-- Nota informativa -->
+
         <div class="alert alert-info mt-5">
             <h5 class="fw-bold"><i class="bi bi-lightbulb"></i> Consejo:</h5>
             Mantén actualizados los pedidos y envíos para garantizar una experiencia óptima al cliente.
@@ -106,4 +107,5 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
+
 </html>
