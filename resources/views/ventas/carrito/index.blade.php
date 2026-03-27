@@ -4,29 +4,26 @@
 
     <div class="container my-5" style="max-width: 1200px;">
 
-
         <div class="row mb-4">
             <div class="col-12">
                 <h5 class="fw-semibold mb-0">Carrito</h5>
-
             </div>
         </div>
 
+        <div class="row align-items-start carrito-row">
 
-        <div class="row align-items-start">
 
-            <div class="col-md-8">
+            <div class="col-md-8 items">
 
                 @if (empty($carrito['items']))
                     <p class="text-muted">Tu carrito está vacío.</p>
                 @else
                     <div class="row g-4">
                         @foreach ($carrito['items'] as $item)
-                            <div class="col-md-6 item-row" data-id="{{ $item['idProducto'] }}"
+                            <div class="col-12 col-md-6 item-row" data-id="{{ $item['idProducto'] }}"
                                 data-precio="{{ $item['precio'] }}">
 
                                 <div class="card border-0 rounded-4 shadow-sm h-100">
-
 
                                     <img src="http://35.175.5.116:8080/uploads/productos/{{ $item['imagen'] }}"
                                         class="card-img-top rounded-top-4" style="height:250px; object-fit:cover;">
@@ -40,7 +37,6 @@
                                         <div class="text-muted mb-2" style="font-size:0.85rem;">
                                             ${{ number_format($item['precio'], 0, ',', '.') }}
                                         </div>
-
 
                                         <div class="d-flex align-items-center gap-2">
 
@@ -60,7 +56,6 @@
 
                                         </div>
 
-
                                         <div class="fw-bold mt-2 item-total">
                                             ${{ number_format($item['total'], 0, ',', '.') }}
                                         </div>
@@ -75,11 +70,12 @@
 
             </div>
 
-            <div class="col-md-4" style="position: sticky; top: 100px; align-self: flex-start;">
 
-                <div class="card border-0 shadow-sm rounded-3">
+            <div class="col-md-4 resumen" style="position: sticky; top: 100px; align-self: flex-start;">
 
-                    <div class="card-body">
+                <div class="card border-0 shadow-sm rounded-3 mb-4 mb-md-0">
+
+                    <div class="card-body text-center text-md-start">
 
                         <div class="d-flex justify-content-between mb-2">
                             <span>Subtotal</span>
@@ -109,10 +105,40 @@
                     </div>
                 </div>
             </div>
+
         </div>
 
     </div>
 
+    <style>
+        @media (max-width: 767px) {
+            .carrito-row {
+                display: flex;
+                flex-direction: column;
+            }
+
+            .resumen {
+                order: -1;
+                /* sube arriba */
+                width: 100%;
+                position: relative !important;
+                /* quita sticky */
+                top: auto !important;
+                margin-bottom: 20px;
+                text-align: center;
+                /* centrado en móvil */
+            }
+
+            .items {
+                width: 100%;
+            }
+
+            .item-row {
+                width: 100%;
+
+            }
+        }
+    </style>
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {
