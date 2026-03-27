@@ -85,10 +85,6 @@
           Productos
         </a>
 
-        <a href="#" class="btn btn-outline-dark border-0">
-          <i class="bi bi-cart-fill fs-5"></i>
-        </a>
-
         <a href="{{ route('login') }}" class="btn btn-outline-dark px-3">
           <i class="bi bi-person-circle me-1"></i>
           <span class="d-none d-md-inline">Iniciar sesión</span>

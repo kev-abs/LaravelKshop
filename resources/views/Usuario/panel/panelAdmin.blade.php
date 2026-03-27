@@ -235,7 +235,7 @@ class Administrador
       </p>
 
 
-      <div class="row g-4">
+      <div class="row justify-content-center g-4">
         <!-- Card Usuarios -->
         <div class="col-md-6 col-lg-3">
           <a href="{{ route('usuariosVista') }}" class="text-decoration-none">

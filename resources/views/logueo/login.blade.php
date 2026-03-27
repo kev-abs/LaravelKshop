@@ -64,12 +64,6 @@
         </li>
 
         <li class="nav-item">
-          <a href="#" class="nav-link">
-            <i class="bi bi-cart-fill"></i>
-          </a>
-        </li>
-
-        <li class="nav-item">
           <a href="{{ route('login') }}" class="btn btn-outline-dark">
             <i class="bi bi-person-circle me-1"></i>
             <span class="d-none d-lg-inline">Iniciar sesión</span>
